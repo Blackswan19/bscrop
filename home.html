@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pkchs</title>
+    <link rel="icon" type="image/x-icon" href="tlogo.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mate:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quattrocento:wght@400;700&family=Sedan:ital@0;1&display=swap');
+    * {
+        font-family: "Quattrocento", serif;
+        color: rgba(255, 255, 255, 0.733);
+        list-style: none;
+        letter-spacing: 0.5px;
+    }
+    body, html {
+        background-blend-mode: luminosity;
+        background-color: rgb(30, 30, 30);
+        width: 88%;
+        margin-left: 5.5%;
+    }
+    .container {
+        margin: auto;
+        text-align: center;
+        padding-top: 69px;
+        padding-bottom: 80px; 
+    }
+    @media screen and (max-width: 760px) {
+        .container {
+            font-size: 36px;
+        text-align: center;
+        margin-bottom: -140px;
+        margin-top: 78%;
+        margin-left: -21%;
+
+        } 
+        .services{
+            margin-top: -35%;
+        }
+        .section-title{
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: -153px;
+            margin-left: -62%;
+        }  
+        h5 {
+            font-size: 25px;
+        }
+    }
+    .section-title {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: -117px;
+    }
+    h5 {
+        font-size: 30px;
+        margin: 19px;
+    }
+    p {
+        font-size: 16px;
+        color: #f1f1f1c1;
+        line-height: 26px;
+        font-weight: 400;
+    }
+    a {
+        text-decoration: none; 
+    }
+    #main-header{
+        width: 41%;
+        position: fixed;
+        top: 7%;
+        left: 73%;
+    }
+    #main-header a{
+        padding: 33px 33px;
+    font-weight: 600;
+    color: #ffffff;
+
+    }
+    #main-header a:hover{
+        color: #676767;
+            transition: 0.5s;
+            font-weight: 700;
+    }
+    .open-nav {
+        max-height: 400px !important; 
+    }
+    .open-nav .mobile-toggle {
+        -webkit-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg); 
+    }
+    .logo {
+        font-size: xx-large;
+        color: #000000;
+        font-family: serif;
+    }
+    @media screen and (max-width: 760px) {
+        .logo {
+            float: none; 
+        }  
+        #main-header {
+            width: 133%;
+            padding: 31px 0px;
+            overflow: hidden;
+            position: fixed;
+            margin-left: -11%;
+        }
+
+    }
+    #main-header nav {
+        width: 75%;
+        position: relative;
+        left: 70%;
+    }
+    @media screen and (max-width: 760px){
+        #main-header nav{
+            overflow: hidden;
+            margin-left: 0%;
+            display: grid;
+            position: relative;
+        } 
+        #main-header nav a{
+            height: 3px;
+        }
+    }
+    #main-header nav a {
+        color: #ffffffc8;
+        font-size: 15px;
+        font-weight: 500;
+        padding: 15px;
+        line-height: 1px;
+        position: relative;
+        left: 11%;
+    }
+    #main-header nav a:hover {
+        transition: 0.5s;
+        color: #757575;
+        font-size: 18px;
+        font-weight: 800;
+    }
+    .header-wrapper {
+        max-width: fit-content;
+        position: relative;
+    }
+    .hero-content {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        font-size: 27px;
+    }
+    .tables{
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 50px; 
+    }
+    h1:hover {
+        color: rgba(255, 255, 255, 0.824);
+    }
+    .menubar{
+        position: fixed;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    width: 100%;
+    text-align: center;
+    left: -2px;
+    border: solid 1px #ffffff66;
+    padding: 21px 0px;
+    }
+    .skill-bar {
+        position: relative;
+        width: 100%;
+        height: 2px;
+        margin-top: 52px;
+        background: #00000026;
+        text-align: center;   
+    }
+    ul {
+        font-size: large;
+    text-align: center;
+    line-height: 42px;
+    padding-top: 3%;
+    position: relative;
+    left: -3%;
+
+    }
+    input{
+        color: #ffffffcc;;
+        border: none;
+        outline: none;
+        background: rgb(0, 0, 0);
+        padding: 14px 36px;
+        font-size: medium;
+        border-radius: 41px;
+        margin-top: 11%;
+
+    }
+    button{
+        background: none;
+        margin-top: 3.5%;
+        border: none;
+        color: #ffffffcc;
+        text-align: center;
+        display: flex;
+        left: 49%;
+        position: relative;
+    }
+    span{
+        position: relative;
+        left: 6%;
+        font-size: 21px;
+        color: rgba(255, 255, 255, 0.801);
+        font-weight: 700;
+        cursor: pointer;
+    }
+    i{
+        position: relative;
+        left: 4%;
+    }
+    .section-titles{
+        margin-bottom: -25%;
+        font-size: xxx-large;
+        padding-left: 45%;
+        text-decoration: underline;
+    }
+    img {
+    width: 100%;
+}
+
+.container {
+    margin: auto;
+    text-align: center;
+    padding-top: 87%;
+    margin-bottom: -80%;
+}
+    .timedate{
+            font-size: 37px;
+            position: fixed;
+            z-index: 1001;
+            font-weight: 400;
+            background: rgb(0, 0, 0);
+            width: 100%;
+            right: 0;
+            text-align: center;
+            left: 0;
+            top: 0;
+
+        }
+        .firework{
+            position: fixed;
+            top: 95%;
+            z-index: 10;
+            left: 24px;
+            color: rgba(255, 255, 255, 0.801);
+            font-weight: 500;
+        }
+    @media screen and (max-width: 760px) {
+        body {
+        margin-left: -0.5%;
+        width: 103%;
+    }
+        .timedate{
+            font-size: 37px;
+            position: fixed;
+            z-index: 1001;
+            font-weight: 400;
+            background: rgb(0, 0, 0);
+            width: 100%;
+            right: 0;
+            text-align: center;
+            left: 0;
+            top: 0;
+        }
+        #main-header nav ul li {
+            width: 100%;
+            padding: 10px 0;
+            margin: 0; 
+        } 
+        button{
+            position: relative;
+            left: 38%;
+            margin-top: 5%;
+            padding: 21px;
+            background: rgba(255, 255, 255, 0);
+            text-align: center;
+
+        }  
+        img {
+    width: 100%;
+    top: 2em;
+        position: relative;
+}
+
+        span{
+            position: static;
+            padding-left: 8%;
+        }
+        ul{
+            display: contents;
+        position: relative;
+        font-size: large;
+        float: inherit;
+        line-height: 34px;
+
+        }
+        .containers {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 1px;
+            margin-top: 16%;
+            margin-left: -21%;
+        } 
+        .section-titles{
+            padding-left: 6%;
+            text-decoration: none;
+            font-size: 42px;
+            margin-top: 72%;
+            margin-bottom: -92%;
+        }
+        .containers a:hover{
+            color: rgba(255, 255, 255, 0.824);
+        }
+        
+        .menubar{
+            position: fixed;
+            left: -4%;
+            width: 103%;
+            top: 92%;
+            text-align: center;
+            background: rgb(0, 0, 0);
+            padding: 20px 11px;
+            height: 35%;
+        }
+        .menubar a{
+            font-size: 16px;
+            color: rgb(92 92 92);
+        }   
+    }
+    .scroll{
+            left: 95%;
+        font-size: 20px;
+        top: 94%;
+        position: fixed;
+    }
+.scroll i{
+    background: #000000;
+    padding: 11px 12px;
+    border-radius: 137%;
+    color: #ffffff;
+}
+.scroll i:hover{
+    color: #f5deb3;
+}
+.extra{
+    text-align: center;
+    position: relative;
+    top: 56em;
+    width: 100%;
+
+}
+.extra a{
+    color: rgba(255, 255, 255, 0.742);
+    padding: 11px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+    @media screen and (max-width: 760px) {
+        #main-header {
+            margin-left: -29%;
+            padding-top: 41%;
+        } 
+        .firework{
+            position: fixed;
+            top: 22px;
+            font-size: 15px;
+            left: 18px;
+            z-index: 10000;
+            color: rgba(255, 255, 255, 0.801);
+            font-weight: 600;
+        }
+        .scroll{
+            left: 84%;
+            font-size: 20px;
+            top: 84%;
+            position: fixed;
+        }
+        .extra{
+            text-align: center;
+    position: relative;
+    top: 17em;
+    width: 100%;
+
+        }
+    }
+
+
+    </style>
+</head>
+<body>
+    <section id="up">
+        <a href=""></a>
+      </section>
+    <div class="hero-content">
+            <img src="logo.png" alt="">
+    </div>
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h6>SITES</h6><br><br>
+            </div>
+                <div class="skill-progress-container">
+                    <a href="https://blackswan19.github.io/bsfesta/music.html#home">BS FESTA</a><br><br>
+                    <a href="https://blackswan19.github.io/BS/home.html">BStory</a>
+                </div>
+    </section>
+    <div class="extra">
+        <hr><p class="copy" style="color: rgba(240, 248, 255, 0.322);font-size: 12px;">©BS LABELS. All Rights Reserved</p>
+    </div>
+</body>
+</html>
