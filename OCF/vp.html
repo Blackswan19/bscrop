@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCF</title>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/Z8sGbcN/logo.png">
+    <style>
+                @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Strait&display=swap');
+*{
+    color: rgb(255, 255, 255);
+    font-family: "Red Hat Display", sans-serif;
+}
+body {
+	background-image: url("https://i.ibb.co/vPLBVTQ/bg.png");
+	background-repeat: no-repeat;
+	background-size: 106%;
+	background-color: rgb(0, 0, 0);
+}
+
+.menu-bar {
+	padding: inherit;
+	padding-left: 12%;
+	text-decoration: none;
+	font-size: smaller;
+	padding-top: 72px;
+}
+
+.menu-bar ul {
+	list-style: none;
+	display: flex;
+}
+
+.menu-bar ul li {
+	padding: 10px 20px;
+	position: relative;
+}
+
+.menu-bar ul li a {
+	color: rgb(255, 255, 255);
+	text-decoration: none;
+	transition: all 0.3s;
+    font-size: 16px;
+}
+
+.menu-bar ul li a:hover {
+	color: rgba(255, 255, 255, 0.311);
+}
+
+        button{
+            width: 6%;
+            position: absolute;
+            top: 55%;
+            left: 49.5%;
+            padding: 11px 10px;
+            background: #8080804d;
+            border: none;
+            outline: none;
+            color: white;
+            border-radius: 6px;
+        }
+        option {
+            background-color: #ffffff;
+            color: #333;
+        }
+        
+        input {
+            padding: 12px 32px;
+            position: absolute;
+            bottom: 40%;
+            background: #3c3c3c80;
+            outline: none;
+            border: none;
+            left: 44%;
+            color: rgba(255, 255, 255, 0.811);
+            font-size: 15px;
+        }
+        select {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f2f2f24e;
+            color: #ffffff;
+            font-size: 16px;
+            appearance: none;
+        }
+
+        option {
+            background-color: #fff;
+            color: #333;
+        }
+
+        select:focus {
+            outline: none;
+        }
+        .loginame{
+            position: absolute;
+            top: 50%;
+            left: 40%;
+        }
+        .list{
+            position: absolute;
+            top: 53%;
+            left: 40%;
+        }
+        img {
+            width: 23%;
+    position: fixed;
+    top: 6%;
+    left: 3%;
+        }
+        .adder{
+    position: fixed;
+    left: 10%;
+}
+video{
+    width: 44%;
+    /* border: solid 1px gray; */
+    position: fixed;
+    top: -4em;
+    left: -7em;
+    z-index: -1;
+}
+        @media screen and (max-width: 768px){
+            body{
+                background-size: 102%;
+            }
+            button{
+                position: absolute;
+                top: 75%;
+                left: 34%;
+                width: 29%;
+            }
+            .list{
+                position: absolute;
+                top: 53%;
+                left: 33%;
+            }
+            .loginame{
+                position: absolute;
+                top: 44%;
+                left: 23%;
+            }
+            input {
+        padding: 13px 21px;
+        background: #3c3c3c80;
+        outline: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.811);
+        font-size: 15px;
+        position: relative;
+        left: -8%;
+    }
+            img {
+    width: 69%;
+    position: fixed;
+    top: 6%;
+    left: 15%;
+}
+.adder{
+    position: fixed;
+        left: 37%;
+        z-index: 1000;
+}
+
+video {
+    width: 100%;
+        position: fixed;
+        top: -14px;
+        left: 1%;
+
+}
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-bar">
+        <ul>
+          <li><a href="main.html">Home</a></li>
+          <li><a href="vp.html">My profits</a></li>
+          <li><a href="offers.html">Offers</i></a>
+          <li><a id="about">About us</i></a><script>document.getElementById("about").addEventListener("click", function(event){event.preventDefault(); alert("OCF is one of the brand of BS LABELS, which was a marketing is a global marketing consulting and experience creative company headquartered in New Berlin, Wisconsin, USA. The company was founded in 1979, and BS LABELS Marketing is ranked 10th among global marketing services providers. is one of the leaders in the marketing industry.BS LABELS Marketing provides a range of marketing services, including planning, execution and evaluation of various brand campaigns and event marketing campaigns. Their core business areas include sports, entertainment, retail, automotive, technology and consumer products.As the world's leading experiential creative company, BS LABELS Marketing focuses on creating and delivering unique, personalized and compelling brand experiences. They create deeply interactive and engaging activities by integrating multiple channels, including online, offline, social media, etc., to achieve their clients' marketing goals.BS LABELS Marketing also has offices around the world, including the United States, the United Kingdom, China, Brazil, Russia, etc., and their customers are all over the world. They work with world-renowned brands, including Pepsi, Dell, the International Olympic Committee, and more, providing them with innovative and impactful marketing solutions.Through years of professional experience and excellence in the marketing and experiential creative fields, BS LABELS Marketing has won many awards and recognition within the industry. They are a dynamic and creative team dedicated to creating unique and meaningful brand experiences for their customers.");}); </script> 
+        </ul>
+      </div>
+    <div class="full">
+        <form id="list">
+            <div class="loginame">
+                <input type="name" id="name" name="name" placeholder="Enter your code here" autocomplete="off" required><br><br>
+            </div>
+            
+            <button id="submit" type="button">Login</button>
+        </form>
+        <script>
+            document.getElementById('submit').addEventListener('click', function() {
+                event.preventDefault(); 
+                var name = document.getElementById('name').value;
+                
+                if (name == '') {
+                    alert("You din't buy OCF");
+                } 
+                else{
+                    alert("You din't buy OCF");
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
