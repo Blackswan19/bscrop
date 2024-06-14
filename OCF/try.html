@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Blank</title>
+    <script>
+        function printBlank() {
+            var input1 = document.getElementById("input1").value;
+            var input2 = document.getElementById("input2").value;
+            var input3 = document.getElementById("input3").value;
+            var input4 = document.getElementById("input4").value;
+            
+            if (input1.trim() !== "" && input2.trim() !== "" && input3.trim() !== "" && input4.trim() !== "") {
+                document.getElementById("output").innerText = "blank";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Enter Text in All Fields and Click the Button</h1>
+    <input type="text" id="input1" placeholder="Input 1"><br><br>
+    <input type="text" id="input2" placeholder="Input 2"><br><br>
+    <input type="text" id="input3" placeholder="Input 3"><br><br>
+    <input type="text" id="input4" placeholder="Input 4"><br><br>
+    <button onclick="printBlank()">Submit</button>
+    <p id="output"></p>
+</body>
+</html>
