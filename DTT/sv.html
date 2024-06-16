@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTT</title>
-    <link rel="icon" type="image/x-icon" href="logo.png">
+    <title>SV</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.dribbble.com/users/2007778/screenshots/17173384/media/9c919d97c8b32452ba06e182255cd9df.jpg?resize=400x300&vertical=center">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
@@ -53,17 +53,16 @@
 </head>
 <body>
     <div class="title">
-        DTT
-        <p style="line-height: 0; font-size: 15px;">offers</p>
+        Sv
+        <p style="line-height: 0; font-size: 15px;">Offers</p>
     </div>
     <hr>
     <div class="offers">
+        <p>100 - 200</p>
+        <p>200 - 400</p>
+        <p>300 - 600</p>
+        <p>400 - 800</p>
         <p>500 - 1000</p>
-        <p>600 - 2000</p>
-        <p>700 - 4000</p>
-        <p>800 - 6000</p>
-        <p>900 - 8000</p>
-        <p>1000 - 10000</p>
     </div>
     <div class="inputs">
         <input type="text" id="name" placeholder="Enter your amount">
@@ -81,11 +80,11 @@
 
             if (isNaN(amount)) {
                 alert("Please enter a valid amount.");
-            } else if (amount >= 500 && amount <= 1000) {
+            } else if (amount >= 100 && amount <= 500) {
                 alert("Payment amount: " + amount);
                 insertImage();
             } else {
-                alert("Offer starts from 500!");
+                alert("Offer Limit is 500!");
             }
         });
 
