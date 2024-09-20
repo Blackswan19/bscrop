@@ -39,6 +39,8 @@
             border-bottom: 1px solid #ccc;
             display: flex;
             justify-content: space-between;
+            font-size: 18px;
+    font-weight: 600;
         }
 
         .goal-item:last-child {
@@ -53,7 +55,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
         }
 
         .btn-start:hover {
@@ -105,7 +107,7 @@
         <h2>Daily routine</h2>
         <input type="text" id="goalInput" placeholder="Enter your routine(e.g., 8 am - wake up)">
         <input type="time" id="goalTime" value="08:00">
-        <button class="btn-start" id="startButton">Start</button>
+        <button class="btn-start" id="startButton">SAVE</button>
         <div id="goalList"></div>
     </div>
 
@@ -123,7 +125,7 @@
                 document.getElementById('goalTime').value = '08:00'; // Reset time input
                 updateGoalList();
             } else {
-                alert("Please enter a goal before starting!");
+                // alert("Enter a goal!");
             }
         });
 
@@ -137,7 +139,7 @@
                 goalItem.classList.add('goal-item');
 
                 goalItem.innerHTML = `
-                    <span>Goal: "${item.goal}" | Time: ${item.time}</span>
+                    <span>At : ${item.time} - ${item.goal}</span>
                     <button class="btn-delete" onclick="deleteGoal(${index})">X</button>
                 `;
 
