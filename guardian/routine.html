@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BsGuardian</title>
+    <title>MyDailyTracker</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
 
@@ -22,17 +22,17 @@
             margin: 0;
         }
 
-        .goal-section {
+        .daily-routine-section {
             margin: 20px;
             padding: 20px;
             background: #ffffff30;
             border: solid 1.5px gray;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px; /* Set a width for the goal section */
+            width: 400px; /* Set a width for the daily routine section */
         }
 
-        .goal-item {
+        .routine-item {
             margin: 5px 0;
             padding: 10px;
             /* background-color: #f9f9f9; */
@@ -40,14 +40,14 @@
             display: flex;
             justify-content: space-between;
             font-size: 18px;
-    font-weight: 600;
+            font-weight: 600;
         }
 
-        .goal-item:last-child {
+        .routine-item:last-child {
             border-bottom: none;
         }
 
-        .btn-start {
+        .btn-add {
             background-color: #ffffff21;
             color: white;
             padding: 10px 34px;
@@ -58,11 +58,11 @@
             font-weight: 600;
         }
 
-        .btn-start:hover {
+        .btn-add:hover {
             background-color: #bfbfbf;
         }
 
-        .btn-delete {
+        .btn-remove {
             background-color: #ff4c4c;
             color: white;
             border: none;
@@ -71,7 +71,7 @@
             cursor: pointer;
         }
 
-        .btn-delete:hover {
+        .btn-remove:hover {
             background-color: #ff1a1a;
         }
 
@@ -103,12 +103,12 @@
 </head>
 <body>
 
-    <div class="goal-section">
-        <h2>Daily routine</h2>
-        <input type="text" id="goalInput" placeholder="Enter your routine(e.g., 8 am - wake up)">
-        <input type="time" id="goalTime" value="12:00">
-        <button class="btn-start" id="startButton">SAVE</button>
-        <div id="goalList"></div>
+    <div class="daily-routine-section">
+        <h2>My Daily Routine</h2>
+        <input type="text" id="routineInput" placeholder="Enter your routine(e.g., 8 am - wake up)">
+        <input type="time" id="routineTime" value="08:00">
+        <button class="btn-add" id="addButton">ADD</button>
+        <div id="routineList"></div>
     </div>
 
     <script src="routine.js">
