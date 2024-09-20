@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BsGuardian</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
+
+        * {
+            color: rgb(255, 255, 255);
+            font-family: "Red Hat Display", sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #37474F;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+        }
+
+        .punishment-box {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 600px;
+            text-align: center;
+            white-space: pre-wrap; /* Preserve whitespace for formatting */
+            margin-bottom: 20px;
+            border: solid 1px gray;
+        }
+
+        h2 {
+            color: #fff;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-done, .btn-start {
+            background-color: #ffffff21;
+            color: white;
+            padding: 10px 34px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-done:hover, .btn-start:hover {
+            background-color: #bfbfbf;
+        }
+
+        .goal-section {
+            text-align: center;
+            border: solid 1.5px gray;
+            padding: 30px;
+            border-radius: 12px;
+            background: #ffffff30;
+            overflow-y: auto; /* Allow scrolling */
+            max-height: 300px; 
+            position: fixed;
+    top: 55%;
+        }
+
+        .goal-section input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            font-size: 16px;
+            width: 250px; /* Set a width for the input field */
+            transition: border-color 0.3s ease;
+            margin-bottom: 20px;
+            color: black;
+            font-weight: 500;
+        }
+
+        .goal-section input:focus {
+            border-color: #4CAF50; /* Change border color on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        .goal-info {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff9800;
+        }
+
+        .punishment {
+            position: fixed;
+            top: 15%;
+            border: solid 1.5px gray;
+            padding: 45px;
+            border-radius: 9px;
+            background: #ffffff30;
+        }
+
+        .goal-item {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-delete {
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #ff1a1a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="punishment">
+        <h2>You have to do..!</h2>
+        <div class="punishment-box" id="punishment"></div>
+        <button class="btn-done" id="doneButton">Done</button>
+    </div>
+
+    <div class="goal-section">
+        <h2>Track Your Goals</h2>
+        <input type="text" id="goalInput" placeholder="Enter your goal (e.g., Don't watch porn)">
+        <button class="btn-start" id="startButton">Start</button>
+        <div id="goalList"></div>
+    </div>
+
+    <script>
+        const punishments = [
+            "Drink 2 bottles of water.",
+            "Read a book for 30 minutes.",
+            "Take a 10-minute walk.",
+            "Organize your wardrobe.",
+            "Write a gratitude journal for 10 minutes.",
+            "Do 15 minutes of yoga or stretching.",
+            "Clean your room for 30 minutes.",
+            "Stay away from mobile devices for 2 hours.",
+            "Write 1,000 words on a random topic.",
+            "Spend 1 hour learning a new skill.",
+            "Take a 2-hour walk.",
+            "Do 50 squats.",
+            "Go for a 30-minute jog or run.",
+            "Take a cold shower for 5 minutes.",
+            "Wake up at 4:30 AM tomorrow."
+        ];
+
+        function getPunishmentForToday() {
+            const startDate = new Date(2024, 0, 1);
+            const today = new Date();
+            const diffDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            const punishmentIndex = Math.floor(diffDays / 2) % punishments.length;
+            return punishments[punishmentIndex];
+        }
+
+        function showPunishment() {
+            const punishmentText = getPunishmentForToday();
+            const lastCompletedPunishment = localStorage.getItem('lastCompletedPunishment');
+
+            if (lastCompletedPunishment === punishmentText) {
+                document.getElementById('punishment').innerText = "Completed";
+                document.getElementById('doneButton').style.display = 'none';
+            } else {
+                document.getElementById('punishment').innerText = punishmentText;
+                document.getElementById('doneButton').style.display = 'inline-block';
+            }
+        }
+
+        document.getElementById('doneButton').addEventListener('click', function() {
+            const currentPunishment = getPunishmentForToday();
+            document.getElementById('punishment').innerText = "Completed";
+            document.getElementById('doneButton').style.display = 'none';
+            localStorage.setItem('lastCompletedPunishment', currentPunishment);
+        });
+
+        showPunishment();
+
+        document.getElementById('startButton').addEventListener('click', function() {
+    const goal = document.getElementById('goalInput').value;
+
+    if (goal) {
+        const goals = JSON.parse(localStorage.getItem('userGoals')) || [];
+        const startDate = Date.now(); // Store the start date as a timestamp
+        goals.push({ goal, startDate });
+        localStorage.setItem('userGoals', JSON.stringify(goals));
+
+        document.getElementById('goalInput').value = ''; // Clear input
+        updateGoalList();
+    } else {
+        alert("Please enter a goal before starting!");
+    }
+});
+
+function updateGoalList() {
+    const goals = JSON.parse(localStorage.getItem('userGoals')) || [];
+    const goalList = document.getElementById('goalList');
+    goalList.innerHTML = ''; // Clear previous goals
+
+    goals.forEach((item, index) => {
+        const today = Date.now(); // Get the current timestamp
+        const start = item.startDate; // Retrieve the start date timestamp
+        const diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24)); // Calculate the difference in days
+        const goalItem = document.createElement('div');
+        goalItem.classList.add('goal-item');
+
+        goalItem.innerHTML = `
+            <span>Goal: "${item.goal}" | Days passed: ${diffDays}</span>
+            <button class="btn-delete" onclick="deleteGoal(${index})">X</button>
+        `;
+
+        goalList.appendChild(goalItem);
+    });
+}
+
+        function deleteGoal(index) {
+            const goals = JSON.parse(localStorage.getItem('userGoals')) || [];
+            goals.splice(index, 1); // Remove the goal at the given index
+            localStorage.setItem('userGoals', JSON.stringify(goals));
+            updateGoalList(); // Refresh the goal list
+        }
+
+        function initializeGoalTracker() {
+            updateGoalList();
+        }
+
+        initializeGoalTracker();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BsGuardian</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
+
+        * {
+            color: rgb(255, 255, 255);
+            font-family: "Red Hat Display", sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        body {
+            background-color: #37474F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .goal-section {
+            margin: 20px;
+            padding: 20px;
+            background: #ffffff30;
+            border: solid 1.5px gray;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px; /* Set a width for the goal section */
+        }
+
+        .goal-item {
+            margin: 5px 0;
+            padding: 10px;
+            /* background-color: #f9f9f9; */
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .goal-item:last-child {
+            border-bottom: none;
+        }
+
+        .btn-start {
+            background-color: #ffffff21;
+            color: white;
+            padding: 10px 34px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-start:hover {
+            background-color: #bfbfbf;
+        }
+
+        .btn-delete {
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #ff1a1a;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            font-size: 16px;
+            width: 85%; /* Set a width for the input field */
+            transition: border-color 0.3s ease;
+            margin-bottom: 20px;
+            color: black;
+            font-weight: 500;
+        }
+
+        input[type="time"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: black;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="goal-section">
+        <h2>Daily routine</h2>
+        <input type="text" id="goalInput" placeholder="Enter your routine(e.g., 8 am - wake up)">
+        <input type="time" id="goalTime" value="08:00">
+        <button class="btn-start" id="startButton">Start</button>
+        <div id="goalList"></div>
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            const goal = document.getElementById('goalInput').value;
+            const time = document.getElementById('goalTime').value;
+
+            if (goal) {
+                const goals = JSON.parse(localStorage.getItem('userGoals')) || [];
+                goals.push({ goal, time });
+                localStorage.setItem('userGoals', JSON.stringify(goals));
+
+                document.getElementById('goalInput').value = ''; // Clear input
+                document.getElementById('goalTime').value = '08:00'; // Reset time input
+                updateGoalList();
+            } else {
+                alert("Please enter a goal before starting!");
+            }
+        });
+
+        function updateGoalList() {
+            const goals = JSON.parse(localStorage.getItem('userGoals')) || [];
+            const goalList = document.getElementById('goalList');
+            goalList.innerHTML = ''; // Clear previous goals
+
+            goals.forEach((item, index) => {
+                const goalItem = document.createElement('div');
+                goalItem.classList.add('goal-item');
+
+                goalItem.innerHTML = `
+                    <span>Goal: "${item.goal}" | Time: ${item.time}</span>
+                    <button class="btn-delete" onclick="deleteGoal(${index})">X</button>
+                `;
+
+                goalList.appendChild(goalItem);
+            });
+        }
+
+        function deleteGoal(index) {
+            const goals = JSON.parse(localStorage.getItem('userGoals')) || [];
+            goals.splice(index, 1); // Remove the goal at the given index
+            localStorage.setItem('userGoals', JSON.stringify(goals));
+            updateGoalList(); // Refresh the goal list
+        }
+
+        function initializeGoalTracker() {
+            updateGoalList();
+        }
+
+        initializeGoalTracker();
+    </script>
+
+</body>
+</html>
