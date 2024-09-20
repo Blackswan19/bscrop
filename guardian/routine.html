@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyDailyTracker</title>
+    <title>BsGuardian</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
 
@@ -22,17 +22,17 @@
             margin: 0;
         }
 
-        .daily-routine-section {
+        .goal-section {
             margin: 20px;
             padding: 20px;
             background: #ffffff30;
             border: solid 1.5px gray;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px; /* Set a width for the daily routine section */
+            width: 400px; /* Set a width for the goal section */
         }
 
-        .routine-item {
+        .goal-item {
             margin: 5px 0;
             padding: 10px;
             /* background-color: #f9f9f9; */
@@ -40,14 +40,14 @@
             display: flex;
             justify-content: space-between;
             font-size: 18px;
-            font-weight: 600;
+    font-weight: 600;
         }
 
-        .routine-item:last-child {
+        .goal-item:last-child {
             border-bottom: none;
         }
 
-        .btn-add {
+        .btn-start {
             background-color: #ffffff21;
             color: white;
             padding: 10px 34px;
@@ -58,11 +58,11 @@
             font-weight: 600;
         }
 
-        .btn-add:hover {
+        .btn-start:hover {
             background-color: #bfbfbf;
         }
 
-        .btn-remove {
+        .btn-delete {
             background-color: #ff4c4c;
             color: white;
             border: none;
@@ -71,7 +71,7 @@
             cursor: pointer;
         }
 
-        .btn-remove:hover {
+        .btn-delete:hover {
             background-color: #ff1a1a;
         }
 
@@ -103,62 +103,16 @@
 </head>
 <body>
 
-    <div class="daily-routine-section">
-        <h2>My Daily Routine</h2>
-        <input type="text" id="routineInput" placeholder="Enter your routine(e.g., 8 am - wake up)">
-        <input type="time" id="routineTime" value="08:00">
-        <button class="btn-add" id="addButton">ADD</button>
-        <div id="routineList"></div>
+    <div class="goal-section">
+        <h2>Daily routine</h2>
+        <input type="text" id="goalInput" placeholder="Enter your routine(e.g., 8 am - wake up)">
+        <input type="time" id="goalTime" value="12:00">
+        <button class="btn-start" id="startButton">SAVE</button>
+        <div id="goalList"></div>
     </div>
 
-    <script>
-        document.getElementById('addButton').addEventListener('click', function() {
-            const routine = document.getElementById('routineInput').value;
-            const time = document.getElementById('routineTime').value;
-
-            if (routine) {
-                const routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
-                routines.push({ routine, time });
-                localStorage.setItem('userRoutines', JSON.stringify(routines));
-
-                document.getElementById('routineInput').value = ''; // Clear input
-                document.getElementById('routineTime').value = '08:00'; // Reset time input
-                updateRoutineList();
-            } else {
-                // alert("Enter a routine!");
-            }
-        });
-
-        function updateRoutineList() {
-            const routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
-            const routineList = document.getElementById('routineList');
-            routineList.innerHTML = ''; // Clear previous routines
-
-            routines.forEach((item, index) => {
-                const routineItem = document.createElement('div');
-                routineItem.classList.add('routine-item');
-
-                routineItem.innerHTML = `
-                    <span>At : ${item.time} - ${item.routine}</span>
-                    <button class="btn-remove" onclick="removeRoutine(${index})">X</button>
-                `;
-
-                routineList.appendChild(routineItem);
-            });
-        }
-
-        function removeRoutine(index) {
-            const routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
-            routines.splice(index, 1); // Remove the routine at the given index
-            localStorage.setItem('userRoutines', JSON.stringify(routines));
-            updateRoutineList(); // Refresh the routine list
-        }
-
-        function initializeRoutineTracker() {
-            updateRoutineList();
-        }
-
-        initializeRoutineTracker();
+    <script src="routine.js">
+        
     </script>
 
 </body>
