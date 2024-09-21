@@ -75,45 +75,52 @@
 
     <script>
         const routineForm = document.getElementById('routineForm');
-const submitBtn = document.getElementById('submitBtn');
-const resultMessage = document.getElementById('resultMessage');
-
-let routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
-
-function displayCheckInRoutines() {
-    routineForm.innerHTML = '';
-    routines.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'routine-item';
-        div.innerHTML = `
-            <input type="checkbox" id="routine${index}">
-            <label for="routine${index}">${item.time} - ${item.routine}</label>
-        `;
-        routineForm.appendChild(div);
-    });
-}
-
-submitBtn.addEventListener('click', () => {
-    let uncheckedCount = 0;
-    routines.forEach((_, index) => {
-        const checkbox = document.getElementById(`routine${index}`);
-        if (!checkbox.checked) {
-            uncheckedCount++;
+        const submitBtn = document.getElementById('submitBtn');
+        const resultMessage = document.getElementById('resultMessage');
+    
+        let routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
+    
+        function displayCheckInRoutines() {
+            routineForm.innerHTML = '';
+            routines.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'routine-item';
+                const checked = item.checked ? 'checked' : '';
+                div.innerHTML = `
+                    <input type="checkbox" id="routine${index}" ${checked}>
+                    <label for="routine${index}">${item.time} - ${item.routine}</label>
+                `;
+                routineForm.appendChild(div);
+    
+                // Add event listener to save checked state
+                const checkbox = document.getElementById(`routine${index}`);
+                checkbox.addEventListener('change', () => {
+                    item.checked = checkbox.checked; // Update the checked state
+                    localStorage.setItem('userRoutines', JSON.stringify(routines)); // Save updated routines
+                });
+            });
         }
-    });
-
-    if (uncheckedCount === 0) {
-        resultMessage.textContent = "Good job!";
-    } else {
-        const extraWalkTime = uncheckedCount * 5; // 5 minutes for each unchecked routine
-        resultMessage.textContent = `You need to walk ${extraWalkTime} more minutes.`;
-    }
-});
-
-// Display routines on page load
-displayCheckInRoutines();
-
+    
+        submitBtn.addEventListener('click', () => {
+            let uncheckedCount = 0;
+            routines.forEach((item) => {
+                if (!item.checked) {
+                    uncheckedCount++;
+                }
+            });
+    
+            if (uncheckedCount === 0) {
+                resultMessage.textContent = "Good job!";
+            } else {
+                const extraWalkTime = uncheckedCount * 5; // 5 minutes for each unchecked routine
+                resultMessage.textContent = `You need to walk ${extraWalkTime} more minutes.`;
+            }
+        });
+    
+        // Display routines on page load
+        displayCheckInRoutines();
     </script>
+    
 
 </body>
 </html>
