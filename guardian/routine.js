@@ -14,6 +14,7 @@ document.getElementById('addButton').addEventListener('click', function() {
         // alert("Enter a routine!");
     }
 });
+
 function updateRoutineList() {
     const routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
     const routineList = document.getElementById('routineList');
@@ -46,6 +47,7 @@ function updateRoutineList() {
         routineList.appendChild(routineItem);
     });
 }
+
 function removeRoutine(index) {
     const routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
     routines.splice(index, 1); // Remove the routine at the given index
@@ -58,3 +60,10 @@ function initializeRoutineTracker() {
 }
 
 initializeRoutineTracker();
+
+// Add a button to navigate to the check-in page
+
+checkInButton.onclick = function() {
+    window.location.href = 'checkin.html'; // Change this path if needed
+};
+document.querySelector('.daily-routine-section').appendChild(checkInButton);
