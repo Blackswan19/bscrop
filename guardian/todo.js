@@ -75,7 +75,7 @@ const goalItem = document.createElement('div');
 goalItem.classList.add('goal-item');
 
 goalItem.innerHTML = `
-    <span>Goal: "${item.goal}" | Days passed: ${diffDays}</span>
+    <span>Goal: "${item.goal}" | No.of days: ${diffDays}</span>
     <button class="btn-delete" onclick="deleteGoal(${index})">X</button>
 `;
 
