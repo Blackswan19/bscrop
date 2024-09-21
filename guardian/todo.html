@@ -15,7 +15,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #181818;
+            background-color: #37474F;
             color: #f0f0f0;
             margin: 0;
             padding: 20px;
@@ -28,12 +28,13 @@
 
         .punishment-box {
             background-color: #282828;
-    padding: 12px;
-    max-width: 600px;
-    text-align: center;
-    white-space: pre-wrap;
-    margin-bottom: 20px;
-    border-left: solid 5px #0e4bff;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 600px;
+            text-align: center;
+            white-space: pre-wrap; /* Preserve whitespace for formatting */
+            margin-bottom: 20px;
+            border: solid 1px gray;
         }
 
         h2 {
@@ -44,26 +45,27 @@
         }
 
         .btn-done, .btn-start {
-            background-color: #0e4bff;
+            background-color: #ffffff21;
             color: white;
-            padding: 8px 31px;
+            padding: 10px 34px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             transition: background-color 0.3s ease;
             margin-bottom: 25px;
         }
 
         .btn-done:hover, .btn-start:hover {
-            background-color: #0e4affb0;
+            background-color: #bfbfbf;
         }
 
         .goal-section {
             text-align: center;
+            border: solid 1.5px gray;
             padding: 30px;
-
-            background: #3c3c3c;
+            border-radius: 12px;
+            background: #ffffff30;
             overflow-y: auto; /* Allow scrolling */
             max-height: 300px; 
             position: fixed;
@@ -73,15 +75,14 @@
         .goal-section input {
             padding: 10px;
             border-radius: 5px;
+            border: 1px solid #ccc;
             margin-right: 10px;
             font-size: 16px;
-            width: 250px;
+            width: 250px; /* Set a width for the input field */
+            transition: border-color 0.3s ease;
             margin-bottom: 20px;
-            color: rgb(255, 255, 255);
-            font-weight: 800;
-            background: #9f9f9f;
-            outline: none;
-            border: none;
+            color: black;
+            font-weight: 500;
         }
 
         .goal-section input:focus {
@@ -98,32 +99,30 @@
         .punishment {
             position: fixed;
             top: 5%;
+            border: solid 1.5px gray;
             padding: 20px;
-            background: #3c3c3c;
+            border-radius: 9px;
+            background: #ffffff30;
         }
 
         .goal-item {
             margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #282828;
-    padding: 10px;
-    border-left: solid 5px #0e4bff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .btn-delete {
-            background-color: #0e4bff;
-    color: white;
-    border: none;
-    border-radius: 2px;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-weight: 900;
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
         }
 
         .btn-delete:hover {
-            background-color: #0e4affb0;
+            background-color: #ff1a1a;
         }
     </style>
 </head>
@@ -137,7 +136,7 @@
 
     <div class="goal-section">
         <h2>Track Your Goals</h2>
-        <input type="text" id="goalInput">
+        <input type="text" id="goalInput" placeholder="Enter your goal (e.g., wake up early)">
         <button class="btn-start" id="startButton">Start</button>
         <div id="goalList"></div>
     </div>
