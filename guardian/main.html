@@ -22,39 +22,39 @@
 
     h1 {
       color: #00b6ff;
-    font-size: 21px;
-    margin: 0;
-    position: absolute;
-    top: 25px;
-    left: 47px;
-    font-weight: bold;
-    border: solid 1.5px #00b6ff;
-    padding: 5px 67px;
-    border-radius: 8px;
+      font-size: 21px;
+      margin: 0;
+      position: absolute;
+      top: 25px;
+      left: 47px;
+      font-weight: bold;
+      border: solid 1.5px #00b6ff;
+      padding: 5px 67px;
+      border-radius: 8px;
     }
 
     .timer {
       font-size: 3em;
-    background-color: #282828;
-    color: white;
-    padding: 4px 49px;
-    border-radius: 6px;
-    width: fit-content;
-    margin-top: 0px;
-    margin-bottom: 50px;
-    border: solid 1px gray;
+      background-color: #282828;
+      color: white;
+      padding: 4px 49px;
+      border-radius: 6px;
+      width: fit-content;
+      margin-top: 0px;
+      margin-bottom: 50px;
+      border: solid 1px gray;
     }
 
     .btn {
       margin: 10px 0;
-    padding: 8px 20px;
-    background-color: #ffffff21;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-    width: 200px;
+      padding: 8px 20px;
+      background-color: #ffffff21;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      width: 200px;
     }
 
     .btn:hover {
@@ -63,13 +63,13 @@
 
     .text-section {
       margin-top: 60px;
-    font-size: 24px;
-    text-align: left;
-    float: left;
-    width: 80%;
-    line-height: 1.8;
-    padding-left: 20px;
-    font-weight: 500;
+      font-size: 24px;
+      text-align: left;
+      float: left;
+      width: 80%;
+      line-height: 1.8;
+      padding-left: 20px;
+      font-weight: 500;
     }
 
     .text-section a {
@@ -78,6 +78,7 @@
       color: white;
       text-decoration: none;
     }
+
     .help {
       margin-top: auto;
       font-size: 0.9em;
@@ -85,8 +86,51 @@
       position: absolute;
       bottom: 10px;
       right: 20px;
+      cursor: pointer;
     }
-    
+
+    /* Popup styles */
+    .popup {
+      display: none;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #282828;
+      padding: 20px;
+      border: solid 1px gray;
+      border-radius: 6px;
+      z-index: 1000;
+      width: 80%;
+    }
+
+    .popup h2 {
+      margin-top: 0;
+      color: white;
+      font-size: 18px;
+    }
+
+    .popup button {
+      margin-top: 20px;
+      padding: 5px 15px;
+      background-color: #37474F;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
@@ -104,7 +148,15 @@
     <a href="compare.html">Compare spends..$</a>
   </div>
 
-  <div class="help">Help..?</div>
+  <div class="help" id="helpBtn">Help..?</div>
+
+  <!-- Popup HTML -->
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="popup">
+    <h2>Welcome!</h2>
+    <p>BsGuardian is a personal tool that helps you track your daily routine and keep an eye on your weekly and monthly spending. It also assigns you simple,medium and hard tasks to make sure you stay on healty track. If you don't complete your tasks, BsGuardian gives you additional tasks as a form of motivation or punishment.</p>
+    <button id="closePopup">Close</button>
+  </div>
 
   <script>
     // Get the timer element, start button, and reset button
@@ -144,9 +196,27 @@
     // Event listeners for the buttons
     startBtn.addEventListener('click', startTimer);
     resetBtn.addEventListener('click', resetTimer);
-  
-    // Remove the initial call to startTimer()
-    // Instead, the timer will only start when the user clicks the button
+
+    // Popup functionality
+    const helpBtn = document.getElementById('helpBtn');
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    const closePopup = document.getElementById('closePopup');
+
+    helpBtn.addEventListener('click', () => {
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+    });
+
+    closePopup.addEventListener('click', () => {
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', () => {
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+    });
   </script>
 </body>
 </html>
