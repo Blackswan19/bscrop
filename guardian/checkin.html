@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BsGuardian</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
+
+        * {
+            color: rgb(255, 255, 255);
+            font-family: "Red Hat Display", sans-serif;
+            letter-spacing: 0.5px;
+        }
+        body {
+            background-color: #37474F;
+            color: white;
+            font-family: "Red Hat Display", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .check-in-section {
+            margin: 20px;
+            padding: 20px;
+            background: #ffffff30;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .routine-item {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .routine-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .btn-submit {
+            background-color: #ffffff21;
+            color: white;
+            padding: 10px 34px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .btn-submit:hover {
+            background-color: #bfbfbf;
+        }
+
+        .result-message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="check-in-section">
+        <h2>Routine Check-in</h2>
+        <form id="routineForm"></form>
+        <button class="btn-submit" id="submitBtn">Submit</button>
+        <div class="result-message" id="resultMessage"></div>
+    </div>
+
+    <script>
+        const routineForm = document.getElementById('routineForm');
+const submitBtn = document.getElementById('submitBtn');
+const resultMessage = document.getElementById('resultMessage');
+
+let routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
+
+function displayCheckInRoutines() {
+    routineForm.innerHTML = '';
+    routines.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'routine-item';
+        div.innerHTML = `
+            <input type="checkbox" id="routine${index}">
+            <label for="routine${index}">${item.time} - ${item.routine}</label>
+        `;
+        routineForm.appendChild(div);
+    });
+}
+
+submitBtn.addEventListener('click', () => {
+    let uncheckedCount = 0;
+    routines.forEach((_, index) => {
+        const checkbox = document.getElementById(`routine${index}`);
+        if (!checkbox.checked) {
+            uncheckedCount++;
+        }
+    });
+
+    if (uncheckedCount === 0) {
+        resultMessage.textContent = "Good job!";
+    } else {
+        const extraWalkTime = uncheckedCount * 5; // 5 minutes for each unchecked routine
+        resultMessage.textContent = `You need to walk ${extraWalkTime} more minutes.`;
+    }
+});
+
+// Display routines on page load
+displayCheckInRoutines();
+
+    </script>
+
+</body>
+</html>
