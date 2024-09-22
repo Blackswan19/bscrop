@@ -6,6 +6,7 @@
     <title>BsGuardian</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
             background-color: #02153d;
             display: flex;
             justify-content: center;
@@ -18,7 +19,7 @@
         .daily-routine-section {
             margin: 20px;
             padding: 20px;
-            background: #ffffff30;
+            background: #ffffff17;
             border: solid 1.5px gray;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -48,11 +49,10 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            font-weight: 600;
         }
 
         .btn-add:hover {
-            background-color: #bfbfbf;
+            background-color: #0041ff;
         }
 
         .btn-remove {
@@ -69,20 +69,22 @@
         }
 
         input[type="text"] {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
-            font-size: 16px;
-            width: 85%; /* Set a width for the input field */
-            transition: border-color 0.3s ease;
-            margin-bottom: 20px;
-            color: black;
-            font-weight: 500;
+            padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    font-size: 15px;
+    width: auto;
+    transition: border-color 0.3s ease;
+    margin-bottom: 20px;
+    color: black;
+    font-weight: 500;
+    outline: none;
+
         }
 
         input[type="time"] {
-            padding: 10px;
+            padding: 10px 15px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -99,10 +101,10 @@
     <div class="daily-routine-section">
         <h2>My Daily Routine</h2>
         <input type="text" id="routineInput" placeholder="Enter your routine(e.g., 8 am - wake up)">
-        <input type="time" id="routineTime" value="08:00">
-        <button class="btn-add" id="addButton">ADD</button>
+        <input type="time" id="routineTime" value="08:00"><br>
+        <button class="btn-add" id="addButton">Add</button>
         <div id="routineList"></div>
-        <button onclick="window.location.href='checkin.html'" style="background: #282828;
+        <button onclick="window.location.href='checkin.html'" style="background: #000000;
         padding: 10px;
         border: none;
         border-radius: 4px;color: white;">Go to Check-in Page</button>
