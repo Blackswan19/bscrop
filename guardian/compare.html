@@ -1,397 +1,262 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BsGuardian</title>
+    <title>Compare Weekly Spends</title>
     <style>
-       @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
+        * {
+            color: rgb(255, 255, 255);
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-* {
-    color: rgb(255, 255, 255);
-    font-family: "Red Hat Display", sans-serif;
-    letter-spacing: 0.5px;
-    box-sizing: border-box;
-}
+        body {
+            background-color: #02153d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-body {
-    background-color: #02153d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+        .container {
+            background: #ffffff30;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
 
-.container {
-    background: #ffffff30;
-    border-radius: 10px;
+        h1, h2 {
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #444;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+            background-color: #444;
+            color: #fff;
+        }
+
+        th {
+            background: #ffffff30;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #ffffff21;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0041ff;
+        }
+
+        /* Modal Styles */
+        .popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        .popup-content {
+            background-color: #1d1d1d;
     padding: 20px;
-    width: 100%;
-    max-width: 600px;
-}
-
-h1, h2, h3 {
-    color: #fff;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #444;
     border-radius: 10px;
-    overflow: hidden;
-    margin-top: 20px;
-}
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+    border: solid 1px #0027ff;
+        }
 
-th, td {
-    border: 1px solid #444;
-    padding: 12px;
-    text-align: left;
-    background-color: #444;
-    color: #fff;
-    font-size: 18px; /* Increased font size */
-}
-
-th {
-    background: #ffffff30;
-    font-size: 15px; /* Increased font size */
-}
-
-.hidden {
-    display: none;
-}
-
-/* Button styles */
-button[type="button"] {
-    background-color: #ffffff21;
-    color: #ffffff;
-    border: none;
-    padding: 8px 20px; /* Increased padding */
-    font-size: 1em; /* Increased font size */
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: 500;
-}
-
-button[type="button"]:hover {
-    background-color: #898989;
-}
-
-/* Label and input field styles */
-label {
-    color: #fff;
-    font-weight: bold;
-}
-
-input[type="number"] {
-    background-color: #ffffff;
-    color: black;
-    border: 1px solid #ccc;
-    padding: 8px; /* Increased padding */
-    font-size: 20px; /* Increased font size */
-    border-radius: 12px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#today-label {
-    font-size: 20px; /* Increased font size */
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-#total-expenses {
-    font-size: 20px; /* Increased font size */
-    font-weight: bold;
-    margin-bottom: 30px;
-}
-
-/* Mobile Styles */
-@media only screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 100%;
-        padding: 15px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    h2 {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-
-    h3 {
-        font-size: 18px;
-    }
-
-    th, td {
-        padding: 5px;
-    }
-
-    button[type="button"] {
-        padding: 8px 15px;
-        font-size: 14px;
-    }
-
-    input[type="number"] {
-        padding: 8px;
-        font-size: 14px;
-        border-radius: 8px;
-    }
-
-    #today-label {
-        font-size: 16px;
-        margin-bottom: 5px;
-    }
-
-    #total-expenses {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    table {
-        font-size: 12px;
-    }
-}
-
+        .popup-content button {
+            background-color: #0027ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Compare spends</h1>
+        <h1>Compare Weekly Spends</h1>
+        <form id="expense-form">
+            <label for="today">Enter Today's Spend:</label>
+            <input type="number" id="today" min="0" step="0.01">
+            <button type="button" onclick="saveExpenses()">Save Today's Spend</button>
+        </form>
 
-    <h3 id="today-label">Enter today's spends</h3>
-    <form id="expense-form">
-        <div id="monday-div" class="hidden">
-            <input type="number" id="monday" >
-        </div>
-        <div id="tuesday-div" class="hidden">
-            <input type="number" id="tuesday" >
-        </div>
-        <div id="wednesday-div" class="hidden">
-            <input type="number" id="wednesday" >
-        </div>
-        <div id="thursday-div" class="hidden">
-            <input type="number" id="thursday" >
-        </div>
-        <div id="friday-div" class="hidden">
-            <input type="number" id="friday" >
-        </div>
-        <div id="saturday-div" class="hidden">
-            <input type="number" id="saturday" >
-        </div>
-        <div id="sunday-div" class="hidden">
-            <input type="number" id="sunday" >
-        </div>
-        <br>
-        <button type="button" id="calculate-button" style="    display: block;
-        margin-bottom: 10px;
-    " onclick="calculateExpenses()">Compare Weekly Spends</button>
-        <button type="button" onclick="saveExpenses()">Save</button>
-    </form><!-- Clear Local Storage Button -->
-    <h2>Total Expenses (₹): <span id="total-expenses">0.00</span></h2>
+        <h2>Total Weekly Expenses: ₹<span id="total-expenses">0.00</span></h2>
+        <button type="button" id="compare-button" onclick="calculateExpenses()">Compare Weekly Spends</button>
 
-    <h2>Monthly Weekly Spends</h2>
-    <table id="weekly-expenses-table">
-        <thead>
-            <tr>
-                <th>Week</th>
-                <th>Weekly Expenses (₹)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Weekly expenses will be displayed here -->
-        </tbody>
-        <!-- <button type="button" onclick="clearLocalStorage()">Clear Local Storage</button> -->
-    </table>
-
+        <h2>Monthly Weekly Spends</h2>
+        <table id="weekly-expenses-table">
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Weekly Expenses (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Weekly expenses will be displayed here -->
+            </tbody>
+        </table>
     </div>
+
+    <!-- Modal Popup -->
+    <div id="popup-modal" class="popup-modal">
+        <div class="popup-content">
+            <p id="popup-message"></p>
+            <button type="button" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
     <script>
-        // Function to show only today's input field and control button visibility
-        function showTodayInput() {
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            const dayMap = {
-                0: 'sunday',
-                1: 'monday',
-                2: 'tuesday',
-                3: 'wednesday',
-                4: 'thursday',
-                5: 'friday',
-                6: 'saturday'
+        let sundayClicked = false;
+
+        // Save today's expense to localStorage
+        function saveExpenses() {
+            const todayInput = document.getElementById('today').value;
+            if (!todayInput) {
+                showPopup("Please enter today's spend.");
+                return;
+            }
+
+            const todaySpend = parseFloat(todayInput);
+            const dailyExpenses = JSON.parse(localStorage.getItem("dailyExpenses")) || {
+                monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
             };
 
+            const dayOfWeek = new Date().getDay();
+            const dayMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+            // Save today's spend
             const todayDay = dayMap[dayOfWeek];
+            dailyExpenses[todayDay] = todaySpend;
+            localStorage.setItem("dailyExpenses", JSON.stringify(dailyExpenses));
 
-            // Show the input field for today
-            document.getElementById(todayDay + '-div').classList.remove('hidden');
-            // document.getElementById("today-label").innerText = `Enter 's Expenses`;
-
-            // Show/hide the calculate button
-            document.getElementById("calculate-button").classList.toggle('hidden', dayOfWeek !== 0);
-
-            // Load today's saved value if any
-            loadDailyExpenses();
-            loadTotalExpenses();
+            showPopup(`Today's spend (₹${todaySpend}) saved.`);
         }
 
-        // Function to save and add input values to the previous amount
-        function saveExpenses() {
+        // Function to calculate weekly expenses
+        function calculateExpenses() {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+
+            if (dayOfWeek !== 0) {
+                showPopup("You can only compare weekly spends on Sundays.");
+                return;
+            }
+
+            if (sundayClicked) {
+                showPopup("You've already compared spends this Sunday.");
+                return;
+            }
+
             let dailyExpenses = JSON.parse(localStorage.getItem("dailyExpenses")) || {
                 monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
             };
 
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            const dayMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-            const todayDay = dayMap[dayOfWeek];
+            let weeklyTotal = dailyExpenses.monday + dailyExpenses.tuesday + dailyExpenses.wednesday +
+                              dailyExpenses.thursday + dailyExpenses.friday + dailyExpenses.saturday + dailyExpenses.sunday;
 
-            // Get the current input value for today and add it to the saved value
-            const inputValue = parseFloat(document.getElementById(todayDay).value) || 0;
-            dailyExpenses[todayDay] += inputValue;
+            // Save weekly expenses
+            let weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
+            if (weeklyExpenses.length >= 4) {
+                showPopup("You've already tracked expenses for 4 weeks.");
+                return;
+            }
 
-            // Save the updated daily expenses
-            localStorage.setItem("dailyExpenses", JSON.stringify(dailyExpenses));
+            weeklyExpenses.push(weeklyTotal);
+            localStorage.setItem("weeklyExpenses", JSON.stringify(weeklyExpenses));
+            displayWeeklyExpenses();
+            updateTotal(weeklyTotal);
 
-            // Update the total expenses in localStorage
-            let totalExpenses = parseFloat(localStorage.getItem("totalExpenses")) || 0;
-            totalExpenses += inputValue;
-            localStorage.setItem("totalExpenses", totalExpenses.toFixed(2));
+            sundayClicked = true;
 
-            // Update the total expenses displayed
-            document.getElementById("total-expenses").innerText = totalExpenses.toFixed(2);
-
-            // Clear input fields after saving
+            // Clear daily expenses after the week
+            localStorage.removeItem("dailyExpenses");
             resetInputs();
 
-            // Optionally, show a success message
+            setTimeout(function() {
+                sundayClicked = false; // Allow button to be clicked again next Sunday
+            }, 7 * 24 * 60 * 60 * 1000);
         }
-
-        // Function to reset input fields
-        function resetInputs() {
-            document.getElementById("monday").value = 0;
-            document.getElementById("tuesday").value = 0;
-            document.getElementById("wednesday").value = 0;
-            document.getElementById("thursday").value = 0;
-            document.getElementById("friday").value = 0;
-            document.getElementById("saturday").value = 0;
-            document.getElementById("sunday").value = 0;
-        }
-
-        let sundayClicked = false;
-
-function calculateExpenses() {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-
-    if (dayOfWeek !== 0) { // 0 represents Sunday
-        alert("This button will work only on Sundays.");
-        return;
-    }
-
-    if (sundayClicked) {
-        alert("You've already compared weekly spends for this Sunday. Please wait until next Sunday.");
-        return;
-    }
-
-    sundayClicked = true;
-
-    // Rest of the calculateExpenses function remains the same
-    let dailyExpenses = JSON.parse(localStorage.getItem("dailyExpenses")) || {
-        monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
-    };
-
-    let total = dailyExpenses.monday + dailyExpenses.tuesday + dailyExpenses.wednesday +
-                dailyExpenses.thursday + dailyExpenses.friday + dailyExpenses.saturday + dailyExpenses.sunday;
-
-    let weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
-
-    if (weeklyExpenses.length >= 4) {
-        alert("You've already tracked expenses for 4 weeks (1 month).");
-        return;
-    }
-
-    weeklyExpenses.push(total);
-    localStorage.setItem("weeklyExpenses", JSON.stringify(weeklyExpenses));
-
-    // Update total expenses in local storage
-    let totalExpenses = parseFloat(localStorage.getItem("totalExpenses")) || 0;
-    totalExpenses += total;
-    localStorage.setItem("totalExpenses", totalExpenses);
-
-    displayWeeklyExpenses();
-    localStorage.removeItem("dailyExpenses");
-    resetInputs();
-    updateTotal(0);
-
-    // Reset the sundayClicked flag on the next Sunday
-    setTimeout(function() {
-        sundayClicked = false;
-    }, 7 * 24 * 60 * 60 * 1000); // 7 days from now
-}
 
         // Function to display weekly expenses
         function displayWeeklyExpenses() {
-            let weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
+            const weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
+            const tableBody = document.querySelector('#weekly-expenses-table tbody');
+            tableBody.innerHTML = '';
 
-            let weeklyTableBody = document.getElementById("weekly-expenses-table").getElementsByTagName("tbody")[0];
-            weeklyTableBody.innerHTML = "";
+            weeklyExpenses.forEach((expense, index) => {
+                const row = document.createElement('tr');
+                const weekCell = document.createElement('td');
+                const expenseCell = document.createElement('td');
 
-            weeklyExpenses.forEach(function(weekExpense, index) {
-                let row = weeklyTableBody.insertRow();
-                let cellWeek = row.insertCell(0);
-                let cellExpense = row.insertCell(1);
-                cellWeek.innerHTML = "Week " + (index + 1);
-                cellExpense.innerHTML = "₹" + weekExpense.toFixed(2);
+                weekCell.textContent = 'Week ' + (index + 1);
+                expenseCell.textContent = '₹' + expense.toFixed(2);
+
+                row.appendChild(weekCell);
+                row.appendChild(expenseCell);
+                tableBody.appendChild(row);
             });
         }
 
-        // Function to clear local storage
-        function clearLocalStorage() {
-            localStorage.clear();
-            displayWeeklyExpenses();
-            resetInputs();
-            updateTotal(0);
+        // Function to update total weekly expenses display
+        function updateTotal(total) {
+            document.getElementById('total-expenses').textContent = total.toFixed(2);
         }
 
-        // Function to load total expenses from localStorage
-        function loadTotalExpenses() {
-            const totalExpenses = parseFloat(localStorage.getItem("totalExpenses")) || 0;
-            document.getElementById("total-expenses").innerText = totalExpenses.toFixed(2);
+        // Reset input fields
+        function resetInputs() {
+            document.getElementById('today').value = '';
         }
 
-        // Function to load daily expenses
-        function loadDailyExpenses() {
-            const inputValues = JSON.parse(localStorage.getItem("inputValues")) || {
-                monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
-            };
-
-            document.getElementById("monday").value = inputValues.monday;
-            document.getElementById("tuesday").value = inputValues.tuesday;
-            document.getElementById("wednesday").value = inputValues.wednesday;
-            document.getElementById("thursday").value = inputValues.thursday;
-            document.getElementById("friday").value = inputValues.friday;
-            document.getElementById("saturday").value = inputValues.saturday;
-            document.getElementById("sunday").value = inputValues.sunday;
+        // Popup functionality
+        function showPopup(message) {
+            document.getElementById('popup-message').textContent = message;
+            document.getElementById('popup-modal').style.display = 'flex';
         }
 
-        // Load stored data when the page loads
+        function closePopup() {
+            document.getElementById('popup-modal').style.display = 'none';
+        }
+
+        // Load weekly expenses on page load
         window.onload = function() {
-            showTodayInput();
             displayWeeklyExpenses();
-            loadTotalExpenses();
-            loadDailyExpenses();
         };
     </script>
 </body>
