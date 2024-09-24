@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BsGuardian</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
+
+        * {
+            color: rgb(255, 255, 255);
+            font-family: "Red Hat Display", sans-serif;
+            letter-spacing: 0.5px;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #02153d;
@@ -61,7 +69,6 @@
             overflow-y: auto; /* Allow scrolling */
             max-height: 300px; 
             position: fixed;
-            bottom: 10%;
         }
 
         .goal-section input {
@@ -119,12 +126,6 @@
     </style>
 </head>
 <body>
-
-    <div class="punishment">
-        <h2>You have to do..!</h2>
-        <div class="punishment-box" id="punishment"></div>
-        <button class="btn-done" id="doneButton">Done</button>
-    </div>
 
     <div class="goal-section">
         <h2>Track Your Goals</h2>
