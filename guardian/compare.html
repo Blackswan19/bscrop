@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BsGuardian</title>
     <style>
-    
+       @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
+
+* {
+    color: rgb(255, 255, 255);
+    font-family: "Red Hat Display", sans-serif;
+    letter-spacing: 0.5px;
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #02153d;
+    background-color: #181818;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -188,10 +195,11 @@ input[type="number"] {
             <input type="number" id="sunday" >
         </div>
         <br>
-        <button type="button" id="calculate-button" class="hidden" onclick="calculateExpenses()">Compare Weekly Spends</button>
+        <button type="button" id="calculate-button" style="    display: block;
+        margin-bottom: 10px;
+    " onclick="calculateExpenses()">Compare Weekly Spends</button>
         <button type="button" onclick="saveExpenses()">Save</button>
-    </form>
-
+    </form><!-- Clear Local Storage Button -->
     <h2>Total Expenses (₹): <span id="total-expenses">0.00</span></h2>
 
     <h2>Monthly Weekly Spends</h2>
@@ -281,35 +289,57 @@ input[type="number"] {
             document.getElementById("sunday").value = 0;
         }
 
-        // Function to calculate and display weekly expenses
-        function calculateExpenses() {
-            let dailyExpenses = JSON.parse(localStorage.getItem("dailyExpenses")) || {
-                monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
-            };
+        let sundayClicked = false;
 
-            let total = dailyExpenses.monday + dailyExpenses.tuesday + dailyExpenses.wednesday +
-                        dailyExpenses.thursday + dailyExpenses.friday + dailyExpenses.saturday + dailyExpenses.sunday;
+function calculateExpenses() {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
 
-            let weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
+    if (dayOfWeek !== 0) { // 0 represents Sunday
+        alert("This button will work only on Sundays.");
+        return;
+    }
 
-            if (weeklyExpenses.length >= 4) {
-                alert("You've already tracked expenses for 4 weeks (1 month).");
-                return;
-            }
+    if (sundayClicked) {
+        alert("You've already compared weekly spends for this Sunday. Please wait until next Sunday.");
+        return;
+    }
 
-            weeklyExpenses.push(total);
-            localStorage.setItem("weeklyExpenses", JSON.stringify(weeklyExpenses));
+    sundayClicked = true;
 
-            // Update total expenses in local storage
-            let totalExpenses = parseFloat(localStorage.getItem("totalExpenses")) || 0;
-            totalExpenses += total;
-            localStorage.setItem("totalExpenses", totalExpenses);
+    // Rest of the calculateExpenses function remains the same
+    let dailyExpenses = JSON.parse(localStorage.getItem("dailyExpenses")) || {
+        monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
+    };
 
-            displayWeeklyExpenses();
-            localStorage.removeItem("dailyExpenses");
-            resetInputs();
-            updateTotal(0);
-        }
+    let total = dailyExpenses.monday + dailyExpenses.tuesday + dailyExpenses.wednesday +
+                dailyExpenses.thursday + dailyExpenses.friday + dailyExpenses.saturday + dailyExpenses.sunday;
+
+    let weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
+
+    if (weeklyExpenses.length >= 4) {
+        alert("You've already tracked expenses for 4 weeks (1 month).");
+        return;
+    }
+
+    weeklyExpenses.push(total);
+    localStorage.setItem("weeklyExpenses", JSON.stringify(weeklyExpenses));
+
+    // Update total expenses in local storage
+    let totalExpenses = parseFloat(localStorage.getItem("totalExpenses")) || 0;
+    totalExpenses += total;
+    localStorage.setItem("totalExpenses", totalExpenses);
+
+    displayWeeklyExpenses();
+    localStorage.removeItem("dailyExpenses");
+    resetInputs();
+    updateTotal(0);
+
+    // Reset the sundayClicked flag on the next Sunday
+    setTimeout(function() {
+        sundayClicked = false;
+    }, 7 * 24 * 60 * 60 * 1000); // 7 days from now
+}
 
         // Function to display weekly expenses
         function displayWeeklyExpenses() {
