@@ -99,12 +99,13 @@
     .box img {
       position: relative;
       overflow: hidden;
+      border-radius: 1px;
       transition: transform 0.4s ease;
       box-shadow: 0 4px 10px var(--deep-shadow);
     }
 
     .box img {
-      border-radius: 5px;
+      border-radius: 1px;
       transition: all 0.2s ease;
     }
 
@@ -234,8 +235,8 @@
 
     /* Reduce margin and font size for smaller screens */
     h1, h2, h3, p {
-        margin-bottom: 20px;
-        font-size: 1.1rem;
+      margin: 20px;
+      color: #0e4bff;
     }
 
     .box a {
@@ -300,10 +301,10 @@
         </header>
 
         <section class="main-container">
-            
+          <h2>Comedy Movies</h2>
           <div class="box">
             <img src="https://i.ytimg.com/vi/68wSTlrw_RQ/hq720.jpg" 
-            onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=68wSTlrw_RQ', 'Jalsa', 'This is an exciting film that offers a mix of engaging moments, featuring action, humor, or emotions. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+            onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=68wSTlrw_RQ', 'Jalsa', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
             alt="Image 1">
        
        <img src="https://i.ytimg.com/vi/w4l6yDmoepA/hq720.jpg" 
