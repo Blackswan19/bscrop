@@ -155,8 +155,8 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
             color: white;
-            
-            border: none;
+            border: solid 2px #002aff;
+            padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 20px;
@@ -213,10 +213,13 @@
     /* Popup adjustments for mobile */
     .popup-content {
       height: 100%;
+      padding: 22px;
     }
 
     .popup-content img {
       width: 100%;
+      margin-top: 60px;
+      
     }
 
     .close-btn {
@@ -230,7 +233,9 @@
     }
 
     .movie-description {
-        font-size: 12px;
+      font-size: 14px;
+            width: 100%;
+
     }
 
     /* Reduce margin and font size for smaller screens */
@@ -248,21 +253,33 @@
         .box {
             grid-template-columns: 1fr;
         }
-
+        .box img{
+    
+        width: 100%;
+        border-radius: 5px;
+        }
         .netflixLogo {
             font-size: 1.2rem;
         }
         
         .movie-title {
-            font-size: 16px;
+          font-size: 35px;
+          font-family: fantasy;
         }
         
         .movie-description {
-            font-size: 10px;
+          font-size: 14px;
+          width: 100%;
         }
 
         .popup-content img {
             max-height: 50vh;
+        }
+        .popup-content button{
+          font-size: 15px;
+        }
+        .close-btn{
+          font-size: 30px;
         }
     }
 }
@@ -449,7 +466,7 @@
 
             // Open the modified URL in a new tab
             if (modifiedUrl.includes("yout-ube.com/watch?v=")) {
-                window.open(modifiedUrl, "_blank");
+                window.open(modifiedUrl, "_self");
                 // Removed the line that hides the play button
                 // document.getElementById("playButton").style.display = "none"; 
             } else {
