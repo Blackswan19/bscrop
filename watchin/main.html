@@ -96,7 +96,7 @@
       margin-bottom: 50px;
     }
 
-    .box a {
+    .box img {
       position: relative;
       overflow: hidden;
       border-radius: 10px;
@@ -104,13 +104,14 @@
       box-shadow: 0 4px 10px var(--deep-shadow);
     }
 
-    .box a img {
+    .box img {
       border-radius: 10px;
       transition: all 0.3s ease;
     }
 
-    .box a:hover {
+    img:hover {
       transform: scale(1.1);
+      filter: brightness(0.8);
     }
 
 
@@ -246,6 +247,8 @@
     @media only screen and (max-width: 480px) {
         .box {
             grid-template-columns: 1fr;
+            margin-top: 35px;
+
         }
         .box img{
           width: 90%;
