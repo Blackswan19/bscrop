@@ -1,255 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BsWatchin</title>
-  <link rel="icon" type="image/x-icon" href="https://i.ibb.co/gW8Py0B/BS.png">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Orbitron:wght@400;700&family=Red+Hat+Display:wght@400;900&display=swap');
-    
-    /* Reset & Global Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Red Hat Display', sans-serif;
-      scroll-behavior: smooth;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Popup Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+        }
 
-    body {
-      background: #0f0f0f;
-      color: #ffffff;
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
+        .box img {
+            width: 150px;
+            height: auto;
+            margin: 10px;
+            cursor: pointer;
+            border: 2px solid #ff001e;
+            border-radius: 8px;
+        }
 
-    h1, h2, h3, p {
-      margin-bottom: 35px;
-    }
+        /* Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    img {
-      max-width: 100%;
-      display: block;
-      transition: all 0.3s ease;
-    }
+        /* Popup Content */
+        .popup-content {
+            background: #1b1b1b;
+            padding: 20px;
+            text-align: center;
+            width: 90%;
+           height: 100%;
+        }
 
-    /* Root Variables for Theme */
-    :root {
-      --primary-color: #ffffff;
-      --secondary-color: #bbbbbb;
-      --accent-color: #0033ff;
-      --dark-bg: #1b1b1b;
-      --light-gray: #000000;
-      --deep-shadow: rgba(0, 0, 0, 0.5);
-      --gradient-bg: linear-gradient(to right, #2a35ff, #ff001e);
-    }
+        .popup-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-    /* Header Styles */
-    header {
-      background-color: var(--dark-bg);
-      padding: 15px 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      box-shadow: 0 4px 20px var(--deep-shadow);
-      transition: background-color 0.4s ease;
-    }
+        .popup-content button {
+            background: #ff001e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-    header:hover {
-      background-color: #000;
-    }
-
-    .netflixLogo {
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-      background: var(--gradient-bg);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Main Container */
-    .main-container {
-      padding: 126px;
-      transition: padding 0.3s ease;
-    }
-
-    .section {
-      display: none;
-      margin-bottom: 40px;
-      padding: 35px;
-    }
-
-    .section h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 20px;
-    }
-
-    .box {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(150px, 1fr));
-      grid-gap: 20px;
-      margin-bottom: 50px;
-    }
-
-    .box a {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      transition: transform 0.4s ease;
-      box-shadow: 0 4px 10px var(--deep-shadow);
-    }
-
-    .box a img {
-      border-radius: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .box a:hover {
-      transform: scale(1.1);
-    }
-
-    .box a:hover img {
-      filter: brightness(0.7);
-    }
-button{
-    background: #1b1b1b;
-    color: white;
-    outline: none;
-    border: none;
-    font-size: 15px;
-}
-    /* Fade-in Animation */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  
-    @media (max-width: 430px) {
-      .main-container {
-        padding: 45px;
-        transition: padding 0.3s ease;
-        top: 5em;
-        position: relative;
-        left: 0px;
-      }
-      .box {
-        display: grid;
-        grid-template-columns: repeat(1, minmax(150px, 1fr));
-        grid-gap: 20px;
-        margin-bottom: 50px;
-      }
-    }
-  </style>
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div id="result" style="position: fixed;
-    z-index: 100000;
-    text-align: center;
-    top: 30px;
-    right: 20px;
-    "></div>
-    <header>
-      <div class="netflixLogo">
-        <a id="logo" href="#home">BsWatchin</a>
-      </div>
-    </header>
 
-    <!-- MAIN CONTAINER -->
-    <section class="main-container">
-        <h2>Love Movies</h2>
-        <div class="box">
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=68wSTlrw_RQ&t=2s')" href="#"><img src="https://i.ytimg.com/vi/68wSTlrw_RQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAugw92nT7k-J3-q8BuvHchEGX3VA"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=thcuCL1wwhY')" href="#"><img src="https://i.ytimg.com/vi/w4l6yDmoepA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBngUupyfNaYo01RByfI8iU6wNgNA"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=EztUsjJAh0E')" href="#"><img src="https://i.ytimg.com/vi/EztUsjJAh0E/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCeXoqvbmQOLsacsBs86BFq8WozKw"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=Rb8GCqEv1qQ')" href="#"><img src="https://i.ytimg.com/vi/Rb8GCqEv1qQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBYkBFFghNawQU9Q1lvEtPU0266Jw"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=KAcOQ5gvSC8')" href="#"><img src="https://i.ytimg.com/vi/KAcOQ5gvSC8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDGVi0h0x2ntiTcktsCm0LugWoSYw"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=bE--kxiHkaQ')" href="#"><img src="https://i.ytimg.com/vi/bE--kxiHkaQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDbHV1DpV0zycAZ61cRDAwZnNgDOA"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=JhGUPkZjA6Y')" href="#"><img src="https://i.ytimg.com/vi/JhGUPkZjA6Y/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBpJX2c5bH-L6_oFpLIH1OD3v644Q"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=vINrat94sFc')" href="#"><img src="https://i.ytimg.com/vi/A77rGW61mFI/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB1Z-4cuX2lre_TgruLGQUl48wlpg"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=hoCA1GfsStU')" href="#"><img src="https://i.ytimg.com/vi/hoCA1GfsStU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBY5ECQckJs5vGQlzVjYtbYszJ-Ug"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=pG4_xm-UilM')" href="#"><img src="https://i.ytimg.com/vi/pG4_xm-UilM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDY297ljagwOCbnPgt92Eh2C8PVMw"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=mVJQ8nAnTsw')" href="#"><img src="https://i.ytimg.com/vi/mVJQ8nAnTsw/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDOIun9QX1DFyB-ghihlgGgZqcdwg"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=OhmOT3FiYag')" href="#"><img src="https://i.ytimg.com/vi/OhmOT3FiYag/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLChffWqeutjAKZG0E0NulnzSiMQiQ"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=vn7ufa9iy7g')" href="#"><img src="https://i.ytimg.com/vi/vn7ufa9iy7g/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBdlJxr6V_6ZiHx1Faq8ekEvTtMYA"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=A8JCM61du_I')" href="#"><img src="https://i.ytimg.com/vi/A8JCM61du_I/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCKggWKAjSe_hyz0kPydHMm60nD-Q"></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=E7jo60_5-iU')" href="#"><img src="https://i.ytimg.com/vi/E7jo60_5-iU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCyJ81kt1DNTG3HGTz4t0X2GLfROQ"></a>
+    <div class="wrapper">
+        <header>
+            <h1>Image Popup Example</h1>
+        </header>
 
-        </div>
-        <h2>Love Movies</h2>
-          <div class="box">
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=5YZHpKZodI8')" href="#"><img src="https://i.ytimg.com/vi/5YZHpKZodI8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDH15mQWXbuUP2lgItFTciq_nmyTA'" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=n-TTCG0e8-g')" href="#"><img src="https://i.ytimg.com/vi/c_diMSAaojU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB8lmUw7mIpZdsgHgKBEznbF4J2kA" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=EY3Va4AXECU')" href="#"><img src="https://i.ytimg.com/vi/EY3Va4AXECU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAqrRUd_1leN4MciESupfhDNmUN0g" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=ssnMSSU9qRM')" href="#"><img src="https://i.ytimg.com/vi/4iZILQ6LHLY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCTAgbDQjR3QcnrbkIcoNPoPPj1HQ" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=tSYHaEEE27U')" href="#"><img src="https://i.ytimg.com/vi/tSYHaEEE27U/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDkphBaREatWhBdSBaQXT4pXZgmfQ" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=j2qEtMUoonI')" href="#"><img src="https://i.ytimg.com/vi/DYw4JOXFIDE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAV0qABC5HbyOdv9VpE5ACYsrjGmg" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=YrmULmZNzDo')" href="#"><img src="https://i.ytimg.com/vi/76NYmcs3mN0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCPBdeUfLMZ0lsF98llkv_989MNjA" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=1uPnKmqWkEI')" href="#"><img src="https://i.ytimg.com/vi/_78YIKu2D0c/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCEd6SA9RA3ie92OlKxgCaGFcY5oQ" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=SRtO_EA0Siw')" href="#"><img src="https://i.ytimg.com/vi/SRtO_EA0Siw/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDie4_t8I-pXEAUfBMQFBZzZEx9iA" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=VSyivphv2J4')" href="#"><img src="https://i.ytimg.com/vi/0g2ywLLlgyM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBIKqs4c5I3nKzaxBhpcilOH1o2vA" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=f8wRhgAIiMc')" href="#"><img src="https://i.ytimg.com/vi/f8wRhgAIiMc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA4rnwtHma5OiUccEFpp-vjsbqkPw" alt=""></a>
-            <a onclick="modifyLink('https://www.youtube.com/watch?v=wl7FV1LHcU4')" href="#"><img src="https://i.ytimg.com/vi/wl7FV1LHcU4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDv45wA7E8sMFOZO3v9v1IC0hLlzA" alt=""></a>
+        <section class="main-container">
+            <h2>Select an Image</h2>
+            <div class="box">
+                <img src="https://i.ytimg.com/vi/68wSTlrw_RQ/hq720.jpg" onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=68wSTlrw_RQ')" alt="Image 1">
+                <img src="https://i.ytimg.com/vi/w4l6yDmoepA/hq720.jpg" onclick="openPopup(this.src, 'https://youtu.be/w4l6yDmoepA')" alt="Image 2">
+                <!-- Add more images here -->
             </div>
-      </section>
-  </div>
+        </section>
 
-  <!-- JavaScript -->
-  <script>
-    function modifyLink(videoUrl) {
-            let modifiedUrl = videoUrl;
+        <!-- Popup Overlay -->
+        <div id="popupOverlay" class="popup-overlay">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <img id="popupImage" src="" alt="Popup Image">
+                <button id="playButton" onclick="playVideo()">Play</button>
+            </div>
+        </div>
+    </div>
 
-            // Modify the URL based on the given conditions
-            if (videoUrl.includes("youtu.be")) {
-                modifiedUrl = `https://www.yout-ube.com/watch?v=${videoUrl.split("youtu.be/")[1].split("?")[0]}`;
-            } else if (videoUrl.includes("youtube.com")) {
-                modifiedUrl = videoUrl.replace(/youtube/i, "yout-ube");
-            }
+    <script>
+        let videoUrl; // To store the URL passed to the popup
 
-            // Update the result section with the play button
-            if (modifiedUrl.includes("yout-ube.com/watch?v=")) {
-                document.getElementById("result").innerHTML = `
-                    <button id="playButton" onclick="playVideo('${modifiedUrl}')">Play in full screen</button>
-                `;
-                document.getElementById("userLink").value = ""; // Clear input field
-            } else {
-                document.getElementById("result").innerHTML = "Invalid URL";
-            }
+        function openPopup(imageSrc, video) {
+            document.getElementById('popupOverlay').style.display = 'flex';
+            document.getElementById('popupImage').src = imageSrc;
+            videoUrl = video; // Store the video URL
         }
 
-        function playVideo(videoUrl) {
-            window.open(videoUrl, "_self"); // Open the video in a new tab
-            document.getElementById("playButton").style.display = "none"; // Hide the play button
+        function closePopup() {
+            document.getElementById('popupOverlay').style.display = 'none';
         }
 
-        function setFullscreen() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            }
-        }
-  </script>
+        function modifyLink(videoUrl) {
+    let modifiedUrl = videoUrl;
+
+    // Modify the URL based on the given conditions
+    if (videoUrl.includes("youtu.be")) {
+        modifiedUrl = `https://www.yout-ube.com/watch?v=${videoUrl.split("youtu.be/")[1].split("?")[0]}`;
+    } else if (videoUrl.includes("youtube.com")) {
+        modifiedUrl = videoUrl.replace(/youtube/i, "yout-ube");
+    }
+
+    // Open the modified URL in a new tab
+    if (modifiedUrl.includes("yout-ube.com/watch?v=")) {
+        window.open(modifiedUrl, "_blank");
+        document.getElementById("playButton").style.display = "none"; // Hide the play button if needed
+    } else {
+        document.getElementById("result").innerHTML = "Invalid URL";
+    }
+}
+
+function playVideo() {
+    modifyLink(videoUrl); // Call modifyLink with the stored videoUrl
+}
+
+    </script>
 </body>
 </html>
