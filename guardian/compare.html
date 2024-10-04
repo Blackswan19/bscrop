@@ -3,261 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare Weekly Spends</title>
+    <title>Weekly Spend Tracker</title>
     <style>
-        * {
-            color: rgb(255, 255, 255);
-            box-sizing: border-box;
+        body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #02153d;
         }
 
-        body {
-            background-color: #02153d;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+        h1 {
+            text-align: center;
         }
 
         .container {
-            background: #ffffff30;
-            border-radius: 10px;
-            padding: 20px;
-            width: 100%;
             max-width: 600px;
-        }
-
-        h1, h2 {
-            color: #fff;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #444;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #444;
-            padding: 12px;
-            text-align: left;
-            background-color: #444;
-            color: #fff;
-        }
-
-        th {
+            margin: auto;
             background: #ffffff30;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
-        input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            margin-bottom: 10px;
+        .spend-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .spend-list li {
+            padding: 10px;
+            background-color: #eaeaea2b;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            color: white;
         }
 
         button {
+            padding: 8px 16px;
             background-color: #ffffff21;
             color: #ffffff;
             border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: 10px;
             border-radius: 4px;
+            cursor: pointer;
         }
 
         button:hover {
             background-color: #0041ff;
         }
 
-        /* Modal Styles */
-        .popup-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            display: none;
+        input {
+            padding: 8px;
+            margin-right: 10px;
+            width: 60%;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+
         }
 
-        .popup-content {
-            background-color: #1d1d1d;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 80%;
-    max-width: 400px;
-    border: solid 1px #0027ff;
+        .week-summary {
+            margin-top: 20px;
+            background-color: #9896ff;
+            padding: 10px;
+            border-radius: 8px;
         }
 
-        .popup-content button {
-            background-color: #0027ff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
+        .week-history {
+            margin-top: 20px;
+            background-color: #91cdc8;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .week-history h3 {
+            margin-bottom: 10px;
+        }
+
+        .week-history ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .week-history ul li {
+            background-color: #eaeaea;
+            padding: 8px;
+            margin-bottom: 8px;
             border-radius: 4px;
         }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Compare Weekly Spends</h1>
-        <form id="expense-form">
-            <label for="today">Enter Today's Spend:</label>
-            <input type="number" id="today" min="0" step="0.01">
-            <button type="button" onclick="saveExpenses()">Save Today's Spend</button>
-        </form>
 
-        <h2>Total Weekly Expenses: ₹<span id="total-expenses">0.00</span></h2>
-        <button type="button" id="compare-button" onclick="calculateExpenses()">Compare Weekly Spends</button>
+<div class="container">
+    <h1>Compare spends</h1>
 
-        <h2>Monthly Weekly Spends</h2>
-        <table id="weekly-expenses-table">
-            <thead>
-                <tr>
-                    <th>Week</th>
-                    <th>Weekly Expenses (₹)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Weekly expenses will be displayed here -->
-            </tbody>
-        </table>
+    <input type="number" id="spend-input" placeholder="Enter today's spend..." min="0">
+    <button id="add-spend">Add Spend</button>
+
+    <h2>Today's Spend</h2>
+    <ul id="spend-list" class="spend-list"></ul>
+
+    <h3>Total Today's Spend: $<span id="total-spend">0</span></h3>
+
+    <div class="week-summary">
+        <h3>This Week's Spend: <span id="this-week-spend">0</span></h3>
     </div>
 
-    <!-- Modal Popup -->
-    <div id="popup-modal" class="popup-modal">
-        <div class="popup-content">
-            <p id="popup-message"></p>
-            <button type="button" onclick="closePopup()">Close</button>
-        </div>
+    <div class="week-history">
+        <h3>Previous Weeks' Spends: </h3>
+        <ul id="week-history-list"></ul>
     </div>
+</div>
 
-    <script>
-        let sundayClicked = false;
+<script>
+    // Initialize data from local storage
+    let spends = JSON.parse(localStorage.getItem('spends')) || [];
+    let weeklySpends = JSON.parse(localStorage.getItem('weeklySpends')) || [];
+    let currentWeekTotal = parseFloat(localStorage.getItem('currentWeekTotal')) || 0;
 
-        // Save today's expense to localStorage
-        function saveExpenses() {
-            const todayInput = document.getElementById('today').value;
-            if (!todayInput) {
-                showPopup("Enter today's spend.");
-                return;
+    // Get today's date
+    const today = new Date();
+    const todayString = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+    // Function to update daily spend list
+    function updateSpendList() {
+        const spendList = document.getElementById('spend-list');
+        const totalSpend = document.getElementById('total-spend');
+        spendList.innerHTML = '';
+        let total = 0;
+
+        spends.forEach((spend, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                $${spend}
+                <button onclick="removeSpend(${index})">Remove</button>
+            `;
+            spendList.appendChild(li);
+            total += parseFloat(spend);
+        });
+
+        totalSpend.textContent = total.toFixed(2);
+    }
+
+    // Function to add a spend for today
+    function addSpend() {
+        const spendInput = document.getElementById('spend-input');
+        const spendAmount = parseFloat(spendInput.value);
+
+        if (isNaN(spendAmount) || spendInput.value === '') {
+            alert('Please enter a valid spend amount');
+            return;
+        }
+
+        spends.push(spendAmount);
+        localStorage.setItem('spends', JSON.stringify(spends));
+
+        spendInput.value = '';  // Clear the input
+        updateSpendList();
+        updateWeeklyTotal(spendAmount); // Update weekly total with today's spend
+    }
+
+    // Function to remove a spend
+    function removeSpend(index) {
+        const removedSpend = spends[index];
+        spends.splice(index, 1);
+        localStorage.setItem('spends', JSON.stringify(spends));
+        updateSpendList();
+        updateWeeklyTotal(-removedSpend); // Subtract removed spend from weekly total
+    }
+
+    // Function to update weekly total
+    function updateWeeklyTotal(amount) {
+        currentWeekTotal += amount; // Add today's spend or subtract removed spend
+        localStorage.setItem('currentWeekTotal', currentWeekTotal);
+        document.getElementById('this-week-spend').textContent = currentWeekTotal.toFixed(2);
+    }
+
+    // Function to reset weekly spends on Sunday
+    function resetWeeklySpends() {
+        const lastReset = localStorage.getItem('lastResetDate');
+
+        // Check if a reset is needed (only on Sunday)
+        if (today.getDay() === 0) { // Sunday is day 0
+            if (lastReset !== todayString) {
+                // Store current week's total in weeklySpends array
+                if (currentWeekTotal > 0) {
+                    const weekData = { total: currentWeekTotal, spends: [...spends] };
+                    weeklySpends.push(weekData);
+                    localStorage.setItem('weeklySpends', JSON.stringify(weeklySpends));
+                }
+
+                // Reset for the new week
+                currentWeekTotal = 0;
+                spends = [];
+                localStorage.setItem('spends', JSON.stringify(spends));
+                localStorage.setItem('currentWeekTotal', currentWeekTotal);
+                localStorage.setItem('lastResetDate', todayString); // Update the last reset date
             }
-
-            const todaySpend = parseFloat(todayInput);
-            const dailyExpenses = JSON.parse(localStorage.getItem("dailyExpenses")) || {
-                monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
-            };
-
-            const dayOfWeek = new Date().getDay();
-            const dayMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-
-            // Save today's spend
-            const todayDay = dayMap[dayOfWeek];
-            dailyExpenses[todayDay] = todaySpend;
-            localStorage.setItem("dailyExpenses", JSON.stringify(dailyExpenses));
-
-            showPopup(`Today's spend (₹${todaySpend}) saved.`);
         }
+    }
 
-        // Function to calculate weekly expenses
-        function calculateExpenses() {
-            const today = new Date();
-            const dayOfWeek = today.getDay();
+    // Function to display the history of weekly spends
+    function displayWeeklyHistory() {
+        const weekHistoryList = document.getElementById('week-history-list');
+        weekHistoryList.innerHTML = '';
+        weeklySpends.forEach((weekData, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                Week ${index + 1} Spend: $${weekData.total.toFixed(2)}<br>
+                Spends: ${weekData.spends.join(', ')}
+            `;
+            weekHistoryList.appendChild(li);
+        });
+    }
 
-            if (dayOfWeek !== 0) {
-                showPopup("You can only compare weekly spends on Sundays.");
-                return;
-            }
+    // Add event listener to the "Add Spend" button
+    document.getElementById('add-spend').addEventListener('click', addSpend);
 
-            if (sundayClicked) {
-                showPopup("You've already compared spends this Sunday.");
-                return;
-            }
+    // Update the view
+    updateSpendList();
+    displayWeeklyHistory();
+    resetWeeklySpends();
 
-            let dailyExpenses = JSON.parse(localStorage.getItem("dailyExpenses")) || {
-                monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 0, sunday: 0
-            };
+</script>
 
-            let weeklyTotal = dailyExpenses.monday + dailyExpenses.tuesday + dailyExpenses.wednesday +
-                              dailyExpenses.thursday + dailyExpenses.friday + dailyExpenses.saturday + dailyExpenses.sunday;
-
-            // Save weekly expenses
-            let weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
-            if (weeklyExpenses.length >= 4) {
-                showPopup("You've already tracked expenses for 4 weeks.");
-                return;
-            }
-
-            weeklyExpenses.push(weeklyTotal);
-            localStorage.setItem("weeklyExpenses", JSON.stringify(weeklyExpenses));
-            displayWeeklyExpenses();
-            updateTotal(weeklyTotal);
-
-            sundayClicked = true;
-
-            // Clear daily expenses after the week
-            localStorage.removeItem("dailyExpenses");
-            resetInputs();
-
-            setTimeout(function() {
-                sundayClicked = false; // Allow button to be clicked again next Sunday
-            }, 7 * 24 * 60 * 60 * 1000);
-        }
-
-        // Function to display weekly expenses
-        function displayWeeklyExpenses() {
-            const weeklyExpenses = JSON.parse(localStorage.getItem("weeklyExpenses")) || [];
-            const tableBody = document.querySelector('#weekly-expenses-table tbody');
-            tableBody.innerHTML = '';
-
-            weeklyExpenses.forEach((expense, index) => {
-                const row = document.createElement('tr');
-                const weekCell = document.createElement('td');
-                const expenseCell = document.createElement('td');
-
-                weekCell.textContent = 'Week ' + (index + 1);
-                expenseCell.textContent = '₹' + expense.toFixed(2);
-
-                row.appendChild(weekCell);
-                row.appendChild(expenseCell);
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Function to update total weekly expenses display
-        function updateTotal(total) {
-            document.getElementById('total-expenses').textContent = total.toFixed(2);
-        }
-
-        // Reset input fields
-        function resetInputs() {
-            document.getElementById('today').value = '';
-        }
-
-        // Popup functionality
-        function showPopup(message) {
-            document.getElementById('popup-message').textContent = message;
-            document.getElementById('popup-modal').style.display = 'flex';
-        }
-
-        function closePopup() {
-            document.getElementById('popup-modal').style.display = 'none';
-        }
-
-        // Load weekly expenses on page load
-        window.onload = function() {
-            displayWeeklyExpenses();
-        };
-    </script>
 </body>
 </html>
