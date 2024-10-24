@@ -85,7 +85,7 @@
         </header>
 
         <section class="main-container">
-          <h2>Newly added</h2>
+          <h2>English Moives</h2>
           <div class="box">
             <script>let videoUrl, currentTitle, currentDescription; function openPopup(imageSrc, video, title, description) { document.getElementById('popupOverlay').style.display = 'flex'; document.getElementById('popupImage').src = imageSrc; videoUrl = video; currentTitle = title; currentDescription = description; document.getElementById('movieTitle').innerText = currentTitle; document.getElementById('movieDescription').innerText = currentDescription; } function closePopup() { document.getElementById('popupOverlay').style.display = 'none'; } function modifyLink(videoUrl) { let modifiedUrl = videoUrl; if (videoUrl.includes("youtu.be")) { modifiedUrl = `https://www.yout-ube.com/watch?v=${videoUrl.split("youtu.be/")[1].split("?")[0]}`; } else if (videoUrl.includes("youtube.com")) { modifiedUrl = videoUrl.replace(/youtube/i, "yout-ube"); } if (modifiedUrl.includes("yout-ube.com/watch?v=")) { window.open(modifiedUrl, "_self"); } else { document.getElementById("result").innerHTML = "Invalid URL"; } } function playVideo() { modifyLink(videoUrl); }</script>
             <img src="https://i.ytimg.com/vi/sWFaFXvNJzw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA7zqfTmoalxNcq54qWght9KHCRrA" 
