@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="whole.css">
+  <title>BsWatchin</title>
+  <link rel="icon" type="image/x-icon" href="https://i.ibb.co/x5Pb9bH/watchinlogo.png">
+</head>
+<body>
+    <header>
+        <div class="netflixLogo">
+            <a id="logo" href="https://blackswan19.github.io/bscrop/watchin/main">BsWatchin</a>
+        </div>
+        <div class="categories">
+          <a href="#category/moives/telugu"><button class="active" onclick="showSection('all', 'Telugu')">Telugu</button></a>
+          <a href="#category/moives/hindi"><button onclick="showSection('shows', 'Hindi')">Hindi</button></a>
+          <a href="#category/moives/english"><button onclick="showSection('movies', 'English')">English</button></a>
+          <a href="#category/moives/cartoons"><button onclick="showSection('videos', 'Cartoons')">Cartoons</button></a>
+          <a href="#category/moives/east-asian"><button onclick="showSection('music', 'East asian')">East asian</button></a>
+          <a href="#category/moives/alllang/playlist"><button onclick="showSection('all1', 'All')">Playlist</button> </a>
+        </div>
+        <div class="search-container">
+          <input type="text" id="searchBar" placeholder="Search movie here..." onkeyup="searchMovies()">
+        </div>
+        <div class="from">
+              <button><a href="mylist.html">Add Movies</a></button>
+        </div>      
+    </header>
+    <div class="aboutus">
+      <h2>BsWatchin Moives</h2>
+        <p>If the moive you're looking for isn't available on our site, you can import the movie from YouTube and add it to <a href="https://blackswan19.github.io/bscrop/watchin/mylist" style="text-decoration: underline;
+          color: rgb(0 143 255);
+          font-weight: 600;
+          letter-spacing: 0.5px;">BsVideosaver</a> and watch there when ever you want to.</p>
+        
+    </div>
+    <div class="custom-menu"> <style> a{ text-decoration: none; } .custom-menu { display: none; position: fixed; background-color: #171717; border: 1px solid #242424; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; padding: 10px; border-radius: 5px; z-index: 1000; filter: drop-shadow(11px 12px 22px rgba(0, 0, 0, 0.416)); } .custom-menu button { display: block; width: 100%; border: none; background: none; text-align: left; padding: 8px; cursor: pointer; font-size: 15px; color: rgba(255, 255, 255, 0.811); } .custom-menu button:hover { background-color: #404040; } </style> <a href="https://blackswan19.github.io/bscrop/formbs"><button id="option2">More From Bs</button></a><a href="https://blackswan19.github.io/bscrop/watchin/mylist"><button id="option2">Add a moive</button></a> <a href="https://blackswan19.github.io/Educate/stoper"><button id="option2">Go to BsAdstoper</button></a> </div>
+    <div id="all1" class="section">
+      <section class="main-container">
+        <h2>Moives playlist- #Telugu</h2>
+      <div class="box" id="movieList">
+          <img src="https://i.ibb.co/pX35Y4b/watchinlogo.png" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=w4l6yDmoepA&list=PLSPuDpldWomuuefy0_Qu6K9RHW8njLdWK', 'More Telugu Moives playlist ', 'Here’s a movie playlist to help you find more films you’ll love. Dive in to discover movies that fit your style and interests, making it easier to choose what to watch next!')" 
+          data-title="All Moives playlist"> 
+        </div>
+        <h2>Moives playlist - #English</h2>
+        <div class="box" id="movieList">
+          <img src="https://i.ibb.co/pX35Y4b/watchinlogo.png" 
+            onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=CsL_QcXryhQ&list=PLum50h_rWpG5e-46sLWgZAvWrbGzms---', 'More English Moives playlist', 'Here’s a movie playlist to help you find more films you’ll love. Dive in to discover movies that fit your style and interests, making it easier to choose what to watch next!')" 
+            data-title="">
+        </div>
+        <h2>Moives playlist - #East asian</h2>
+        <div class="box" id="movieList">
+            <img src="https://i.ibb.co/pX35Y4b/watchinlogo.png" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=3x4yTVBUSiE&list=PLQArqXsUfDgWxvD6FTXKq9hrSDHe7ZZo2', 'More East asian Moives playlist', 'Here’s a movie playlist to help you find more films you’ll love. Dive in to discover movies that fit your style and interests, making it easier to choose what to watch next!')" 
+              data-title="">
+          </div>
+          <h2>Moives playlist - #Hindi</h2>
+          <div class="box" id="movieList">
+              <img src="https://i.ibb.co/pX35Y4b/watchinlogo.png" 
+                onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=vB2m1uRF30c&list=PLNjIr3ro3NNcR4fst-hZbBzEQ1TCwdJj6', 'More Hindi Moives playlist', 'Here’s a movie playlist to help you find more films you’ll love. Dive in to discover movies that fit your style and interests, making it easier to choose what to watch next!')" 
+                data-title="">
+            </div>
+          </section>
+    </div>
+  <div id="all" class="section active">
+    <section class="main-container">
+      <h2>Available Moives</h2>
+        <div class="box" id="movieList">
+          <img src="https://image-resizer-cloud-api.akamaized.net/image/2719F7A0-CA9A-4B41-B590-4DE8A1B77F8D/0-16x9.jpg?width=1920&updatedTime=2024-09-13T09:49:26Z&dt=Web" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=SAd1y3BEDs0', 'Adhurs', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Adhurs"> 
+          <img src="https://sund-images.sunnxt.com/72205/1920x1080_Mahanubhavadu_72205_7106d041-5dcc-4a50-a2e6-3471ece4088b.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=YtxnjOEFDn4', 'Mahanubhavudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Mahanubhavudu"> 
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/13880aff9b3d668ae1ebbcab49bafec6340c41734a87d0036e33a6643c5edb38.png" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Zejiz78jQ2A', 'Oye', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Oye"> 
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/013f63e5cb6ca94db05a3829a2a5cc2c2fb6f4e361abdb6ccaeceb7fe87bc608.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=G8GeXXYL2s4', 'Sukumarudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Sukumarudu"> 
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/735a24bff378372edd6a15c462da39700ee03e860b0c1ad852f416279273734e.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=rd0P7CKdJ3s', 'Pandavulu Pandavulu Tummeda', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Pandavulu Pandavulu Tummeda"> 
+
+          <img src="https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/old_images/MOVIE/5071/1000155071/1000155071-h" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=_Nq2m5LRQ3g', 'Janatha Garage', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Janatha Garage"> 
+          <img src="https://image-resizer-cloud-api.akamaized.net/image/B8EB7DCB-B5DA-4F36-AC6E-A4F748E53077/0-16x9.jpg?width=1920&updatedTime=2024-06-28T01:36:02Z&dt=Web" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=9iZdAsjabqg', 'Kondaveeti Donga', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Kondaveeti Donga"> 
+          <img src="https://image-resizer-cloud-api.akamaized.net/image/1C73BA9D-7980-4B8E-B4CB-323C34A532E4/0-16x9.jpg?width=1920&updatedTime=2024-10-29T06:58:58Z&dt=Web" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=hdarcKWGqRE&t=2198s', 'Attaku Yamudu Ammayiki Mogudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Attaku Yamudu Ammayiki Mogudu"> 
+          <img src="https://xstreamcp-assets-msp.streamready.in/assets/SUNNXT/MOVIE/661fb681c7460f6c5c86c80b/images/1920x1080_feb8207e-a795-4e5d-b1bf-af947e617294.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=4PPFe6nH2X4', 'Jagadeka Veerudu Athiloka Sundari', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Jagadeka Veerudu Athiloka Sundari"> 
+          <img src="https://www.newstap.in/h-upload/2023/07/18/1522261-surya.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=WaTcVj1N8Qw', 'Surya Son of Krishnan', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Surya Son of Krishnan"> 
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/d6b0b39e202a2e5217110043650bec2bae3cd8809492276f7f7317bb76ef8b5b.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=u4fetE5LDqg&list=PLGfKtpuTRlnSWDuJyaM8cjajuHZj0hDIu&index=20', 'Pilla Zamindar', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Pilla Zamindar"> 
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/3c153e4adf4bb191e37065448fe54648acafadbc5ca4915929f3b699c2880912.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=uMJkyB8Ipy4', 'Namo Venkatesa', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Namo Venkatesa"> 
+          <img src="https://sund-images.sunnxt.com/9909/1920x1080_87deb6f0-ad7f-4e8f-bdea-335464fcf263.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=7Raedk5VTe0&list=PLLDvXHRInjmKWnvOaNwrsXW-T_zChrzIU&index=40', 'Andhrudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Andhrudu"> 
+          <img src="https://xstreamcp-assets-msp.streamready.in/assets/AHA/MOVIE/657c402fa9540e6b3ede8448/images/0-16x9.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=dWsIGLsybYQ&list=PLdPdX7Yks_RuwDOvycFgCIC7TNrHgtfzZ&index=8', 'Rough', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Rough">     
+          <img src="https://eros-asset-msp.streamready.in/assets/EROSNOW/MOVIE/6103da995e85b5521ade7412/images/6964632.png" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=_wRLp_Ppe8E', 'Sathi Leelavathi', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Sathi Leelavathi"> 
+          <img src="https://s1.dmcdn.net/v/3LW2G1LOPvv-xHmGj/x1080" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=QNh4_fWRJAM', 'Ongole Gitta', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="">  
+          <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_hs_2_5x/sources/r1/cms/prod/880/550880-h" 
+          onclick="openPopup(this.src, 'https://youtu.be/xQVqKoPsF2c?si=DnMzs2KuTcliziAI', 'Oka Laila Kosam', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Ongole Gitta">
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/50d79133768e8eb6b6eef1d8cebc1b76632ef6098c8e552af54b332a8170de0b.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/whIpRskedkQ?si=M4cDzawXkQb8PhhM', 'Vikramarkudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Vikramarkudu"> 
+          <img src="https://images.tv9telugu.com/wp-content/uploads/2023/08/chandramukhi-3.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/LjgEr8jjCDE?si=tP8gY5Te8s5RHXfE', 'Chandramukhi', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Chandramukhi">
+          <img src="https://tracktollywood.com/wp-content/smush-webp/2024/08/indra-movie.jpg.webp" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=3FVm92LLPTg', 'Indra', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Indra">
+          <img src="https://sund-images.sunnxt.com/10645/640x360_Okkadu_10645_f478181a-7ec2-40a5-9b5e-b7722dc6d53c.jpg" 
+            onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=qXgUlhSzlXI', 'Okkadu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+            data-title="Okkadu"> 
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/76c892c729e7c4f4d9dba6f1e6ad79eb2581551d7dd491430027d7ce9089f923._SX1080_FMjpg_.jpg" 
+            onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=CbW0xv7UVOs', 'Shiva', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+            data-title="Shiva">  
+            <img src="https://m.media-amazon.com/images/S/pv-target-images/ff2ed094faea44ab95e287f4d92653d3202b8522d7e301d4976d8dbc7db6de24.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/t197BhimicA?si=JDEv9s_xEWtLCMib', 'Raghuvaran B.Tech', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Raghuvaran B.Tech"> 
+          <img src="https://i.ytimg.com/vi/bV6qTLAJlos/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhbv7GElqMEDm5WIgecvznVGy3lw" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=bV6qTLAJlos', 'Sankarabharanam', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Sankarabharanam"> 
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/72135d7a76553b7666f902ad67be6bf38c647c21b725ee2fd6b99059bfa2743c._SX329_.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/2s2Rw6L0RDc?si=bkcx2QYPfhikjQI7', 'Style', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Style">  
+          <img src="https://sund-images.sunnxt.com/72203/640x360_JaiLavaKusa_72203_820630da-68d6-45ea-9a58-69f115c83690.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=-VEtPlDuJTc', 'Jai Lava Kusa', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Jai Lava Kusa">
+          <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/6071/1000186071/1000186071-h" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=iF4tWV8k6-o', 'Manyam Puli', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Manyam Puli">
+        <img src="https://image-resizer-cloud-api.akamaized.net/image/DE1A7AA2-5840-49DE-8AD8-77838CA93F15/0-16x9.jpg?width=1080" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=6kelTocUsio', 'Karthikeya', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Karthikeya">
+        <img src="https://i0.wp.com/tejarao.com/wp-content/uploads/2020/06/mahesh-srimanthuduposter15.jpg?resize=1200%2C650&ssl=1" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=LS6XiINMc2s', 'Srimanthudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Srimanthudu">
+        <img src="https://www.moviesavailableon.com/Images/movies/bengal_tiger_te.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=F0Z4oguk6VY', 'Bengal Tiger', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Bengal Tiger">
+        <img src="https://i.ytimg.com/vi/rleei8BIEpE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBZm8hDdnAmk7EmWuQi3IkCu5QpIQ" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=rleei8BIEpE', 'Stalin', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Stalin">
+        <img src="https://i.ytimg.com/vi/Zk6umRbfJz4/maxresdefault.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=dAf7xicqtuA', 'Businessman', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Businessman">
+        <img src="https://media.licdn.com/dms/image/C4D12AQGrcepwLluZ3A/article-cover_image-shrink_600_2000/0/1520153181728?e=2147483647&v=beta&t=U8Vzm8Ff8bumVqf0qHPkvmgEtmK4OKS_s7XuvgM9ElI" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=G7haVu5g-Qw', 'Magadheera', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Magadheera">
+        <img src="https://static.digit.in/OTT/v2/images/chatrapathi-1336088.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=vD5r6hb7R2w', 'Chatrapathi', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Chatrapathi">
+          <img src="https://img.airtel.tv/unsafe/fit-in/1600x0/filters:format(webp)/https://xstreamcp-assets-msp.streamready.in/assets/SUNNXT/MOVIE/661fb6922219bd445f94c337/images/1920x1080_DhruvaTelugu_72199_7062f7d2-3398-45ee-bb15-b47f13115470.jpg?o=production" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=vINrat94sFc', 'Dhruva', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Dhruva">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQP3rmC72W16OPLBKljVx5pqzSz2zsWpv0XZcgSMR9TZZyUwnYOE1UwOTmCo6Wsy07sNsRlqFo4qrsOqi3cJykEuBK-6zVN64S7bAUyfvU9W6X9GZWWfDBkJJ0VZoTgCcq7CuRdwk0Ng/s1600/aparichitudu0001.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Wb6COX3yyuQ', 'Aparichitudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Aparichitudu">
+          <img src="https://e1.pxfuel.com/desktop-wallpaper/704/242/desktop-wallpaper-thadaka-movie-thadaka-2.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=A8JCM61du_I', 'Tadakha', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Tadakha">
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/cd0d3d6d6bf2a680885b492942dbbcbe34800cfc11af1a76fbd113e4ba47215f._SX1080_FMjpg_.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=EztUsjJAh0E', 'Gabbar Singh', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Gabbar Singh">
+          <img src="https://sund-images.sunnxt.com/27818/1920x1080_4782460b-8919-43b9-9817-29e9f5843222.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=W03c_X8VcV0', 'Naayak', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Naayak">
+        <img src="https://sund-images.sunnxt.com/101255/1280x720_7AumArivu_101255_2140a643-a8b1-4960-8588-cec731749c7f.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=qRr-q2hid78', '7th Sense', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="7th Sense">
+        <img src="https://www.famousbollywood.com/wp-content/uploads/2023/02/Krrish-movie.webp" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=9Yx_03MOaNg', 'Krrish', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Krrish">
+        <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/7208/1000057208/1000057208-h" 
+                   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=EY3Va4AXECU', 'Singham', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+                   data-title="Singham">
+                   <img src="https://sund-images.sunnxt.com/27848/960x540_7fd8e678-44c6-45e0-aa7b-8e0ac63d5e54.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=R1vEkxA1gJ0', 'Thuppakki', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Thuppakki">
+        <img src="https://etv-win-image.akamaized.net/etvwin/telugumovies/simhadri/87037/simhadri-Simhadri_Movie-768x432.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=6_TavfvdMSc', 'Simhadri', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Simhadri">
+        <img src="https://jiotvimages.cdn.jio.com/imagespublic/10/79/e49fa323c7845775bbbe8b035fae483f_1726620043125_l_medium.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=f9SIFownXUk', 'Ek Niranjan', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Ek Niranjan">
+        <img src="https://m.media-amazon.com/images/S/pv-target-images/754688659858f78b89219c428b1516c0a23664cfcd3b25a6ace8f650dccb25f8._SX1080_FMjpg_.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Px5nHPQZ-1o', 'Legend', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Legend">
+        <img src="https://i.ytimg.com/vi/hdhzMtZejVg/maxresdefault.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Df7STZvA9pI', 'Taxiwaala', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Taxiwaala">
+        <img src="https://assets-in.bmscdn.com/discovery-catalog/events/et00312314-ynqknzpunk-landscape.jpg" 
+        onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=f8wRhgAIiMc', 'Varsham', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+        data-title="Varsham">
+          <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/5382/1000055382/1000055382-h" 
+            onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=mf7sk4IydGo', 'Manmadhudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+            data-title="Manmadhudu">    
+            
+          <img src="https://jiotvimages.cdn.jio.com/dare_images/shows/700/-/2024-06-20/240620899009.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/zVm9IFaAJlo?si=-LVPwrT5y7Dlw5g0', 'Snehitudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Snehitudu">  
+          <img src="https://i.ytimg.com/vi/BF0k3AoNCo4/maxresdefault.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/KGa8wieNE6s?si=Okl10aQk-bb2Uen0', ' Brindavanam', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Brindavanam">  
+          <img src="https://sund-images.sunnxt.com/11336/640x360_KingTelugu_11336_325f09ca-dac1-4f63-892c-e4e9faebb3d0.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=GL8W1GPs7hE', 'King', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="King">
+          <img src="https://i.ytimg.com/vi/eIqhS32uSbE/maxresdefault.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=GuKfZ6PIvxU', 'Yamadonga', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Yamadonga">
+
+<img src="https://image-resizer-cloud-api.akamaized.net/image/5B48DD8D-CA0B-4836-933B-D69BB80DFBD3/0-16x9.jpg?width=1920&updatedTime=2024-06-10T11:36:21Z&dt=Web" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=-8DYitq2qzs', 'SR Kalyanamandapam', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="SR Kalyanamandapam">
+
+<img src="https://i.ytimg.com/vi/zVv7MBY5gqs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAt2SDM8_mj8jvmIcGRO11_T0ucaw" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=b8dvhBPrGtw', 'Mirchi', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Mirchi">
+
+<img src="https://sund-images.sunnxt.com/10075/640x360_dcb36d55-ea41-4c45-bbd3-ceca03da92ff.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=lgHQ-u765HA', 'Brahmachari', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Brahmachari">
+
+<img src="https://sund-images.sunnxt.com/7726/1920x1080_GopalaGopala_7726_fca845ca-e029-43a3-940a-cb07f6a44470.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=NPybsXYnxk4', 'Gopala Gopala', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Gopala Gopala">
+
+<img src="https://i.ytimg.com/vi/YzmjCwPiLbk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCZ73aicpblWVC4E0xcQtQWDMaWHA" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=tZquI3a1qZw', 'Julayi', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Julayi">
+
+<img src="https://image-resizer-cloud-api.akamaized.net/image/0A6C87A4-B8E7-422F-B16D-88E06A7C7198/0-16x9.jpg?width=1920&updatedTime=2024-06-28T01:28:12Z&dt=Web" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=68wSTlrw_RQ', 'Jalsa', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Jalsa">
+
+<img src="https://images.tv9telugu.com/wp-content/uploads/2023/09/pokiri.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=thcuCL1wwhY', 'Pokiri', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Pokiri">
+
+<img src="https://sund-images.sunnxt.com/27803/960x540_ba291a1a-8528-42d2-8e87-1ebd127fca24.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Rb8GCqEv1qQ', 'Kick', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Kick">
+
+<img src="https://sund-images.sunnxt.com/27817/640x360_b39cbdff-2e29-4b7d-bd84-7e9f43ae709e.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=KAcOQ5gvSC8', 'Mr. Perfect', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Mr. Perfect">
+   <img src="https://qqcdnpictest.mxplay.com/pic/54a9c436c761d3656c9814799a34b80b/en/16x9/640x360/2837964cf5e1aa430eed69bedfb585b1_1920x1080.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=bE--kxiHkaQ', 'Narasimha', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Narasimha">
+
+<img src="https://diey8xpfs90ha.cloudfront.net/wp-content/uploads/2023/10/Chiranjeevi-Shankar-Dada-MBBS-re-release-date-update.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=JhGUPkZjA6Y', 'Shankar Dada', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Shankar Dada">
+
+<img src="https://media.chitrajyothy.com/appimg/galleries/1822072310471847/07232022225852n50.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=hoCA1GfsStU', 'Nuvvu Naaku Nachav', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Nuvvu Naaku Nachav">
+
+<img src="https://images.tv9telugu.com/wp-content/uploads/2023/07/venky-movie.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=pG4_xm-UilM', 'Venky', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Venky">
+
+<img src="https://sund-images.sunnxt.com/7437/1920x1080_8d7f6003-f556-448c-978f-f2f479d145f1.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=mVJQ8nAnTsw', 'Baadshah', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Baadshah">
+
+<img src="https://img1.hotstarext.com/image/upload/f_auto,t_hcdl/sources/r1/cms/prod/old_images/MOVIE/5257/1000055257/1000055257-h" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=OhmOT3FiYag', 'Maryada Ramanna', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Maryada Ramanna">
+
+<img src="https://sund-images.sunnxt.com/10412/640x360_Khaleja_10412_f4a3a09b-ab7a-4be8-92df-313dea95a9d9.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=1CIWTLmcb8Q', 'Khaleja', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Khaleja">
+
+<img src="https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/old_images/MOVIE/7181/1000057181/1000057181-h" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=vn7ufa9iy7g', 'Mr. Pellikoduku', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Mr. Pellikoduku">
+
+<img src="https://jiotvimages.cdn.jio.com/dare_images/shows/700/-/2024-10-04/241004897004.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Deoo7_CQFdg', 'Annayya', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Annayya">
+
+<img src="https://m.media-amazon.com/images/S/pv-target-images/1442349209b28e9bf66f067c81106a8ce654ab9507ba1fddb0ab01fd9d6b9349._SX1080_FMjpg_.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=nVsJLEIMnmE', 'Govindudu Andarivadele', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Govindudu Andarivadele">
+
+<img src="https://content.tupaki.com/twdata/2018/0718/news/Get-Ready-For-Attarintiki-Daredi-Tamil-Remake-1533046425-149.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=6yH0ViJrXhM', 'Attarintiki Daredi', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Attarintiki Daredi">
+
+<img src="https://assets-in.bmscdn.com/discovery-catalog/events/et00017848-jwfzckftmm-landscape.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=oVsA6B1cweo', 'Race Gurram', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Race Gurram">
+
+<img src="https://m.media-amazon.com/images/S/pv-target-images/77fcbfbf0dd0a46e3141556d1d372a08633e05d5d35fdea469b380a554ed166d.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=E7jo60_5-iU', 'Eedu Gold Ehe', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Eedu Gold Ehe">
+
+   <img src="https://image-resizer-cloud-api.akamaized.net/image/60DBCABA-3925-4357-9678-0DACCC7F68BF/0-16x9.jpg?width=1920&updatedTime=2024-06-28T01:14:29Z&dt=Web" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=tVLu60NDjZY', 'Ramayya Vasthavayya', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Ramayya Vasthavayya">
+   
+<img src="https://www.idlebrain.com/images5/wp-24aagadu1366.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=hravgftk9gQ', 'Aagadu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Aagadu">
+   
+<img src="https://m.media-amazon.com/images/M/MV5BZWQ2ZGQzZDgtZWQ4MC00N2RhLWE3YjEtMjRjMjE2OWE3N2QyXkEyXkFqcGc@._V1_.jpg" 
+   onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=M5rXgWKooz0', 'Dookudu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+   data-title="Dookudu">
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/199b2d25285820aed77d67a7ffde30b4cc130bf33eb583c3f513d194fdf95ecf.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/JzJCJlPpZWg?si=Kh8oTLkcnzcsqO_c', 'Dhee', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Dhee">  
+      
+      <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/5960/1000055960/1000055960-h" 
+          onclick="openPopup(this.src, 'https://youtu.be/qgSpqOHP3H8?si=qY0AkWVfTnahqiNu', 'Raja Rani', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Raja Rani"> 
+      
+      <img src="https://daex9l847wg3n.cloudfront.net/shemoutputimages/Ready/62f3b3ccdde71566af000121/large_16_9_1687356157.webp" 
+          onclick="openPopup(this.src, 'https://youtu.be/arJu4Q7bEmc?si=oe__xUuP6AihLDSX', 'Ready', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Ready">  
+      
+      <img src="https://m.media-amazon.com/images/S/pv-target-images/55a3f24feee60a37d0138922e98584e8e7822fc60d348f32702e3644e70996d6.jpg" 
+          onclick="openPopup(this.src, 'https://youtu.be/uwJYlzoT0eE?si=g-PZJfppcTF9ytB0', 'Ninnu Kori', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Ninnu Kori">  
+      
+      <img src="https://sund-images.sunnxt.com/101022/640x360_Bheeshma_101022_ae3e4c83-566f-4d0a-82a2-41203c5ce310.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=JQYtgRF_SiI', 'Bheeshma', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Bheeshma"> 
+      
+      <img src="https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/901/550901-h" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=1p7NmlTW5qo', 'Subramanyam For Sale', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Subramanyam For Sale"> 
+      
+      <img src="https://d2zfbyesi0qka0.cloudfront.net/wp-content/uploads/2022/06/Dubai-Seenu-1024x576.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=tMrLlmjOD74', 'Dubai Seenu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Dubai Seenu">
+      
+          <img src="https://www.cinejosh.com/gallereys/movies/normal/100_love_movie_stills/100_love_movie_stills_011.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=D06awr4iZMw', '100% Love', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="100% Love">
+          <img src="https://i.ytimg.com/vi/09etmf8PUio/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD02x8PXm1KsXkD2_Y8J6Raihx91w" 
+          onclick="openPopup(this.src, 'https://youtube.com/watch?v=D-Il1EpW1zI', 'Endukante Premanta', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Endukante Premanta">
+          <img src="https://i.ytimg.com/vi/9SFolkII4Io/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBScIwjFv5mLhAYDkmKa1DwqcXWYQ" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=V1WvqCBE7Bw', 'Seethamma Vakitlo Sirimalle Chettu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Seethamma Vakitlo Sirimalle Chettu">
+          <img src="https://image.tmdb.org/t/p/w780/ufUKrzfdQ2ha8sqnMMPM25Ll8NO.jpg" 
+               onclick="openPopup(this.src, 'https://youtu.be/kPDELBGqT2Y?si=9FGSbrvhS8uxbjFF', 'Geethanjali', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               alt="" data-title="Geethanjali">
+          <img src="https://image-resizer-cloud-api.akamaized.net/image/68B1EB6B-11D6-42C4-A48E-7FADEAB98F9C/0-16x9.jpg?width=1080" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=RwGs_nS5IQI', '90ML', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="90ML">
+          <img src="https://jiotvimages.cdn.jio.com/imagespublic/49/13/29b6cadda89d54d78c21e5d20e47941a_1727310926711_l_medium.jpg" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=n-TTCG0e8-g', 'Nuvvostanante Nenoddantana', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Nuvvostanante Nenoddantana">
+          <img src="https://i.ytimg.com/vi/AtMeB2ROgKQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDu2P72ylHejjiZ_lNr0B--XIi1hg" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=2OlgjlfnoCA', 'Tulasi', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Tulasi">
+          <img src="https://tejarao.com/wp-content/uploads/2017/11/marigold-flowers.jpg" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=BslcqqAOmRQ', 'Rarandoi Veduka Chudham', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Rarandoi Veduka Chudham">
+          <img src="https://www.naasongs.site/wp-content/uploads/2024/09/naasongs.site_.jpg" 
+               onclick="openPopup(this.src, 'https://youtu.be/Rv3DLPFbQgA?si=g57GXrLffYc1RL5s', 'Iddarammayilatho', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Iddarammayilatho">
+          <img src="https://images.tfhy.in/39/2441/banners/2441_web_banner_1600_900_202101281400.png" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=ssnMSSU9qRM', 'Kotha Bangaru Lokam', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Kotha Bangaru Lokam">
+          <img src="https://i.ytimg.com/vi/VNReyLPf8D4/maxresdefault.jpg" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=_jvUsPiPJqM&t=11s', 'Chirutha', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Chirutha">
+          <img src="https://static.toiimg.com/photo/80073181.cms" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=tSYHaEEE27U', 'Rang De', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Rang De">
+          <img src="https://sund-images.sunnxt.com/7632/960x540_3d9aeb9c-136b-46c1-8491-2e5a1b941aa5.jpg" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=mDbeEGDVE4M', 'Power', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Power">
+          <img src="https://images.ottplay.com/articles/2021q3/15_years_of_Bommaril_OTTplay_news_cover_image_1_828.png?impolicy=ottplay-20210210&width=1200&height=675" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=j2qEtMUoonI', 'Bommarillu', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Bommarillu">
+      
+                   
+               <img src="https://etv-win-image.akamaized.net/etvwin/telugumovies/yemaayachesave/26378/ye-maaya-chesave-Y_M_C_Movie-768x432.jpg" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=YrmULmZNzDo', 'Ye Maaya Chesave', 'This is an exciting film that offers a mix of engaging moments, featuring romance, emotions, and drama. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Ye Maaya Chesave">
+
+<img src="https://i0.wp.com/lyricbasket.in/wp-content/uploads/2017/08/orange_movie_desktop_widescreen_wallpapers_01.jpg?fit=1280%2C710&ssl=1" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=1uPnKmqWkEI', 'Orange', 'This is an exciting film that offers a mix of engaging moments, featuring romance, action, and emotional turmoil. The movie follows the journey of a man struggling with love and life. Whether you are looking for an emotional rollercoaster or action-packed entertainment, this film keeps you hooked throughout.')" 
+               data-title="Orange">
+
+<img src="https://i.ytimg.com/vi/FGVmFG6M3SQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCA115ZvXBM_Lw2ObProbYkjRKSLg" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=VSyivphv2J4', 'Tholi Prema', 'This is an exciting film that offers a mix of engaging moments, featuring romance, comedy, and emotions. The movie takes viewers through a journey of love, relationships, and self-discovery. Whether you are looking for an inspiring love story or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+               data-title="Tholi Prema">
+
+<img src="https://i.ytimg.com/vi/SmcFFKLV_FU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCe5-123K4xOG-E7S6QCEvf1cfHHw" 
+               onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=wl7FV1LHcU4', 'Shatamanam Bhavati', 'This is an exciting film that offers a mix of engaging moments, featuring family, emotions, and drama. The movie follows the story of a man reconnecting with his roots and the values of family and love. If you are looking for a heartwarming family film, this one is sure to touch your heart.')" 
+               data-title="Shatamanam Bhavati">
+
+<img src="https://ott360.in/Images/movies/godavari_te.jpg" 
+      onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=k_-PvLgr1c0', 'Godavari', 'This is an exciting film that offers a mix of engaging moments, featuring emotions, family drama, and introspection. The movie explores the story of a woman’s journey through life and relationships along the scenic Godavari river. A compelling narrative about life, love, and the changing seasons of relationships, this film will captivate you with its beauty and depth.')" 
+      data-title="Godavari">
+          </div>
+          <div class="bottom">
+            <a href="https://blackswan19.github.io/Educate/stoper.html" style="white-space: newrap;"><button>Watch moive with yt link?</button></a>
+          </div>
+      </section>
+  </div>
+  <div id="movies" class="section">
+    <section class="main-container">
+        <h2>Available Moives</h2>
+        <div class="box" id="movieList">
+        <img src="https://i.ytimg.com/vi/sWFaFXvNJzw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA7zqfTmoalxNcq54qWght9KHCRrA" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=GpSDwdsLcGI', 'Woman of the Hour 2023', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Woman of the Hour 2023">  
+          <img src="https://i.ytimg.com/vi/bw5kfTqngB0/maxresdefault.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=yp8PHybyHsc', 'Beauty And The Beast ', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Beauty And The Beast">  
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/1ba3dae5e8f5cdc57f4aaa21af36bae461c5edb8245df92503e1e751da6cde68._UR1920,1080_SX720_FMjpg_.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=iFiRPL7NPcw', 'One Last Night', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="One Last Night">  
+          <img src="https://images.plex.tv/photo?size=large-1280&url=https%3A%2F%2Fmetadata-static.plex.tv%2F7%2Fgracenote%2F7c53910dc07bb6484c04f132a42911a6.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=d_ABN5IzFKM', 'Flying Lessons', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Flying Lessons">  
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/b97fb79f4d547b186a4a1520cb979bf379841d79855b03c02628b3cc84704383.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Es8leDGNsbQ', 'Mi - 5', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Mi - 5">  
+          <img src="https://shahid.mbc.net/mediaObject/2023/Hanin/Nov/Thump_Survivor/original/Thump_Survivor.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=B3tsJ6Ut_EQ', 'Survivor', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Survivor">  
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/7871debdd604b135e757a6df4f4e8765097da7bd9ab007deb3810ac4220d0e57.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Jxjl40T4JNQ', 'Bleeding Steel', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Bleeding Steel">  
+          <img src="https://lh3.googleusercontent.com/nLlIqWf3UCoKSes5BxRqjUWU6arknWaVT7R4hsjZ7SPYZxK8qmyOXxkyR8K5Uda7j_raq6GUNC3_" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=eWG78R4y8Jk', 'The Girl With All The Gifts', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="The Girl With All The Gifts">  
+          <img src="https://m.media-amazon.com/images/M/MV5BNDg5OTQzYmYtMmM3Yi00M2Y4LWJmNmYtMzI2ODg1NjJiMjM2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=-aJ7c4jvCeM', 'Stand Up Guys', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Stand Up Guys">  
+          <img src="https://pics.filmaffinity.com/Romeo_and_Juliet_TV_Miniseries-202834115-large.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=SDNK8lT0lxs', 'Romeo and Juliet', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Romeo and Juliet">  
+          <img src="https://pic-bstarstatic.akamaized.net/ugc/a2abd1ee20aa3ef69d6893a6a0271030.jpg@320w_180h_1e_1c_90q" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=_vWrAV85JbE', 'Princess of Thieves ', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Princess of Thieves">  
+          <img src="https://i.ytimg.com/vi/9elrYKgq8d8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCwouGBp16LkiG7px_0Tqv9y_FNpw" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=aQXR7RthBuc', 'Cinderella', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Cinderella">  
+          <img src="https://cultrbox.com/wp-content/uploads/2015/08/need-for-speed-poster.jpg?w=1440" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=_TFL2dGViuw', 'Need For Speed', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Need For Speed">  
+          <img src="https://i.ytimg.com/vi/jwErAY9QjMA/maxresdefault.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=jwErAY9QjMA&t=4835s', 'S.O.S', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="S.O.S">  
+          <img src="https://resizing.flixster.com/1zSMKtvJLZnl85NYk9ZEEVyxOys=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p19099_v_h10_aa.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=wLswCTQ2kE0', 'Rose Hill', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Rose Hill">  
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/46bfd3e3eff3f8f4ba19f6255fdde158b41ebeabdf31a629a804898af0f33057.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=321UrMV39Vo', 'Senior Project', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Senior Project">  
+          <img src="https://i.ytimg.com/vi/MUx-GAt98BI/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBLkUhBh-KS9SPj5msa6tURfU2k2w" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=qBczncM0ntk', 'Beauty And The Billionaire ', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Beauty And The Billionaire ">  
+          <img src="https://images.plex.tv/photo?size=large-1280&url=https%3A%2F%2Fmetadata-static.plex.tv%2F3%2Fgracenote%2F3ba1c37337efe69090d00ac9b33faa7d.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=6jvqXxt3WNo', 'Not Cinderella`s Type', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Not Cinderella`s Type">  
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/775fac6795b0104671079024922ad0bce872eb96799c37ef72c8714945387e5f.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=XhGDh-niEB4', 'XIII The Conspiracy', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="XIII The Conspiracy">  
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/fb0a40d3a3dbd37e57289c5b1417da9e09422fda65ee5efd0e959a3473d0b4e7.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=p8egZga9Fqs', 'Love on Harbor Island', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+          data-title="Love on Harbor Island">  
+        </div>
+       
+          <div class="bottom">
+            <a href="https://blackswan19.github.io/Educate/stoper.html" style="white-space: newrap;"><button>Watch moive with yt link?</button></a>
+          </div>
+      </section>
+  </div>
+
+  <div id="videos" class="section">
+    <section class="main-container">
+        <h2>Tom and Jerry</h2>
+        <div class="box" id="movieList">
+         <img src="https://static.euronews.com/articles/stories/07/38/86/86/1440x810_cmsv2_34816e51-346c-525e-9d16-c92108f88346-7388686.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=AB4JZr9nWCY&list=PLbEif3LMBbrxFaXONS-1Uf51G0hkzQ3j4', 'Tom and Jerry(old)', 'Tom and Jerry is an American animated media franchise and series of comedy short films created in 1940 by William Hanna and Joseph Barbera. Best known for its 161 theatrical short films by Metro-Goldwyn-Mayer, the series centers on the enmity between the titular characters of a cat named Tom and a mouse named Jerry')" 
+          data-title="Tom and Jerry">  
+          <img src="https://preview.redd.it/opinions-on-tom-and-jerry-v0-35njsha47tsb1.jpg?auto=webp&s=0f3c6dfa96892425c03d90f00dca6f411ebaaa7d" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=GqLoXcPVDc0&list=PL1Z6ttYZJTaPGsh8JDlBBF58GC6j5efWU', 'Tom and Jerry', 'Tom and Jerry is an American animated media franchise and series of comedy short films created in 1940 by William Hanna and Joseph Barbera. Best known for its 161 theatrical short films by Metro-Goldwyn-Mayer, the series centers on the enmity between the titular characters of a cat named Tom and a mouse named Jerry')" 
+          data-title="Tom and Jerry">  
+          <img src="https://i.ytimg.com/vi/fX7GvTXxgWY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAenS3eTsOF-dxBS1v2eH9Egy0-UQ" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=YlgkhRSYUVI&list=PLfdQCeS-r6lCq19SAX1qsGIULnk7jbsKY', 'Tom and Jerry(2014)', 'Tom and Jerry is an American animated media franchise and series of comedy short films created in 1940 by William Hanna and Joseph Barbera. Best known for its 161 theatrical short films by Metro-Goldwyn-Mayer, the series centers on the enmity between the titular characters of a cat named Tom and a mouse named Jerry')" 
+          data-title="Tom and Jerry">  
+        </div>
+        <h2>Mr. Bean</h2>
+        <div class="box" id="movieList">
+          <img src="https://v3img.voot.com/v3Storage/assets/mr_bean_animated_16x9-1688126406198.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=9tdpic4U244&list=PL03E61EE42BBA9181', 'Mr. Bean: The Animated Series', 'Mr Bean, a fastidious bachelor, lives with Teddy, his stuffed brown bear. He finds unconventional ways to do seemingly normal tasks and often gets into trouble with his landlady, Mrs Wicket.')" 
+          data-title="Mr. Bean">  
+          <img src="https://cdn-play.tv2i.dk/fe9af1ab-0616-4a68-9ff1-fdcb5fe667fc.jpg?rect=0%2C0%2C3840%2C2160&h=720" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=m_BHMP6GlVc&list=PLd4rjD_RVZHEn0GxzchcjIdBBYTjsWv-X', 'Tom and Jerry', 'The childish Mr Bean uses his unusual wit to fulfil everyday tasks. But, more often than not, he creates trouble for himself and those around him.')" 
+          data-title="Mr. Bean">  
+        </div>
+        <h2>Oggy and the cockroaches</h2>
+        <div class="box" id="movieList">
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/c9caab71357cb1fdd38d404c865c72c7d39761776e2e8a69b063cdac03d2238b.jpg" 
+          onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=3l1kLGKxl2w&list=PL-d4D7FQaDKMKmZD-nmHpdnbO7YZRipC6', 'Oggy and the cockroaches', 'A lazy cat, Oggy, loves to watch TV and eat food. However, his flatmates, who happen to be three tiny cockroaches, enjoy attacking Oggy`s refrigerator and creating chaos, which ruins his peace.')" 
+          data-title="Oggy and the cockroaches">    
+        </div>
+          
+          <div class="bottom">
+            <a href="https://blackswan19.github.io/Educate/stoper.html" style="white-space: newrap;"><button>Watch moive with yt link?</button></a>
+          </div>
+      </section>
+  </div>
+
+  <div id="music" class="section">
+    <section class="main-container">
+          <h2>Available Moives</h2>
+          <div class="box" id="movieList">
+            <img src="https://i.ytimg.com/vi/br3SsatqZh8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDlQ0TKwXcVEwTW0TcWUwRdm9R0PA" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=br3SsatqZh8&t=1147s', '...ing (2003)', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="...ing (2003)">
+              <img src="https://photos.hancinema.net/photos/photo890495.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=j8nrsTZKdAI&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=3', 'Dancing the Waltz Alone', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Dancing the Waltz Alone">
+              
+              <img src="https://nekosdrama.wordpress.com/wp-content/uploads/2016/01/l20150731-99002100303i1.jpg?w=640" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=WuaRLIvpT64&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=2', 'What is the Ghost Up To? ', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="What is the Ghost Up To?">
+              <img src="https://i.ytimg.com/vi/0NaA_Afyodc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDlkHwWBgM4HGk2-M59UMqLbqdKZg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=MpXfsK2IOCs&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=4', 'Came to Me and Became a Star', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Came to Me and Became a Star">
+              <img src="https://i.ytimg.com/vi/A2CVlP-67bo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB5zaE1yg5CWvGubhmVQYFJo6Wuuw" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=XB87vm0OEpA&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=5', 'If We Were a Season', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="If We Were a Season">
+              <img src="https://photos.hancinema.net/photos/photo886333.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=yYBBlDjThI4&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=6', 'Let Us Meet', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Let Us Meet">
+              <img src="https://i.ytimg.com/vi/B68tzRK5xek/maxresdefault.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=ZwtM8tSrWOM&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=8', 'Don`t worry, I`m a ghost', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Don`t worry, I`m a ghost">
+              <img src="https://i.ytimg.com/vi/Cz-wgSdFyu8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBPuBE_5PlaKAMzOjQDsxp_VwC98w" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=h2LNeJuY5Wo&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=9', 'You Are Closer Than I Think', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="You Are Closer Than I Think">
+              <img src="https://asianwiki.com/images/f/f4/KBS_Drama_Special-Yeon-Woos_Summer-trailer.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=5rmKjjLGEvU&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=10', 'Yeonu`s Summer', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Yeonu`s Summer">
+             
+              <img src="https://avatars.mds.yandex.net/get-vthumb/4579100/c17b5fb72473598a646df88aa5024faf/564x318_1" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=1Wgy4z9uOJs&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=12', 'Madam Jeong`s One Last Week ', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="">
+              <img src="https://nekosdrama.wordpress.com/wp-content/uploads/2013/07/4.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=nlcMCWYblOg&list=PLrwHAEDEGR-LIq4YYivDjuI7iCsw9nO8v&index=13', 'My Friend is Still Alive', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Madam Jeong`s One Last Week ">
+          </div>
+          
+          <div class="bottom">
+            <a href="https://blackswan19.github.io/Educate/stoper.html" style="white-space: newrap;"><button>Watch moive with yt link?</button></a>
+          </div>
+      </section>
+  </div>
+
+
+  <div id="shows" class="section">
+    <section class="main-container">
+          <h2>Available Moives</h2>
+          <div class="box" id="movieList">
+            <div class="custom-menu"> <style> a{ text-decoration: none; } .custom-menu { display: none; position: fixed; background-color: #171717; border: 1px solid #242424; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; padding: 10px; border-radius: 5px; z-index: 1000; filter: drop-shadow(11px 12px 22px rgba(0, 0, 0, 0.416)); } .custom-menu button { display: block; width: 100%; border: none; background: none; text-align: left; padding: 8px; cursor: pointer; font-size: 15px; color: rgba(255, 255, 255, 0.811); } .custom-menu button:hover { background-color: #404040; } </style> <a href="https://blackswan19.github.io/bscrop/formbs"><button id="option2">More From Bs</button></a> <a href="https://blackswan19.github.io/Educate/stoper"><button id="option2">Go to BsAdstoper</button></a> </div>
+            <img src="https://resizing.flixster.com/sFFlwdm20-Aa_8-N5kWV1XxT9-s=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p14223720_v_h8_aa.jpg" 
+              onclick="openPopup(this.src, 'https://youtu.be/Iy-6jmQCcrI?si=drQxLAiziUWxtvqj', 'Raabta', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Raabta">
+              <img src="https://m.media-amazon.com/images/S/pv-target-images/9153b98db1cbd3a90d1bc394e4b515734fcc27c33d4f624960bd89a059634e00.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=9HYN5zXy970&t=1938s', 'Kai Po Che', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Kai Po Che">
+              <img src="https://m.media-amazon.com/images/S/pv-target-images/4e20c04fbb609a0c260b3ca00fd535ef17bb051a119b99df9f5f6e508b3b654e.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=o5x6t68xVVE', 'Teri Meri Kahaani', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Teri Meri Kahaani">
+              <img src="https://images.indianexpress.com/2018/04/blackmail-759.jpeg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=T9W742IKCHg', 'Blackmail', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Blackmail">
+              <img src="https://i.ytimg.com/vi/NvTD2FXJIu0/maxresdefault.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=Frb5hl4aoo4', 'Kya Kehna', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Kya Kehna">
+              <img src="https://jiocinemaweb.cdn.jio.com/jioimages.cdn.jio.com/content/entry/dynamiccontent/thumbs/1680/-/0/12/26/8a0e8f3374c811e688d58522ba040c22_1582111969083_l_medium.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=htwtV6qsSVo&t=4571s', 'Sanam Teri Kasam', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Sanam Teri Kasam">
+              <img src="https://i.ytimg.com/vi/dbTkItiju1w/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAe97wozQWM5JvVulgsbkbdrlZzIg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=dbTkItiju1w', 'Ajab Prem Ki Ghazab Kahani', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Ajab Prem Ki Ghazab Kahani">
+              <img src="https://cfm.yidio.com/images/movie/21700/backdrop-640x360.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=ckj2dj3vYt0', 'Dil Maange More', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Dil Maange More">
+              <img src="https://img1.hotstarext.com/image/upload/f_auto,t_hcdl/sources/r1/cms/prod/5316/1125316-h-9301d69b57d1" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=aMaR1pKdJl4', 'Humko Deewana Kar Gaye', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Humko Deewana Kar Gaye">
+              <img src="https://i.ytimg.com/vi/hpLUOJN2Zd8/maxresdefault.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=HczCus7E2GM', 'Half Girlfriend', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Half Girlfriend">
+              <img src="https://www.filmyfenil.com/wp-content/uploads/2017/09/Baadshaho-Poster.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=4nBU02Fv02s', 'Baadshaho', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Baadshaho">
+              <img src="https://resizing.flixster.com/XL6oNbOh5ptGCy-nz9qKtOBKccs=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p162369_v_h8_aa.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=SaEV_DMPogk', 'Chup Chup Ke', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Chup Chup Ke">
+              <img src="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/old_images/MOVIE/257/1000100257/1000100257-h" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=gxBERAhEU7w', 'Garam Masala', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Garam Masala">
+              <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/1717/1121717-h-bbc0d1327240" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=tPXYWRGNl7s', 'Ready', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Ready">
+              <img src="https://xstreamcp-assets-msp.streamready.in/assets/LIONSGATEPLAY/MOVIE/6492bfc05f85c677750e909b/images/DHAMAALY2007MHI_Airtel_thumbnail1_1920X1080.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=LKNHVDPKy7g', 'Dhamaal', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Dhamaal">
+              <img src="https://origin-staticv2.sonyliv.com/videoasset_images/mujhse_shaadi_karogi_29july_landscape_thumb.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=P8mi8WhZpew', 'Mujhse Shaadi Karog', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Mujhse Shaadi Karog">
+              <img src="https://m.media-amazon.com/images/S/pv-target-images/637956eacb7b708269cda4b89d93a09ddac1476541dc0737c2cfb893721d6266._SX1080_FMjpg_.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=SodVhwB6Sz8', 'Golmaal', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Golmaal">
+              <img src="https://m.media-amazon.com/images/S/pv-target-images/280e9f862f84b0cb3b54f5406f5560b057848965bb4f09a6169a8e692c328905._SX1080_FMjpg_.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=zloKjQXmwhE', 'Bhagam Bhag', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Bhagam Bhag">
+              <img src="https://i.ytimg.com/vi/tcm8G_ZS1pQ/maxresdefault.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=TIQ5hrfermg&t=2791s', 'Hera Pheri', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="Hera Pheri">
+              <img src="https://m.media-amazon.com/images/M/MV5BNjE3NDk3NGItMGI3MC00MzdkLThmZGMtZmQ0ZmI3MmVkZDMzXkEyXkFqcGc@._V1_.jpg" 
+              onclick="openPopup(this.src, 'https://www.youtube.com/watch?v=NSudj0s4vTw', 'HOUSEFULL 3', 'This is an exciting film that offers a mix of engaging moments, featuring [action, humor, or emotions]. The movie takes viewers through a journey with interesting characters and a captivating storyline. Whether you are looking for entertainment or something thought-provoking, this movie is sure to keep you engaged from start to finish.')" 
+              data-title="HOUSEFULL 3">              
+          </div>
+         
+          <div class="bottom">
+            <a href="https://blackswan19.github.io/Educate/stoper.html" style="white-space: newrap;"><button>Watch moive with yt link?</button></a>
+          </div>
+      </section>
+  </div>
+
+  <div id="popupOverlay" class="popup-overlay">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <img id="popupImage" src="" alt="Popup Image">
+        <div class="popopt">
+          <div class="movie-title" id="movieTitle"></div>
+          <div class="movie-description" id="movieDescription"></div>
+          <button id="playButton" onclick="playVideo()">Watch moive Now</button>
+        </div>
+    </div>
+</div>
+  <!-- JavaScript -->
+  <script>
+    function showSection(sectionId, sectionName) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => section.classList.remove('active'));
+
+      // Remove active class from all buttons
+      const buttons = document.querySelectorAll('.categories button');
+      buttons.forEach(button => button.classList.remove('active'));
+
+      // Show the selected section
+      document.getElementById(sectionId).classList.add('active');
+
+      // Highlight the active button
+      document.querySelector(`.categories button[onclick*="${sectionId}"]`).classList.add('active');
+
+      // Update the selected section label
+      document.getElementById('selected-section-label').textContent = sectionName;
+    }
+  </script>
+<script src="playmoive.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BsImageconverter</title>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/pZ5yWHQ/roralogo.png">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #212121;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .editor-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 30px;
+        }
+        img {
+            max-width: 100%;
+            max-height: 400px;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="range"] {
+            width: 100%;
+            max-width: 300px;
+            margin: 5px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .download-btn {
+            background-color: #007BFF;
+        }
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+        .upload-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="formbs">
+        <a href="https://blackswan19.github.io/bscrop/formbs" style="text-decoration: underline;color: #0040ff;position: fi;">@FromBs</a>
+    </div>
+    <h1 style="color: #0040ff;">BsImageconverter</h1>
+
+    <div class="editor-container">
+        <div class="upload-container">
+            <input type="file" id="imageUploader" accept="image/*">
+        </div>
+        
+        <img id="previewImage" alt="Preview" style="display: none;">
+        
+        <div class="controls" style="display: none;" id="controls">
+            <button id="invertButton">Invert Black and White</button>
+            <div>
+                <label for="brightness">Brightness:</label>
+                <input type="range" id="brightness" min="0" max="2" step="0.1" value="1">
+            </div>
+            <div>
+                <label for="contrast">Contrast:</label>
+                <input type="range" id="contrast" min="0" max="2" step="0.1" value="1">
+            </div>
+            <div>
+                <label for="saturation">Saturation:</label>
+                <input type="range" id="saturation" min="0" max="2" step="0.1" value="1">
+            </div>
+            <button class="download-btn" id="downloadButton">Download Image</button>
+        </div>
+    </div>
+
+    <script>
+        const imageUploader = document.getElementById('imageUploader');
+        const previewImage = document.getElementById('previewImage');
+        const controls = document.getElementById('controls');
+        const invertButton = document.getElementById('invertButton');
+        const downloadButton = document.getElementById('downloadButton');
+
+        const brightnessControl = document.getElementById('brightness');
+        const contrastControl = document.getElementById('contrast');
+        const saturationControl = document.getElementById('saturation');
+
+        let isInverted = false;
+
+        // Load and display the image
+        imageUploader.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    previewImage.src = reader.result;
+                    previewImage.style.display = 'block';
+                    controls.style.display = 'flex';
+                    previewImage.style.filter = ''; // Reset filters on new image
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Toggle invert filter for black/white inversion
+        invertButton.addEventListener('click', () => {
+            isInverted = !isInverted;
+            updateFilters();
+        });
+
+        // Update image filters
+        const updateFilters = () => {
+            const brightness = brightnessControl.value;
+            const contrast = contrastControl.value;
+            const saturation = saturationControl.value;
+
+            previewImage.style.filter = `
+                invert(${isInverted ? 1 : 0})
+                contrast(${contrast})
+                brightness(${brightness})
+                saturate(${saturation})
+            `;
+        };
+
+        // Add event listeners for sliders
+        brightnessControl.addEventListener('input', updateFilters);
+        contrastControl.addEventListener('input', updateFilters);
+        saturationControl.addEventListener('input', updateFilters);
+
+        // Download the modified image
+        downloadButton.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size to match image
+            canvas.width = previewImage.width;
+            canvas.height = previewImage.height;
+
+            // Apply the image to the canvas
+            ctx.filter = previewImage.style.filter;
+            ctx.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
+
+            // Convert canvas to a data URL and trigger a download
+            const dataUrl = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'modified_image.png';
+            link.click();
+        });
+//         document.addEventListener("DOMContentLoaded", () => {
+//   const customMenu = document.querySelector(".custom-menu");
+
+//   // Show custom menu on right-click
+//   document.addEventListener("contextmenu", (event) => {
+//       event.preventDefault();
+//       customMenu.style.display = "block";
+//       customMenu.style.top = `${event.pageY}px`;
+//       customMenu.style.left = `${event.pageX}px`;
+//   });
+
+//   // Hide the menu when clicking elsewhere
+//   document.addEventListener("click", () => {
+//       customMenu.style.display = "none";
+//   });
+// });
+
+    </script>
+
+</body>
+</html>
