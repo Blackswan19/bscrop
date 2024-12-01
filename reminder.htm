@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BsReminder</title>
+  <link rel="icon" type="image/x-icon" href="https://i.ibb.co/WBcSJPd/New-Project-A1-A7313.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="calendar.css">
+</head>
+<body>
+    <p style="color: #0059ff;font-weight: 500;">#BsReminder</p>
+<div class="calendar">
+  <h2 id="monthAndYear"></h2>
+  <table id="calendar">
+    <thead>
+      <tr>
+        <th>Sunday</th>
+        <th>Monday</th>
+        <th>Tueday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+      </tr>
+    </thead>
+    <tbody id="calendar-body">
+    </tbody>
+  </table>
+</div>
+<div class="leftright">
+    <button class="but1" onclick="previous()"><i class="fa-solid fa-angle-left"></i></button>
+<button class="but2" onclick="next()"><i class="fa-solid fa-angle-left fa-flip-horizontal"></i></button>
+
+</div>
+<!-- Goal Input Modal -->
+<div id="goalInputModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('goalInputModal')">&times;</span>
+    <h3 id="inputModalDate"></h3>
+    <input type="text" id="goalInput" placeholder="Enter your goal" />
+    <button onclick="saveGoal()">Save Goal</button>
+  </div>
+</div>
+
+<!-- Goal Display Modal -->
+<div id="goalDisplayModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('goalDisplayModal')">&times;</span>
+    <h3 id="displayModalDate"></h3>
+    <p id="goalDisplayText"></p>
+    <button onclick="editGoal()"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
+  </div>
+</div>
+
+<script>
+  let today = new Date();
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+  let goals = JSON.parse(localStorage.getItem('goals')) || {}; // Load saved goals from localStorage or initialize empty object
+  let selectedDate; // Stores the currently selected date
+
+  function generateCalendar(month, year) {
+    let calendarBody = document.getElementById("calendar-body");
+    calendarBody.innerHTML = "";
+    let date = new Date(year, month, 1);
+    let firstDay = date.getDay();
+    let daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    document.getElementById("monthAndYear").innerText = months[month] + ' ' + year;
+
+    let dayCount = 1;
+    for (let i = 0; i < 6; i++) {
+      let row = document.createElement("tr");
+      for (let j = 0; j < 7; j++) {
+        if (i === 0 && j < firstDay) {
+          let cell = document.createElement("td");
+          cell.appendChild(document.createTextNode(""));
+          row.appendChild(cell);
+        } else if (dayCount > daysInMonth) {
+          break;
+        } else {
+          let cell = document.createElement("td");
+          cell.setAttribute("data-date", `${year}-${month + 1}-${dayCount}`);
+          cell.onclick = () => handleDateClick(cell);
+
+          let cellText = document.createTextNode(dayCount);
+          cell.appendChild(cellText);
+
+          // Highlight today's date
+          if (dayCount === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+            cell.classList.add("highlight");
+          }
+
+          // Highlight if a goal is set for this date
+          let goalKey = `${year}-${month + 1}-${dayCount}`;
+          if (goals[goalKey]) {
+            cell.classList.add("goal-highlight");
+          }
+
+          row.appendChild(cell);
+          dayCount++;
+        }
+      }
+      calendarBody.appendChild(row);
+    }
+  }
+
+  // Handle clicking on a date cell
+  function handleDateClick(cell) {
+    selectedDate = cell.getAttribute("data-date");
+
+    if (goals[selectedDate]) {
+      // If a goal exists for this date, show the display modal
+      document.getElementById("displayModalDate").innerText = `Goal for ${selectedDate}`;
+      document.getElementById("goalDisplayText").innerText = goals[selectedDate] || "No goals";
+      document.getElementById("goalDisplayModal").style.display = "flex";
+    } else {
+      // If no goal exists, open the input modal
+      document.getElementById("inputModalDate").innerText = `Set Goal for ${selectedDate}`;
+      document.getElementById("goalInput").value = "";
+      document.getElementById("goalInputModal").style.display = "flex";
+    }
+  }
+
+  // Open the goal input modal to edit an existing goal
+  function editGoal() {
+    closeModal('goalDisplayModal');
+    document.getElementById("inputModalDate").innerText = `Edit Goal for ${selectedDate}`;
+    document.getElementById("goalInput").value = goals[selectedDate];
+    document.getElementById("goalInputModal").style.display = "flex";
+  }
+
+  // Close the specified modal
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+  }
+
+  // Save the goal and refresh calendar to reflect the goal
+  function saveGoal() {
+    let goalText = document.getElementById("goalInput").value;
+    if (goalText.trim()) {
+      goals[selectedDate] = goalText;
+    } else {
+      delete goals[selectedDate]; // Remove goal if input is empty
+    }
+    localStorage.setItem('goals', JSON.stringify(goals)); // Save goals to localStorage
+    closeModal('goalInputModal');
+    generateCalendar(currentMonth, currentYear);
+  }
+
+  generateCalendar(currentMonth, currentYear);
+
+  function previous() {
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    generateCalendar(currentMonth, currentYear);
+  }
+
+  function next() {
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
+    generateCalendar(currentMonth, currentYear);
+  }
+
+  // Close modal if clicked outside of it
+  window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+      closeModal('goalInputModal');
+      closeModal('goalDisplayModal');
+    }
+  };
+</script>
+</body>
+</html>
