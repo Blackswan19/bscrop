@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BSearchin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Brave Logo */
+        #logo {
+            font-size: 40px;
+        }
+        #logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        /* Search Container */
+        #browser-container {
+            width: 50%;
+    text-align: center;
+    padding: 20px;
+        }
+
+        /* Search Bar Style */
+        #url-bar {
+            width: 85%;
+    padding: 13px 40px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #8d8d8d30;
+    border: none;
+    border-radius: 130px;
+    margin-top: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    outline: none;
+        }
+        ::-webkit-scrollbar{
+            height: 5px;
+            background-color: #3a3b3e00;
+        }
+        #url-bar:focus{
+            background-color: #8d8d8d67;
+        }
+        #url-bar::placeholder {
+            color: #9e9e9e;
+        }
+
+        /* Go Button Style */
+        #go-button {
+            padding: 10px 25px;
+    position: relative;
+    top: 20px;
+    background: #1b1b1b15;
+    border: solid 1px rgba(255, 255, 255, 0.616);
+    outline: none;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+        }
+        #go-button:hover {
+            background-color: #ffffff2d;
+        }
+        
+        /* Wrapper for Button within Search Container */
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* Option Buttons */
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 25px;
+            gap: 10px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ffffff1a;
+            color: #ffffff;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            justify-content: space-between;
+            position: relative;
+        }
+        .option:hover {
+            background-color: #7070706d;
+        }
+        .option-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Input for Editable URL */
+        .url-input {
+            display: none;
+            background-color: #8d8d8d30;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 5px;
+            outline: none;
+        }
+        /* Decorative Background Pattern */
+        #background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://www.transparenttextures.com/patterns/debut-light.png');
+            opacity: 0.1;
+        }
+        /* Saved Websites Display */
+        #saved-websites {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    padding: 6px;
+    left: 0px;
+    background: #ffffff24;
+    filter: drop-shadow(2px 15px 10px black);
+        }
+        div#websites-list {
+    display: flex;
+}
+        .website-item {
+            display: flex;
+    padding: 5px;
+    margin: 5px;
+    font-size: 12px;
+    justify-content: flex-start;
+    
+        }
+        .website-item:hover{
+            background-color: #ffffff49;
+    border-radius: 6px;
+        }
+        .website-item img {
+            width: 15px;
+    height: 15px;
+    margin-right: 5px;
+        }
+        .color-picker {
+    position: fixed;
+    top: 15px;
+    right: 0px;
+}
+input#colorPicker {
+    padding: 14px 13px;
+    width: 5%;
+    background: #7979797d;
+    border: solid 1px black;
+    outline: none;
+}
+        .delete-btn {
+            background: transparent;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+    position: absolute;
+    background: rgb(255 255 255);
+    padding: 0px 5px;
+    border-radius: 3px;
+    bottom: 0px;
+    margin-left: -9px;
+        }
+        .delete-btn:hover{
+            font-size: 20px;
+            padding: 7px 9px;
+            color: black;
+            background: rgb(255, 255, 255);
+            font-weight: 300;
+        }
+        div#websites-list {
+            display: flex
+;
+    position: relative;
+    gap: 10px;
+    overflow-x: scroll;
+    width: 96%;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.801);
+    }
+
+.frombs {
+    position: fixed;
+    gap: 20px;
+    display: flex
+;
+    font-size: 13px;
+    background: #ffffff24;
+    filter: drop-shadow(12px -14px 16px black);
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    left: 0px;
+    padding: 8px 30px;
+    bottom: 0px;
+    }
+
+    .frombs a:hover {
+        text-decoration: underline;
+    }
+    .footer {
+        color: #e8eaed;
+        position: fixed;
+        font-size: 15px;
+        right: 90px;
+    }
+    .more{
+        display: none;
+    }
+    #clear-input {
+    position: absolute;
+    right: 40px;
+    cursor: pointer;
+    color: #aeaeae;
+    font-size: 30px;
+    display: none;
+    top: 21px;
+    font-weight: 100;
+        }
+
+        .suggestions {
+            position: relative;
+    top: 10px;
+    left: 40px;
+    background: #ffffff24;
+    width: 90%;
+    z-index: 1000;
+    max-height: 135px;
+    overflow-y: auto;
+    text-align: justify;
+    border-radius: 9px;
+        }
+
+        .suggestion-item {
+            padding: 8px 25px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background: #8d8d8d67;
+        }
+@media(max-width:480px){
+    body{
+        position: fixed;
+    width: 100%;
+    }
+    input#colorPicker{
+  position: fixed;
+    right: 5px;
+}
+    input#url-bar {
+        position: relative;
+        width: 100%;
+        left: -20px;
+        padding: 10px 20px;
+        font-size: 15px;
+}
+.suggestion-item {
+    padding: 8px 25px;
+    cursor: pointer;
+    font-size: 15px;
+}
+.suggestions {
+    position: relative;
+        top: 10px;
+        width: 100%;
+        left: 0px;
+}
+#clear-input {
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+    color: #aeaeae;
+    font-size: 22px;
+    display: none;
+    top: 22px;
+    font-weight: 100;
+}
+.frombs {
+    display: none;
+}
+#go-button {
+    padding: 10px 20px;
+    position: relative;
+}
+#logo {
+    font-size: 30px;
+}
+#browser-container {
+        width: 80%;
+        position: relative;
+    }
+div#websites-list {
+            display: flex
+;
+    position: relative;
+    gap: 10px;
+    overflow-x: scroll;
+    width: 88%;
+    white-space: nowrap;
+}
+.more{
+    display: block;
+    background: #ffffff24;
+    filter: drop-shadow(12px -14px 16px black);
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        bottom: 0px;
+        position: fixed;
+        font-size: 12px;
+        gap: 10px;
+        display: grid;
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- Saved Websites Section -->
+<div id="saved-websites">
+    <div id="websites-list"></div>
+</div>
+
+<!-- Logo Section -->
+<div id="logo">BSearchin</div>
+
+<!-- Search Container -->
+<!-- Search Container -->
+<div id="browser-container">
+    <div class="search-wrapper">
+        <input type="text" id="url-bar" placeholder="Search here..." autocomplete="off">
+        <span id="clear-input">×</span>
+        <div class="suggestions" id="suggestions-list"></div>
+        <button id="go-button" disabled>Search</button>
+    </div>
+</div>
+
+<!-- Options Container -->
+<div class="options-container">
+    <div class="option">
+        <span class="option-text">Save a website</span>
+    </div>
+</div>
+<div class="color-picker">
+    <input type="color" id="colorPicker" value="#001252" onchange="changeBackgroundColor(event)">
+  </div>
+<script src="noright.js"></script>
+<div class="frombs">
+    <p style="color: rgb(0, 0, 0); text-decoration: underline; font-size: 15px;font-weight: 600;">More Searches</p><br><br><br>
+    <a href="https://blackswan19.github.io/Educate/songsearcher">BSongsearch</a>
+    <a href="https://blackswan19.github.io/bscrop/bsweb">BsWebs</a>
+    <a href="https://blackswan19.github.io/bscrop/formbs">Rora</a>
+    <div class="footer">
+      <a href="https://blackswan19.github.io/bscrop/reminder.html">BsReminder <i class="fa-regular fa-calendar-days"></i></a>
+    </div>
+  </div>
+  <div class="more">
+    <a href="https://blackswan19.github.io/bscrop/formbs">More FromBs</a>
+  </div>
+
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("url-bar").focus();
+    });
+</script>
+<script>
+    const urlBar = document.getElementById('url-bar');
+    const goButton = document.getElementById('go-button');
+    const clearInput = document.getElementById('clear-input');
+    const suggestionsList = document.getElementById('suggestions-list');
+
+    // Initialize localStorage for inputs
+    const storedInputsKey = 'storedInputs';
+    let storedInputs = JSON.parse(localStorage.getItem(storedInputsKey)) || [];
+
+    // Enable/disable search button and toggle clear button visibility
+    urlBar.addEventListener('input', function () {
+        const value = urlBar.value.trim();
+        goButton.disabled = value === '';
+        clearInput.style.display = value ? 'block' : 'none';
+
+        // Show suggestions
+        showSuggestions(value);
+    });
+
+    // Clear input field
+    clearInput.addEventListener('click', function () {
+        urlBar.value = '';
+        goButton.disabled = true;
+        clearInput.style.display = 'none';
+        suggestionsList.innerHTML = ''; // Clear suggestions
+    });
+
+    // Store input in localStorage when searching
+    goButton.addEventListener('click', function () {
+        const value = urlBar.value.trim();
+        if (value && !storedInputs.includes(value)) {
+            storedInputs.push(value);
+            localStorage.setItem(storedInputsKey, JSON.stringify(storedInputs));
+        }
+
+        let url = value;
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://www.google.com/search?q=' + encodeURIComponent(value);
+        }
+        window.open(url, '_self');
+    });
+
+    // Allow pressing 'Enter' to search
+    urlBar.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            goButton.click();
+        }
+    });
+    function showSuggestions(value) {
+    suggestionsList.innerHTML = ''; // Clear current suggestions
+    if (!value) return;
+
+    const suggestions = storedInputs.filter(input =>
+        input.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (suggestions.length === 0) {
+        suggestionsList.style.display = 'none';
+    } else {
+        suggestionsList.style.display = 'block';
+        suggestions.forEach((suggestion, index) => {
+            const item = document.createElement('div');
+            item.classList.add('suggestion-item');
+            item.style.display = 'flex'; // Use flexbox to align the word on the left and x on the right
+            item.style.justifyContent = 'space-between'; // Ensure space between the word and the x mark
+            item.style.alignItems = 'center'; // Vertically center the items
+
+            const suggestionText = document.createElement('span');
+            suggestionText.textContent = suggestion;
+            suggestionText.style.flex = '1'; // Take up the remaining space
+
+            const deleteBtn = document.createElement('span');
+            deleteBtn.textContent = '×';
+            deleteBtn.style.color = 'white';
+            deleteBtn.style.cursor = 'pointer';
+            deleteBtn.style.fontSize = '20px';
+            deleteBtn.style.fontWeight = '100px';
+
+            // Delete suggestion from localStorage
+            deleteBtn.addEventListener('click', () => {
+                storedInputs.splice(index, 1);
+                localStorage.setItem(storedInputsKey, JSON.stringify(storedInputs));
+                showSuggestions(value); // Refresh suggestions
+            });
+
+            // Add event listener to the suggestion text to fill input with the clicked suggestion
+            suggestionText.addEventListener('click', () => {
+                urlBar.value = suggestion; // Fill the input with the clicked suggestion
+                suggestionsList.innerHTML = ''; // Clear suggestions
+                clearInput.style.display = 'block'; // Show the clear button
+            });
+
+            item.appendChild(suggestionText);
+            item.appendChild(deleteBtn);
+            suggestionsList.appendChild(item);
+        });
+    }
+}
+
+
+    // Hide suggestions if clicked outside
+    document.addEventListener('click', (event) => {
+        if (!document.querySelector('.search-wrapper').contains(event.target)) {
+            suggestionsList.style.display = 'none';
+        }
+    });
+
+window.onload = function() {
+      const savedColor = localStorage.getItem('bgColor');
+      if (savedColor) {
+        document.body.style.backgroundColor = savedColor;
+        document.getElementById('colorPicker').value = savedColor;
+      }
+    }
+    function changeBackgroundColor(event) {
+      const selectedColor = event.target.value;
+      document.body.style.backgroundColor = selectedColor;
+
+      // Save the color in localStorage
+      localStorage.setItem('bgColor', selectedColor);
+    }
+    // Save a new website with user-defined title
+async function saveWebsite(url) {
+    // Ensure the URL has a proper protocol
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url; // Add 'https://' if missing
+    }
+
+    // Ask the user for a title
+    const title = prompt("Enter a title for this website:");
+
+    if (title) { // Only save if a title was entered
+        const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+
+        // Add the new website to the saved websites array
+        savedWebsites.push({ url, title });
+        
+        // Save the updated list back to localStorage
+        localStorage.setItem('websites', JSON.stringify(savedWebsites));
+
+        // Reload the list of saved websites
+        loadWebsites();
+    } else {
+        alert("Website title cannot be empty!");
+    }
+}
+
+// Load saved websites from localStorage and display them
+async function loadWebsites() {
+    const websitesList = document.getElementById('websites-list');
+    websitesList.innerHTML = ''; // Clear the list
+
+    const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+
+    for (const [index, website] of savedWebsites.entries()) {
+        const websiteItem = document.createElement('div');
+        websiteItem.classList.add('website-item');
+
+        // Create a link element for the saved website
+        const link = document.createElement('a');
+        link.href = website.url;
+        link.target = '_self';
+
+        // Add favicon for the website
+        const favicon = document.createElement('img');
+        const domain = getDomain(website.url);
+        favicon.src = `https://www.google.com/s2/favicons?domain=${domain}`;
+        favicon.onerror = function () {
+            // Use a fallback icon if favicon cannot be loaded
+            favicon.src = 'https://i.ibb.co/kxgjrZG/sitesaved-BS.png';
+        };
+        favicon.alt = '';
+
+        // Use the title if available, otherwise fallback to the domain
+        const title = website.title || domain;
+
+        // Create delete button for removing saved website
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete-btn');
+        deleteBtn.innerText = '×';
+        deleteBtn.onclick = function () {
+            deleteWebsite(index);
+        };
+
+        // Append favicon and title to the link
+        link.appendChild(favicon);
+        link.appendChild(document.createTextNode(title));
+
+        // Append link and delete button to the website item
+        websiteItem.appendChild(link);
+        websiteItem.appendChild(deleteBtn);
+
+        // Add the website item to the list
+        websitesList.appendChild(websiteItem);
+    }
+}
+
+// Delete a website from localStorage
+function deleteWebsite(index) {
+    const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+    savedWebsites.splice(index, 1); // Remove the website at the given index
+    localStorage.setItem('websites', JSON.stringify(savedWebsites));
+    loadWebsites(); // Reload the list to reflect the deletion
+}
+
+// Helper function to extract the domain from the URL
+function getDomain(url) {
+    try {
+        return new URL(url).hostname; // Extract the domain name
+    } catch (e) {
+        return url; // Fallback to the full URL if parsing fails
+    }
+}
+
+// Initialize websites on page load
+loadWebsites();
+
+// Add event listeners for the search bar and button
+document.querySelector('.option').addEventListener('click', async function () {
+    const url = prompt("Enter the website URL:");
+    if (url) {
+        await saveWebsite(url);
+    }
+});
+
+</script>
+
+
+</body>
+</html>
