@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mytv(Imgcnvt) - Paid</title>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/84x2Bk3/BS.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="img.css">
+    </style>
+</head>
+<body>
+    <style>
+        #content {
+            display: none;
+        }
+        #accessDenied {
+    display: none;
+    color: red;
+    text-align: center;
+    top: 100px;
+    position: relative;
+}
+        div#pinSection {
+    padding: 50px;
+    background: #3c3c3c;
+    color: white;
+    border-radius: 15px;
+}
+input#pinInput {
+    padding: 10px 20px;
+    border-radius: 100px;
+    border: none;
+    outline: none;
+    color: black;
+    font-size: 15px;
+}
+            .password-container {
+                position: relative;
+                display: inline-block;
+            }
+            .toggle-password button{
+                position: absolute;
+                right: 10px;
+                top: 5px;
+                cursor: pointer;
+                background: none;
+                border: none;
+                font-size: 14px;
+                color: #007BFF;
+            }
+        </style>
+
+        <div id="pinSection">
+            <p>Enter the PIN to access the site:</p>
+            <div class="password-container">
+                <input type="password" id="pinInput" placeholder="Enter PIN">
+                <button class="toggle-password" onclick="togglePassword()" style="background-color: #3c3c3c;">Show</button>
+            </div>
+            <br><br>
+            <button onclick="validatePin()">Submit</button>
+            <p id="accessDenied">Incorrect PIN. Please try again.</p>
+        </div>
+<div class="whole"  id="content">
+
+<div class="custom-menu">
+        <a href="https://blackswan19.github.io/bscrop/imgcrop"><button id="option2">Go to BsImgcroper</button></a>
+        <a href="https://blackswan19.github.io/bscrop/formbs"><button id="option2">More From BS</button></a>
+      </div>
+     <div class="croper">
+        <a href="https://blackswan19.github.io/bscrop/imgcrop" style="text-decoration: underline;color: #ffffff;position: fixed;right: 10px;top: 10px;font-size: 20px;"><i class="fa-solid fa-crop-simple"></i></a>
+     </div>
+    <h1 style="color: #0040ff;font-weight: 600;text-align: center;
+    line-height: 25px;">Myootive<br><span style="color: rgb(186, 186, 186);font-size: 12px;">(Imgcnvt)</span></h1>
+
+    <div class="editor-container">
+        <input type="file" id="imageUploader" accept="image/*" title="By using BsImgconverter you can covert your image blending">
+        <img id="previewImage" alt="Preview" style="display: none;">
+        
+        <div class="controls" style="display: none;" id="controls">
+            <div class="laststage">
+                <button id="downloadButton">Download Image</button>
+                <button id="invertButton">Convert the image</button>
+            </div> 
+            <div class="udjest">
+                <div>
+                    <label for="brightness">Brightness:</label>
+                    <input class="volume" type="range" id="brightness" min="0" max="2" step="0.1" value="1">
+                </div>
+                <div>
+                    <label for="contrast">Contrast:</label>
+                    <input class="volume" type="range" id="contrast" min="0" max="2" step="0.1" value="1">
+                </div>
+                <div>
+                    <label for="saturation">Saturation:</label>
+                    <input class="volume" type="range" id="saturation" min="0" max="2" step="0.1" value="1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup message for upload limit -->
+    <div id="uploadLimitPopup" class="popup">
+        <p>You have the reached '50' upload limit for the next 24 hours.</p>
+        <button onclick="closePopup()">Ok, I will</button>
+    </div>
+    <div id="imagePopup" class="image-popup">
+        <h2 id="imageStatus"></h2>
+        <img id="popupImage" alt="Popup Image">
+        <button id="closePopup">Close</button>
+    </div>
+    
+ 
+</div>   
+    <div class="status" id="statusMessage"></div>
+
+    <script>
+        const MAX_UPLOADS = 50;
+        const UPLOAD_LIMIT_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+        let uploadCount = 0;
+        let uploadTimestamps = [];
+        const imageUploader = document.getElementById('imageUploader');
+        const previewImage = document.getElementById('previewImage');
+        const controls = document.getElementById('controls');
+        const invertButton = document.getElementById('invertButton');
+        const brightnessControl = document.getElementById('brightness');
+        const contrastControl = document.getElementById('contrast');
+        const saturationControl = document.getElementById('saturation');
+        const downloadButton = document.getElementById('downloadButton');
+        const statusMessage = document.getElementById('statusMessage');
+        const uploadLimitPopup = document.getElementById('uploadLimitPopup');
+        const imagePopup = document.getElementById('imagePopup');
+        
+        // Load the upload history from localStorage
+        loadUploadHistory();
+
+        // Load and display the image
+        imageUploader.addEventListener('change', (event) => {
+            if (uploadCount >= MAX_UPLOADS) {
+                displayPopup();
+                return;
+            }
+
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    previewImage.src = reader.result;
+                    previewImage.style.display = 'block';
+                    controls.style.display = 'flex';
+                    previewImage.style.filter = '';
+                    trackUpload();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Toggle invert filter for black/white inversion
+        invertButton.addEventListener('click', () => {
+            updateFilters();
+        });
+
+        // Update image filters
+        const updateFilters = () => {
+            const brightness = brightnessControl.value;
+            const contrast = contrastControl.value;
+            const saturation = saturationControl.value;
+
+            previewImage.style.filter = `
+                invert(1)
+                contrast(${contrast})
+                brightness(${brightness})
+                saturate(${saturation})
+            `;
+        };
+
+        // Add event listeners for sliders
+        brightnessControl.addEventListener('input', updateFilters);
+        contrastControl.addEventListener('input', updateFilters);
+        saturationControl.addEventListener('input', updateFilters);
+
+        downloadButton.addEventListener('click', () => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+
+    img.src = previewImage.src;
+
+    img.onload = () => {
+        // Set canvas size to the same as the image
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Set background color (e.g., white)
+        ctx.fillStyle = '#ffffff'; // Replace with your preferred background color
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Apply filters (invert, brightness, contrast, saturation)
+        const brightness = brightnessControl.value;
+        const contrast = contrastControl.value;
+        const saturation = saturationControl.value;
+
+        ctx.filter = `
+            invert(${isInverted ? 1 : 0})
+            brightness(${brightness})
+            contrast(${contrast})
+            saturate(${saturation})
+        `;
+
+        // Draw the image onto the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Generate the downloadable image
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'Rora#imgconv.png';
+        link.click();
+    };
+});
+        function loadUploadHistory() {
+            const history = JSON.parse(localStorage.getItem('uploadHistory')) || [];
+            const now = Date.now();
+            uploadTimestamps = history.filter(timestamp => now - timestamp < UPLOAD_LIMIT_TIME);
+            uploadCount = uploadTimestamps.length;
+
+            if (uploadCount >= MAX_UPLOADS) {
+                displayPopup();
+            } else {
+                displayStatus(`Uploads left: ${MAX_UPLOADS - uploadCount}`, 'info');
+            }
+        }
+
+        // Track a new upload
+        function trackUpload() {
+            const now = Date.now();
+            uploadTimestamps.push(now);
+            uploadCount++;
+
+            // Save the updated history to localStorage
+            localStorage.setItem('uploadHistory', JSON.stringify(uploadTimestamps));
+
+            // Update the status
+            if (uploadCount >= MAX_UPLOADS) {
+                displayPopup();
+            } else {
+                displayStatus(`Uploads left: ${MAX_UPLOADS - uploadCount}`, 'info');
+            }
+        }
+
+        // Display a popup message
+        function displayPopup() {
+            uploadLimitPopup.style.display = 'block';
+        }
+
+        // Close the popup
+        function closePopup() {
+            uploadLimitPopup.style.display = 'none';
+        }
+
+        // Display status messages
+        function displayStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.style.display = 'block';
+        }
+       
+const popupImage = document.getElementById('popupImage');
+const imageStatus = document.getElementById('imageStatus');
+const closePopupButton = document.getElementById('closePopup');
+
+let isConverted = false;
+let isInverted = false;
+
+// Function to apply filters and update image state
+const applyFiltersToCanvas = () => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+
+    img.src = previewImage.src;
+
+    img.onload = () => {
+        // Set canvas size to the image size
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Apply filters (invert, brightness, contrast, saturation)
+        const brightness = brightnessControl.value;
+        const contrast = contrastControl.value;
+        const saturation = saturationControl.value;
+
+        ctx.filter = `
+            invert(${isInverted ? 1 : 0})
+            brightness(${brightness})
+            contrast(${contrast})
+            saturate(${saturation})
+        `;
+
+        // Draw the filtered image on the canvas
+        ctx.drawImage(img, 0, 0);
+
+        // Update the previewImage to display the filtered image
+        previewImage.src = canvas.toDataURL('image/png');
+
+        // Mark the image as converted and set it as inverted (black-and-white)
+        isConverted = true;
+        isInverted = !isInverted;  // Toggle the inverted state for the next conversion
+    };
+};
+const correctPin = "2911"; // Set your PIN here
+            
+            function validatePin() {
+                const userPin = document.getElementById("pinInput").value;
+                const pinSection = document.getElementById("pinSection");
+                const content = document.getElementById("content");
+                const accessDenied = document.getElementById("accessDenied");
+    
+                if (userPin === correctPin) {
+                    pinSection.style.display = "none";
+                    content.style.display = "block";
+                    accessDenied.style.display = "none";
+                } else {
+                    accessDenied.style.display = "block";
+                }
+            }
+    
+            function lockSite() {
+                document.getElementById("content").style.display = "none";
+                document.getElementById("pinSection").style.display = "block";
+                document.getElementById("pinInput").value = ""; // Clear PIN input
+            }
+    
+            function togglePassword() {
+                const pinInput = document.getElementById("pinInput");
+                const toggleBtn = document.querySelector(".toggle-password");
+    
+                if (pinInput.type === "password") {
+                    pinInput.type = "text";
+                    toggleBtn.textContent = "Hide";
+                } else {
+                    pinInput.type = "password";
+                    toggleBtn.textContent = "Show";
+                }
+            }
+// Event listener for the "Convert the image" button (inversion)
+invertButton.addEventListener('click', () => {
+    applyFiltersToCanvas();
+});
+
+// Event listener to open the popup with the processed image
+previewImage.addEventListener('click', () => {
+    popupImage.src = previewImage.src;
+
+    // Show the correct status in the popup
+    if (isConverted) {
+        imageStatus.textContent = isInverted ? "Normal Image" : "Converted Image";
+    } else {
+        imageStatus.textContent = "Original Image";
+    }
+
+    imagePopup.style.display = 'block';
+});
+
+// Event listener to close the popup
+closePopupButton.addEventListener('click', () => {
+    imagePopup.style.display = 'none';
+});
+
+    </script>
+<script src="noright.js"></script>
+</body>
+</html>
