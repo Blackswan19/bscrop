@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Strait&display=swap');
+*{
+    color: rgb(255, 255, 255);
+    font-family: "Red Hat Display", sans-serif;
+}
+body{
+  background-color: #000000;
+  font-weight: 300;
+}
+table {
+  width: 100%;
+    position: fixed;
+    top: 20%;
+}
+tr{
+  color: #ffffff;
+}
+h2#monthAndYear {
+  font-size: 50px;
+  width: 100%;
+  position: fixed;
+  left: 37%;
+  top: 15px;
+}
+th, td {
+    border: 0px solid #000000;
+    padding: 15px;
+    text-align: center;
+    color: gray;
+}
+td:hover{
+  color: rgb(187, 187, 187);
+  background: #1d1d1d;
+  font-weight: 800;
+}
+th {
+    background-color: #000000;
+    color: #d6d6d6;
+}
+th:hover{
+  color: #0022ff;
+}
+p#goalDisplayText {
+  font-size: 16px;
+  background: #696969;
+  padding: 8px;
+  text-transform: capitalize;
+  font-weight: 600;
+  border-radius: 134px;
+}
+.highlight {
+    background-color: #ff00008b;
+    color: white;
+    font-weight: 600;
+}
+.highlight:hover{
+  background-color: #ff000059;
+}
+.leftright {
+  position: fixed;
+  bottom: 150px;
+  width: 100%;
+  left: 25%;
+  display: flex;
+  gap: 600px;
+}
+.leftright button{
+  font-size: large;
+  background-color: transparent;
+}
+/* Additional CSS for goal display, modal, and layout adjustments */
+.goal-highlight {
+  background-color: #1800ffa8;
+  color: white;
+  font-weight: 600;
+}
+.goal-highlight:hover {
+    background-color: #1900ff68;
+}
+input{
+padding: 11px;
+outline: none;
+border: none;
+color: rgb(255, 255, 255);
+border-radius: 5px;
+background: #4d4d4d;
+}
+button{
+padding: 11px;
+border: none;
+background: #4d4d4d;
+border-radius: 5px;
+}
+button:hover{
+background: #4d4d4db4;
+}
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.84);
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background-color: #282828;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 25px;
+  cursor: pointer;
+}
+.close:hover {
+    font-weight: 400;
+  color: #0059ff;
+}
+/* General Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  position: fixed;
+  top: 20%;
+}
+
+th, td {
+  
+  padding: 10px;
+  text-align: center;
+  color: gray;
+}
+
+td:hover {
+  color: rgb(187, 187, 187);
+  background: #1d1d1d;
+  font-weight: 800;
+}
+
+/* Responsive Styling for Small Screens */
+@media (max-width: 768px) {
+
+  /* General adjustments for mobile */
+  h2#monthAndYear {
+    font-size: 28px;
+    top: 45px;
+    transform: translateX(-50%);
+    text-align: right;
+  }
+
+  table {
+      position: relative;
+      top: 0;
+      margin-top: 100px;
+      display: block;
+      width: 100%;
+      border: none;
+  }
+
+  thead {
+      display: none; /* Hide table headers on mobile */
+  }
+
+  tr {
+      display: block;
+      margin-bottom: 15px;
+      border: 1px solid #444; /* Border for separation between rows */
+  }
+
+  td {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-bottom: 1px solid #333;
+  }
+
+  /* Label each cell with its corresponding header */
+  td::before {
+      content: attr(data-label); /* Use data-label attribute for mobile view */
+      font-weight: bold;
+      color: #d6d6d6;
+      text-transform: uppercase;
+      flex: 1;
+  }
+  .modal-content {
+    width: 80%;
+}
+  .leftright {
+    align-items: center;
+    gap: 80px;
+    padding: 20px;
+    left: 30%;
+  }
+}
