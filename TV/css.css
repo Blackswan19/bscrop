@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Strait&display=swap');
+
+* {
+	font-family: "Red Hat Display", sans-serif;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+/* Subtitles Button Styling */
+#subtitle-btn {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Hover effect for subtitle button */
+#subtitle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+
+
+/* Playback Controls Styling */
+#backward-btn, #play-pause-btn, #forward-btn {
+    position:fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.233);
+    color: #ffffff80;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+#play-pause-btn {
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#backward-btn {
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+#forward-btn {
+    left: 60%;
+    transform: translate(-50%, -50%);
+}
+
+/* Optional hover effect */
+#backward-btn:hover, #play-pause-btn:hover, #forward-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+}
+
+
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: rgb(30, 29, 29);
+	color: #3e3e3e;
+	overflow: hidden;
+	position: relative;
+}
+
+.screen-frame {
+	position: relative;
+    width: 1200px;
+    overflow: hidden;
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.249);
+    background: rgb(0, 0, 0);
+}
+
+video {
+	width: 100%;
+	border-radius: 25px;
+}
+
+#upload-btn {
+	appearance: none;
+	color: #ffffff;
+    background-color: #afafaf00;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    position: fixed;
+    z-index: 3;
+    top: 20px;
+    left: 20px;
+	width: 50%;
+}
+
+#toggle-on,
+#toggle-off {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 30px;
+	color: #6e6e6e;
+	/* Light muted grey */
+	cursor: pointer;
+}
+
+#toggle-on:hover,
+#toggle-off:hover {
+	color: white;
+}
+
+#toggle-off {
+	display: none;
+}
+
+canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgb(0, 0, 0);
+	/* Soft white background */
+	pointer-events: none;
+}
+#blend-factor-display {
+	display: inline;
+    font-size: 13px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+#brightness-container {
+	position: fixed;
+    bottom: 20px;
+    left: 10px;
+    font-size: 13px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+/* Title display */
+#title {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	font-size: 25px;
+	font-weight: 600;
+	color: #4a4a4a;
+	/* Medium grey */
+	display: none;
+	z-index: 2;
+}
+
+/* Controls container */
+#controls-container {
+	display: none;
+    position: fixed;
+    bottom: 10px;
+    left: 39.5%;
+    color: white;
+    z-index: 2;
+}
+
+.blend-factor-controls {
+	position: absolute;
+	display: contents;
+}
+.blend-factor-controls button {
+	padding: 10px 30px;
+    color: #ffffff;
+    background-color: #f0f0f000;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.help {
+	margin-top: auto;
+	font-size: 0.9em;
+	color: #636363;
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+	cursor: pointer;
+}
+.help:hover{
+	color: rgb(173, 173, 173);
+}
+/* Progress container */
+#progress-container {
+	width: 90%;
+	height: 3px;
+	background: #ffffff2e;
+	/* Light grey for the progress background */
+	border-radius: 5px;
+	margin-top: 10px;
+	overflow: hidden;
+	position: absolute;
+	bottom: 62px;
+	left: 5%;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+#progress-container:hover{
+	transform: scale(1.05);
+	height: 4px;
+	background: rgb(21 21 21);
+}
+#progress-bar {
+	height: 100%;
+	background: rgb(0, 26, 255);
+	/* Soft blue/cyan progress bar */
+	width: 0%;
+}
+
+/* Popup styles */
+.popup {
+	display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+	color: #c9c9c9;
+    background-color: rgb(21 21 21);
+    padding: 35px;
+    border-radius: 16px;
+    z-index: 1000;
+    width: 22%;
+    font-size: 15px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    line-height: 30px;
+	letter-spacing: 0.5px;
+}
+
+.popup h2 {
+	margin-top: 0;
+	color: #333333;
+	/* Dark grey header */
+	font-size: 18px;
+}
+
+.popup button {
+	margin-top: 20px;
+	padding: 5px 15px;
+	color: #595959;
+	background-color: #f0f0f0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.popup button:hover {
+	color: white;
+	background-color: rgb(52, 52, 52);
+}
+
+/* Overlay */
+.overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.9);
+	/* Soft light grey overlay */
+	z-index: 999;
+}
+
+/* Mobile styles */
+@media (max-width: 1089px) {
+	* {
+		background-color: #ffffff;
+		/* Light background for smaller screens */
+	}
+
+	body {
+		background-color: #ffffff;
+		display: none;
+	}
+}
