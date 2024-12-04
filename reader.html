@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myootive(Reader)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"> <!-- Clean Font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        ::-webkit-scrollbar{
+            width: 10px;
+            cursor: pointer;
+            background-color: #242424;
+        }
+        ::-webkit-scrollbar-thumb{
+            width: 10px;
+            cursor: pointer;
+            background-color: #515151;
+        }
+        ::-webkit-scrollbar-thumb:hover{
+            width: 10px;
+            cursor: pointer;
+            background-color: #9c9c9c ;
+        }
+        h1 {
+            font-size: 28px;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        #textInput {
+            width: 85%;
+            max-width: 700px;
+            height: 150px;
+            font-size: 18px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+        #highlightedText {
+            font-size: 18px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 700px;
+            text-align: left;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        .highlight {
+            background-color: #008cff;
+            transition: background-color 0.2s ease;
+        }
+        button {
+            padding: 12px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #5b5b5b;
+        }
+        button:active {
+            background-color: #000000;
+            color: rgb(255, 255, 255);
+        }
+        select {
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 80px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 80%;
+            max-width: 700px;
+            margin-top: 10px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background-color: #ddd;
+            border-radius: 5px;
+            position: relative;
+        }
+        .progress-bar .progress {
+            height: 100%;
+            background-color: #121212;
+            border-radius: 5px;
+            width: 0;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>Myootive(Reader)</h1>
+    <textarea id="textInput" placeholder="Type text here..."></textarea><br>
+
+    <div class="controls">
+        <label for="voiceSelect">Select Voice:</label>
+        <select id="voiceSelect"></select><br><br>
+        
+        <button id="playPauseButton" onclick="togglePlayPause()">
+            <i id="playPauseIcon" class="fas fa-play"></i>
+        </button>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div id="progress" class="progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="highlightedText"></div>
+
+    <script>
+        let currentWordIndex = 0;
+        let words = [];
+        let voices = [];
+        const voiceSelect = document.getElementById('voiceSelect');
+        let utterance = null; // To store the SpeechSynthesisUtterance
+        let isPlaying = false; // Flag to track if the speech is currently playing
+        let progressBar = document.getElementById('progress');
+    
+        // Function to load available voices
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = ''; // Clear the existing options
+            voices.forEach((voice, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = voice.name;
+                voiceSelect.appendChild(option);
+            });
+    
+            // Set a default voice if available
+            if (voices.length > 0) {
+                voiceSelect.value = 0; // Select the first voice by default
+            }
+        }
+    
+        // Function to start reading the text and highlight words
+        function startReading() {
+            let text = document.getElementById('textInput').value.trim();
+            if (text === '') return; // Don't start if the text is empty
+    
+            words = text.split(/\s+/);  // Split the text into words
+            currentWordIndex = 0;
+    
+            // Set the initial content to display the text
+            document.getElementById('highlightedText').innerHTML = text;
+    
+            // Select the chosen voice
+            let selectedVoiceIndex = voiceSelect.value;
+            let selectedVoice = voices[selectedVoiceIndex];
+    
+            // Initialize speech synthesis with the chosen voice and the given text
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.voice = selectedVoice; // Set the selected voice
+    
+            // Event handler when a word boundary is reached (for highlighting)
+            utterance.onboundary = function(event) {
+                if (event.name === 'word') {
+                    let wordIndex = text.substring(0, event.charIndex).split(/\s+/).length - 1;
+                    highlightWord(wordIndex); // Highlight the word at the current index
+                    updateProgress(event.charIndex, text.length); // Update progress bar
+                }
+            };
+    
+            // Speak the utterance
+            speechSynthesis.speak(utterance);
+            isPlaying = true;
+            updatePlayPauseIcon();
+        }
+    
+        // Function to highlight the current word
+        function highlightWord(index) {
+            let highlightedText = document.getElementById('highlightedText');
+            let text = document.getElementById('textInput').value;
+            let wordsArray = text.split(/\s+/);
+    
+            let highlightedContent = '';
+    
+            // Rebuild the text with highlighting
+            wordsArray.forEach((word, i) => {
+                if (i === index) {
+                    highlightedContent += `<span class="highlight">${word}</span> `;
+                } else {
+                    highlightedContent += word + ' ';
+                }
+            });
+    
+            highlightedText.innerHTML = highlightedContent.trim();
+        }
+    
+        // Function to update the progress bar
+        function updateProgress(charIndex, textLength) {
+            const progressPercentage = (charIndex / textLength) * 100;
+            progressBar.style.width = progressPercentage + '%';
+        }
+    
+        // Function to toggle play/pause
+        function togglePlayPause() {
+            if (isPlaying) {
+                speechSynthesis.pause(); // Pause the speech
+                isPlaying = false;
+                updatePlayPauseIcon();
+            } else {
+                if (utterance) {
+                    speechSynthesis.resume(); // Resume the speech if it's paused
+                } else {
+                    startReading(); // Start reading if no speech is playing
+                }
+                isPlaying = true;
+                updatePlayPauseIcon();
+            }
+        }
+    
+        // Function to update the play/pause icon and text
+        function updatePlayPauseIcon() {
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const button = document.getElementById('playPauseButton');
+            if (isPlaying) {
+                playPauseIcon.classList.remove('fa-play');
+                playPauseIcon.classList.add('fa-pause');
+                button.innerHTML = '<i id="playPauseIcon" class="fas fa-pause"></i>';
+            } else {
+                playPauseIcon.classList.remove('fa-pause');
+                playPauseIcon.classList.add('fa-play');
+                button.innerHTML = '<i id="playPauseIcon" class="fas fa-play"></i>';
+            }
+        }
+    
+        // Load voices when the page loads
+        window.onload = function() {
+            loadVoices();
+    
+            // Reload voices in case of a voice change (e.g., after changing browser settings)
+            speechSynthesis.onvoiceschanged = loadVoices;
+        };
+    
+        // Function to stop speech synthesis when the page is about to be unloaded (refreshed or closed)
+        window.addEventListener('beforeunload', function() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel(); // Stop any ongoing speech
+            }
+        });
+    </script>
+    
+
+</body>
+</html>
