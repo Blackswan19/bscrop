@@ -6,15 +6,28 @@
     <title>Time Timer</title>
     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/qjfY8v0/Rora-imgconv.png">
     <style>
+        /* Light and Dark Mode */
         body {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
             margin: 0;
             font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Light Mode */
+        .light-mode {
+            background-color: #f0f0f0;
+            color: black;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #333;
+            color: white;
         }
 
         .timer {
@@ -24,7 +37,7 @@
             border-radius: 50%;
             background: conic-gradient(#0066ff 0deg, #0066ff 0deg, #ddd 0deg, #ddd 360deg);
             margin-bottom: 20px;
-            transition: background 0.1s linear; /* Smooth continuous transition */
+            transition: background 0.1s linear;
         }
 
         .timer-text {
@@ -46,11 +59,11 @@
 
         input[type="number"] {
             width: 60px;
-    text-align: center;
-    padding: 5px 10px;
-    border-radius: 8px;
-    border: solid 1px black;
-    outline: none;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: solid 1px black;
+            outline: none;
         }
 
         button {
@@ -66,10 +79,26 @@
         button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
+            color: black;
+        }
+
+        /* Theme switch button */
+        .theme-switch {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #535353;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .theme-switch:hover {
+            background-color: #3a3a3a;
         }
     </style>
 </head>
-<body>
+<body class="light-mode">
     <div class="timer" id="timer">
         <div class="timer-text" id="timer-text">25:00</div>
     </div>
@@ -85,6 +114,8 @@
         </div>
     </div>
 
+    <button class="theme-switch" id="themeSwitch">Dark</button>
+
     <script>
         let timeRemaining = 0; // Time in seconds
         let timerInterval;
@@ -95,6 +126,8 @@
         const startButton = document.getElementById('startButton');
         const pauseButton = document.getElementById('pauseButton');
         const timeInput = document.getElementById('timeInput');
+        const themeSwitch = document.getElementById('themeSwitch');
+        const body = document.body;
 
         // Function to update the timer display
         function updateTimer() {
@@ -102,24 +135,22 @@
             const seconds = timeRemaining % 60;
             timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-            // Calculate the angle of the conic gradient (smooth progression)
             const angle = (timeRemaining / (parseInt(timeInput.value) * 60)) * 360;
-            // Set the gradient with a smooth transition
             timer.style.background = `conic-gradient(#0066ff 0deg, #0066ff ${angle}deg, #ddd ${angle}deg, #ddd 360deg)`;
 
             if (timeRemaining > 0 && !isPaused) {
                 timeRemaining--;
             } else if (timeRemaining === 0) {
                 clearInterval(timerInterval);
-                startButton.disabled = false; // Enable the start button again
-                pauseButton.disabled = true; // Disable the pause button
+                startButton.disabled = false;
+                pauseButton.disabled = true;
                 alert('Time is up!');
             }
         }
 
         // Start timer function
         function startTimer() {
-            clearInterval(timerInterval); // Clear any existing timer
+            clearInterval(timerInterval);
             const inputMinutes = parseInt(timeInput.value);
 
             if (isNaN(inputMinutes) || inputMinutes <= 0) {
@@ -127,23 +158,32 @@
                 return;
             }
 
-            timeRemaining = inputMinutes * 60; // Set time based on input
-            startButton.disabled = true; // Disable the start button
-            pauseButton.disabled = false; // Enable the pause button
-            isPaused = false; // Reset pause state
-            updateTimer(); // Initial display
-            timerInterval = setInterval(updateTimer, 1000); // Update every second
+            timeRemaining = inputMinutes * 60;
+            startButton.disabled = true;
+            pauseButton.disabled = false;
+            isPaused = false;
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
         }
 
         // Pause/Resume timer function
         function togglePause() {
-            isPaused = !isPaused; // Toggle pause state
+            isPaused = !isPaused;
             pauseButton.textContent = isPaused ? 'Resume' : 'Pause';
+        }
+
+        // Switch between light and dark modes
+        function toggleTheme() {
+            const isLightMode = body.classList.contains('light-mode');
+            body.classList.remove(isLightMode ? 'light-mode' : 'dark-mode');
+            body.classList.add(isLightMode ? 'dark-mode' : 'light-mode');
+            themeSwitch.textContent = isLightMode ? 'Light' : 'Dark';
         }
 
         // Event listeners for buttons
         startButton.addEventListener('click', startTimer);
         pauseButton.addEventListener('click', togglePause);
+        themeSwitch.addEventListener('click', toggleTheme);
     </script>
 </body>
 </html>
