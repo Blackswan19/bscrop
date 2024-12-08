@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Timer</title>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/qjfY8v0/Rora-imgconv.png">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .timer {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: conic-gradient(#0066ff 0deg, #0066ff 0deg, #ddd 0deg, #ddd 360deg);
+            margin-bottom: 20px;
+            transition: background 0.1s linear; /* Smooth continuous transition */
+        }
+
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: solid 1px black;
+    outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">
+        <div class="timer-text" id="timer-text">25:00</div>
+    </div>
+
+    <div class="controls">
+        <div>
+            <label for="timeInput">Set Time here: </label>
+            <input type="number" id="timeInput" value="25" min="1" max="120">
+        </div>
+        <div>
+            <button id="startButton">Start Timer</button>
+            <button id="pauseButton" disabled>Pause</button>
+        </div>
+    </div>
+
+    <script>
+        let timeRemaining = 0; // Time in seconds
+        let timerInterval;
+        let isPaused = false;
+
+        const timer = document.getElementById('timer');
+        const timerText = document.getElementById('timer-text');
+        const startButton = document.getElementById('startButton');
+        const pauseButton = document.getElementById('pauseButton');
+        const timeInput = document.getElementById('timeInput');
+
+        // Function to update the timer display
+        function updateTimer() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            // Calculate the angle of the conic gradient (smooth progression)
+            const angle = (timeRemaining / (parseInt(timeInput.value) * 60)) * 360;
+            // Set the gradient with a smooth transition
+            timer.style.background = `conic-gradient(#0066ff 0deg, #0066ff ${angle}deg, #ddd ${angle}deg, #ddd 360deg)`;
+
+            if (timeRemaining > 0 && !isPaused) {
+                timeRemaining--;
+            } else if (timeRemaining === 0) {
+                clearInterval(timerInterval);
+                startButton.disabled = false; // Enable the start button again
+                pauseButton.disabled = true; // Disable the pause button
+                alert('Time is up!');
+            }
+        }
+
+        // Start timer function
+        function startTimer() {
+            clearInterval(timerInterval); // Clear any existing timer
+            const inputMinutes = parseInt(timeInput.value);
+
+            if (isNaN(inputMinutes) || inputMinutes <= 0) {
+                alert('Please enter a valid time (1-120 minutes).');
+                return;
+            }
+
+            timeRemaining = inputMinutes * 60; // Set time based on input
+            startButton.disabled = true; // Disable the start button
+            pauseButton.disabled = false; // Enable the pause button
+            isPaused = false; // Reset pause state
+            updateTimer(); // Initial display
+            timerInterval = setInterval(updateTimer, 1000); // Update every second
+        }
+
+        // Pause/Resume timer function
+        function togglePause() {
+            isPaused = !isPaused; // Toggle pause state
+            pauseButton.textContent = isPaused ? 'Resume' : 'Pause';
+        }
+
+        // Event listeners for buttons
+        startButton.addEventListener('click', startTimer);
+        pauseButton.addEventListener('click', togglePause);
+    </script>
+</body>
+</html>
