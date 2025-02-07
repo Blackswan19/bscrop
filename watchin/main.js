@@ -418,6 +418,3 @@ let currentIndex;
         window.onload = function () {
             displayStoredMedia(); // Displays all media on page load
         };
-        <script>
-    
-  </script>
