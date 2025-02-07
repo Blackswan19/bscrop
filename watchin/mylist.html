@@ -315,35 +315,36 @@
         }
         
         .category-buttons {
-            display: flex;
-            position: fixed;
-            gap: 10px;
-            top: 100px;
-            left: 32%;
-            white-space: nowrap;
-            z-index: 1000;
-            background: #00000066;
-            border-radius: 10px;
-            backdrop-filter: blur(14px);
+            display: flex
+;
+    position: fixed;
+    gap: 10px;
+    top: 85px;
+    white-space: nowrap;
+    z-index: 1000;
+    background: #00000066;
+    
+    backdrop-filter: blur(14px);
+    width: 100%;
+    left: 0px;
         }
         
         .category-buttons button {
             color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-radius: 10px;
-            width: 35%;
-            padding: 10px 25px;
-            text-align: center;
-            gap: 5px;
-            display: flex;
-            align-items: baseline;
-            background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 10px 25px;
+    text-align: center;background-color: transparent;
+    display: flex
+;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
         }
         
         .category-buttons button:hover {
-            background-color: rgba(128, 128, 128, 0.306);
+            color: #0041ff;
         }
         
         @media(max-width : 480px) {
@@ -466,7 +467,8 @@
       <!-- Search Bar --> <input type="text" id="searchBar" placeholder="Search video here..." oninput="filterMedia()"> <!-- Category Buttons --> 
       <header>
          <a id="logo" href="https://blackswan19.github.io/bscrop/watchin/mylist">BsVideosaver</a> <button type="button" onclick="openAddMoviePopup()" class="button1">Add Movie</button> 
-         <div class="category-buttons"> <button onclick="filterByCategory('video')"><i class="fa-solid fa-video"></i> Video</button> <button onclick="filterByCategory('songs')"><i class="fa-solid fa-music"></i> Music</button> <button onclick="filterByCategory('movie')"><i class="fa-solid fa-film"></i> Moives</button> <button onclick="filterByCategory('important')"><i class="fa-solid fa-star"></i>Important</button> </div>
+         <div class="category-buttons"> 
+            <button onclick="filterByCategory('songs')"><i class="fa-solid fa-music"></i> Music</button> <button onclick="filterByCategory('movie')"><i class="fa-solid fa-film"></i> Moives</button> <button onclick="filterByCategory('video')"><i class="fa-solid fa-video"></i> Video</button> <button onclick="filterByCategory('important')"><i class="fa-solid fa-star"></i>Important</button> </div>
       </header>
       <!-- Display Area --> 
       <div id="displayArea" class="mediaContainer"></div>
