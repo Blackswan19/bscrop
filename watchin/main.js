@@ -220,6 +220,7 @@ const newVideos = [
     
 ];
 
+
 // Function to check if a video already exists in storedMedia
 function videoExists(link) {
     const storedMedia = JSON.parse(localStorage.getItem("storedMedia")) || [];
@@ -260,22 +261,22 @@ newVideos.forEach(video => {
     localStorage.setItem("storedMedia", JSON.stringify(storedMedia));
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const customMenu = document.querySelector(".custom-menu");
+// document.addEventListener("DOMContentLoaded", () => {
+//     const customMenu = document.querySelector(".custom-menu");
 
-    // Show custom menu on right-click
-    document.addEventListener("contextmenu", (event) => {
-        event.preventDefault();
-        customMenu.style.display = "block";
-        customMenu.style.top = `${event.pageY}px`;
-        customMenu.style.left = `${event.pageX}px`;
-    });
+//     // Show custom menu on right-click
+//     document.addEventListener("contextmenu", (event) => {
+//         event.preventDefault();
+//         customMenu.style.display = "block";
+//         customMenu.style.top = `${event.pageY}px`;
+//         customMenu.style.left = `${event.pageX}px`;
+//     });
 
-    // Hide the menu when clicking elsewhere
-    document.addEventListener("click", () => {
-        customMenu.style.display = "none";
-    });
-})
+//     // Hide the menu when clicking elsewhere
+//     document.addEventListener("click", () => {
+//         customMenu.style.display = "none";
+//     });
+// })
       
 let currentIndex;
         let filteredMedia = []; // Keeps track of the filtered results.
@@ -379,13 +380,25 @@ let currentIndex;
     closePopup();
 }
 
-        function deleteMedia() {
-            let storedMedia = JSON.parse(localStorage.getItem("storedMedia")) || [];
-            storedMedia.splice(currentIndex, 1);
-            localStorage.setItem("storedMedia", JSON.stringify(storedMedia));
-            displayStoredMedia();
-            closePopup();
-        }
+function deleteMedia() {
+    let storedMedia = JSON.parse(localStorage.getItem("storedMedia")) || [];
+    
+    // Remove the item at currentIndex
+    storedMedia.splice(currentIndex, 1);
+    
+    // Update localStorage
+    localStorage.setItem("storedMedia", JSON.stringify(storedMedia));
+
+    // Update filteredMedia to reflect the deletion
+    filteredMedia = storedMedia;
+
+    // Refresh the displayed media
+    displayStoredMedia();
+
+    // Close the popup
+    closePopup();
+}
+
 
         function filterByCategory(category) {
             const storedMedia = JSON.parse(localStorage.getItem("storedMedia")) || [];
