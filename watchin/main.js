@@ -142,6 +142,5 @@ function closeAddMoviePopup() {
 }
 
 window.onload = function () {
-    clearStoredMedia();
     displayStoredMedia();
 };
