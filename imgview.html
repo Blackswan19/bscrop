@@ -1,196 +1,104 @@
 <!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgview</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/gW8Py0B/BS.png"> <style> body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; background-color: #121212; color: #ffffff; line-height: 1.5; } .container { width: 100%; max-width: 935px; padding: 30px 20px; } .profile-header { display: flex; align-items: center; margin-bottom: 44px; padding-bottom: 20px; border-bottom: 1px solid #333; } .profile-pic { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; margin-right: 40px; border: 2px solid #ffffff10; transition: transform 0.3s ease; } .profile-pic:hover { transform: scale(1.05); } .profile-pic img { width: 100%; height: 100%; object-fit: cover; } .profile-info { flex: 1; } .profile-info h1 { font-size: 28px; margin: 0 0 10px; font-weight: 400; color: #ffffff; } .stats { display: flex; gap: 40px; margin: 15px 0; color: #b0b0b0; font-size: 16px; } .stats span { font-weight: 600; } .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; } .post { width: 100%; padding-top: 100%; background-color: #1e1e1e; position: relative; cursor: pointer; overflow: hidden; transition: transform 0.2s ease; } .post:hover { transform: scale(1.02); } .post img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; } .post:hover img { opacity: 0.9; } .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.614); justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; } .modal.show { display: flex; opacity: 1; } .modal-content { padding: 60px; border-radius: 12px; position: relative; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); display: flex ; background: #00000091; justify-content: center; align-items: center; } .modal-content img { width: 55%; height: auto; display: block; border-radius: 8px; } .close { position: absolute; top: 15px; right: 20px; font-size: 36px; color: #ffffff; cursor: pointer; transition: color 0.2s ease; } .close:hover { color: #b0b0b0; } .nav-btn { position: fixed; top: 50%; transform: translateY(-50%); background-color: transparent; color: #ffffff44; border: none; font-size: 30px; cursor: pointer; border-radius: 50%; transition: background-color 0.2sease, opacity 0.2sease; z-index: 1001; font-weight: 100; } .nav-btn:hover { color: rgb(255, 255, 255); } .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; } .prev-btn { left: 40px; } .next-btn { right: 40px; } .load-more { display: block; margin: 40px auto 20px; padding: 12px 24px; background-color: #0095f6; color: #ffffff; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; text-align: center; transition: background-color 0.2s ease; } .load-more:hover { background-color: #0081d5; } a{ text-decoration: none; color: skyblue; } a:hover{ text-decoration: underline; } .msg{ display: none; } @media screen and (max-width: 480px) { .msg{ display: block; display: flex ; justify-content: center; align-items: center; text-align: center; height: 100vh; flex-direction: column; } .container{ display: none; } } </style> </head> <body> <div class="msg"> <h1>BsImgview</h1> Site is designed to be accessed from a system device only. </div> <div class="container"> <!-- Profile Header --> <div class="profile-header"> <div class="profile-pic"> <img src="https://picsum.photos/150?random=1" alt="Profile Picture"> </div> <div class="profile-info"> <h1>BsImgview</h1> <div class="stats"> <span id="postCount">0 posts</span> <span>164 followers</span> <span>10 following</span> </div> <p>Welcome to Bs world.</p> <p><a target="_blank" href="https://blackswan19.github.io/bscrop/formbs.html"><svg aria-label="Link icon" class="x1lliihq x1n2onr6 x7l2uk3" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12"><title>Link icon</title><path d="m9.726 5.123 1.228-1.228a6.47 6.47 0 0 1 9.15 9.152l-1.227 1.227m-4.603 4.603-1.228 1.228a6.47 6.47 0 0 1-9.15-9.152l1.227-1.227" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="8.471" x2="15.529" y1="15.529" y2="8.471"></line></svg> bit.ly/ToRora</a></p> </div> </div> <!-- Posts Grid --> <div class="posts-grid" id="postsGrid"></div> <!-- Load More Button --> <button class="load-more" id="loadMoreBtn">Load More</button> </div> <script src="noright.js"></script> <!-- Modal (Popup) --> <div id="imageModal" class="modal"> <div class="modal-content"> <span class="close" onclick="closeModal()">×</span> <img id="modalImage" src="" alt="Popup Image"> </div> <button id="prevBtn" class="nav-btn prev-btn" onclick="prevImage()">❮</button> <button id="nextBtn" class="nav-btn next-btn" onclick="nextImage()">❯</button> </div>
- <script>
-        const links = {
-            6: "https://blackswan19.github.io/bsfesta/music",
-            5: "https://blackswan19.github.io/Educate/savelink",
-            3: "https://blackswan19.github.io/bscrop/imgconver",
-            4: "https://blackswan19.github.io/bscrop/watchin/main",
-            2: "https://blackswan19.github.io/bscrop/bsweb",
-            7: "https://blackswan19.github.io/Educate/stoper",
-            8: "https://blackswan19.github.io/Educate/hider",
-            9: "https://blackswan19.github.io/Educate/bookpad",
-            10: "https://blackswan19.github.io/Educate/filexplorer",
-            11: "https://blackswan19.github.io/bscrop/watchin/mylist",
-            1: "https://blackswan19.github.io/Educate/savenotes",
-            14: "https://blackswan19.github.io/bsfesta/minifesta",
-            12: "https://blackswan19.github.io/Educate/password",
-            15: "https://blackswan19.github.io/bscrop/imgediter",
-            16: "https://blackswan19.github.io/Educate/room",
-            17: "https://blackswan19.github.io/bscrop/imgview",
-        };
+<script>
+        let postIndex = 2; // Start after profile pic (random=1)
+        const postsPerLoad = 30; // Number of posts to load each time
+        let images = []; // Array to store all image sources
+        let currentImageIndex = -1; // Track the current image in the modal
 
-        function performAction() {
-            const query = document.getElementById('searchQuery').value.trim();
-            const optionNumber = parseInt(query, 10);
+        // Function to add posts
+        function addPosts() {
+            const postsGrid = document.getElementById('postsGrid');
+            const postCount = document.getElementById('postCount');
+            const currentPostCount = images.length; // Use images.length instead of DOM query
 
-            if (optionNumber >= 1 && optionNumber <= 15) {
-                openLink(optionNumber); // Open the corresponding link if it's a number
-            } else {
-                googleSearch(query); // Otherwise, perform a Google search
+            for (let i = 0; i < postsPerLoad; i++) {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post';
+
+                const img = document.createElement('img');
+                const imgSrc = `https://picsum.photos/300?random=${postIndex}`;
+                img.src = imgSrc;
+                img.alt = `Post ${currentPostCount + i + 1}`;
+
+                postDiv.appendChild(img);
+                postsGrid.appendChild(postDiv);
+                images.push(imgSrc);
+                postIndex++;
             }
-        }
-        function imFeelingLucky() {
-      const query = document.getElementById('search-input').value.trim();
-      const selectedContext = document.querySelector('.context-options button.active');
-      
-      if (query) {
-        let fullQuery = query;
-    
-        if (selectedContext) {
-          const context = selectedContext.getAttribute('data-context');
-          fullQuery = `${query} ${context}`;
-        }
-    
-        const url = `https://www.google.com/search?btnI=I&q=${encodeURIComponent(fullQuery)}`;
-        window.location.href = url;
-      } else {
-        alert("Enter a search query!");
-      }
-    }
-    function googleSearch() {
-      const query = document.getElementById('search-input').value.trim();
-      
-      // Get the selected context
-      const selectedContext = document.querySelector('.context-options button.active');
-      
-      if (query) {
-        let fullQuery = query;
-        
-        // Append context to query if a context is selected
-        if (selectedContext) {
-          const context = selectedContext.getAttribute('data-context');
-          fullQuery = `${query} ${context}`;
-        }
-    
-        // Redirect to Google with the query
-        const url = `https://www.google.com/search?q=${encodeURIComponent(fullQuery)}`;
-        window.location.href = url;
-      } else {
-        alert("Enter a search query!");
-      }
-    }
 
-        function handleEnter(event) {
-            if (event.key === "Enter") {
-                performAction();
+            postCount.textContent = `${currentPostCount + postsPerLoad} posts`;
+        }
+
+        // Event delegation for image clicks
+        document.getElementById('postsGrid').addEventListener('click', function(event) {
+            const img = event.target.tagName === 'IMG' ? event.target : null;
+            if (img) {
+                const index = images.indexOf(img.src);
+                if (index !== -1) {
+                    openModal(img.src, index);
+                } else {
+                    console.error('Image not found in array:', img.src);
+                }
+            }
+        });
+
+        // Open the modal and set the image source
+        function openModal(imageSrc, index) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            currentImageIndex = index;
+            modal.style.display = 'block'; // Ensure display is set before transition
+            setTimeout(() => modal.classList.add('show'), 10); // Small delay for transition
+            updateNavButtons();
+        }
+
+        // Close the modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300); // Match transition duration
+        }
+
+        // Go to previous image
+        function prevImage() {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                document.getElementById('modalImage').src = images[currentImageIndex];
+                updateNavButtons();
             }
         }
 
-        function clearSearchInput() {
-            document.getElementById('searchQuery').value = '';
-            toggleClearIcon();
-        }
-
-        function toggleClearIcon() {
-            const input = document.getElementById('searchQuery');
-            const clearIcon = document.getElementById('clearIcon');
-            clearIcon.style.visibility = input.value ? 'visible' : 'hidden';
-        }
-
-        function openLink(optionNumber) {
-            if (links[optionNumber]) {
-                window.open(links[optionNumber], "_self");
+        // Go to next image
+        function nextImage() {
+            if (currentImageIndex < images.length - 1) {
+                currentImageIndex++;
+                document.getElementById('modalImage').src = images[currentImageIndex];
+                updateNavButtons();
             }
         }
 
-        function toggleMoreOptions() {
-            const extraOptions = document.getElementById('extraOptions');
-            extraOptions.style.display = extraOptions.style.display === 'none' ? 'flex' : 'none';
+        // Update navigation button states
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            prevBtn.disabled = currentImageIndex <= 0;
+            nextBtn.disabled = currentImageIndex >= images.length - 1;
         }
-// Country time zones
-const countryTimeZones = {
-      'India': 'Asia/Kolkata',
-      'Korea': 'Asia/Seoul',
-      'Japan': 'Asia/Tokyo',
-      'China': 'Asia/Shanghai',
-      'USA': 'America/New_York',
-      'Australia': 'Australia/Sydney',
-      'France': 'Europe/Paris',
-      'Germany': 'Europe/Berlin'
-    };
 
-    // Open popup
-    function openPopup() {
-      const popupContainer = document.getElementById('popupContainer');
-      const countryList = document.getElementById('countryList');
-      const timeDisplay = document.getElementById('timeDisplay');
-
-      // Clear previous list and time display
-      countryList.innerHTML = '';
-      timeDisplay.textContent = '';
-
-      // Create list items for each country
-      for (const country in countryTimeZones) {
-        const listItem = document.createElement('li');
-        listItem.textContent = country;
-        listItem.onclick = () => replaceWithTime(listItem, country);
-        countryList.appendChild(listItem);
-      }
-
-      popupContainer.classList.add('visible');
-    }
-
-    // Replace country name with the current time
-    function replaceWithTime(listItem, country) {
-      const timeZone = countryTimeZones[country];
-      const currentTime = new Intl.DateTimeFormat('en-US', {
-        timeZone: timeZone,
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true
-      }).format(new Date());
-
-      listItem.textContent = `${country} time now : ${currentTime}.`;
-      listItem.style.cursor = 'default'; // Change cursor to default after time is displayed
-      listItem.onclick = null; // Disable further clicks on this item
-    }
-    function performContextualSearch(context) {
-      const query = document.getElementById('search-input').value.trim();
-    
-      if (query) {
-        // Add the context to the search input
-        const fullQuery = `${query} ${context}`;
-        document.getElementById('search-input').value = fullQuery;  // Update the search input with the full query
-    
-        // Highlight the active context button
-        const buttons = document.querySelectorAll('.context-options button');
-        buttons.forEach(button => button.classList.remove('active'));
-    
-        // Find the clicked button and add the 'active' class
-        const selectedButton = Array.from(buttons).find(button => button.textContent.toLowerCase().includes(context.toLowerCase()));
-        if (selectedButton) {
-          selectedButton.classList.add('active');
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         }
-    
-        // Perform the search immediately with the full query
-        googleSearch();
-      } else {
-        // If no query is entered, show an alert
-        alert("Enter a search query first!");
-      }
-    }
-    // Close popup
-    function closePopup() {
-      const popupContainer = document.getElementById('popupContainer');
-      popupContainer.classList.remove('visible');
-      document.getElementById('timeDisplay').textContent = '';
-    }
-     // Trigger search on "Enter" key or clicking the search icon
-     document.getElementById('search-input').addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        googleSearch();
-      }
-    });
-    
-    document.querySelector('.fa-magnifying-glass').addEventListener('click', googleSearch);
-    
-    // Add data-context attributes to buttons for context
-    document.querySelectorAll('.context-options button').forEach((button, index) => {
-      const contexts = ['', '', ''];
-      button.setAttribute('data-context', contexts[index]);
-    });
-  </script>
-  
-<script src="noright.js"></script>
+
+        // Load initial posts
+        addPosts();
+
+        // Add event listener for Load More button
+        document.getElementById('loadMoreBtn').addEventListener('click', addPosts);
+    </script>
 </body>
 </html>
