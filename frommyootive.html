@@ -1,4 +1,183 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>By Myootive</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/sd04n7n4/logo.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Noto+Sans"> <style> @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&family=Red+Hat+Display:ital,wght@0,300..900&family=Strait&display=swap'); * { font-family: "Red Hat Display", sans-serif; } body { display: flex; justify-content: center; align-items: center; height: 100vh; /* Full height of the viewport */ margin: 0; text-align: center; letter-spacing: 1px; flex-direction: column; /* Stack items vertically */ background-color: #1f1f1f; /* Dark background */ color: #ffffff; /* Light text */ } ul a { background-color: #2e2e2e; color: #ffffff; } ul a:hover, ul a:active { background-color: #656565; color: #ffffff; } ul a:active { color: #1f1f1f; } ul { list-style-type: none; padding: 0; margin: 0; } li { margin: 21px 0px; width: 248px; } ul a { display: block; text-decoration: none; font-size: 15px; padding: 10px 30px; border-radius: 12px; transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease; } ul a:hover { transform: scale(1.05); } .coin { width: 100px; height: 100px; border-radius: 50%; background-color: white; /* Default to white */ display: flex; justify-content: center; align-items: center; font-size: 36px; /* Increased font size for clarity */ font-weight: bold; margin: 20px auto; /* Centering the coin */ transition: transform 1s; /* Smooth spinning */ } .coin.spin { transform: rotateY(720deg); /* Spins the coin */ } #spinBtn { padding: 10px 20px; background-color: #686868; color: white; border: none; border-radius: 10px; font-size: 15px; cursor: pointer; transition: background-color 0.3s; margin-top: 10px; transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease; } #spinBtn:hover { transform: scale(1.05); } #result { margin-top: 20px; font-size: 18px; font-weight: bold; } @media (max-width: 600px) { a { font-size: 18px; padding: 12px 24px; } } #passwordContainer { display: none; text-align: center; margin-top: 50px; z-index: 1; background: black; padding: 132px; position: fixed; height: 100%; width: 100%; } #userPassword { padding: 10px; width: 300px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px; outline: none; transition: border-color 0.3s; } #userPassword:focus { transform: scale(1.05); } #submitBtn { padding: 10px 20px; background-color: #646464; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s; } #submitBtn:hover { transform: scale(1.05); } #error-message { color: red; margin-top: 10px; font-size: 14px; text-align: center; } </style> </head> <body> <ul> <p>By Myootive</p><br><br> <li><a href="https://blackswan19.github.io/bscrop/tabview">Tab View</a></li> <li><a href="https://blackswan19.github.io/Educate/studyroom">Studyroom</a></li> <li><a href="https://blackswan19.github.io/bscrop/imgconver">Imgcnvt</a></li> <script src="noright.js"></script> <li><a href="https://blackswan19.github.io/Educate/Scheduler">Scheduler</a></li> <li><a href="https://blackswan19.github.io/bscrop/voicetest">Voicetester</a></li> <li><a href="https://blackswan19.github.io/bscrop/timer">Timer</a></li> <li><a href="https://blackswan19.github.io/bscrop/beautify">Beautify</a></li> <li><a href="https://blackswan19.github.io/bscrop/imgcrop">BsImgcroper</a></li><br><br><br><br> </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>By Myootive</title>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/sd04n7n4/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Noto+Sans">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&family=Red+Hat+Display:ital,wght@0,300..900&family=Strait&display=swap');
+
+        * {
+            font-family: "Red Hat Display", sans-serif;
+        }
+
+        body {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; /* Full height of the viewport */
+            margin: 0; 
+            text-align: center;
+            letter-spacing: 1px;
+            flex-direction: column; /* Stack items vertically */
+                background-color: #1f1f1f; /* Dark background */
+                color: #ffffff; /* Light text */
+            }
+            ul a {
+                background-color: #2e2e2e;
+                color: #ffffff;
+            }
+            ul a:hover, ul a:active {
+                background-color: #656565;
+                color: #ffffff;
+            }
+            ul a:active {
+                color: #1f1f1f;
+            }
+
+
+        ul {
+            list-style-type: none; 
+            padding: 0; 
+            margin: 0; 
+        }
+
+        li {
+            margin: 21px 0px;
+            width: 248px;
+        }
+
+        ul a {
+            display: block; 
+            text-decoration: none; 
+            font-size: 15px; 
+            padding: 10px 30px; 
+            border-radius: 12px; 
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease; 
+        }
+
+        ul a:hover {
+            transform: scale(1.05); 
+        }
+
+        .coin {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: white; /* Default to white */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px; /* Increased font size for clarity */
+            font-weight: bold;
+            margin: 20px auto; /* Centering the coin */
+            transition: transform 1s; /* Smooth spinning */
+        }
+
+        .coin.spin {
+            transform: rotateY(720deg); /* Spins the coin */
+        }
+
+        #spinBtn {
+            padding: 10px 20px;
+            background-color: #686868;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px; 
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease; 
+        }
+
+        #spinBtn:hover {
+            transform: scale(1.05); 
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            a {
+                font-size: 18px; 
+                padding: 12px 24px; 
+            }
+        }
+
+        #passwordContainer {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+            z-index: 1;
+            background: black;
+            padding: 132px;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+        }
+
+        #userPassword {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #userPassword:focus {
+            transform: scale(1.05); 
+        }
+
+        #submitBtn {
+            padding: 10px 20px;
+            background-color: #646464;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submitBtn:hover {
+            transform: scale(1.05); 
+        }
+
+        #error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <p>By Myootive</p><br><br>
+        
+            <li><a href="https://blackswan19.github.io/bscrop/tabview">Tab View</a></li>
+        <li><a href="https://blackswan19.github.io/Educate/studyroom">Studyroom</a></li>
+        <li><a href="https://blackswan19.github.io/bscrop/imgconver">Imgcnvt</a></li>
+        <!-- <script src="noright.js"></script> -->
+        <li><a href="https://blackswan19.github.io/Educate/Scheduler">Scheduler</a></li>
+        <li><a href="https://blackswan19.github.io/bscrop/voicetest">Voicetester</a></li>
+        <li><a href="https://blackswan19.github.io/bscrop/timer">Timer</a></li>
+        <li><a href="https://blackswan19.github.io/bscrop/beautify">Beautify</a></li>
+        <li><a href="https://blackswan19.github.io/bscrop/countday">BsDaycount</a></li>
+        <li><a href="https://blackswan19.github.io/bscrop/imgcrop">BsImgcroper</a></li><br><br><br><br>
+       
+    </ul>
+
     <script>
         document.getElementById('spinBtn').addEventListener('click', function() {
             const coin = document.getElementById('coin');
