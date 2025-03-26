@@ -1,64 +1,101 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgediter</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/gW8Py0B/BS.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300..900&display=swap'); * { font-family: "Red Hat Display", sans-serif; } body { text-align: center; background-color: #0f0f0f; color: #ffffff; padding: 20px; } h2 { color: #0049ff; font-size: 30px; } input, button, select { padding: 12px; margin: 10px; border: 1px solid #444; border-radius: 8px; font-size: 15px; background-color: #333; color: #ffffff; transition: all 0.3s ease; width: -webkit-fill-available; text-align: center; } select { background-color: #222; cursor: pointer; } button { background-color: #0049ff; color: white; cursor: pointer; border: none; font-weight: 500; } button:hover { background-color: #0048ff6c; } .container { background: #1e1e1e; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; } img { max-width: 100%; margin-top: 20px; border: 2px solid #555; border-radius: 10px; padding: 5px; background-color: #222; display: block; } #qualityValue { font-size: 16px; font-weight: bold; } .hidden { display: none; } .file-size { font-size: 14px; font-weight: bold; margin-top: 10px; color: #aaa; } </style> </head> <body> <h2>BsImgediter</h2> <h4>Rename, Compress, and Download Image</h4> <div class="container"> <select id="modeSelector" onchange="toggleMode()"> <option value="" selected disabled>Select an option</option> <option value="rename">Rename Image</option> <option value="compare">Compare & Compress</option> </select> <br><br> <input type="file" id="imageInput" accept="image/*" class="hidden" onchange="previewOriginalImage()"> <br><br> <div id="renameSection" class="hidden"> <input type="text" id="newFileName" placeholder="Enter new file name"> <br><br> <select id="fileTypeSelector"> <option value="jpg">JPG</option> <option value="png">PNG</option> <option value="webp">WEBP</option> </select> <br><br> <button onclick="renameImage()">Rename & Download</button> </div> <div id="compareSection" class="hidden"> <label>Compression Quality: </label> <input style="padding: 0px; height: 1px;" type="range" id="quality" min="10" max="100" step="10" value="80" oninput="updateQualityValue()"> <span id="qualityValue">80%</span> <br><br> <button onclick="compressImage()">Compress & Compare</button> <br><br> <h3>Compressed Image Preview</h3> <p class="file-size hidden" id="compressedSize"></p> <img id="compressedPreview" class="hidden"> <br> <select id="fileTypeSelector"> <option value="jpg">JPG</option> <option value="png">PNG</option> <option value="webp">WEBP</option> </select> <br> <button id="downloadButton" class="hidden" onclick="downloadCompressedImage()">Download Compressed Image</button> </div> </div>
-       <script>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgediter</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/gW8Py0B/BS.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700&display=swap'); * { font-family: "Red Hat Display", sans-serif; margin: 0; padding: 0; box-sizing: border-box; } body { text-align: center; background: black; color: #ffffff; min-height: 100vh; padding: 40px 20px; } h2 { color: #0066ff; font-size: 36px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; } h3 { color: #ffffff; font-size: 20px; font-weight: 500; margin: 20px 0 15px; } h4 { color: #b0b0b0; font-size: 18px; font-weight: 400; margin-bottom: 30px; } input, button, select { padding: 12px; margin: 10px; border: 1px solid #444; border-radius: 8px; font-size: 15px; background-color: #333; color: #ffffff; transition: all 0.3s ease; width: -webkit-fill-available; text-align: center; outline: none; } select { background-color: #1a1a1a; cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px top 50%; background-size: 16px; } button { background-color: #0066ff; color: white; cursor: pointer; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; } button:hover { background-color: #0052cc; transform: translateY(-2px); } .select-container { background: #1f1f1f; padding: 20px; border-radius: 12px; max-width: 400px; margin: 0 auto 25px auto; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); } .content-container { background: #181818; padding: 25px; border-radius: 12px; max-width: 550px; margin: 0 auto; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); } .upload-area { border: 2px dashed #404040; border-radius: 10px; padding: 20px; background: #202020; cursor: pointer; transition: all 0.3s ease; margin-bottom: 20px; } .upload-area:hover { border-color: #0066ff; background: #252525; } .upload-area.dragover { border-color: #0066ff; background: #2a2a2a; transform: scale(1.02); } .upload-area p { color: #b0b0b0; font-size: 16px; margin: 10px 0; } .upload-area span { color: #0066ff; font-weight: 500; } img { max-width: 100%; margin-top: 20px; border: 2px solid #404040; border-radius: 10px; padding: 5px; background-color: #252525; display: block; transition: transform 0.3s ease; } img:hover { transform: scale(1.02); } #qualityValue { font-size: 16px; font-weight: 500; color: #b0b0b0; margin-left: 10px; } .hidden { display: none; } .file-size { font-size: 14px; font-weight: 500; margin-top: 15px; color: #888888; } label { font-size: 16px; font-weight: 500; color: #d0d0d0; margin-bottom: 10px; display: block; } input[type="range"] { height: 3px; padding: 0; background: #404040; border-radius: 4px; cursor: pointer; } input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: #0066ff; border-radius: 50%; cursor: pointer; } </style> </head> <body> <h2>BsImgediter</h2> <h4>Rename, Compress, and Download Image</h4> <div class="select-container"> <select id="modeSelector" onchange="toggleMode()"> <option value="" selected disabled>Select an Option</option> <option value="rename">Rename Image</option> <option value="compare">Compare & Compress</option> </select> </div> <div class="content-container"> <div id="uploadArea" class="upload-area hidden"> <p>Drag & Drop your image here or <span>click to upload</span></p> <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="previewOriginalImage()"> </div> <div id="mainSection" class="hidden"> <div id="renameContent" class="hidden"> <input type="text" id="newFileName" placeholder="Enter new file name"> </div> <div id="compressContent" class="hidden"> <label>Compression Quality</label> <input type="range" id="quality" min="10" max="100" step="10" value="80" oninput="updateQualityValue()"> <span id="qualityValue">80%</span> <h3>Compressed Image Preview</h3> <p class="file-size hidden" id="compressedSize"></p> <img id="compressedPreview" class="hidden"> </div> <select id="fileTypeSelector"> <option value="jpg">JPG</option> <option value="png">PNG</option> <option value="webp">WEBP</option> </select> <button id="actionButton" onclick="performAction()">Process Image</button> </div> </div>
+    <script>
         let compressedBlob = null;
+        let currentMode = '';
 
         function toggleMode() {
             const mode = document.getElementById('modeSelector').value;
-            document.getElementById('renameSection').classList.add('hidden');
-            document.getElementById('compareSection').classList.add('hidden');
-            document.getElementById('imageInput').classList.add('hidden');
-            
+            currentMode = mode;
+            const mainSection = document.getElementById('mainSection');
+            const renameContent = document.getElementById('renameContent');
+            const compressContent = document.getElementById('compressContent');
+            const uploadArea = document.getElementById('uploadArea');
+            const actionButton = document.getElementById('actionButton');
+
+            uploadArea.classList.add('hidden');
+            mainSection.classList.add('hidden');
+            renameContent.classList.add('hidden');
+            compressContent.classList.add('hidden');
+
             if (mode) {
-                document.getElementById('imageInput').classList.remove('hidden');
-                document.getElementById(mode + 'Section').classList.remove('hidden');
+                uploadArea.classList.remove('hidden');
+                mainSection.classList.remove('hidden');
+                if (mode === 'rename') {
+                    renameContent.classList.remove('hidden');
+                    actionButton.textContent = 'Rename & Download';
+                } else if (mode === 'compare') {
+                    compressContent.classList.remove('hidden');
+                    actionButton.textContent = 'Compress & Download';
+                }
             }
         }
 
+        // Upload area functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+
+        uploadArea.addEventListener('click', () => imageInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            imageInput.files = e.dataTransfer.files;
+            previewOriginalImage();
+        });
+
         function updateQualityValue() {
-    document.getElementById('qualityValue').textContent = document.getElementById('quality').value + '%';
-    compressImage(); // Automatically apply compression
-}
+            document.getElementById('qualityValue').textContent = document.getElementById('quality').value + '%';
+            if (currentMode === 'compare') {
+                compressImage();
+            }
+        }
 
+        function performAction() {
+            if (currentMode === 'rename') {
+                renameImage();
+            } else if (currentMode === 'compare') {
+                downloadCompressedImage();
+            }
+        }
 
-function renameImage() {
-    const fileInput = document.getElementById('imageInput');
-    const newFileName = document.getElementById('newFileName').value.trim();
-    const fileType = document.getElementById('fileTypeSelector').value;
+        function renameImage() {
+            const fileInput = document.getElementById('imageInput');
+            const newFileName = document.getElementById('newFileName').value.trim();
+            const fileType = document.getElementById('fileTypeSelector').value;
 
-    if (!fileInput.files.length) {
-        alert('Select an image file.');
-        return;
-    }
+            if (!fileInput.files.length) {
+                alert('Select an image file.');
+                return;
+            }
+            if (!newFileName) {
+                alert('Enter a new file name.');
+                return;
+            }
 
-    if (!newFileName) {
-        alert('Enter a new file name.');
-        return;
-    }
-
-    const file = fileInput.files[0];
-    const newFile = `${newFileName}.${fileType}`;
-    
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(file);
-    link.download = newFile;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
+            const file = fileInput.files[0];
+            const newFile = `${newFileName}.${fileType}`;
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(file);
+            link.download = newFile;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
         function previewOriginalImage() {
             const fileInput = document.getElementById('imageInput');
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                const fileSize = (file.size / 1024).toFixed(2) + ' KB';
-                
-                document.getElementById('originalSize').textContent = `Original Size: ${fileSize}`;
-                document.getElementById('originalSize').classList.remove('hidden');
-
-                const preview = document.getElementById('preview');
-                preview.src = URL.createObjectURL(file);
-                preview.classList.remove('hidden');
+            if (fileInput.files.length > 0 && currentMode === 'compare') {
+                compressImage();
             }
         }
 
@@ -67,7 +104,6 @@ function renameImage() {
             const quality = parseInt(document.getElementById('quality').value) / 100;
             
             if (!fileInput.files.length) {
-                alert('Select an image file.');
                 return;
             }
             
@@ -94,26 +130,24 @@ function renameImage() {
                         const compressedPreview = document.getElementById('compressedPreview');
                         compressedPreview.src = URL.createObjectURL(blob);
                         compressedPreview.classList.remove('hidden');
-                        document.getElementById('downloadButton').classList.remove('hidden');
                     }, 'image/jpeg', quality);
                 };
             };
         }
 
         function downloadCompressedImage() {
-    if (compressedBlob) {
-        const fileType = document.getElementById('fileTypeSelector').value;
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(compressedBlob);
-        link.download = `compressed_image.${fileType}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-}
-
+            if (compressedBlob) {
+                const fileType = document.getElementById('fileTypeSelector').value;
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(compressedBlob);
+                link.download = `compressed_image.${fileType}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert('Upload an image first.');
+            }
+        }
     </script>
-    
-<script src="noright.js"></script>
 </body>
 </html>
