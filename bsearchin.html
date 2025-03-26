@@ -1,51 +1,89 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BSearchin</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/5cLfkcH/rora.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); /* Basic reset */ * { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; } body { font-family: Arial, sans-serif; background-color: #000000; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; } /* Brave Logo */ #logo { font-size: 40px; } #logo img { width: 100px; height: auto; } /* Search Container */ #browser-container { width: 50%; text-align: center; padding: 20px; } /* Search Bar Style */ #url-bar { width: 85%; padding: 10px 40px; font-size: 18px; color: #000000; background-color: #ffffff00; border: solid 2px #ffffff; border-radius: 139px; margin-top: 15px; box-shadow: 0 2px 15px rgb(0 0 0 / 9%); outline: none; } ::-webkit-scrollbar{ height: 5px; background-color: #3a3b3e00; } #url-bar:focus{ background-color: #ffffff; } #url-bar::placeholder { color: #ffffff; } /* Go Button Style */ #go-button { padding: 11px 15px; position: relative; top: 20px; background: #00000000; border: solid 2px #ffffff; outline: none; border-radius: 33px; color: white; text-align: center; } #go-button:hover { background-color: #ffffff; color: black; } /* Wrapper for Button within Search Container */ .search-wrapper { position: relative; display: inline-block; width: 100%; } /* Option Buttons */ .options-container { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 25px; gap: 10px; } .option { display: flex; align-items: center; padding: 5px 10px; color: #ffffff; border-radius: 10px; font-size: 14px; cursor: pointer; transition: background-color 0.3s; justify-content: space-between; position: fixed; top: 10px; right: 10px; } .option:hover { background: linear-gradient(135deg, #666, #333); padding: 5px 10px; } .option-icon { margin-right: 10px; font-size: 1.2em; } /* Input for Editable URL */ .url-input { display: none; background-color: #8d8d8d30; color: #ffffff; border: none; border-radius: 5px; padding: 5px; font-size: 14px; width: 100%; margin-top: 5px; outline: none; } /* Decorative Background Pattern */ #background-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: url('https://www.transparenttextures.com/patterns/debut-light.png'); opacity: 0.1; } /* Saved Websites Display */ #saved-websites { width: 100%; position: fixed; top: 0px; padding: 6px; left: 0px; background: #00000045; filter: drop-shadow(2px 15px 10px rgba(0, 0, 0, 0.236)); border-bottom: solid 1px #ffffff40; height: 45px; } div#websites-list { display: flex; } .website-item { display: flex ; padding: 5px 10px; margin: 5px; font-size: 12px; justify-content: flex-start; } .suggestion-item.active{ cursor: pointer; background-color: #d1d1d1; color: rgb(0, 0, 0); } .website-item:hover{ background-color: #e9e9e96b; border-radius: 6px; } .website-item img { width: 15px; height: 15px; margin-right: 5px; } .color-picker { position: fixed; top: 15px; right: 0px; } input#colorPicker { padding: 14px 13px; width: 5%; background: #7979797d; border: solid 1px black; outline: none; } .delete-btn { background: transparent; border: none; color: #000000; cursor: pointer; font-weight: 500; font-size: 12px; position: absolute; background: rgb(255 255 255); padding: 0px 5px; border-radius: 3px; bottom: 0px; margin-left: -12px; } .delete-btn:hover{ font-size: 20px; padding: 5px 8px; color: black; background: rgb(255, 255, 255); font-weight: 300; } div#websites-list { display: flex ; position: relative; gap: 15px; overflow-x: scroll; width: 94%; white-space: nowrap; text-transform: capitalize; } a { text-decoration: none; color: rgba(255, 255, 255, 0.801); } .frombs { position: fixed; gap: 20px; display: flex ; font-size: 13px; width: 100%; height: 50px; align-items: center; left: 0px; padding: 8px 30px; bottom: 0px; background: #00000045; filter: drop-shadow(2px 15px 10px rgba(0, 0, 0, 0.236)); border-top: solid 1px #ffffff40; } .frombs a:hover { text-decoration: underline; } .footer { color: #e8eaed; position: fixed; font-size: 15px; right: 90px; } .more{ display: none; } #clear-input { position: absolute; right: 40px; cursor: pointer; color: #aeaeae; font-size: 30px; display: none; top: 21px; font-weight: 100; } .suggestions { position: absolute; top: 80px; left: 50px; background: #e5e5e5; width: 85%; z-index: 1000; max-height: 135px; overflow-y: auto; text-align: justify; border-radius: 10px; color: black; font-weight: 500; } .suggestion-item { padding: 8px 25px; cursor: pointer; } .suggestion-item:hover { background: #a8a8a8; } @media(max-width:480px){ body{ position: fixed; width: 100%; } input#colorPicker{ position: fixed; right: 5px; } input#url-bar { position: relative; width: 100%; left: -20px; padding: 10px 20px; font-size: 15px; } .suggestion-item { padding: 8px 25px; cursor: pointer; font-size: 15px; } .suggestions { position: relative; top: 10px; width: 100%; left: 0px; } #clear-input { position: absolute; right: 5px; cursor: pointer; color: #aeaeae; font-size: 22px; display: none; top: 22px; font-weight: 100; } .frombs { display: none; } #go-button { padding: 10px 20px; position: relative; } #logo { font-size: 30px; } #browser-container { width: 80%; position: relative; } div#websites-list { display: flex ; position: relative; gap: 10px; overflow-x: scroll; width: 88%; white-space: nowrap; } .more{ display: block; background: #ffffff24; filter: drop-shadow(12px -14px 16px black); width: 100%; text-align: center; padding: 20px; bottom: 0px; position: fixed; font-size: 12px; gap: 10px; display: grid; } } </style> </head> <body> <!-- Saved Websites Section --> <div id="saved-websites"> <div id="websites-list"></div> </div> <!-- Logo Section --> <div id="logo">BSearchin</div> <!-- Search Container --> <!-- Search Container --> <div id="browser-container"> <div class="search-wrapper"> <input type="text" id="url-bar" placeholder="Search here..." autocomplete="off"> <span id="clear-input">×</span> <div class="suggestions" id="suggestions-list"></div> <button id="go-button" disabled><i class="fa-solid fa-magnifying-glass"></i></button> </div> </div> <!-- Options Container --> <div class="options-container"> <div class="option"> <span class="option-text"><i class="fa-solid fa-plus"></i></span> </div> </div> <!-- <script src="noright.js"></script> --> <div class="frombs"> <p style="color: rgb(0 96 255); text-decoration: underline; font-size: 12px; font-weight: 600; background: black; padding: 5px 20px; border-radius: 100px; ">More</p><br><br><br> <a href="https://blackswan19.github.io/Educate/songsearcher">BSongsearch</a> <a href="https://blackswan19.github.io/bscrop/bsweb">BsWebs</a> <a href="https://blackswan19.github.io/bscrop/formbs">Rora</a> <div class="footer"> <a href="https://blackswan19.github.io/bscrop/reminder.html">BsReminder <i class="fa-regular fa-calendar-days"></i></a> </div> </div> <div class="more"> <a href="https://blackswan19.github.io/bscrop/formbs">More FromBs</a> </div> <style> .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; /* box-shadow: 0 0 50px 50px rgba(0, 0, 0, 0.7) inset; */ z-index: -1; filter: brightness(0.4); } .blur-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; filter: blur(10px); opacity: 0.3; filter: brightness(0.5); z-index: -100000; } .top-buttons { position: absolute; top: 70px; right: 10px; display: flex; gap: 10px; } .button { background: #ffffff24; color: white; border: none; padding: 12px; cursor: pointer; border-radius: 8px; font-size: 14px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; } .button i { font-size: 18px; } .button:hover { background: linear-gradient(135deg, #969696, #000000); } </style> </head> <body> <div class="blur-background" id="blurBg"></div> <div class="background-container" id="bgContainer"></div> <div class="top-buttons"> <button class="button" id="changeBgBtn"><i class="fas fa-image"></i></button> <button class="button" id="deleteBgBtn"><i class="fas fa-trash"></i></button> <input class="button" style="color: white;" type="color" id="colorPicker" value="#001252" onchange="changeBackgroundColor(event)"> </div>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BSearchin</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/5cLfkcH/rora.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); /* Basic reset */ * { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; } body { font-family: Arial, sans-serif; background-color: #000000; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; } /* Brave Logo */ #logo { font-size: 40px; } #logo img { width: 100px; height: auto; } /* Search Container */ #browser-container { width: 50%; text-align: center; padding: 20px; } /* Search Bar Style */ #url-bar { width: 85%; padding: 10px 40px; font-size: 18px; color: #000000; background-color: #ffffff00; border: solid 2px #ffffff; border-radius: 139px; margin-top: 15px; box-shadow: 0 2px 15px rgb(0 0 0 / 9%); outline: none; } ::-webkit-scrollbar { height: 5px; background-color: #3a3b3e00; } #url-bar:focus { background-color: #ffffff; } #url-bar::placeholder { color: #ffffff; } /* Go Button Style */ #go-button { padding: 11px 15px; position: relative; top: 20px; background: #00000000; border: solid 2px #ffffff; outline: none; border-radius: 33px; color: white; text-align: center; } #go-button:hover { background-color: #ffffff; color: black; } /* Wrapper for Button within Search Container */ .search-wrapper { position: relative; display: inline-block; width: 100%; } /* Option Buttons */ .options-container { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 25px; gap: 10px; } .option { display: flex; align-items: center; padding: 5px 10px; color: #ffffff; border-radius: 10px; font-size: 14px; cursor: pointer; transition: background-color 0.3s; justify-content: space-between; position: fixed; top: 10px; right: 10px; } .option:hover { background: linear-gradient(135deg, #666, #333); padding: 5px 10px; } .option-icon { margin-right: 10px; font-size: 1.2em; } /* Input for Editable URL */ .url-input { display: none; background-color: #8d8d8d30; color: #ffffff; border: none; border-radius: 5px; padding: 5px; font-size: 14px; width: 100%; margin-top: 5px; outline: none; } /* Decorative Background Pattern */ #background-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: url('https://www.transparenttextures.com/patterns/debut-light.png'); opacity: 0.1; } /* Saved Websites Display */ #saved-websites { width: 100%; position: fixed; top: 0px; padding: 6px; left: 0px; background: #00000045; backdrop-filter: blur(5px); border-bottom: solid 1px #ffffff40; height: 45px; } div#websites-list { display: flex; } .website-item { display: flex; padding: 5px 10px; margin: 5px; font-size: 12px; justify-content: flex-start; } .suggestion-item.active { cursor: pointer; background-color: #d1d1d1; color: rgb(0, 0, 0); } .website-item:hover { background-color: #e9e9e940; border-radius: 6px; } .website-item img { width: 15px; height: 15px; margin-right: 5px; } .color-picker { position: fixed; top: 15px; right: 0px; } input#colorPicker { padding: 14px 13px; width: 5%; background: #7979797d; border: solid 1px black; outline: none; } .delete-btn { background: transparent; border: none; color: #000000; cursor: pointer; font-weight: 500; font-size: 12px; position: absolute; background: rgb(255 255 255); padding: 0px 5px; border-radius: 3px; bottom: 0px; margin-left: -12px; } .delete-btn:hover { font-size: 20px; padding: 5px 8px; color: black; background: rgb(255, 255, 255); font-weight: 300; } div#websites-list { display: flex; position: relative; gap: 15px; overflow-x: scroll; width: 94%; white-space: nowrap; text-transform: capitalize; } a { text-decoration: none; color: rgba(255, 255, 255, 0.801); } .frombs { position: fixed; gap: 20px; display: flex; font-size: 13px; width: 100%; height: 50px; align-items: center; left: 0px; padding: 8px 30px; bottom: 0px; background: #00000045; backdrop-filter: blur(5px); border-top: solid 1px #ffffff40; } .frombs a:hover { text-decoration: underline; } .footer { color: #e8eaed; position: fixed; font-size: 15px; right: 90px; } .more { display: none; } #clear-input { position: absolute; right: 40px; cursor: pointer; color: #aeaeae; font-size: 30px; display: none; top: 21px; font-weight: 100; } .suggestions { position: absolute; top: 80px; left: 50px; background: #e5e5e5; width: 85%; z-index: 1000; max-height: 135px; overflow-y: auto; text-align: justify; border-radius: 10px; color: black; font-weight: 500; } .suggestion-item { padding: 8px 25px; cursor: pointer; } .suggestion-item:hover { background: #a8a8a8; } @media(max-width:480px) { body { position: fixed; width: 100%; } input#colorPicker { position: fixed; right: 5px; } input#url-bar { position: relative; width: 100%; left: -20px; padding: 10px 20px; font-size: 15px; } .suggestion-item { padding: 8px 25px; cursor: pointer; font-size: 15px; } .suggestions { position: relative; top: 10px; width: 100%; left: 0px; } #clear-input { position: absolute; right: 5px; cursor: pointer; color: #aeaeae; font-size: 22px; display: none; top: 22px; font-weight: 100; } .frombs { display: none; } #go-button { padding: 10px 20px; position: relative; } #logo { font-size: 30px; } #browser-container { width: 80%; position: relative; } div#websites-list { display: flex; position: relative; gap: 10px; overflow-x: scroll; width: 88%; white-space: nowrap; } .more { display: block; background: #ffffff24; filter: drop-shadow(12px -14px 16px black); width: 100%; text-align: center; padding: 20px; bottom: 0px; position: fixed; font-size: 12px; gap: 10px; display: grid; } } </style> </head> <body> <!-- Saved Websites Section --> <div id="saved-websites"> <div id="websites-list"></div> </div> <!-- Logo Section --> <div id="logo">BSearchin</div> <!-- Search Container --> <div id="browser-container"> <div class="search-wrapper"> <input type="text" id="url-bar" placeholder="Search here..." autocomplete="off"> <span id="clear-input">×</span> <div class="suggestions" id="suggestions-list"></div> <button id="go-button" disabled><i class="fa-solid fa-magnifying-glass"></i></button> </div> </div> <!-- Options Container --> <div class="options-container"> <div class="option"> <span class="option-text"><i class="fa-solid fa-plus"></i></span> </div> </div> <div class="frombs"> <p style="color: rgb(0 96 255); text-decoration: underline; font-size: 12px; font-weight: 600; background: black; padding: 5px 20px; border-radius: 100px;">More</p><br><br><br> <a href="https://blackswan19.github.io/Educate/songsearcher">BSongsearch</a> <a href="https://blackswan19.github.io/bscrop/bsweb">BsWebs</a> <a href="https://blackswan19.github.io/bscrop/formbs">Rora</a> <div class="footer"> <a href="https://blackswan19.github.io/bscrop/reminder.html">BsReminder <i class="fa-regular fa-calendar-days"></i></a> </div> </div> <div class="more"> <a href="https://blackswan19.github.io/bscrop/formbs">More FromBs</a> </div> <style> .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; z-index: -1; filter: brightness(0.5); } .blur-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; filter: blur(10px); opacity: 0.3; filter: brightness(0.5); z-index: -100000; } .top-buttons { position: absolute; top: 70px; right: 10px; display: flex; gap: 10px; } .button { background: #ffffff24; color: white; border: none; padding: 12px; cursor: pointer; border-radius: 8px; font-size: 14px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; } .button i { font-size: 18px; } .button:hover { background: linear-gradient(135deg, #969696, #000000); } </style> <div class="blur-background" id="blurBg"></div> <div class="background-container" id="bgContainer"></div> <div class="top-buttons"> <button class="button" id="changeBgBtn"><i class="fas fa-image"></i></button> <button class="button" id="deleteBgBtn"><i class="fas fa-trash"></i></button> <input class="button" style="color: white;" type="color" id="colorPicker" value="#001252" onchange="changeBackgroundColor(event)"> </div>
 <script>
-        function updateBackground(imageSrc) {
-            const bgContainer = document.getElementById('bgContainer');
-            const blurBg = document.getElementById('blurBg');
-            document.body.style.backgroundColor = "black"; // Change background to black when image is set
-            bgContainer.style.backgroundImage = `url('${imageSrc}')`;
-            blurBg.style.backgroundImage = `url('${imageSrc}')`;
-        }
+    // Image compression function to ensure storage in localStorage
+    function compressImage(file, callback) {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const maxWidth = 800; // Max width for compression
+                const maxHeight = 800; // Max height for compression
+                let width = img.width;
+                let height = img.height;
 
-        document.getElementById('changeBgBtn').addEventListener('click', function() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        updateBackground(e.target.result);
-                        localStorage.setItem('backgroundImage', e.target.result);
-                    };
-                    reader.readAsDataURL(file);
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width *= maxHeight / height;
+                        height = maxHeight;
+                    }
                 }
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7); // 70% quality
+                callback(compressedDataUrl);
             };
-            input.click();
-        });
+        };
+        reader.readAsDataURL(file);
+    }
 
-        document.getElementById('deleteBgBtn').addEventListener('click', function() {
-            document.getElementById('bgContainer').style.backgroundImage = '';
-            document.getElementById('blurBg').style.backgroundImage = '';
-            document.body.style.backgroundColor = "black"; // Reset to blue background when image is deleted
-            localStorage.removeItem('backgroundImage');
-        });
+    function updateBackground(imageSrc) {
+        const bgContainer = document.getElementById('bgContainer');
+        const blurBg = document.getElementById('blurBg');
+        document.body.style.backgroundColor = "black"; // Change background to black when image is set
+        bgContainer.style.backgroundImage = `url('${imageSrc}')`;
+        blurBg.style.backgroundImage = `url('${imageSrc}')`;
+    }
 
-        window.addEventListener('load', function() {
-            const storedImage = localStorage.getItem('backgroundImage');
-            if (storedImage) {
-                updateBackground(storedImage);
+    document.getElementById('changeBgBtn').addEventListener('click', function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                compressImage(file, function(compressedData) {
+                    try {
+                        updateBackground(compressedData);
+                        localStorage.setItem('backgroundImage', compressedData);
+                        console.log('Compressed image stored, size:', compressedData.length);
+                    } catch (error) {
+                        console.error('Failed to store image:', error);
+                        alert('Image too large to store. Try a smaller file.');
+                    }
+                });
             }
-        });
-    </script>
-  <script>
+        };
+        input.click();
+    });
+
+    document.getElementById('deleteBgBtn').addEventListener('click', function() {
+        document.getElementById('bgContainer').style.backgroundImage = '';
+        document.getElementById('blurBg').style.backgroundImage = '';
+        document.body.style.backgroundColor = "black"; // Reset to black background when image is deleted
+        localStorage.removeItem('backgroundImage');
+    });
+
+    window.addEventListener('load', function() {
+        const storedImage = localStorage.getItem('backgroundImage');
+        if (storedImage) {
+            updateBackground(storedImage);
+        }
+    });
+
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("url-bar").focus();
     });
-</script>
-<script>
+
     const urlBar = document.getElementById('url-bar');
     const goButton = document.getElementById('go-button');
     const clearInput = document.getElementById('clear-input');
@@ -96,95 +134,93 @@
     });
     let activeIndex = -1; // Tracks the currently active suggestion
 
-function showSuggestions(value) {
-    suggestionsList.innerHTML = ''; // Clear current suggestions
-    activeIndex = -1; // Reset active index when new suggestions are shown
+    function showSuggestions(value) {
+        suggestionsList.innerHTML = ''; // Clear current suggestions
+        activeIndex = -1; // Reset active index when new suggestions are shown
 
-    if (!value) return;
+        if (!value) return;
 
-    const suggestions = storedInputs.filter(input =>
-        input.toLowerCase().includes(value.toLowerCase())
-    );
+        const suggestions = storedInputs.filter(input =>
+            input.toLowerCase().includes(value.toLowerCase())
+        );
 
-    if (suggestions.length === 0) {
-        suggestionsList.style.display = 'none';
-    } else {
-        suggestionsList.style.display = 'block';
-        suggestions.forEach((suggestion, index) => {
-            const item = document.createElement('div');
-            item.classList.add('suggestion-item');
-            item.style.display = 'flex'; // Use flexbox to align the word on the left and x on the right
-            item.style.justifyContent = 'space-between'; // Ensure space between the word and the x mark
-            item.style.alignItems = 'center';
+        if (suggestions.length === 0) {
+            suggestionsList.style.display = 'none';
+        } else {
+            suggestionsList.style.display = 'block';
+            suggestions.forEach((suggestion, index) => {
+                const item = document.createElement('div');
+                item.classList.add('suggestion-item');
+                item.style.display = 'flex'; // Use flexbox to align the word on the left and x on the right
+                item.style.justifyContent = 'space-between'; // Ensure space between the word and the x mark
+                item.style.alignItems = 'center';
 
-            const suggestionText = document.createElement('span');
-            suggestionText.textContent = suggestion;
-            suggestionText.style.flex = '1'; // Take up the remaining space
+                const suggestionText = document.createElement('span');
+                suggestionText.textContent = suggestion;
+                suggestionText.style.flex = '1'; // Take up the remaining space
 
-            const deleteBtn = document.createElement('span');
-            deleteBtn.textContent = '×';
-            deleteBtn.style.color = '#000000';
-            deleteBtn.style.cursor = 'pointer';
-            deleteBtn.style.fontSize = '20px';
-            deleteBtn.style.fontWeight = '100px';
+                const deleteBtn = document.createElement('span');
+                deleteBtn.textContent = '×';
+                deleteBtn.style.color = '#000000';
+                deleteBtn.style.cursor = 'pointer';
+                deleteBtn.style.fontSize = '20px';
+                deleteBtn.style.fontWeight = '100px';
 
-            // Delete suggestion from localStorage
-            deleteBtn.addEventListener('click', () => {
-                storedInputs.splice(index, 1);
-                localStorage.setItem(storedInputsKey, JSON.stringify(storedInputs));
-                showSuggestions(value); // Refresh suggestions
+                // Delete suggestion from localStorage
+                deleteBtn.addEventListener('click', () => {
+                    storedInputs.splice(index, 1);
+                    localStorage.setItem(storedInputsKey, JSON.stringify(storedInputs));
+                    showSuggestions(value); // Refresh suggestions
+                });
+
+                // Add event listener to the suggestion text to fill input with the clicked suggestion
+                suggestionText.addEventListener('click', () => {
+                    urlBar.value = suggestion; // Fill the input with the clicked suggestion
+                    suggestionsList.innerHTML = ''; // Clear suggestions
+                    clearInput.style.display = 'block'; // Show the clear button
+                });
+
+                item.appendChild(suggestionText);
+                item.appendChild(deleteBtn);
+                suggestionsList.appendChild(item);
             });
-
-            // Add event listener to the suggestion text to fill input with the clicked suggestion
-            suggestionText.addEventListener('click', () => {
-                urlBar.value = suggestion; // Fill the input with the clicked suggestion
-                suggestionsList.innerHTML = ''; // Clear suggestions
-                clearInput.style.display = 'block'; // Show the clear button
-            });
-
-            item.appendChild(suggestionText);
-            item.appendChild(deleteBtn);
-            suggestionsList.appendChild(item);
-        });
-    }
-}
-
-// Navigate suggestions using the Up and Down keys
-urlBar.addEventListener('keydown', function (e) {
-    const suggestionItems = document.querySelectorAll('.suggestion-item');
-
-    if (e.key === 'ArrowDown') {
-        e.preventDefault(); // Prevent cursor movement in input
-        if (activeIndex < suggestionItems.length - 1) {
-            activeIndex++;
-            updateActiveSuggestion(suggestionItems);
-        }
-    } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (activeIndex > 0) {
-            activeIndex--;
-            updateActiveSuggestion(suggestionItems);
-        }
-    } else if (e.key === 'Enter') {
-        if (activeIndex >= 0 && suggestionItems[activeIndex]) {
-            suggestionItems[activeIndex].querySelector('span').click(); // Simulate click
         }
     }
-});
 
-function updateActiveSuggestion(suggestionItems) {
-    // Clear all active classes
-    suggestionItems.forEach(item => item.classList.remove('active'));
+    // Navigate suggestions using the Up and Down keys
+    urlBar.addEventListener('keydown', function (e) {
+        const suggestionItems = document.querySelectorAll('.suggestion-item');
 
-    // Highlight the new active suggestion
-    if (activeIndex >= 0) {
-        const activeItem = suggestionItems[activeIndex];
-        activeItem.classList.add('active');
-        urlBar.value = activeItem.querySelector('span').textContent; // Update input with active suggestion
+        if (e.key === 'ArrowDown') {
+            e.preventDefault(); // Prevent cursor movement in input
+            if (activeIndex < suggestionItems.length - 1) {
+                activeIndex++;
+                updateActiveSuggestion(suggestionItems);
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (activeIndex > 0) {
+                activeIndex--;
+                updateActiveSuggestion(suggestionItems);
+            }
+        } else if (e.key === 'Enter') {
+            if (activeIndex >= 0 && suggestionItems[activeIndex]) {
+                suggestionItems[activeIndex].querySelector('span').click(); // Simulate click
+            }
+        }
+    });
+
+    function updateActiveSuggestion(suggestionItems) {
+        // Clear all active classes
+        suggestionItems.forEach(item => item.classList.remove('active'));
+
+        // Highlight the new active suggestion
+        if (activeIndex >= 0) {
+            const activeItem = suggestionItems[activeIndex];
+            activeItem.classList.add('active');
+            urlBar.value = activeItem.querySelector('span').textContent; // Update input with active suggestion
+        }
     }
-}
-
-
 
     // Hide suggestions if clicked outside
     document.addEventListener('click', (event) => {
@@ -193,126 +229,104 @@ function updateActiveSuggestion(suggestionItems) {
         }
     });
 
-window.onload = function() {
-      const savedColor = localStorage.getItem('bgColor');
-      if (savedColor) {
-        document.body.style.backgroundColor = savedColor;
-        document.getElementById('colorPicker').value = savedColor;
-      }
+    window.onload = function() {
+        const savedColor = localStorage.getItem('bgColor');
+        if (savedColor) {
+            document.body.style.backgroundColor = savedColor;
+            document.getElementById('colorPicker').value = savedColor;
+        }
     }
     function changeBackgroundColor(event) {
-      const selectedColor = event.target.value;
-      document.body.style.backgroundColor = selectedColor;
-
-      // Save the color in localStorage
-      localStorage.setItem('bgColor', selectedColor);
+        const selectedColor = event.target.value;
+        document.body.style.backgroundColor = selectedColor;
+        localStorage.setItem('bgColor', selectedColor);
     }
     // Save a new website with user-defined title
-async function saveWebsite(url) {
-    // Ensure the URL has a proper protocol
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://' + url; // Add 'https://' if missing
+    async function saveWebsite(url) {
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url; // Add 'https://' if missing
+        }
+
+        const title = prompt("Enter a title for this website:");
+        if (title) { // Only save if a title was entered
+            const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+            savedWebsites.push({ url, title });
+            localStorage.setItem('websites', JSON.stringify(savedWebsites));
+            loadWebsites();
+        } else {
+            alert("Website title cannot be empty!");
+        }
     }
 
-    // Ask the user for a title
-    const title = prompt("Enter a title for this website:");
+    // Load saved websites from localStorage and display them
+    async function loadWebsites() {
+        const websitesList = document.getElementById('websites-list');
+        websitesList.innerHTML = ''; // Clear the list
 
-    if (title) { // Only save if a title was entered
         const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
 
-        // Add the new website to the saved websites array
-        savedWebsites.push({ url, title });
-        
-        // Save the updated list back to localStorage
+        for (const [index, website] of savedWebsites.entries()) {
+            const websiteItem = document.createElement('div');
+            websiteItem.classList.add('website-item');
+
+            const link = document.createElement('a');
+            link.href = website.url;
+            link.target = '_self';
+
+            const favicon = document.createElement('img');
+            const domain = getDomain(website.url);
+            favicon.src = `https://www.google.com/s2/favicons?domain=${domain}`;
+            favicon.onerror = function () {
+                favicon.src = 'https://i.ibb.co/kxgjrZG/sitesaved-BS.png';
+            };
+            favicon.alt = '';
+
+            const title = website.title || domain;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('delete-btn');
+            deleteBtn.innerText = '×';
+            deleteBtn.onclick = function () {
+                deleteWebsite(index);
+            };
+
+            link.appendChild(favicon);
+            link.appendChild(document.createTextNode(title));
+            websiteItem.appendChild(link);
+            websiteItem.appendChild(deleteBtn);
+            websitesList.appendChild(websiteItem);
+        }
+    }
+
+    // Delete a website from localStorage
+    function deleteWebsite(index) {
+        const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+        savedWebsites.splice(index, 1); // Remove the website at the given index
         localStorage.setItem('websites', JSON.stringify(savedWebsites));
-
-        // Reload the list of saved websites
-        loadWebsites();
-    } else {
-        alert("Website title cannot be empty!");
+        loadWebsites(); // Reload the list to reflect the deletion
     }
-}
 
-// Load saved websites from localStorage and display them
-async function loadWebsites() {
-    const websitesList = document.getElementById('websites-list');
-    websitesList.innerHTML = ''; // Clear the list
-
-    const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
-
-    for (const [index, website] of savedWebsites.entries()) {
-        const websiteItem = document.createElement('div');
-        websiteItem.classList.add('website-item');
-
-        // Create a link element for the saved website
-        const link = document.createElement('a');
-        link.href = website.url;
-        link.target = '_self';
-
-        // Add favicon for the website
-        const favicon = document.createElement('img');
-        const domain = getDomain(website.url);
-        favicon.src = `https://www.google.com/s2/favicons?domain=${domain}`;
-        favicon.onerror = function () {
-            // Use a fallback icon if favicon cannot be loaded
-            favicon.src = 'https://i.ibb.co/kxgjrZG/sitesaved-BS.png';
-        };
-        favicon.alt = '';
-
-        // Use the title if available, otherwise fallback to the domain
-        const title = website.title || domain;
-
-        // Create delete button for removing saved website
-        const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-btn');
-        deleteBtn.innerText = '×';
-        deleteBtn.onclick = function () {
-            deleteWebsite(index);
-        };
-
-        // Append favicon and title to the link
-        link.appendChild(favicon);
-        link.appendChild(document.createTextNode(title));
-
-        // Append link and delete button to the website item
-        websiteItem.appendChild(link);
-        websiteItem.appendChild(deleteBtn);
-
-        // Add the website item to the list
-        websitesList.appendChild(websiteItem);
+    // Helper function to extract the domain from the URL
+    function getDomain(url) {
+        try {
+            return new URL(url).hostname; // Extract the domain name
+        } catch (e) {
+            return url; // Fallback to the full URL if parsing fails
+        }
     }
-}
 
-// Delete a website from localStorage
-function deleteWebsite(index) {
-    const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
-    savedWebsites.splice(index, 1); // Remove the website at the given index
-    localStorage.setItem('websites', JSON.stringify(savedWebsites));
-    loadWebsites(); // Reload the list to reflect the deletion
-}
+    // Initialize websites on page load
+    loadWebsites();
 
-// Helper function to extract the domain from the URL
-function getDomain(url) {
-    try {
-        return new URL(url).hostname; // Extract the domain name
-    } catch (e) {
-        return url; // Fallback to the full URL if parsing fails
-    }
-}
-
-// Initialize websites on page load
-loadWebsites();
-
-// Add event listeners for the search bar and button
-document.querySelector('.option').addEventListener('click', async function () {
-    const url = prompt("Enter the website URL:");
-    if (url) {
-        await saveWebsite(url);
-    }
-});
+    // Add event listeners for the search bar and button
+    document.querySelector('.option').addEventListener('click', async function () {
+        const url = prompt("Enter the website URL:");
+        if (url) {
+            await saveWebsite(url);
+        }
+    });
 
 </script>
 
-<script src="noright.js"></script>
 </body>
 </html>
