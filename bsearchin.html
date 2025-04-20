@@ -9,7 +9,7 @@
             img.onload = function() {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                const maxWidth = 1920; // Increased for better quality
+                const maxWidth = 1920;
                 const maxHeight = 1080;
                 let width = img.width;
                 let height = img.height;
@@ -30,13 +30,13 @@
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
 
-                let quality = 0.9; // Start with high quality
+                let quality = 0.9;
                 let compressedDataUrl;
 
                 do {
-                    compressedDataUrl = canvas.toDataURL('image/webp', quality); // Use WebP
+                    compressedDataUrl = canvas.toDataURL('image/webp', quality);
                     quality -= 0.1;
-                } while (compressedDataUrl.length > 5 * 1024 * 1024 && quality > 0.1); // Under 5MB
+                } while (compressedDataUrl.length > 5 * 1024 * 1024 && quality > 0.1);
 
                 if (compressedDataUrl.length > 5 * 1024 * 1024) {
                     alert('Image is too large to store even after compression.');
@@ -287,6 +287,8 @@
         for (const [index, website] of savedWebsites.entries()) {
             const websiteItem = document.createElement('div');
             websiteItem.classList.add('website-item');
+            websiteItem.setAttribute('draggable', 'true');
+            websiteItem.dataset.index = index;
 
             const link = document.createElement('a');
             link.href = website.url;
@@ -305,8 +307,11 @@
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-btn');
             deleteBtn.innerText = '×';
-            deleteBtn.onclick = function () {
-                deleteWebsite(index);
+            deleteBtn.onclick = function (e) {
+                e.preventDefault();
+                if (confirm(`Are you sure you want to delete "${title}"?`)) {
+                    deleteWebsite(index);
+                }
             };
 
             link.appendChild(favicon);
@@ -314,7 +319,52 @@
             websiteItem.appendChild(link);
             websiteItem.appendChild(deleteBtn);
             websitesList.appendChild(websiteItem);
+
+            // Drag and drop event listeners
+            websiteItem.addEventListener('dragstart', handleDragStart);
+            websiteItem.addEventListener('dragover', handleDragOver);
+            websiteItem.addEventListener('drop', handleDrop);
+            websiteItem.addEventListener('dragend', handleDragEnd);
         }
+    }
+
+    let draggedItem = null;
+
+    function handleDragStart(e) {
+        draggedItem = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', this.dataset.index);
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        if (draggedItem !== this) {
+            const allItems = [...document.querySelectorAll('.website-item')];
+            const draggedIndex = parseInt(draggedItem.dataset.index);
+            const droppedIndex = parseInt(this.dataset.index);
+            const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+
+            // Reorder the websites array
+            const [draggedWebsite] = savedWebsites.splice(draggedIndex, 1);
+            savedWebsites.splice(droppedIndex, 0, draggedWebsite);
+
+            // Update localStorage
+            localStorage.setItem('websites', JSON.stringify(savedWebsites));
+
+            // Reload websites to reflect new order
+            loadWebsites();
+        }
+    }
+
+    function handleDragEnd() {
+        this.classList.remove('dragging');
+        draggedItem = null;
     }
 
     function deleteWebsite(index) {
