@@ -94,7 +94,6 @@ function openPopup(index) {
 function closePopup() {
     document.getElementById("popupOverlay").style.display = "none";
 }
-
 // Function to play the video in a mini tab (popup window)
 function playInMiniTab() {
     const media = filteredMedia[currentIndex];
@@ -102,33 +101,33 @@ function playInMiniTab() {
         // Open a popup window for the video player
         const popup = window.open('', 'VideoPlayer', 'width=800,height=450,resizable=yes,scrollbars=no');
         
+        // Use the modified URL for the embed
+        const modifiedUrl = modifyLink(media.link);
+        const embedUrl = getEmbedUrl(modifiedUrl); // Get embed URL from modified link
+        
         popup.document.write(`
             <!DOCTYPE html>
             <html lang="en">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>BsVideosaver</title>
+                <title>BsVideosaver/playing/${media.title}   </title>
                 
                 <link rel="icon" type="image/x-icon" href="https://i.ibb.co/HqNHsqy/vidsave.png">
-                <style> @import url('https://fonts.googleapis.com/css2?family=Alata&family=Anton&family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Racing+Sans+One&family=Roboto+Slab:wght@100..900&family=Satisfy&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Racing+Sans+One&family=Roboto+Slab:wght@100..900&family=Satisfy&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Roboto+Slab:wght@100..900&family=Satisfy&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Orbitron:wght@400;700&family=Red+Hat+Display:wght@400;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Alata&family=Corinthia:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Geologica:wght@100..900&family=Lavishly+Yours&family=League+Spartan:wght@100..900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Mrs+Saint+Delafield&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Alata&family=Corinthia:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Geologica:wght@100..900&family=Lavishly+Yours&family=League+Spartan:wght@100..900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Mrs+Saint+Delafield&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    font-family: "Prompt", sans-serif;
-}
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        scroll-behavior: smooth;
+                        font-family: "Prompt", sans-serif;
+                    }
 
                     body { 
                         margin: 0; 
                         background: #000; 
-                        
                         color: white;
                     }
                     ::-webkit-scrollbar {
@@ -159,7 +158,8 @@ function playInMiniTab() {
                         transition: background-color 0.3s;
                     }
                     .header button:hover {
-                        background-color: #0041ff; color: white;
+                        background-color: #0041ff; 
+                        color: white;
                     }
                     .header .title {
                         font-size: 18px;
@@ -180,14 +180,13 @@ function playInMiniTab() {
                     <span class="title">${media.title}</span>
                     <button onclick="window.opener.focus(); window.close()">Go Back</button>
                 </div>
-                <iframe src="${getEmbedUrl(media.link)}" frameborder="0" allowfullscreen></iframe>
+                <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
             </body>
             </html>
         `);
         popup.document.close();
     }
 }
-
 // Function to convert YouTube URL to embed URL
 function getEmbedUrl(youtubeLink) {
     const videoId = youtubeLink.match(/(?:v=|\/)([0-9A-Za-z_-]{11}).*/)?.[1];
