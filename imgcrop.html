@@ -1,19 +1,21 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgcroper</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/sd04n7n4/logo.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;} body { font-family: Arial, sans-serif; flex-direction: column; justify-content: center; align-items: center; background-color: #212121; height: 100vh; color: #333; } #image-container { max-width: 100%; margin: 20px auto; text-align: center; } #image-preview { max-width: 100%; width: 400px; /* Fixed width */ height: 400px; /* Fixed height */ object-fit: contain; /* Ensures the image scales proportionally */ display: none; border: 1px solid #ccc; background: #f9f9f9; /* Optional background for empty space */ } ::-webkit-scrollbar{ background-color: transparent; } input { margin: 20px; max-width: 600px; background-color: #3c3c3c; border-radius: 10px; color: white; padding: 0px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 25px; } .btn-group { margin: 10px 0; text-align: center; position: fixed; right: 10px; bottom: 50px; background: black; padding: 10px; border-radius: 10px; z-index: 100; gap: 3px; } .cropper-container.cropper-bg { height: 511px; } button{ padding: 6px 20px; font-size: 15px; cursor: pointer; background-color: #3c3c3c; color: white; border: solid 1px #3c3c3c; border-radius: 50px; } button:hover { background-color: #1c1c1c; } .cropper-bg { position: relative; background-color: white; } .cropper-crop-box { width: 1300px; height: 511px; transform: translateX(464.5px); } .cropper-crop { cursor: crosshair; background: rgb(0, 0, 0); opacity: 85%; } div#movement-controls { position: fixed; right: 10px; top: 90px; background: black; padding: 10px; border-radius: 10px; z-index: 100; display: none; gap: 3px; } .mainoptions{ text-align: center;gap: 20px;position: fixed;left: 10px;bottom: 15px; } .messsage{ display: none; } @media (max-width: 480px) { .messsage{ display: block; position: fixed; text-align: center; color: white; align-items: center; height: 100vh; display: flex ; width: 100%; justify-content: center; background: #000000b5; } input{ position: fixed; left: 0px; padding: 10px; z-index: -10000; } } </style> <div class="messsage"> <p>Open in Desktop site mode to access the site</p> </div> <div class="custom-menu"> <style> a{ text-decoration: none; } .custom-menu { display: none; position: fixed; background-color: #262626; border: 1px solid #242424; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; padding: 5px; border-radius: 5px; z-index: 1000; } .custom-menu button { display: block; width: 100%; border: none; background: none; text-align: left; cursor: pointer; color: white; font-size: 15px; } .custom-menu button:hover { background-color: #404040; border-radius: 5px; } .image-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.9); padding: 20px; border-radius: 10px; z-index: 1000; text-align: center; display: none; width: 100%; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); height: 100%; } .image-popup img { max-height: 80%; } .image-popup h2 { color: #0050ff; font-size: 20px; font-weight: 600; margin-bottom: 10px; text-align: justify; text-transform: uppercase; } @media(max-width:480px){ button { padding: 10px 20px; font-size: 9px; cursor: pointer; background-color: #004cff; color: white; border: none; border-radius: 50px; } label { font-weight: 100; } } </style> </style> <a href="https://blackswan19.github.io/bscrop/imgconver"><button id="option2">Go to BsImgconverter</button></a> <a href="https://blackswan19.github.io/bscrop/formbs"><button id="option2">More From BS</button></a> </div> <h1 style="text-align: center;color: #7e7e7e; font-weight: 400; text-align: center; line-height: 25px;position: relative; top: 25px;">BsImgcroper</h1><div id="image-container"> <input type="file" id="image-input" accept="image/*" class="btn"> <br> <div id="movement-controls"> <button id="move-up" class="btn">Up</button> <button id="move-down" class="btn">Down</button><br> <button id="move-right" class="btn">Right</button> <button id="move-left" class="btn">Left</button><br> </div> <img id="image-preview"> </div> <div class="btn-group"> <button id="aspect-1-1" class="btn" style="display: none;">1:1</button> <button id="aspect-16-9" class="btn" style="display: none;">16:9</button> <button id="aspect-4-3" class="btn" style="display: none;">4:3</button> <button id="reset" class="btn" style="display: none;">Reset</button> </div> <div class="mainoptions"> <button id="crop-button" class="btn" style="display: none;">Crop the image</button> <a id="download-link" class="btn" style="display: none;color: white;text-decoration: underline;" download="Rora#imgcrop.png">Download</a> </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgcroper</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/84x2Bk3/BS.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; } body { display: flex; flex-direction: column; align-items: center; min-height: 100vh; background: #212121; color: #e0e0e0; } h1 { text-align: center; font-weight: 600; font-size: 24px; margin: 20px 0; } #image-container { max-width: 100%; text-align: center; padding: 0 15px; } #image-preview { max-width: 100%; width: 500px; height: 500px; object-fit: contain; display: none; border: 1px solid #333; background: #2a2a2a; border-radius: 6px; } ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #2a2a2a; } ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; } input[type="file"] { display: block; background: #333; border: none; border-radius: 6px; color: #fff; padding: 12px 20px; cursor: pointer; font-size: 14px; transition: background 0.2s; } input[type="file"]:hover { background: #444; } #move-toolbar { position: fixed; right: 15px; top: 20px; display: flex; flex-direction: column; gap: 8px; background: #000000; padding: 10px; border-radius: 6px; display: none; z-index: 100; } .move-btn { background: #000000; border: none; border-radius: 6px; width: 36px; height: 36px; color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; } .move-btn:hover { background: #004bff; } #size-controls { position: fixed; right: 15px; bottom: 15px; display: flex; flex-direction: column; gap: 8px; background: #000000; padding: 10px; border-radius: 6px; display: none; z-index: 100; } .size-btn { background: #000000; border: none; border-radius: 6px; padding: 10px 15px; color: #fff; font-size: 14px; cursor: pointer; display: flex;justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; } .size-btn:hover { background: #004bff; } #crop-section { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; background: #000000; padding: 10px; border-radius: 6px; z-index: 100; } .action-btn { background: #131313; border: none; border-radius: 6px; padding: 10px 20px; color: #fff; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; transition: background 0.2s; } .action-btn:hover { background: #0044ff; } .action-btn.crop { padding: 12px 24px; } .messsage { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.8); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; z-index: 1000; text-align: center; padding: 20px; } .custom-menu { display: none; position: fixed; background: #2a2a2a; border: 1px solid #333; padding: 10px; border-radius: 6px; z-index: 1000; } .custom-menu button { display: block; width: 100%; border: none; background: none; text-align: left; cursor: pointer; color: #fff; font-size: 14px; padding: 8px; border-radius: 4px; transition: background 0.2s; } .custom-menu button:hover { background: #333; } .cropper-container { margin: 35px -99px; background: #2a2a2a !important; } .cropper-crop-box { border: 1px dashed #004bff; } .cropper-view-box { outline: 1px solid #004bff; outline-color: rgba(0, 123, 255, 0.75); } .messsage { display: none; } @media (max-width: 768px) { #image-preview { width: 100%; height: auto; max-height: 400px; } #move-toolbar { gap: 6px; padding: 8px; } .move-btn { width: 32px; height: 32px; font-size: 14px; } } @media (max-width: 480px) { .messsage { display: flex; } #image-container, #move-toolbar, #size-controls, #crop-section { display: none; } input[type="file"] { display: none; } } </style> </head> <body> <div class="messsage"> <p>Please open in Desktop site mode to access the site</p> </div> <div class="custom-menu"> <a href="https://blackswan19.github.io/bscrop/imgconver"><button>Go to BsImgconverter</button></a> <a href="https://blackswan19.github.io/bscrop/formbs"><button>More From BS</button></a> </div> <h1>BsImgcroper</h1> <div id="image-container"><script src="noright.js"></script> <input type="file" id="image-input" accept="image/*"> <div id="move-toolbar"> <button id="move-up" class="move-btn" title="Move Up"><i class="fas fa-arrow-up"></i></button> <button id="move-down" class="move-btn" title="Move Down"><i class="fas fa-arrow-down"></i></button> <button id="move-left" class="move-btn" title="Move Left"><i class="fas fa-arrow-left"></i></button> <button id="move-right" class="move-btn" title="Move Right"><i class="fas fa-arrow-right"></i></button> <button id="rotate-left" class="move-btn" title="Rotate Left"><i class="fas fa-undo"></i></button> <button id="rotate-right" class="move-btn" title="Rotate Right"><i class="fas fa-redo"></i></button> </div> <img id="image-preview"> </div> <div id="size-controls"> <button id="size-1-1" class="size-btn" title="1:1 Aspect Ratio"><i class="fas fa-square"></i> 1:1</button> <button id="size-16-9" class="size-btn" title="16:9 Aspect Ratio"><i class="fas fa-film"></i> 16:9</button> <button id="size-4-3" class="size-btn" title="4:3 Aspect Ratio"><i class="fas fa-tv"></i> 4:3</button> <button id="reset-crop" class="size-btn" title="Reset Crop"><i class="fas fa-sync"></i> Reset</button> </div> <div id="crop-section"> <button id="crop-button" class="action-btn crop" style="display: none;"><i class="fas fa-crop"></i> Crop</button> <a id="download-link" class="action-btn" style="display: none;" download="cropped-image.png"><i class="fas fa-download"></i> Download</a> </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script>
         const imageInput = document.getElementById('image-input');
         const imagePreview = document.getElementById('image-preview');
         const cropButton = document.getElementById('crop-button');
         const downloadLink = document.getElementById('download-link');
-        const aspect1to1 = document.getElementById('aspect-1-1');
-        const aspect16to9 = document.getElementById('aspect-16-9');
-        const aspect4to3 = document.getElementById('aspect-4-3');
-        const resetButton = document.getElementById('reset');
+        const size1to1 = document.getElementById('size-1-1');
+        const size16to9 = document.getElementById('size-16-9');
+        const size4to3 = document.getElementById('size-4-3');
+        const resetButton = document.getElementById('reset-crop');
         const moveUp = document.getElementById('move-up');
         const moveDown = document.getElementById('move-down');
         const moveLeft = document.getElementById('move-left');
         const moveRight = document.getElementById('move-right');
-        const movementControls = document.getElementById('movement-controls');
+        const rotateLeft = document.getElementById('rotate-left');
+        const rotateRight = document.getElementById('rotate-right');
+        const moveToolbar = document.getElementById('move-toolbar');
+        const sizeControls = document.getElementById('size-controls');
 
         let cropper;
 
@@ -30,60 +32,67 @@
                     }
 
                     cropper = new Cropper(imagePreview, {
-                        aspectRatio: 1, // Default aspect ratio (1:1)
+                        aspectRatio: 1,
                         viewMode: 1,
                         autoCropArea: 1,
+                        background: false,
                     });
 
-                    cropButton.style.display = 'inline-block';
-                    aspect1to1.style.display = 'inline-block';
-                    aspect16to9.style.display = 'inline-block';
-                    aspect4to3.style.display = 'inline-block';
-                    resetButton.style.display = 'inline-block';
+                    moveToolbar.style.display = 'flex';
+                    sizeControls.style.display = 'flex';
+                    cropButton.style.display = 'flex';
                     downloadLink.style.display = 'none';
-                    movementControls.style.display = 'flex';
                 };
                 reader.readAsDataURL(file);
             }
         });
 
-        aspect1to1.addEventListener('click', () => {
-            cropper.setAspectRatio(1); // Square
+        size1to1.addEventListener('click', () => {
+            cropper.setAspectRatio(1);
         });
 
-        aspect16to9.addEventListener('click', () => {
-            cropper.setAspectRatio(16 / 9); // Widescreen
+        size16to9.addEventListener('click', () => {
+            cropper.setAspectRatio(16 / 9);
         });
 
-        aspect4to3.addEventListener('click', () => {
-            cropper.setAspectRatio(4 / 3); // Standard
+        size4to3.addEventListener('click', () => {
+            cropper.setAspectRatio(4 / 3);
         });
 
         resetButton.addEventListener('click', () => {
             if (cropper) {
-                cropper.destroy(); // Remove the cropper
+                cropper.destroy();
+                cropper = new Cropper(imagePreview, {
+                    aspectRatio: NaN,
+                    viewMode: 0,
+                    autoCrop: false,
+                    background: false,
+                });
             }
-            cropper = new Cropper(imagePreview, {
-                aspectRatio: NaN, // No aspect ratio (full picture)
-                viewMode: 0, // Free mode
-                autoCrop: false, // Do not show cropping box
-            });
         });
 
         moveUp.addEventListener('click', () => {
-            cropper.move(0, -1); // Move up by 10px
+            cropper.move(0, -1);
         });
 
         moveDown.addEventListener('click', () => {
-            cropper.move(0,1); // Move down by 10px
+            cropper.move(0, 1);
         });
 
         moveLeft.addEventListener('click', () => {
-            cropper.move(-1, 0); // Move left by 10px
+            cropper.move(-1, 0);
         });
 
         moveRight.addEventListener('click', () => {
-            cropper.move(1, 0); // Move right by 10px
+            cropper.move(1, 0);
+        });
+
+        rotateLeft.addEventListener('click', () => {
+            cropper.rotate(-90);
+        });
+
+        rotateRight.addEventListener('click', () => {
+            cropper.rotate(90);
         });
 
         cropButton.addEventListener('click', () => {
@@ -91,10 +100,15 @@
             canvas.toBlob((blob) => {
                 const url = URL.createObjectURL(blob);
                 downloadLink.href = url;
-                downloadLink.style.display = 'inline-block';
-            });
+                const file = imageInput.files[0];
+                let fileName = 'cropped-image';
+                if (file && file.name) {
+                    fileName = file.name.split('.').slice(0, -1).join('.');
+                }
+                downloadLink.setAttribute('download', `${fileName}#Bsimgcrop.png`);
+                downloadLink.style.display = 'flex';
+            }, 'image/png');
         });
     </script>
-    <script src="noright.js"></script>
 </body>
 </html>
