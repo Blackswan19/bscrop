@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsWebs</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/10YfRvf/webslogo.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;900&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; color: #5e5e5e; font-family: 'Red Hat Display', sans-serif; } body { display: flex; flex-direction: column; margin: 0; padding: 0; background-color: #000000; padding-left: 150px; } a{ text-decoration: none; color: white; } h1 { color: #0029ff; font-size: 35px; margin-top: 65px; font-weight: 600; } .rora { height: 1px; position: fixed; width: 1000%; background: #262626; left: -100px; } .search-bar { display: flex ; align-items: center; margin: 20px 0; padding: 0; border-radius: 130px; background-color: #1e1e1e; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.194); width: 100%; max-width: 650px; } .search-bar input { flex: 1; padding: 12px 45px; font-size: 18px; border: none; outline: none; border-radius: 30px; background-color: transparent; color: #b8b8b8; } .search-bar input::placeholder { color: #696969; opacity: 1; } .search-bar button { background-color: transparent; color: #8b8b8b; border: none; padding: 8px 30px; border-radius: 62px; font-size: 16px; cursor: pointer; transition: background-color 0.3s; margin-left: 10px; } .save { position: fixed; right: 10px; top: 10px; color: white; text-decoration: none; } .save:hover{ text-decoration: underline; } ::-webkit-scrollbar{ background-color: rgba(38, 37, 37, 0.027); width: 12px; } ::-webkit-scrollbar-thumb{ background-color: rgb(57, 57, 57); } ::-webkit-scrollbar-thumb:hover{ background-color: gray; } ::-webkit-scrollbar-track{ background-color: rgba(38, 37, 37, 0); } .results-container { margin-top: 40px; text-align: left; width: 100%; max-width: 760px; max-height: 580px; position: fixed; overflow-x: auto; padding-bottom: 30px; } .result-item { position: relative; margin-bottom: 20px; padding: 15px 0; border-bottom: 1px solid #424242; } .result-title { font-size: 25px; color: #b6b6b6c9; text-decoration: none; display: block; margin-bottom: 10px; text-transform: capitalize; } .result-title:hover { color: white; text-decoration: underline; } .result-url { color: #0a7b00; font-size: 13px; margin-bottom: 6px; display: block; overflow: hidden; } .result-description { font-size: 14px; color: #5e5e5e; margin-bottom: 10px; text-align: left; } .delete-btn { position: absolute; right: 10px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 10px; cursor: pointer; } .delete-btn:hover { color: white; background-color: #ff0000; } .add-button { position: fixed; bottom: 30px; right: 30px; background-color: #3c3c3c; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 24px; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); } .add-button:hover { background-color: #282828; } .modal-content { background-color: #1a1a1a; margin: 15% auto; padding: 36px; border: 1px solid #4e4e4e; width: 450px; border-radius: 10px; color: #e0e0e0; display: grid; } .modal-content h2 { margin-bottom: 15px; } .modal-content input, .modal-content button { padding: 10px; margin: 5px 0; background-color: #1e1e1e; color: #e0e0e0; border: 1px solid #424242; } .close-btn { background: #f44336; color: #fff; border: none; padding: 10px; cursor: pointer; border-radius: 8px; } .search-bar button:hover{ color: rgb(218, 218, 218); background-color: #3b3a3a; } button.pin-btn { background: #313131; border: none; padding: 5px 15px; color: #a9a9a9; border-radius: 100px; } button.pin-btn:hover{ color: white; background: #0055ff; } .pin-icon { width: 24px; height: 24px; cursor: pointer; } .pinned-sites-button { margin: 10px; padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; cursor: pointer; } .pinned-sites-button:hover { background-color: #0056b3; } .close-btn { background-color: rgb(125, 1, 1); color: #fff; } .add-button { position: fixed; bottom: 40px; /* Ensure spacing from bottom */ right: 30px; background-color: #3c3c3c; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 35px; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); } .modal { position: fixed; right: 40px; top: 150px; /* Adjust for better visibility */ display: none; } @media (max-width: 480px) { body { padding-left: 0; } h1 { font-size: 28px; margin-top: 10px; text-align: justify; margin-left: 10px; } .search-bar button { background-color: transparent; color: #ffffff; border: none; border-radius: 62px; font-size: 15px; cursor: pointer; transition: background-color 0.3s; margin-left: 9px;} .search-bar button:hover { color: rgb(218, 218, 218); background-color: transparent; } .add-button { position: fixed; bottom: 20px; right: 15px;} .results-container { margin-top: 180px; text-align: left; width: 100%; max-width: 760px; max-height: 600px; overflow-y: auto; padding-bottom: 30px; position: relative; padding: 15px; } .search-bar { display: grid ; margin: 20px 0; background-color: #28282824; box-shadow: none; width: 100%; position: fixed; border-radius: 14px; border-bottom: solid 1px #525050; } a.result-title { font-size: 15px; } .modal-content { width: 300px; } } </style> </head> <body> <div class="save"> <a href="https://blackswan19.github.io/bscrop/bsearchin">Save a website</a> </div> <h1>BsWebs</h1> <div class="container"> <div class="search-bar"> <input type="text" id="searchInput" placeholder="Search what you want...." oninput="displayMatchingWebsites()" /> <button onclick="searchWebsites()">Search</button> <button class="pinned-sites-button" onclick="displayPinnedWebsites()">Pinned Sites</button> </div> <div class="rora"></div> <div class="results-container" id="resultsContainer"></div> </div> <script src="noright.js"></script> <button class="add-button" onclick="openModal()">+</button> <div class="modal" id="modal"> <div class="modal-content"> <h2>Save a Website</h2> <input type="text" id="websiteTitle" placeholder="Website Title" required /> <input type="url" id="websiteUrl" placeholder="Website URL" required /> <button onclick="saveWebsite()" style="border: none; background-color: #c60000;">Save</button><br> <button class="close-btn" onclick="closeModal()">Close</button> </div> </div>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsWebs</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/10YfRvf/webslogo.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;900&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; color: #5e5e5e; font-family: 'Red Hat Display', sans-serif; } body { display: flex; flex-direction: column; margin: 0; padding: 0; background-color: #000000; padding-left: 150px; } a{ text-decoration: none; color: white; } h1 { color: #0029ff; font-size: 35px; margin-top: 65px; font-weight: 600; } .rora { height: 1px; position: fixed; width: 1000%; background: #262626; left: -100px; } .search-bar { display: flex ; align-items: center; margin: 20px 0; padding: 0; border-radius: 130px; background-color: #8080801f; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.194); width: 100%; max-width: 650px; } .search-bar input { flex: 1; padding: 12px 45px; font-size: 18px; border: none; outline: none; border-radius: 30px; background-color: transparent; color: #b8b8b8; } .search-bar input::placeholder { color: #696969; opacity: 1; } .search-bar button { background-color: transparent; color: #8b8b8b; border: none; padding: 8px 30px; border-radius: 62px; font-size: 16px; cursor: pointer; transition: background-color 0.3s; margin-left: 10px; } .save { position: fixed; right: 10px; top: 10px; color: white; text-decoration: none; } .save:hover{ text-decoration: underline; } ::-webkit-scrollbar{ background-color: rgba(38, 37, 37, 0.027); width: 12px; } ::-webkit-scrollbar-thumb{ background-color: rgb(57, 57, 57); } ::-webkit-scrollbar-thumb:hover{ background-color: gray; } ::-webkit-scrollbar-track{ background-color: rgba(38, 37, 37, 0); } .results-container { margin-top: 21px; text-align: left; width: 100%; max-width: 710px; max-height: 580px; position: fixed; overflow-x: auto; padding-bottom: 30px; padding-right: 50px; } .result-item { position: relative; margin-bottom: 20px; padding: 18px 29px; border-bottom: solid 1.5px #8080802b; } .result-item:hover{ border-radius: 20px; background-color: #8080801c; } .result-title { font-size: 25px; color: #b6b6b6c9; text-decoration: none; display: block; margin-bottom: 10px; text-transform: capitalize; max-width: 400px; } .result-title:hover { color: white; text-decoration: underline; } .result-url { color: #0a7b00; font-size: 13px; margin-bottom: 6px; display: block; overflow: hidden; } .result-description { font-size: 14px; color: #5e5e5e; margin-bottom: 10px; text-align: left; } .delete-btn { position: absolute; right: 10px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 10px; cursor: pointer; } .delete-btn:hover { color: white; background-color: #ff0000; } .add-button { position: fixed; bottom: 30px; right: 30px; background-color: #3c3c3c; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 24px; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); } .add-button:hover { background-color: #282828; } .modal-content { background-color: #0e0e0e; margin: 20% auto; padding: 36px; border: 1.5px solid #4e4e4e40; width: 450px; border-radius: 20px; color: #e0e0e0; display: grid ; } .modal-content h2 { margin-bottom: 15px; } .modal-content input, .modal-content button { padding: 10px; margin: 5px 0; background-color: #1e1e1e; color: #e0e0e0; outline: none; border: 1px solid #424242; } .modal-content input:focus{ border: solid gray 1px; } .close-btn { color: #fff; padding: 10px; cursor: pointer; display: contents; } .search-bar button:hover{ color: rgb(218, 218, 218); background-color: #3b3a3a; } button.pin-btn { position: absolute; right: 80px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 15px; cursor: pointer; } button.unpin-btn { position: absolute; right: 80px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 10px; cursor: pointer; } button.pin-btn:hover{ color: white; background: #0045ff; } button.unpin-btn:hover{ color: white; background: #005d14; } .pin-icon { width: 24px; height: 24px; cursor: pointer; } .pinned-sites-button { margin: 10px; padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; cursor: pointer; } .pinned-sites-button:hover { background-color: #0056b3; } .close-btn { background-color: rgb(125, 1, 1); color: #fff; } .add-button { position: fixed; bottom: 40px; /* Ensure spacing from bottom */ right: 30px; background-color: #3c3c3c; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 35px; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); } .modal { position: fixed; right: 25px; display: none; bottom: 60px; } @media (max-width: 480px) { body { padding-left: 0; } h1 { font-size: 28px; margin-top: 10px; text-align: justify; margin-left: 10px; } .search-bar button { background-color: transparent; color: #ffffff; border: none; border-radius: 62px; font-size: 15px; cursor: pointer; transition: background-color 0.3s; margin-left: 9px;} .search-bar button:hover { color: rgb(218, 218, 218); background-color: transparent; } .add-button { position: fixed; bottom: 20px; right: 15px;} .results-container { margin-top: 180px; text-align: left; width: 100%; max-width: 760px; max-height: 600px; overflow-y: auto; padding-bottom: 30px; position: relative; padding: 15px; } .search-bar { display: grid ; margin: 20px 0; background-color: #28282824; box-shadow: none; width: 100%; position: fixed; border-radius: 14px; border-bottom: solid 1px #525050; } a.result-title { font-size: 15px; } .modal-content { width: 300px; } } </style> </head> <body> <div class="save"> <a href="https://blackswan19.github.io/bscrop/bsearchin">Save a website</a> </div> <h1>BsWebs</h1> <div class="container"> <div class="search-bar"> <input type="text" id="searchInput" placeholder="Search what you want...." oninput="displayMatchingWebsites()" /> <button onclick="searchWebsites()">Search</button> <button class="pinned-sites-button" onclick="displayPinnedWebsites()">Pinned Sites</button> </div> <div class="rora"></div> <div class="results-container" id="resultsContainer"></div> </div> <script src="noright.js"></script> <button class="add-button" onclick="openModal()">+</button> <div class="modal" id="modal"> <div class="modal-content"> <h2>Save a Website</h2> <input type="text" id="websiteTitle" placeholder="Website Title" required /> <input type="url" id="websiteUrl" placeholder="Website URL" required /> <button onclick="saveWebsite()" style="border: none; background-color: #c60000;">Save Now</button><br> <button class="close-btn" onclick="closeModal()">Close</button> </div> </div>
     <script>
         const STORAGE_KEY = 'bswebs_websites';
         const PINNED_KEY = 'bswebs_pinned';
@@ -284,65 +284,54 @@
     { id: 278, title: 'Discover Family Ancestry', url: 'https://www.familysearch.org/' },
 
 ];
-        // Initialize default websites if local storage is empty
-        function initializeDefaultWebsites() {
-            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY));
-            if (!websites || websites.length === 0) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultWebsites));
-            }
-        }
 
-        // Open the modal
-        function openModal() {
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        // Close the modal
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-        function searchWebsites() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    const filteredWebsites = websites.filter(website => website.title.toLowerCase().includes(query));
-
-    if (filteredWebsites.length > 0) {
-        displayMatchingWebsites();
-    } else if (query) {
-        const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)} website`;
-        window.open(googleSearchUrl, '_self');
+// Initialize default websites if local storage is empty
+function initializeDefaultWebsites() {
+    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (!websites || websites.length === 0) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultWebsites));
     }
 }
 
-        // Save a website
-        function saveWebsite() {
-            const title = document.getElementById('websiteTitle').value.trim();
-            const url = document.getElementById('websiteUrl').value.trim();
+// Open the modal
+function openModal() {
+    document.getElementById('modal').style.display = 'flex';
+}
 
-            if (title && url) {
-                const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+// Close the modal
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
 
-                // Check if the website already exists (based on URL or Title)
-                const duplicate = websites.some(website => website.url === url || website.title.toLowerCase() === title.toLowerCase());
-                if (duplicate) {
-                    return;
-                }
+// Save a website
+function saveWebsite() {
+    const title = document.getElementById('websiteTitle').value.trim();
+    const url = document.getElementById('websiteUrl').value.trim();
 
-                // Add new website
-                const newWebsite = { id: Date.now(), title, url };
-                websites.push(newWebsite);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
+    if (title && url) {
+        const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-                // Clear input fields and close modal
-                document.getElementById('websiteTitle').value = '';
-                document.getElementById('websiteUrl').value = '';
-                closeModal();
-                displayMatchingWebsites();
-            } else {
-            }
+        // Check if the website already exists (based on URL or Title)
+        const duplicate = websites.some(website => website.url === url || website.title.toLowerCase() === title.toLowerCase());
+        if (duplicate) {
+            return;
         }
 
-        function displayMatchingWebsites() {
+        // Add new website
+        const newWebsite = { id: Date.now(), title, url };
+        websites.push(newWebsite);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
+
+        // Clear input fields and close modal
+        document.getElementById('websiteTitle').value = '';
+        document.getElementById('websiteUrl').value = '';
+        closeModal();
+        displayMatchingWebsites();
+    }
+}
+
+// Display matching websites based on search query
+function displayMatchingWebsites() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
@@ -362,14 +351,12 @@
                 <a href="${website.url}" class="result-title" target="_self">${website.title}</a>
                 <span class="result-url">${website.url}</span>
                 <p class="result-description">Click on the white colored title to open and view the site.</p>
-                <div class="optionss">
-        
+                <div class="button-container">
+                    <button class="pin-btn" onclick="${isPinned ? `unpinWebsite(${website.id})` : `pinWebsite(${website.id})`}">
+                        ${isPinned ? 'Unpin' : 'Pin'}
+                    </button>
+                    <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
                 </div>
-                
-                <button class="pin-btn" onclick="${isPinned ? `unpinWebsite(${website.id})` : `pinWebsite(${website.id})`}">
-                    ${isPinned ? 'Unpin' : 'Pin'}
-                </button>
-                <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
             `;
 
             resultsContainer.appendChild(resultItem);
@@ -381,6 +368,7 @@
     }
 }
 
+// Pin a website
 function pinWebsite(id) {
     const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
@@ -391,11 +379,10 @@ function pinWebsite(id) {
         pinnedWebsites.push(websiteToPin);
         localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
         displayMatchingWebsites();
-    } else {
-        
     }
 }
 
+// Unpin a website
 function unpinWebsite(id) {
     let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
     pinnedWebsites = pinnedWebsites.filter(website => website.id !== id);
@@ -403,104 +390,100 @@ function unpinWebsite(id) {
     displayMatchingWebsites();
 }
 
+// Toggle pin/unpin for a website
+function togglePin(id) {
+    let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const website = websites.find(website => website.id === id);
 
-        // Toggle pin/unpin for a website
-        function togglePin(id) {
-            let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            const website = websites.find(website => website.id === id);
+    if (!website) return;
 
-            if (!website) return;
+    const isPinned = pinnedWebsites.some(pinned => pinned.id === id);
+    if (isPinned) {
+        pinnedWebsites = pinnedWebsites.filter(pinned => pinned.id !== id);
+    } else {
+        pinnedWebsites.push(website);
+    }
 
-            const isPinned = pinnedWebsites.some(pinned => pinned.id === id);
-            if (isPinned) {
-                pinnedWebsites = pinnedWebsites.filter(pinned => pinned.id !== id);
-            } else {
-                pinnedWebsites.push(website);
-            }
+    localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
+    displayMatchingWebsites();
+}
 
-            localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
-            displayMatchingWebsites();
-        }
+// Display pinned websites
+function displayPinnedWebsites() {
+    const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+    const resultsContainer = document.getElementById('resultsContainer');
 
-        // Display pinned websites
-        function displayPinnedWebsites() {
-            const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-            const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = '';
 
-            resultsContainer.innerHTML = '';
+    if (pinnedWebsites.length > 0) {
+        pinnedWebsites.forEach(website => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
 
-            if (pinnedWebsites.length > 0) {
-                pinnedWebsites.forEach(website => {
-                    const resultItem = document.createElement('div');
-                    resultItem.className = 'result-item';
+            resultItem.innerHTML = `
+                <div>
+                    <a href="${website.url}" class="result-title" target="_self">${website.title}</a>
+                    <span class="result-url">${website.url}</span>
+                    <p class="result-description">Click on the title to view the site.</p>
+                </div>
+                <div class="button-container">
+                    <button class="unpin-btn" onclick="togglePin(${website.id})">Unpin</button>
+                    <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
+                </div>
+            `;
 
-                    resultItem.innerHTML = `
-                        <div>
-                            <a href="${website.url}" class="result-title" target="_self">${website.title}</a>
-                            <span class="result-url">${website.url}</span>
-                            <p class="result-description">Click on the title to view the site.</p>
-                        </div>
-                        <div>
-                            <img src="https://png.pngtree.com/png-clipart/20210606/original/pngtree-red-push-pin-isolated-realistic-thumbtack-board-tack-png-image_6398035.jpg" 
-                                class="pin-icon" onclick="togglePin(${website.id})" alt="Pin Icon" 
-                                title="Unpin this site" style="opacity: 1;" />
-                            <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
-                        </div>
-                    `;
-
-                    resultsContainer.appendChild(resultItem);
-                });
-            } else {
-                resultsContainer.innerHTML = '<p>No pinned websites found.</p>';
-            }
-        }
-
-        // Delete a website
-        function deleteWebsite(id) {
-            let websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            websites = websites.filter(website => website.id !== id);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
-
-            let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-            pinnedWebsites = pinnedWebsites.filter(website => website.id !== id);
-            localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
-
-            displayMatchingWebsites();
-        }
-
-        // Search websites or open Google
-        function searchWebsites() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            const filteredWebsites = websites.filter(website => website.title.toLowerCase().includes(query));
-
-            if (filteredWebsites.length > 0) {
-                displayMatchingWebsites();
-            } else if (query) {
-                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)} website`;
-                window.open(googleSearchUrl, '_self');
-            }
-        }
-
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeDefaultWebsites();
-            displayMatchingWebsites();
+            resultsContainer.appendChild(resultItem);
         });
+    } else {
+        resultsContainer.innerHTML = '<p>No pinned websites found.</p>';
+    }
+}
 
-        // Enter key listener for search input
-        document.getElementById('searchInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                searchWebsites();
-            }
-        });
+// Delete a website
+function deleteWebsite(id) {
+    let websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    websites = websites.filter(website => website.id !== id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
 
-        // Add oninput listener for live search
-        document.getElementById('searchInput').addEventListener('input', function() {
-            displayMatchingWebsites();
-        });
+    let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+    pinnedWebsites = pinnedWebsites.filter(website => website.id !== id);
+    localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
 
+    displayMatchingWebsites();
+}
+
+// Search websites or open Google
+function searchWebsites() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const filteredWebsites = websites.filter(website => website.title.toLowerCase().includes(query));
+
+    if (filteredWebsites.length > 0) {
+        displayMatchingWebsites();
+    } else if (query) {
+        const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)} website`;
+        window.open(googleSearchUrl, '_self');
+    }
+}
+
+// Initialize the app
+document.addEventListener('DOMContentLoaded', () => {
+    initializeDefaultWebsites();
+    displayMatchingWebsites();
+});
+
+// Enter key listener for search input
+document.getElementById('searchInput').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        searchWebsites();
+    }
+});
+
+// Add oninput listener for live search
+document.getElementById('searchInput').addEventListener('input', function() {
+    displayMatchingWebsites();
+});
     </script>
 </body>
 </html>
