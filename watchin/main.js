@@ -134,35 +134,43 @@ function playInMiniTab() {
                         display: none;
                     }
                     .header {
-                        background: #0000005c;
-                        padding: 10px 15px;
-                        align-items: center;
-                        position: fixed;
-                        backdrop-filter: blur(3px);
-                        display: flex;
-                        gap: 10px;
-                        flex-direction: row-reverse;
-                        justify-content: flex-end;
-                        border-radius: 33px;
-                        top: 25px;
-                        left: 25px;
+                           background: #0000005c;
+    padding: 10px 15px;
+    align-items: center;
+    position: fixed;
+    backdrop-filter: blur(3px);
+    display: flex
+;
+    gap: 10px;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+       border-radius: 44px;
+    top: 25px;
+    left: 55px;
+    max-width: 359px;
                     }
+    // .header:hover{
+    // left: 5px;
+    // position: fixed;
+    // transition: 1s;}
                     .header button {
-                        padding: 8px 15px;
-                        font-size: 14px;
-                        border: none;
-                        border-radius: 35px;
-                        cursor: pointer;
-                        background-color: white;
-                        color: black;
-                        transition: background-color 0.3s;
+                            padding: 11px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+
                     }
                     .header button:hover {
                         background-color: #0041ff; 
                         color: white;
                     }
                     .header .title {
-                        font-size: 18px;
+                        font-size: 10px;
                         font-weight: 600;
                     }
                     iframe {
@@ -232,16 +240,26 @@ function filterByCategory(category) {
 }
 
 // Function to filter media based on search input
-function filterMedia() {
-    const searchQuery = document.getElementById("searchBar").value.toLowerCase();
+function filterMedia(searchQuery) {
+    const storedMedia = JSON.parse(localStorage.getItem("storedMedia")) || [];
     if (!searchQuery) {
-        displayStoredMedia();
+        filteredMedia = storedMedia;
+        displayStoredMedia(filteredMedia);
         return;
     }
-    const filtered = filteredMedia.filter(media => media.title.toLowerCase().includes(searchQuery));
-    displayStoredMedia(filtered);
+
+    // Filter media by partial match of the search query
+    filteredMedia = storedMedia.filter(media =>
+        media.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    displayStoredMedia(filteredMedia);
 }
 
+// Add event listener for real-time search
+document.getElementById("searchBar").addEventListener("input", (event) => {
+    const searchQuery = event.target.value;
+    filterMedia(searchQuery);
+});
 // Function to open the Add Movie popup
 function openAddMoviePopup() {
     document.getElementById("addMoviePopup").style.display = "flex";
@@ -260,7 +278,7 @@ window.onload = function () {
     displayStoredMedia();
 };
 
-// Context menu functionality
+// // Context menu functionality
 document.addEventListener("DOMContentLoaded", () => {
     const customMenu = document.querySelector(".custom-menu");
 
