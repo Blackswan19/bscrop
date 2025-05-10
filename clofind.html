@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clofind</title>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/7dRZzVrb/clofind.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        /* Theme Styles */
+        body.light {
+            background: #f4f7fa;
+            color: #333;
+        }
+        .search-container button {
+            margin: 0px 10px;
+            background: transparent;
+            border: 1.5px solid;
+        }
+        body.light .logo { color: #1a73e8; }
+        body.light .search-container {
+            background: #fff;
+            border: 1px solid #e0e4e8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        body.light .search-container input { background: #fff; color: #333; }
+        body.light .history-icon { background: #fff; border: 1px solid #e0e4e8; }
+        body.light .history-popup { background: #fff; color: #333; border: 1px solid #e0e4e8; }
+        body.light .theme-selector select { background: #fff; color: #333; border: 1px solid #e0e4e8; }
+        body.light .pin-button { background: #f8fafc; color: #333; border: 1px solid #e0e4e8; }
+        body.light .sites-icon { background: #fff; border: 1px solid #e0e4e8; }
+        body.light .sites-popup { background: #fff; color: #333; border: 1px solid #e0e4e8; }
+        body.light .sites-popup input { background: #f8fafc; color: #333; border: 1px solid #e0e4e8; }
+        body.light .sites-popup button { background: #f8fafc; color: #333; border: 1px solid #e0e4e8; }
+        body.light .suggestions-container { background: #fff; border: 1px solid #e0e4e8; }
+
+        body.dark {
+            background: #121212;
+            color: #e0e0e0;
+        }
+        body.dark .logo { color: #64b5f6; }
+        body.dark .search-container { background: #1e1e1e; border: 1px solid #424242; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        body.dark .search-container input { background: #1e1e1e; color: #e0e0e0; }
+        body.dark .search-container button { background: #333; }
+        body.dark .history-icon { background: #1e1e1e; border: 1px solid #424242; }
+        body.dark .history-popup { background: #1e1e1e; color: #e0e0e0; border: 1px solid #424242; }
+        body.dark .theme-selector select { background: #1e1e1e; color: #e0e0e0; border: 1px solid #424242; }
+        body.dark .pin-button { background: #333; color: #e0e0e0; border: 1px solid #424242; }
+        body.dark .sites-icon { background: #1e1e1e; border: 1px solid #424242; }
+        body.dark .sites-popup { background: #1e1e1e; color: #e0e0e0; border: 1px solid #424242; }
+        body.dark .sites-popup input { background: #333; color: #e0e0e0; border: 1px solid #424242; }
+        body.dark .sites-popup button { background: #333; color: #e0e0e0; border: 1px solid #424242; }
+        body.dark .suggestions-container { background: #1e1e1e; border: 1px solid #424242; }
+
+        body.black {
+            background: #000;
+            color: #ffffffc5;
+        }
+        body.black .logo { color: #003cff; }
+        body.black .search-container { background: #1a1a1a; border: 1px solid #333; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+        body.black .search-container input { background: #1a1a1a; color: #ffffffa8; }
+        body.black .search-container button { background: #2c2c2c; }
+        body.black .history-icon { background: #1a1a1a; border: 1px solid #333; }
+        body.black .history-popup { background: #1a1a1a; color: #fff; border: 1px solid #333; }
+        body.black .theme-selector select { background: #1a1a1a; color: #fff; border: 1px solid #333; }
+        body.black .pin-button { background: #2c2c2c; color: #fff; border: 1px solid #333; }
+        body.black .sites-icon { background: #1a1a1a; border: 1px solid #333; }
+        body.black .sites-popup { background: #1a1a1a; color: #fff; border: 1px solid #333; }
+        body.black .sites-popup input { background: #2c2c2c; color: #fff; border: 1px solid #333; }
+        body.black .sites-popup button { background: #2c2c2c; color: #fff; border: 1px solid #333; }
+        body.black .suggestions-container { background: #1a1a1a; border: 1px solid #333; }
+        body.black .sites-icon { background-color: white; }
+        body.black .history-icon { background-color: white; }
+
+        body.blue {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        body.blue .logo { color: #1565c0; }
+        body.blue .search-container { background: #bbdefb; border: 1px solid #90caf9; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.blue .search-container input { background: #bbdefb; color: #1565c0; }
+        body.blue .search-container button { background: #e3f2fd; }
+        body.blue .history-icon { background: #e3f2fd; border: 1px solid #90caf9; }
+        body.blue .history-popup { background: #bbdefb; color: #1565c0; border: 1px solid #90caf9; }
+        body.blue .theme-selector select { background: #bbdefb; color: #1565c0; border: 1px solid #90caf9; }
+        body.blue .pin-button { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+        body.blue .sites-icon { background: #e3f2fd; border: 1px solid #90caf9; }
+        body.blue .sites-popup { background: #bbdefb; color: #1565c0; border: 1px solid #90caf9; }
+        body.blue .sites-popup input { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+        body.blue .sites-popup button { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; font-weight: 600; }
+        body.blue .suggestions-container { background: #bbdefb; border: 1px solid #90caf9; }
+
+        body.green {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        body.green .logo { color: #2e7d32; }
+        body.green .search-container { background: #c8e6c9; border: 1px solid #81c784; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.green .search-container input { background: #c8e6c9; color: #2e7d32; }
+        body.green .search-container button { background: #e8f5e9; }
+        body.green .history-icon { background: #e8f5e9; border: 1px solid #81c784; }
+        body.green .history-popup { background: #c8e6c9; color: #2e7d32; border: 1px solid #81c784; }
+        body.green .theme-selector select { background: #c8e6c9; color: #2e7d32; border: 1px solid #81c784; }
+        body.green .pin-button { background: #e8f5e9; color: #2e7d32; border: 1px solid #81c784; }
+        body.green .sites-icon { background: #e8f5e9; border: 1px solid #81c784; }
+        body.green .sites-popup { background: #c8e6c9; color: #2e7d32; border: 1px solid #81c784; }
+        body.green .sites-popup input { background: #e8f5e9; color: #2e7d32; border: 1px solid #81c784; }
+        body.green .sites-popup button { background: #e8f5e9; color: #2e7d32; border: 1px solid #81c784; }
+        body.green .suggestions-container { background: #c8e6c9; border: 1px solid #81c784; }
+
+        body.red {
+            background: #ffebee;
+            color: #c62828;
+        }
+        body.red .logo { color: #c62828; }
+        body.red .search-container { background: #ffcdd2; border: 1px solid #ef5350; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.red .search-container input { background: #ffcdd2; color: #c62828; }
+        body.red .search-container button { background: #ffebee; }
+        body.red .history-icon { background: #ffebee; border: 1px solid #ef5350; }
+        body.red .history-popup { background: #ffcdd2; color: #c62828; border: 1px solid #ef5350; }
+        body.red .theme-selector select { background: #ffcdd2; color: #c62828; border: 1px solid #ef5350; }
+        body.red .pin-button { background: #ffebee; color: #c62828; border: 1px solid #ef5350; }
+        body.red .sites-icon { background: #ffebee; border: 1px solid #ef5350; }
+        body.red .sites-popup { background: #ffcdd2; color: #c62828; border: 1px solid #ef5350; }
+        body.red .sites-popup input { background: #ffebee; color: #c62828; border: 1px solid #ef5350; }
+        body.red .sites-popup button { background: #ffebee; color: #c62828; border: 1px solid #ef5350; }
+        body.red .suggestions-container { background: #ffcdd2; border: 1px solid #ef5350; }
+
+        body.purple {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+        body.purple .logo { color: #6a1b9a; }
+        body.purple .search-container { background: #e1bee7; border: 1px solid #ab47bc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.purple .search-container input { background: #e1bee7; color: #6a1b9a; }
+        body.purple .search-container button { background: #f3e5f5; }
+        body.purple .history-icon { background: #f3e5f5; border: 1px solid #ab47bc; }
+        body.purple .history-popup { background: #e1bee7; color: #6a1b9a; border: 1px solid #ab47bc; }
+        body.purple .theme-selector select { background: #e1bee7; color: #6a1b9a; border: 1px solid #ab47bc; }
+        body.purple .pin-button { background: #f3e5f5; color: #6a1b9a; border: 1px solid #ab47bc; }
+        body.purple .sites-icon { background: #f3e5f5; border: 1px solid #ab47bc; }
+        body.purple .sites-popup { background: #e1bee7; color: #6a1b9a; border: 1px solid #ab47bc; }
+        body.purple .sites-popup input { background: #f3e5f5; color: #6a1b9a; border: 1px solid #ab47bc; }
+        body.purple .sites-popup button { background: #f3e5f5; color: #6a1b9a; border: 1px solid #ab47bc; }
+        body.purple .suggestions-container { background: #e1bee7; border: 1px solid #ab47bc; }
+
+        body.orange {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        body.orange .logo { color: #e65100; }
+        body.orange .search-container { background: #ffe0b2; border: 1px solid #ff9800; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.orange .search-container input { background: #ffe0b2; color: #e65100; }
+        body.orange .search-container button { background: #fff3e0; }
+        body.orange .history-icon { background: #fff3e0; border: 1px solid #ff9800; }
+        body.orange .history-popup { background: #ffe0b2; color: #e65100; border: 1px solid #ff9800; }
+        body.orange .theme-selector select { background: #ffe0b2; color: #e65100; border: 1px solid #ff9800; }
+        body.orange .pin-button { background: #fff3e0; color: #e65100; border: 1px solid #ff9800; }
+        body.orange .sites-icon { background: #fff3e0; border: 1px solid #ff9800; }
+        body.orange .sites-popup { background: #ffe0b2; color: #e65100; border: 1px solid #ff9800; }
+        body.orange .sites-popup input { background: #fff3e0; color: #e65100; border: 1px solid #ff9800; }
+        body.orange .sites-popup button { background: #fff3e0; color: #e65100; border: 1px solid #ff9800; }
+        body.orange .suggestions-container { background: #ffe0b2; border: 1px solid #ff9800; }
+
+        body.teal {
+            background: #e0f2f1;
+            color: #00695c;
+        }
+        body.teal .logo { color: #00695c; }
+        body.teal .search-container { background: #b2dfdb; border: 1px solid #26a69a; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.teal .search-container input { background: #b2dfdb; color: #00695c; }
+        body.teal .search-container button { background: #e0f2f1; }
+        body.teal .history-icon { background: #e0f2f1; border: 1px solid #26a69a; }
+        body.teal .history-popup { background: #b2dfdb; color: #00695c; border: 1px solid #26a69a; }
+        body.teal .theme-selector select { background: #b2dfdb; color: #00695c; border: 1px solid #26a69a; }
+        body.teal .pin-button { background: #e0f2f1; color: #00695c; border: 1px solid #26a69a; }
+        body.teal .sites-icon { background: #e0f2f1; border: 1px solid #26a69a; }
+        body.teal .sites-popup { background: #b2dfdb; color: #00695c; border: 1px solid #26a69a; }
+        body.teal .sites-popup input { background: #e0f2f1; color: #00695c; border: 1px solid #26a69a; }
+        body.teal .sites-popup button { background: #e0f2f1; color: #00695c; border: 1px solid #26a69a; }
+        body.teal .suggestions-container { background: #b2dfdb; border: 1px solid #26a69a; }
+
+        body.cyan {
+            background: #e0f7fa;
+            color: #006064;
+        }
+        body.cyan .logo { color: #006064; }
+        body.cyan .search-container { background: #b2ebf2; border: 1px solid #4dd0e1; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.cyan .search-container input { background: #b2ebf2; color: #006064; }
+        body.cyan .search-container button { background: #e0f7fa; }
+        body.cyan .history-icon { background: #e0f7fa; border: 1px solid #4dd0e1; }
+        body.cyan .history-popup { background: #b2ebf2; color: #006064; border: 1px solid #4dd0e1; }
+        body.cyan .theme-selector select { background: #b2ebf2; color: #006064; border: 1px solid #4dd0e1; }
+        body.cyan .pin-button { background: #e0f7fa; color: #006064; border: 1px solid #4dd0e1; }
+        body.cyan .sites-icon { background: #e0f7fa; border: 1px solid #4dd0e1; }
+        body.cyan .sites-popup { background: #b2ebf2; color: #006064; border: 1px solid #4dd0e1; }
+        body.cyan .sites-popup input { background: #e0f7fa; color: #006064; border: 1px solid #4dd0e1; }
+        body.cyan .sites-popup button { background: #e0f7fa; color: #006064; border: 1px solid #4dd0e1; }
+        body.cyan .suggestions-container { background: #b2ebf2; border: 1px solid #4dd0e1; }
+
+        body.pink {
+            background: #fce4ec;
+            color: #ad1457;
+        }
+        body.pink .logo { color: #ad1457; }
+        body.pink .search-container { background: #f8bbd0; border: 1px solid #f06292; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.pink .search-container input { background: #f8bbd0; color: #ad1457; }
+        body.pink .search-container button { background: #fce4ec; }
+        body.pink .history-icon { background: #fce4ec; border: 1px solid #f06292; }
+        body.pink .history-popup { background: #f8bbd0; color: #ad1457; border: 1px solid #f06292; }
+        body.pink .theme-selector select { background: #f8bbd0; color: #ad1457; border: 1px solid #f06292; }
+        body.pink .pin-button { background: #fce4ec; color: #ad1457; border: 1px solid #f06292; }
+        body.pink .sites-icon { background: #fce4ec; border: 1px solid #f06292; }
+        body.pink .sites-popup { background: #f8bbd0; color: #ad1457; border: 1px solid #f06292; }
+        body.pink .sites-popup input { background: #fce4ec; color: #ad1457; border: 1px solid #f06292; }
+        body.pink .sites-popup button { background: #fce4ec; color: #ad1457; border: 1px solid #f06292; }
+        body.pink .suggestions-container { background: #f8bbd0; border: 1px solid #f06292; }
+
+        body.yellow {
+            background: #fffde7;
+            color: #f9a825;
+        }
+        body.yellow .logo { color: #f9a825; }
+        body.yellow .search-container { background: #fff9c4; border: 1px solid #ffeb3b; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.yellow .search-container input { background: #fff9c4; color: #f9a825; }
+        body.yellow .search-container button { background: #fffde7; }
+        body.yellow .history-icon { background: #fffde7; border: 1px solid #ffeb3b; }
+        body.yellow .history-popup { background: #fff9c4; color: #f9a825; border: 1px solid #ffeb3b; }
+        body.yellow .theme-selector select { background: #fff9c4; color: #f9a825; border: 1px solid #ffeb3b; }
+        body.yellow .pin-button { background: #fffde7; color: #f9a825; border: 1px solid #ffeb3b; }
+        body.yellow .sites-icon { background: #fffde7; border: 1px solid #ffeb3b; }
+        body.yellow .sites-popup { background: #fff9c4; color: #f9a825; border: 1px solid #ffeb3b; }
+        body.yellow .sites-popup input { background: #fffde7; color: #f9a825; border: 1px solid #ffeb3b; }
+        body.yellow .sites-popup button { background: #fffde7; color: #f9a825; border: 1px solid #ffeb3b; }
+        body.yellow .suggestions-container { background: #fff9c4; border: 1px solid #ffeb3b; }
+
+        body.indigo {
+            background: #e8eaf6;
+            color: #283593;
+        }
+        body.indigo .logo { color: #283593; }
+        body.indigo .search-container { background: #c5cae9; border: 1px solid #7986cb; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.indigo .search-container input { background: #c5cae9; color: #283593; }
+        body.indigo .search-container button { background: #e8eaf6; }
+        body.indigo .history-icon { background: #e8eaf6; border: 1px solid #7986cb; }
+        body.indigo .history-popup { background: #c5cae9; color: #283593; border: 1px solid #7986cb; }
+        body.indigo .theme-selector select { background: #c5cae9; color: #283593; border: 1px solid #7986cb; }
+        body.indigo .pin-button { background: #e8eaf6; color: #283593; border: 1px solid #7986cb; }
+        body.indigo .sites-icon { background: #e8eaf6; border: 1px solid #7986cb; }
+        body.indigo .sites-popup { background: #c5cae9; color: #283593; border: 1px solid #7986cb; }
+        body.indigo .sites-popup input { background: #e8eaf6; color: #283593; border: 1px solid #7986cb; }
+        body.indigo .sites-popup button { background: #e8eaf6; color: #283593; border: 1px solid #7986cb; }
+        body.indigo .suggestions-container { background: #c5cae9; border: 1px solid #7986cb; }
+
+        body.lime {
+            background: #f0f4c3;
+            color: #558b2f;
+        }
+        body.lime .logo { color: #558b2f; }
+        body.lime .search-container { background: #dcedc8; border: 1px solid #9ccc65; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.lime .search-container input { background: #dcedc8; color: #558b2f; }
+        body.lime .search-container button { background: #f0f4c3; }
+        body.lime .history-icon { background: #f0f4c3; border: 1px solid #9ccc65; }
+        body.lime .history-popup { background: #dcedc8; color: #558b2f; border: 1px solid #9ccc65; }
+        body.lime .theme-selector select { background: #dcedc8; color: #558b2f; border: 1px solid #9ccc65; }
+        body.lime .pin-button { background: #f0f4c3; color: #558b2f; border: 1px solid #9ccc65; }
+        body.lime .sites-icon { background: #f0f4c3; border: 1px solid #9ccc65; }
+        body.lime .sites-popup { background: #dcedc8; color: #558b2f; border: 1px solid #9ccc65; }
+        body.lime .sites-popup input { background: #f0f4c3; color: #558b2f; border: 1px solid #9ccc65; }
+        body.lime .sites-popup button { background: #f0f4c3; color: #558b2f; border: 1px solid #9ccc65; }
+        body.lime .suggestions-container { background: #dcedc8; border: 1px solid #9ccc65; }
+
+        body.amber {
+            background: #fff8e1;
+            color: #ff8f00;
+        }
+        body.amber .logo { color: #ff8f00; }
+        body.amber .search-container { background: #ffecb3; border: 1px solid #ffb300; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.amber .search-container input { background: #ffecb3; color: #ff8f00; }
+        body.amber .search-container button { background: #fff8e1; }
+        body.amber .history-icon { background: #fff8e1; border: 1px solid #ffb300; }
+        body.amber .history-popup { background: #ffecb3; color: #ff8f00; border: 1px solid #ffb300; }
+        body.amber .theme-selector select { background: #ffecb3; color: #ff8f00; border: 1px solid #ffb300; }
+        body.amber .pin-button { background: #fff8e1; color: #ff8f00; border: 1px solid #ffb300; }
+        body.amber .sites-icon { background: #fff8e1; border: 1px solid #ffb300; }
+        body.amber .sites-popup { background: #ffecb3; color: #ff8f00; border: 1px solid #ffb300; }
+        body.amber .sites-popup input { background: #fff8e1; color: #ff8f00; border: 1px solid #ffb300; }
+        body.amber .sites-popup button { background: #fff8e1; color: #ff8f00; border: 1px solid #ffb300; }
+        body.amber .suggestions-container { background: #ffecb3; border: 1px solid #ffb300; }
+
+        body.grey {
+            background: #eceff1;
+            color: #455a64;
+        }
+        body.grey .logo { color: #455a64; }
+        body.grey .search-container { background: #cfd8dc; border: 1px solid #90a4ae; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.grey .search-container input { background: #cfd8dc; color: #455a64; }
+        body.grey .search-container button { background: #eceff1; }
+        body.grey .history-icon { background: #eceff1; border: 1px solid #90a4ae; }
+        body.grey .history-popup { background: #cfd8dc; color: #455a64; border: 1px solid #90a4ae; }
+        body.grey .theme-selector select { background: #cfd8dc; color: #455a64; border: 1px solid #90a4ae; }
+        body.grey .pin-button { background: #eceff1; color: #455a64; border: 1px solid #90a4ae; }
+        body.grey .sites-icon { background: #eceff1; border: 1px solid #90a4ae; }
+        body.grey .sites-popup { background: #cfd8dc; color: #455a64; border: 1px solid #90a4ae; }
+        body.grey .sites-popup input { background: #eceff1; color: #455a64; border: 1px solid #90a4ae; }
+        body.grey .sites-popup button { background: #eceff1; color: #455a64; border: 1px solid #90a4ae; }
+        body.grey .suggestions-container { background: #cfd8dc; border: 1px solid #90a4ae; }
+
+        body.brown {
+            background: #efebe9;
+            color: #4e342e;
+        }
+        body.brown .logo { color: #4e342e; }
+        body.brown .search-container { background: #d7ccc8; border: 1px solid #8d6e63; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.brown .search-container input { background: #d7ccc8; color: #4e342e; }
+        body.brown .search-container button { background: #efebe9; }
+        body.brown .history-icon { background: #efebe9; border: 1px solid #8d6e63; }
+        body.brown .history-popup { background: #d7ccc8; color: #4e342e; border: 1px solid #8d6e63; }
+        body.brown .theme-selector select { background: #d7ccc8; color: #4e342e; border: 1px solid #8d6e63; }
+        body.brown .pin-button { background: #efebe9; color: #4e342e; border: 1px solid #8d6e63; }
+        body.brown .sites-icon { background: #efebe9; border: 1px solid #8d6e63; }
+        body.brown .sites-popup { background: #d7ccc8; color: #4e342e; border: 1px solid #8d6e63; }
+        body.brown .sites-popup input { background: #efebe9; color: #4e342e; border: 1px solid #8d6e63; }
+        body.brown .sites-popup button { background: #efebe9; color: #4e342e; border: 1px solid #8d6e63; }
+        body.brown .suggestions-container { background: #d7ccc8; border: 1px solid #8d6e63; }
+
+        body.magenta {
+            background: #f3e0f7;
+            color: #8e24aa;
+        }
+        body.magenta .logo { color: #8e24aa; }
+        body.magenta .search-container { background: #e1bee7; border: 1px solid #ba68c8; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.magenta .search-container input { background: #e1bee7; color: #8e24aa; }
+        body.magenta .search-container button { background: #f3e0f7; }
+        body.magenta .history-icon { background: #f3e0f7; border: 1px solid #ba68c8; }
+        body.magenta .history-popup { background: #e1bee7; color: #8e24aa; border: 1px solid #ba68c8; }
+        body.magenta .theme-selector select { background: #e1bee7; color: #8e24aa; border: 1px solid #ba68c8; }
+        body.magenta .pin-button { background: #f3e0f7; color: #8e24aa; border: 1px solid #ba68c8; }
+        body.magenta .sites-icon { background: #f3e0f7; border: 1px solid #ba68c8; }
+        body.magenta .sites-popup { background: #e1bee7; color: #8e24aa; border: 1px solid #ba68c8; }
+        body.magenta .sites-popup input { background: #f3e0f7; color: #8e24aa; border: 1px solid #ba68c8; }
+        body.magenta .sites-popup button { background: #f3e0f7; color: #8e24aa; border: 1px solid #ba68c8; }
+        body.magenta .suggestions-container { background: #e1bee7; border: 1px solid #ba68c8; }
+
+        body.violet {
+            background: #ede7f6;
+            color: #5e35b1;
+        }
+        body.violet .logo { color: #5e35b1; }
+        body.violet .search-container { background: #d1c4e9; border: 1px solid #9575cd; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.violet .search-container input { background: #d1c4e9; color: #5e35b1; }
+        body.violet .search-container button { background: #ede7f6; }
+        body.violet .history-popup { background: #d1c4e9; color: #5e35b1; border: 1px solid #9575cd; }
+        body.violet .theme-selector select { background: #d1c4e9; color: #5e35b1; border: 1px solid #9575cd; }
+        body.violet .pin-button { background: #ede7f6; color: #5e35b1; border: 1px solid #9575cd; }
+        body.violet .sites-icon { background: #ede7f6; border: 1px solid #9575cd; }
+        body.violet .sites-popup { background: #d1c4e9; color: #5e35b1; border: 1px solid #9575cd; }
+        body.violet .sites-popup input { background: #ede7f6; color: #5e35b1; border: 1px solid #9575cd; }
+        body.violet .sites-popup button { background: #ede7f6; color: #5e35b1; border: 1px solid #9575cd; }
+        body.violet .suggestions-container { background: #d1c4e9; border: 1px solid #9575cd; }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            transition: color 0.5s ease-in-out;
+            letter-spacing: 0.5px;
+            border-right: solid 3px;
+            padding: 6px 12px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 400px; /* Smaller width at bottom */
+            z-index: 1000;
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: move;
+            transition: top 0.5s ease-in-out, bottom 0.5s ease-in-out, max-width 0.5s ease-in-out, width 0.5s ease-in-out;
+            border-radius: 6px;
+        }
+
+        .search-container.focused {
+            bottom: auto;
+            top: 60px;
+            max-width: 600px; /* Larger width when focused */
+            transform: translateX(-50%);
+        }
+
+        .search-container.pinned {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 4px 0 12px rgba(0,0,0,0.15);
+            transform: none;
+            max-width: 50px;
+        }
+
+        .search-container.pinned input {
+            width: 40px;
+            height: 280px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            padding: 12px 6px;
+            font-size: 12px;
+        }
+
+        .search-container.pinned button {
+            width: 40px;
+            height: 40px;
+            padding: 8px;
+        }
+
+        .search-container.pinned .pin-button {
+            width: 40px;
+            height: 40px;
+            padding: 8px;
+            margin-top: auto;
+        }
+
+        .search-container input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 8px 12px;
+            font-size: 16px;
+            transition: flex 0.5s ease-in-out, width 0.5s ease-in-out, background 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        .search-container.focused input {
+            flex: 2; /* Increase input width when focused */
+        }
+
+        .search-container input::placeholder {
+            color: inherit;
+            opacity: 0.5;
+        }
+
+        .search-container button {
+            padding: 8px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .search-container button:hover {
+            opacity: 0.85;
+        }
+
+        .search-container button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .pin-button {
+            padding: 8px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .pin-button:hover {
+            opacity: 0.85;
+        }
+
+        .pin-button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .history-icon, .sites-icon {
+            position: fixed;
+            top: 12px;
+            padding: 8px;
+            cursor: pointer;
+            z-index: 2000;
+            transition: all 0.5s ease-in-out;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .history-icon {
+            right: 12px;
+        }
+
+        .sites-icon {
+            left: 12px;
+        }
+
+        .history-icon:hover, .sites-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .history-icon img, .sites-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .history-popup {
+            display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0px 0px 101em rgb(0 0 0 / 59%);
+    padding: 45px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 520px;
+    overflow-y: auto;
+    z-index: 3000;
+    animation: fadeIn 0.5s ease-in-out;
+    border-radius: 15px;
+        }
+
+        .sites-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 280px;
+            box-shadow: 4px 0 16px rgba(0,0,0,0.2);
+            padding: 16px;
+            z-index: 3000;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .suggestions-container {
+            display: none;
+            position: absolute;
+            top: 125%;
+            left: 0;
+            width: 100%;
+            max-width: 400px; /* Match search-container at bottom */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            z-index: 1500;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            transition: max-width 0.5s ease-in-out;text-align: center;
+        }
+
+        .suggestions-container.focused {
+            max-width: 600px; /* Match search-container when focused */
+        }
+
+        .suggestions-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .suggestions-container li {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .suggestions-container li:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -55%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .history-popup h3, .sites-popup h3 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .sites-popup form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .sites-popup input {
+            padding: 8px;
+            border: none;
+            outline: none;
+            font-size: 12px;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        .sites-popup button {
+            padding: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 12px;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .sites-popup button:hover {
+            opacity: 0.85;
+        }
+
+        .sites-popup .add-site-btn {
+            background: black;
+            color: #fff;
+        }
+
+        .sites-popup .add-site-btn:hover {
+            background: black;
+            color: white;
+            border: none;
+        }
+
+        .history-popup ul, .sites-popup ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-popup li, .sites-popup li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            transition: background 0.2s ease-in-out;
+        }
+
+        .history-popup li:hover, .sites-popup li:hover {
+            background: rgba(0,0,0,0.03);
+        }
+
+        .history-popup li span, .sites-popup li span {
+            flex: 1;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .history-popup li button, .sites-popup li button {
+            background: #ff3b30;
+            color: #fff;
+            border: none;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 10px;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .history-popup li button:hover, .sites-popup li button:hover {
+            background: #d32f2f;
+        }
+
+        .history-popup .clear-all-btn, .sites-popup .clear-all-btn {
+            background: #ff3b30;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 12px;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .history-popup .close-btn, .sites-popup .close-btn {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .history-popup .close-btn:hover, .sites-popup .close-btn:hover {
+            color: white;
+        }
+
+        .history-popup .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .theme-selector {
+            position: fixed;
+            bottom: 12px;
+            right: 12px;
+            z-index: 2000;
+        }
+
+        .theme-selector select {
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border: 1px solid;
+        }
+
+        .theme-selector select:focus {
+            box-shadow: 0 0 0 3px rgba(66,133,244,0.2);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light">
+    <button class="sites-icon" onclick="toggleSitesPopup()">
+        <i class="fa-solid fa-bookmark"></i>
+    </button>
+    <button class="history-icon" onclick="toggleHistoryPopup()">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+    </button>
+    <div class="main-content">
+        <div class="search-container" id="searchContainer">
+            <h1 class="logo">Clofind</h1>
+            <input type="text" placeholder="Search...." id="searchInput" autocomplete="off">
+            <button onclick="performSearch()" style="right: 0px;
+    position: absolute;">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+           
+            <div class="suggestions-container" id="suggestionsContainer">
+                <ul id="suggestionsList"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="history-popup" id="historyPopup">
+        <button class="close-btn" onclick="toggleHistoryPopup()">✕</button>
+        <h3>Search History</h3>
+        <ul id="historyList"></ul>
+        <button class="clear-all-btn" onclick="clearAllHistory()">Clear All</button>
+    </div>
+    <div class="sites-popup" id="sitesPopup">
+        <button class="close-btn" onclick="toggleSitesPopup()">✕</button>
+        <h3>Saved Sites</h3>
+        <form id="siteForm">
+            <input type="text" id="siteName" placeholder="Site Name" required>
+            <input type="url" id="siteUrl" placeholder="Site URL (e.g., https://example.com)" required>
+            <button type="submit" class="add-site-btn">Add Site</button>
+        </form>
+        <ul id="sitesList"></ul>
+        <button class="clear-all-btn" onclick="clearAllSites()">Clear All</button>
+    </div>
+    <div class="theme-selector">
+        <select id="themeSelect" onchange="changeTheme()">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="black">Black</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="red">Red</option>
+            <option value="purple">Purple</option>
+            <option value="orange">Orange</option>
+            <option value="teal">Teal</option>
+            <option value="cyan">Cyan</option>
+            <option value="pink">Pink</option>
+            <option value="yellow">Yellow</option>
+            <option value="indigo">Indigo</option>
+            <option value="lime">Lime</option>
+            <option value="amber">Amber</option>
+            <option value="grey">Grey</option>
+            <option value="brown">Brown</option>
+            <option value="magenta">Magenta</option>
+            <option value="violet">Violet</option>
+        </select>
+    </div>
+    <script>
+        // Search Functionality
+        function performSearch() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+            if (query) {
+                saveSearchHistory(query);
+                window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Search History
+        function saveSearchHistory(query) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+            history.push({ query, date: today.getTime() });
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+            displaySearchHistory();
+            displaySuggestions();
+        }
+
+        function getRelativeDate(timestamp) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const searchDate = new Date(timestamp);
+            searchDate.setHours(0, 0, 0, 0);
+            const diffDays = Math.floor((today - searchDate) / (1000 * 60 * 60 * 24));
+            if (diffDays === 0) return 'Today';
+            if (diffDays === 1) return 'Yesterday';
+            return 'Older';
+        }
+
+        function displaySearchHistory() {
+            const historyList = document.getElementById('historyList');
+            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+            historyList.innerHTML = '';
+            history.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span onclick="copyToInput('${item.query}')">${item.query} (${getRelativeDate(item.date)})</span><button onclick="clearHistoryItem(${index})">Clear</button>`;
+                historyList.appendChild(li);
+            });
+        }
+
+        function copyToInput(query) {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = query;
+            searchInput.focus();
+            displaySuggestions();
+        }
+
+        function clearHistoryItem(index) {
+            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+            history.splice(index, 1);
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+            displaySearchHistory();
+            displaySuggestions();
+        }
+
+        function clearAllHistory() {
+            localStorage.removeItem('searchHistory');
+            displaySearchHistory();
+            displaySuggestions();
+        }
+
+        function toggleHistoryPopup() {
+            const popup = document.getElementById('historyPopup');
+            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+            if (popup.style.display === 'block') {
+                displaySearchHistory();
+                const currentTheme = document.body.className;
+                popup.className = `history-popup ${currentTheme}`;
+            }
+        }
+
+        // Suggestions
+        function displaySuggestions() {
+            const suggestionsList = document.getElementById('suggestionsList');
+            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]').slice(-5).reverse();
+            suggestionsList.innerHTML = '';
+            history.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.query;
+                li.onclick = () => {
+                    copyToInput(item.query);
+                    performSearch();
+                };
+                suggestionsList.appendChild(li);
+            });
+            const suggestionsContainer = document.getElementById('suggestionsContainer');
+            suggestionsContainer.style.display = history.length > 0 ? 'block' : 'none';
+            // Update suggestions container class based on focus state
+            if (searchContainer.classList.contains('focused')) {
+                suggestionsContainer.classList.add('focused');
+            } else {
+                suggestionsContainer.classList.remove('focused');
+            }
+        }
+
+        // Search Bar Focus Handling
+        const searchInput = document.getElementById('searchInput');
+        const searchContainer = document.getElementById('searchContainer');
+
+        searchInput.addEventListener('focus', () => {
+            if (!searchContainer.classList.contains('pinned')) {
+                searchContainer.classList.add('focused');
+                displaySuggestions();
+            }
+        });
+
+        searchInput.addEventListener('blur', () => {
+            if (!searchContainer.classList.contains('pinned')) {
+                searchContainer.classList.remove('focused');
+                setTimeout(() => {
+                    document.getElementById('suggestionsContainer').style.display = 'none';
+                    document.getElementById('suggestionsContainer').classList.remove('focused');
+                }, 200);
+                // Move back to bottom after blur
+                setTimeout(moveToBottom, 500);
+            }
+        });
+
+        // Automatic Movement to Bottom
+        function moveToBottom() {
+            if (!searchContainer.classList.contains('pinned') && !searchContainer.classList.contains('focused')) {
+                searchContainer.style.bottom = 'auto';
+                searchContainer.style.top = '120px';
+                searchContainer.style.transform = 'translateX(-50%)';
+            }
+        }
+
+        // Run moveToBottom every 60 seconds
+        setInterval(moveToBottom, 60000);
+
+        // Saved Sites
+        function saveSite(event) {
+            event.preventDefault();
+            const name = document.getElementById('siteName').value.trim();
+            const url = document.getElementById('siteUrl').value.trim();
+            if (name && url) {
+                const sites = JSON.parse(localStorage.getItem('savedSites') || '[]');
+                sites.push({ name, url });
+                localStorage.setItem('savedSites', JSON.stringify(sites));
+                document.getElementById('siteForm').reset();
+                displaySavedSites();
+            }
+        }
+
+        function displaySavedSites() {
+            const sitesList = document.getElementById('sitesList');
+            const sites = JSON.parse(localStorage.getItem('savedSites') || '[]');
+            sitesList.innerHTML = '';
+            sites.forEach((site, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span onclick="openSite('${site.url}')">${site.name}</span><button onclick="clearSiteItem(${index})">Clear</button>`;
+                sitesList.appendChild(li);
+            });
+        }
+
+        function openSite(url) {
+            window.location.href = url;
+        }
+
+        function clearSiteItem(index) {
+            const sites = JSON.parse(localStorage.getItem('savedSites') || '[]');
+            sites.splice(index, 1);
+            localStorage.setItem('savedSites', JSON.stringify(sites));
+            displaySavedSites();
+        }
+
+        function clearAllSites() {
+            localStorage.removeItem('savedSites');
+            displaySavedSites();
+        }
+
+        function toggleSitesPopup() {
+            const popup = document.getElementById('sitesPopup');
+            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+            if (popup.style.display === 'block') {
+                displaySavedSites();
+                const currentTheme = document.body.className;
+                popup.className = `sites-popup ${currentTheme}`;
+            }
+        }
+
+        // Theme Functionality
+        function changeTheme() {
+            const theme = document.getElementById('themeSelect').value;
+            document.body.className = theme;
+            localStorage.setItem('theme', theme);
+            const historyPopup = document.getElementById('historyPopup');
+            const sitesPopup = document.getElementById('sitesPopup');
+            const suggestionsContainer = document.getElementById('suggestionsContainer');
+            if (historyPopup.style.display === 'block') {
+                historyPopup.className = `history-popup ${theme}`;
+            }
+            if (sitesPopup.style.display === 'block') {
+                sitesPopup.className = `sites-popup ${theme}`;
+            }
+            if (suggestionsContainer && suggestionsContainer.style.display === 'block') {
+                suggestionsContainer.className = `suggestions-container ${theme} ${searchContainer.classList.contains('focused') ? 'focused' : ''}`;
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.className = savedTheme;
+            document.getElementById('themeSelect').value = savedTheme;
+        }
+
+        // Pin Functionality
+        function togglePin() {
+            const searchContainer = document.getElementById('searchContainer');
+            if (searchContainer.classList.contains('pinned')) {
+                searchContainer.classList.remove('pinned');
+                searchContainer.classList.remove('focused');
+                searchContainer.style.bottom = '120px';
+                searchContainer.style.top = 'auto';
+                searchContainer.style.transform = 'translateX(-50%)';
+                document.getElementById('suggestionsContainer').style.display = 'none';
+                document.getElementById('suggestionsContainer').classList.remove('focused');
+            } else {
+                searchContainer.classList.add('pinned');
+                searchContainer.classList.remove('focused');
+                searchContainer.style.transform = 'none';
+                searchContainer.style.top = '0';
+                searchContainer.style.left = '0';
+                searchContainer.style.bottom = 'auto';
+                document.getElementById('suggestionsContainer').style.display = 'none';
+                document.getElementById('suggestionsContainer').classList.remove('focused');
+            }
+        }
+
+        // Initialize
+        loadTheme();
+        displaySearchHistory();
+        displaySavedSites();
+        document.getElementById('siteForm').addEventListener('submit', saveSite);
+
+        // Call moveToBottom initially to ensure correct positioning
+        moveToBottom();
+    </script>
+</body>
+</html>
