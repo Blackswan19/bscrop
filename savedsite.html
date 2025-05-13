@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png">
+    <title>BSearchin - Saved Websites </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4. /
+
+System: 0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background styling */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: -1;
+            filter: brightness(0.5);
+        }
+
+        .blur-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: blur(5px);
+            opacity: 0.3;
+            z-index: -2;
+        }
+
+        /* Header */
+        .header {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+.header img {
+    width: 50px;
+    height: auto;
+    display: block;
+}
+
+        /* Websites container */
+        .websites-container {
+         width: 100%;
+    max-width: 1000px;
+    display: grid
+;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 25px;
+    padding: 20px;
+        }
+
+        .website-card {
+               background: #21212116;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex
+;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1.5px solid #ffffff24;
+    position: relative;
+    backdrop-filter: blur(10px);
+        }
+
+        .website-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0px 15px rgba(255, 255, 255, 0.1);
+            background: #000000a3;
+            border: 1.5px solid #0000003f;
+        }
+
+        .website-card img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .website-card a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .website-card a:hover {
+            text-decoration: underline;
+        }
+
+        .delete-btn {
+            position: absolute;
+            right: 10px;
+            background: #ff0000b3;
+            border: none;
+            color: #ffffff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #ff0000;
+        }
+
+        /* Add website button */
+        .add-website-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffffff24;
+            border: 1.5px solid #ffffff2b;
+            color: #ffffff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .add-website-btn:hover {
+                background: #00000046;
+    border: solid 1.5px #ffffff4d;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .header {
+                font-size: 24px;
+            }
+
+            .header img {
+                width: 40px;
+            }
+
+            .websites-container {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .add-website-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background containers -->
+    <div class="blur-background" id="blurBg"></div>
+    <div class="background-container" id="bgContainer"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <a href="https://blackswan19.github.io/bscrop/bsearchin"><img src="https://i.ibb.co/1bgTMY6/logosercin.png" alt="BSearchin Logo"></a>
+        Saved Websites
+    </div>
+
+    <!-- Websites container -->
+    <div class="websites-container" id="websites-container"></div>
+
+    <!-- Add website button -->
+    <button class="add-website-btn" id="add-website-btn">
+        <i class="fas fa-plus"></i> Add Website
+    </button>
+
+    <script>
+        // Load background from localStorage
+        function loadBackground() {
+            const storedImage = localStorage.getItem('backgroundImage');
+            if (storedImage) {
+                document.getElementById('bgContainer').style.backgroundImage = `url('${storedImage}')`;
+                document.getElementById('blurBg').style.backgroundImage = `url('${storedImage}')`;
+            }
+            const savedColor = localStorage.getItem('bgColor');
+            if (savedColor) {
+                document.body.style.backgroundColor = savedColor;
+            }
+        }
+
+        // Get domain for favicon
+        function getDomain(url) {
+            try {
+                return new URL(url).hostname;
+            } catch (e) {
+                return url;
+            }
+        }
+
+        // Load websites from localStorage
+        function loadWebsites() {
+            const websitesContainer = document.getElementById('websites-container');
+            websitesContainer.innerHTML = '';
+            const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+
+            if (savedWebsites.length === 0) {
+                const emptyMessage = document.createElement('p');
+                emptyMessage.textContent = 'No websites saved yet.';
+                emptyMessage.style.color = '#ffffff80';
+                emptyMessage.style.textAlign = 'center';
+                websitesContainer.appendChild(emptyMessage);
+                return;
+            }
+
+            savedWebsites.forEach((website, index) => {
+                const websiteCard = document.createElement('div');
+                websiteCard.classList.add('website-card');
+
+                const link = document.createElement('a');
+                link.href = website.url;
+                link.target = '_self';
+
+                const favicon = document.createElement('img');
+                const domain = getDomain(website.url);
+                favicon.src = `https://www.google.com/s2/favicons?domain=${domain}`;
+                favicon.onerror = () => {
+                    favicon.src = 'https://i.ibb.co/kxgjrZG/sitesaved-BS.png';
+                };
+
+                const title = document.createElement('span');
+                title.textContent = website.title || domain;
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.innerHTML = '&times;';
+                deleteBtn.onclick = () => {
+                    if (confirm(`Are you sure you want to delete "${website.title || domain}"?`)) {
+                        deleteWebsite(index);
+                    }
+                };
+
+                link.appendChild(favicon);
+                link.appendChild(title);
+                websiteCard.appendChild(link);
+                websiteCard.appendChild(deleteBtn);
+                websitesContainer.appendChild(websiteCard);
+            });
+        }
+
+        // Delete website
+        function deleteWebsite(index) {
+            const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+            savedWebsites.splice(index, 1);
+            localStorage.setItem('websites', JSON.stringify(savedWebsites));
+            loadWebsites();
+        }
+
+        // Add website
+        async function saveWebsite(url) {
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            const title = prompt("Enter a title for this website:");
+            if (title) {
+                const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+                savedWebsites.push({ url, title });
+                localStorage.setItem('websites', JSON.stringify(savedWebsites));
+                loadWebsites();
+            } else {
+                alert("Website title cannot be empty!");
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBackground();
+            loadWebsites();
+
+            document.getElementById('add-website-btn').addEventListener('click', async () => {
+                const url = prompt("Enter the website URL:");
+                if (url) {
+                    await saveWebsite(url);
+                }
+            });
+
+            // Listen for storage changes (e.g., from other page)
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'websites') {
+                    loadWebsites();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
