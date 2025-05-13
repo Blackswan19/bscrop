@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png">
-    <title>BSearchin - Saved Websites </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4. /
-
-System: 0/css/all.min.css">
+    <title>BSearchin - Saved Websites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
@@ -69,35 +67,33 @@ System: 0/css/all.min.css">
             gap: 10px;
         }
 
-.header img {
-    width: 50px;
-    height: auto;
-    display: block;
-}
+        .header img {
+            width: 50px;
+            height: auto;
+            display: block;
+        }
 
         /* Websites container */
         .websites-container {
-         width: 100%;
-    max-width: 1000px;
-    display: grid
-;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 25px;
-    padding: 20px;
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+            padding: 20px;
         }
 
         .website-card {
-               background: #21212116;
-    border-radius: 10px;
-    padding: 15px;
-    display: flex
-;
-    flex-direction: column;
-    gap: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1.5px solid #ffffff24;
-    position: relative;
-    backdrop-filter: blur(10px);
+            background: #21212116;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1.5px solid #ffffff24;
+            position: relative;
+            backdrop-filter: blur(10px);
         }
 
         .website-card:hover {
@@ -124,6 +120,7 @@ System: 0/css/all.min.css">
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            width: 90%;
         }
 
         .website-card a:hover {
@@ -167,28 +164,88 @@ System: 0/css/all.min.css">
         }
 
         .add-website-btn:hover {
-                background: #00000046;
-    border: solid 1.5px #ffffff4d;
+            background: #00000046;
+            border: 1.5px solid #ffffff4d;
         }
 
-        /* Responsive design */
+        /* Mobile-specific styles */
         @media (max-width: 480px) {
+            /* General layout */
+            body {
+                padding: 15px;
+            }
+
+            /* Header */
             .header {
                 font-size: 24px;
+                font-weight: 600;
+                gap: 8px;
+                margin-bottom: 15px;
             }
 
             .header img {
-                width: 40px;
+                width: 36px;
+                height: auto;
             }
 
+            /* Background containers */
+            .background-container,
+            .blur-background {
+                background-size: cover;
+                background-position: center;
+            }
+
+            /* Websites container */
             .websites-container {
                 grid-template-columns: 1fr;
+                gap: 15px;
                 padding: 10px;
             }
 
+            /* Website card */
+            .website-card {
+                padding: 12px;
+                border-radius: 8px;
+                border: 1px solid #ffffff1a;
+                gap: 8px;
+            }
+
+            .website-card a {
+                font-size: 14px;
+                width: 85%;
+            }
+
+            .website-card img {
+                width: 20px;
+                height: 20px;
+            }
+
+            .delete-btn {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+                right: 8px;
+                top: 8px;
+            }
+
+            /* Add website button */
             .add-website-btn {
+                top: 15px;
+                right: 15px;
                 padding: 8px 12px;
                 font-size: 12px;
+                border-radius: 6px;
+                border: 1px solid #ffffff24;
+            }
+
+            .add-website-btn i {
+                font-size: 12px;
+            }
+
+            /* Text elements */
+            p {
+                font-size: 14px;
+                text-align: center;
             }
         }
     </style>
@@ -212,6 +269,7 @@ System: 0/css/all.min.css">
         <i class="fas fa-plus"></i> Add Website
     </button>
 
+    <script src="noright.js"></script>
     <script>
         // Load background from localStorage
         function loadBackground() {
@@ -270,7 +328,7 @@ System: 0/css/all.min.css">
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.classList.add('delete-btn');
-                deleteBtn.innerHTML = '&times;';
+                deleteBtn.innerHTML = '×';
                 deleteBtn.onclick = () => {
                     if (confirm(`Are you sure you want to delete "${website.title || domain}"?`)) {
                         deleteWebsite(index);
