@@ -20,13 +20,13 @@ function storeMedia() {
     const category = document.getElementById("categorySelect").value;
 
     if (!youtubeLink) {
-        document.getElementById("addResult").textContent = "Enter a valid YouTube link.";
+        document.getElementById("addResult").textContent = "Enter a valid Youtube link.";
         return;
     }
 
     const regex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
     if (!regex.test(youtubeLink)) {
-        document.getElementById("addResult").textContent = "Enter a valid YouTube link.";
+        document.getElementById("addResult").textContent = "Enter a valid Youtube link.";
         return;
     }
 
