@@ -1,489 +1,520 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsWebs</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/10YfRvf/webslogo.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;900&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; color: #5e5e5e; font-family: 'Red Hat Display', sans-serif; } body { display: flex; flex-direction: column; margin: 0; padding: 0; background-color: #000000; padding-left: 150px; } a{ text-decoration: none; color: white; } h1 { color: #0029ff; font-size: 35px; margin-top: 65px; font-weight: 600; } .rora { height: 1px; position: fixed; width: 1000%; background: #262626; left: -100px; } .search-bar { display: flex ; align-items: center; margin: 20px 0; padding: 0; border-radius: 130px; background-color: #8080801f; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.194); width: 100%; max-width: 650px; } .search-bar input { flex: 1; padding: 12px 45px; font-size: 18px; border: none; outline: none; border-radius: 30px; background-color: transparent; color: #b8b8b8; } .search-bar input::placeholder { color: #696969; opacity: 1; } .search-bar button { background-color: transparent; color: #8b8b8b; border: none; padding: 8px 30px; border-radius: 62px; font-size: 16px; cursor: pointer; transition: background-color 0.3s; margin-left: 10px; } .save { position: fixed; right: 10px; top: 10px; color: white; text-decoration: none; } .save:hover{ text-decoration: underline; } ::-webkit-scrollbar{ background-color: rgba(38, 37, 37, 0.027); width: 12px; } ::-webkit-scrollbar-thumb{ background-color: rgb(57, 57, 57); } ::-webkit-scrollbar-thumb:hover{ background-color: gray; } ::-webkit-scrollbar-track{ background-color: rgba(38, 37, 37, 0); } .results-container { margin-top: 21px; text-align: left; width: 100%; max-width: 710px; max-height: 580px; position: fixed; overflow-x: auto; padding-bottom: 30px; padding-right: 50px; } .result-item { position: relative; margin-bottom: 20px; padding: 18px 29px; border-bottom: solid 1.5px #8080802b; } .result-item:hover{ border-radius: 20px; background-color: #8080801c; } .result-title { font-size: 25px; color: #b6b6b6c9; text-decoration: none; display: block; margin-bottom: 10px; text-transform: capitalize; max-width: 400px; } .result-title:hover { color: white; text-decoration: underline; } .result-url { color: #0a7b00; font-size: 13px; margin-bottom: 6px; display: block; overflow: hidden; } .result-description { font-size: 14px; color: #5e5e5e; margin-bottom: 10px; text-align: left; } .delete-btn { position: absolute; right: 10px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 10px; cursor: pointer; } .delete-btn:hover { color: white; background-color: #ff0000; } .add-button { position: fixed; bottom: 30px; right: 30px; background-color: #3c3c3c; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 24px; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); } .add-button:hover { background-color: #282828; } .modal-content { background-color: #0e0e0e; margin: 20% auto; padding: 36px; border: 1.5px solid #4e4e4e40; width: 450px; border-radius: 20px; color: #e0e0e0; display: grid ; } .modal-content h2 { margin-bottom: 15px; } .modal-content input, .modal-content button { padding: 10px; margin: 5px 0; background-color: #1e1e1e; color: #e0e0e0; outline: none; border: 1px solid #424242; } .modal-content input:focus{ border: solid gray 1px; } .close-btn { color: #fff; padding: 10px; cursor: pointer; display: contents; } .search-bar button:hover{ color: rgb(218, 218, 218); background-color: #3b3a3a; } button.pin-btn { position: absolute; right: 80px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 15px; cursor: pointer; } button.unpin-btn { position: absolute; right: 80px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 10px; cursor: pointer; } button.pin-btn:hover{ color: white; background: #0045ff; } button.unpin-btn:hover{ color: white; background: #005d14; } .pin-icon { width: 24px; height: 24px; cursor: pointer; } .pinned-sites-button { margin: 10px; padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; cursor: pointer; } .pinned-sites-button:hover { background-color: #0056b3; } .close-btn { background-color: rgb(125, 1, 1); color: #fff; } .add-button { position: fixed; bottom: 40px; /* Ensure spacing from bottom */ right: 30px; background-color: #3c3c3c; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 35px; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); } .modal { position: fixed; right: 25px; display: none; bottom: 60px; } @media (max-width: 480px) { body { padding-left: 0; } h1 { font-size: 28px; margin-top: 10px; text-align: justify; margin-left: 10px; } .search-bar button { background-color: transparent; color: #ffffff; border: none; border-radius: 62px; font-size: 15px; cursor: pointer; transition: background-color 0.3s; margin-left: 9px;} .search-bar button:hover { color: rgb(218, 218, 218); background-color: transparent; } .add-button { position: fixed; bottom: 20px; right: 15px;} .results-container { margin-top: 180px; text-align: left; width: 100%; max-width: 760px; max-height: 600px; overflow-y: auto; padding-bottom: 30px; position: relative; padding: 15px; } .search-bar { display: grid ; margin: 20px 0; background-color: #28282824; box-shadow: none; width: 100%; position: fixed; border-radius: 14px; border-bottom: solid 1px #525050; } a.result-title { font-size: 15px; } .modal-content { width: 300px; } } </style> </head> <body> <div class="save"> <a href="https://blackswan19.github.io/bscrop/bsearchin">Save a website</a> </div> <h1>BsWebs</h1> <div class="container"> <div class="search-bar"> <input type="text" id="searchInput" placeholder="Search what you want...." oninput="displayMatchingWebsites()" /> <button onclick="searchWebsites()">Search</button> <button class="pinned-sites-button" onclick="displayPinnedWebsites()">Pinned Sites</button> </div> <div class="rora"></div> <div class="results-container" id="resultsContainer"></div> </div> <script src="noright.js"></script> <button class="add-button" onclick="openModal()">+</button> <div class="modal" id="modal"> <div class="modal-content"> <h2>Save a Website</h2> <input type="text" id="websiteTitle" placeholder="Website Title" required /> <input type="url" id="websiteUrl" placeholder="Website URL" required /> <button onclick="saveWebsite()" style="border: none; background-color: #c60000;">Save Now</button><br> <button class="close-btn" onclick="closeModal()">Close</button> </div> </div>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsWebs</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/10YfRvf/webslogo.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;900&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; color: #5e5e5e; font-family: 'Red Hat Display', sans-serif; } body { display: flex; flex-direction: column; margin: 0; padding: 0; background-color: #000000; padding-left: 150px; letter-spacing: 0.3px; } a { text-decoration: none; color: white; } h1 { color: #0029ff; font-size: 35px; margin-top: 65px; font-weight: 600; } .rora { height: 1.5px; position: fixed; width: 1000%; background: #8989894f; left: -100px; } .search-bar { display: flex ; align-items: center; margin: 20px 0; padding: 5px; font-size: 21px; border-radius: 130px; background-color: #101010; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.194); width: 100%; max-width: 800px; } .search-bar input { flex: 1; padding: 12px 45px; font-size: 18px; border: none; outline: none; border-radius: 30px; background-color: transparent; color: #b8b8b8; } .search-bar input::placeholder { color: #696969; opacity: 1; } .search-bar button { background-color: transparent; color: #8b8b8b; border: none; padding: 8px 30px; border-radius: 62px; font-size: 16px; cursor: pointer; transition: background-color 0.3s; margin-left: 10px; } .save { position: fixed; right: 10px; top: 10px; color: white; text-decoration: none; } .save:hover { text-decoration: underline; } ::-webkit-scrollbar { background-color: rgba(38, 37, 37, 0.027); width: 12px; } ::-webkit-scrollbar-thumb { background-color: rgb(57, 57, 57); } ::-webkit-scrollbar-thumb:hover { background-color: gray; } ::-webkit-scrollbar-track { background-color: rgba(38, 37, 37, 0); } .results-container { margin-top: 20px; text-align: left; width: 100%; max-width: 800px; max-height: -webkit-fill-available; position: fixed; overflow-x: auto; background: #000000; padding: 35px; border-radius: 25px; } .results-container:hover{ background: #0e0e0e; transition: 0.5s; } .result-item { position: relative; margin-bottom: 20px; padding: 18px 10px; border-bottom: solid 1.5px #8080802b; } .results-container::-webkit-scrollbar-track{ margin-top: 45px; margin-bottom: 45px; } .result-item:hover { background-color: #424242; border-radius: 15px; } .result-title { font-size: 25px; color: #00e5ff9c; text-decoration: none; display: block; margin-bottom: 10px; text-transform: capitalize; max-width: max-content; } .result-title:hover { color: white; } .result-url { color: #00c66fb0; font-size: 13px; margin-bottom: 6px; display: block; overflow: hidden; } .result-description { font-size: 12px; color: #848484; margin-bottom: 10px; text-align: left; font-weight: 500; } .recently-visited { font-size: 12px; color: #ff9900; margin-left: 10px; display: inline; } .delete-btn { position: absolute; right: 10px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 10px; cursor: pointer; } .delete-btn:hover { color: white; background-color: #ff0000; } .add-button { position: fixed; bottom: 30px; right: 30px; background-color: #3c3c3c; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 24px; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); } .add-button:hover { background-color: #282828; } .modal-content { background-color: #0e0e0e; margin: 20% auto; padding: 36px; border: 1.5px solid #4e4e4e40; width: 450px; border-radius: 20px; color: #e0e0e0; display: grid; } .modal-content h2 { margin-bottom: 15px; } .modal-content input, .modal-content button { padding: 10px; margin: 5px 0; background-color: #1e1e1e; color: #e0e0e0; outline: none; border: 1px solid #424242; } .modal-content input:focus { border: solid gray 1px; } .close-btn { color: #fff; padding: 10px; cursor: pointer; display: contents; } .search-bar button:hover { color: rgb(218, 218, 218); background-color: #3b3a3a; } button.pin-btn { position: absolute; right: 80px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 15px; cursor: pointer; } button.unpin-btn { position: absolute; right: 80px; top: 25px; background-color: #313131; color: #a5a5a5; border: none; border-radius: 30px; font-size: 12px; padding: 5px 10px; cursor: pointer; } button.pin-btn:hover { color: white; background: #0045ff; } button.unpin-btn:hover { color: white; background: #005d14; } .pin-icon { width: 24px; height: 24px; cursor: pointer; } .pinned-sites-button { margin: 10px; padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; cursor: pointer; } .pinned-sites-button:hover { background-color: #0056b3; } .close-btn { background-color: rgb(125, 1, 1); color: #fff; } .modal { position: fixed; right: 25px; display: none; bottom: 60px; } @media (max-width: 480px) { body { padding-left: 0; } h1 { font-size: 28px; margin-top: 10px; text-align: justify; margin-left: 10px; } .search-bar button { background-color: transparent; color: #ffffff; border: none; border-radius: 62px; font-size: 15px; cursor: pointer; transition: background-color 0.3s; margin-left: 9px; } .search-bar button:hover { color: rgb(218, 218, 218); background-color: transparent; } .add-button { position: fixed; bottom: 20px; right: 15px; } .results-container { margin-top: 180px; text-align: left; width: 100%; max-width: 760px; max-height: 600px; overflow-y: auto; padding-bottom: 30px; position: relative; padding: 15px; } .search-bar { display: grid; margin: 20px 0; background-color: #28282824; box-shadow: none; width: 100%; position: fixed; border-radius: 14px; border-bottom: solid 1px #525050; } a.result-title { font-size: 15px; } .modal-content { width: 300px; } } </style> </head> <body> <div class="save"> <a href="https://blackswan19.github.io/Educate/savelink">Save a link ?</a> </div> <h1>BsWebs</h1> <div class="container"> <div class="search-bar"> <input type="text" id="searchInput" placeholder="Search by title or URL..." oninput="displayMatchingWebsites()" autocomplete="off"/> <button onclick="searchWebsites()">Search</button> <button class="pinned-sites-button" onclick="displayPinnedWebsites()">Pinned Sites</button> </div> <div class="rora"></div> <div class="results-container" id="resultsContainer"></div> </div> <script src="noright.js"></script> <button class="add-button" onclick="openModal()">+</button> <div class="modal" id="modal"> <div class="modal-content"> <h2>Save a Website</h2> <input type="text" id="websiteTitle" placeholder="Website Title" required /> <input type="url" id="websiteUrl" placeholder="Website URL" required /> <button onclick="saveWebsite()" style="border: none; background-color: #c60000;">Save Now</button><br> <button class="close-btn" onclick="closeModal()">Close</button> </div> </div>
     <script>
         const STORAGE_KEY = 'bswebs_websites';
         const PINNED_KEY = 'bswebs_pinned';
+        const VISITED_KEY = 'bswebs_visited';
 
         const defaultWebsites = [
-    { id: 1, title: 'AI', url: 'https://chat.openai.com/' },
-    { id: 2, title: 'Video Streaming', url: 'https://www.youtube.com/' },
-    { id: 3, title: 'Edit PDFs', url: 'https://smallpdf.com/edit-pdf' },
-    { id: 4, title: 'Advanced PDF Editing', url: 'https://www.ilovepdf.com/edit-pdf' },
-    { id: 5, title: 'Remove Image Backgrounds', url: 'https://www.remove.bg/' },
-    { id: 6, title: 'Search Anything', url: 'https://www.google.com/' },
-    { id: 7, title: 'Code Repository', url: 'https://github.com/' },
-    { id: 8, title: 'Programming Q&A', url: 'https://stackoverflow.com/' },
-    { id: 9, title: 'Learn to Code', url: 'https://www.w3schools.com/' },
-    { id: 10, title: 'Web Development Docs', url: 'https://developer.mozilla.org/' },
-    { id: 11, title: 'Tech News', url: 'https://news.ycombinator.com/' },
-    { id: 12, title: 'Download Free Images', url: 'https://unsplash.com/' },
-    { id: 13, title: 'Search Free Images', url: 'https://www.pexels.com/' },
-    { id: 14, title: 'Download Vectors', url: 'https://www.freepik.com/' },
-    { id: 15, title: 'Create Free Designs', url: 'https://www.canva.com/' },
-    { id: 16, title: 'Image Download', url: 'https://www.pinterest.com/' },
-    { id: 17, title: 'Professional Networking', url: 'https://www.linkedin.com/' },
-    { id: 18, title: 'Online Shopping', url: 'https://www.amazon.com/' },
-    { id: 19, title: 'Cloud Storage', url: 'https://www.dropbox.com/' },
-    { id: 20, title: 'Search Scholarly Articles', url: 'https://scholar.google.com/' },
-    { id: 21, title: 'Learn New Skills', url: 'https://www.udemy.com/' },
-    { id: 22, title: 'Online Courses', url: 'https://www.coursera.org/' },
-    { id: 23, title: 'Learn Coding', url: 'https://www.codecademy.com/' },
-    { id: 24, title: 'Plan Your Day', url: 'https://todoist.com/' },
-    { id: 25, title: 'Online Notepad', url: 'https://www.evernote.com/' },
-    { id: 26, title: 'Write Blogs', url: 'https://www.medium.com/' },
-    { id: 27, title: 'Online Dictionaries', url: 'https://www.dictionary.com/' },
-    { id: 28, title: 'Explore Knowledge', url: 'https://www.wikipedia.org/' },
-    { id: 29, title: 'Search Jobs', url: 'https://www.indeed.com/' },
-    { id: 30, title: 'Remote Work Jobs', url: 'https://weworkremotely.com/' },
-    { id: 31, title: 'Convert Files', url: 'https://www.zamzar.com/' },
-    { id: 32, title: 'Compress Images', url: 'https://tinypng.com/' },
-    { id: 33, title: 'Website Analytics', url: 'https://analytics.google.com/' },
-    { id: 34, title: 'SEO Optimization', url: 'https://ahrefs.com/' },
-    { id: 35, title: 'Keyword Research', url: 'https://www.semrush.com/' },
-    { id: 36, title: 'Collaborative Work', url: 'https://slack.com/' },
-    { id: 37, title: 'Online Spreadsheets', url: 'https://www.google.com/sheets/about/' },
-    { id: 38, title: 'Create Forms', url: 'https://www.google.com/forms/about/' },
-    { id: 39, title: 'Organize Meetings', url: 'https://zoom.us/' },
-    { id: 40, title: 'Web Design Inspiration', url: 'https://dribbble.com/' },
-    { id: 41, title: 'Search for Icons', url: 'https://www.flaticon.com/' },
-    { id: 42, title: 'Listen to Music', url: 'https://www.spotify.com/' },
-    { id: 43, title: 'Free Coding Practice', url: 'https://www.freecodecamp.org/' },
-    { id: 44, title: 'Read Books', url: 'https://www.goodreads.com/' },
-    { id: 45, title: 'Track Expenses', url: 'https://www.mint.com/' },
-    { id: 46, title: 'Edit Videos', url: 'https://www.veed.io/' },
-    { id: 47, title: 'Create Mind Maps', url: 'https://www.mindmeister.com/' },
-    { id: 48, title: 'Convert Units', url: 'https://www.unitconverters.net/' },
-    { id: 49, title: 'Time Zone Converter', url: 'https://www.timeanddate.com/worldclock/converter.html' },
-    { id: 50, title: 'Generate Passwords', url: 'https://www.lastpass.com/' },
-    { id: 51, title: 'Online Drawing', url: 'https://www.autodraw.com/' },
-    { id: 52, title: 'Royalty-Free Music', url: 'https://incompetech.com/' },
-    { id: 53, title: 'Discover Fonts', url: 'https://www.dafont.com/' },
-    { id: 54, title: 'Edit Photos Online', url: 'https://www.pixlr.com/' },
-    { id: 55, title: 'Collaborative Documents', url: 'https://www.notion.so/' },
-    { id: 56, title: 'News Aggregator', url: 'https://www.feedly.com/' },
-    { id: 57, title: 'Digital Marketing Tools', url: 'https://buffer.com/' },
-    { id: 58, title: 'Learn a Language', url: 'https://www.duolingo.com/' },
-    { id: 59, title: 'Learn Typing', url: 'https://www.typing.com/' },
-    { id: 60, title: 'Online Calculators', url: 'https://www.calculator.net/' },
-    { id: 61, title: 'Create Infographics', url: 'https://www.visme.co/' },
-    { id: 62, title: 'Shorten URLs', url: 'https://bitly.com/' },
-    { id: 63, title: 'Track Website Speed', url: 'https://pagespeed.web.dev/' },
-    { id: 64, title: 'Create Flowcharts', url: 'https://app.diagrams.net/' },
-    { id: 65, title: 'Generate Mockups', url: 'https://www.mockupworld.co/' },
-    { id: 66, title: 'Find Books', url: 'https://www.projectgutenberg.org/' },
-    { id: 67, title: 'Resume Builder', url: 'https://www.zety.com/resume-builder' },
-    { id: 68, title: 'Learn Mathematics', url: 'https://www.khanacademy.org/' },
-    { id: 69, title: 'Explore Tech Tutorials', url: 'https://www.geeksforgeeks.org/' },
-    { id: 70, title: 'Online Grammar Check', url: 'https://www.grammarly.com/' },
-    { id: 71, title: 'Find Movie Reviews', url: 'https://www.imdb.com/' },
-    { id: 72, title: 'Buy Domain Names', url: 'https://www.namecheap.com/' },
-    { id: 73, title: 'Host Websites', url: 'https://www.bluehost.com/' },
-    { id: 74, title: 'Stock Market Info', url: 'https://www.marketwatch.com/' },
-    { id: 75, title: 'Financial Management', url: 'https://www.personalcapital.com/' },
-    { id: 76, title: 'Online Surveys', url: 'https://www.surveymonkey.com/' },
-    { id: 77, title: 'Explore Maps', url: 'https://www.google.com/maps/' },
-    { id: 78, title: 'Download Videos', url: 'https://www.savethevideo.com/' },
-    { id: 79, title: 'Find GIFs', url: 'https://giphy.com/' },
-    { id: 80, title: 'Analyze Backlinks', url: 'https://moz.com/' },
-    { id: 81, title: 'Convert Currency', url: 'https://www.xe.com/' },
-    { id: 82, title: 'Monitor Website Uptime', url: 'https://uptimerobot.com/' },
-    { id: 83, title: 'Cryptocurrency Tracker', url: 'https://coinmarketcap.com/' },
-    { id: 84, title: 'Buy and Sell Freelance Services', url: 'https://www.fiverr.com/' },
-    { id: 85, title: 'Hire Freelancers', url: 'https://www.upwork.com/' },
-    { id: 86, title: 'Discover Recipes', url: 'https://www.allrecipes.com/' },
-    { id: 87, title: 'Track Time', url: 'https://www.toggl.com/' },
-    { id: 88, title: 'Social Media Scheduling', url: 'https://hootsuite.com/' },
-    { id: 89, title: 'Online Mindfulness', url: 'https://www.headspace.com/' },
-    { id: 90, title: 'Meditation Guide', url: 'https://www.calm.com/' },
-    { id: 91, title: 'Generate Business Names', url: 'https://www.namelix.com/' },
-    { id: 92, title: 'Mock Interviews', url: 'https://www.pramp.com/' },
-    { id: 93, title: 'Website Heatmaps', url: 'https://www.hotjar.com/' },
-    { id: 94, title: 'Create QR Codes', url: 'https://www.qrstuff.com/' },
-    { id: 95, title: 'Explore World Data', url: 'https://www.gapminder.org/' },
-    { id: 96, title: 'Online Whiteboard', url: 'https://miro.com/' },
-    { id: 97, title: 'Build Chatbots', url: 'https://landbot.io/' },
-    { id: 98, title: 'Remote Team Tools', url: 'https://www.asana.com/' },
-    { id: 99, title: 'Free Stock Videos', url: 'https://www.pexels.com/videos/' },
-    { id: 100, title: 'Explore Fonts', url: 'https://fonts.google.com/' },
-    { id: 101, title: 'AI Writing Assistant', url: 'https://rytr.me/' },
-    { id: 102, title: 'Code Playground', url: 'https://codepen.io/' },
-    { id: 103, title: 'Data Visualization', url: 'https://tableau.com/' },
-    { id: 104, title: 'Time Management', url: 'https://www.rescuetime.com/' },
-    { id: 105, title: 'Online Notebooks', url: 'https://jupyter.org/' },
-    { id: 106, title: 'Design Inspiration', url: 'https://dribbble.com/' },
-    { id: 107, title: 'Create Vector Graphics', url: 'https://www.gravit.io/' },
-    { id: 108, title: 'Online Learning', url: 'https://edx.org/' },
-    { id: 109, title: 'Customer Support', url: 'https://www.zendesk.com/' },
-    { id: 110, title: 'Monitor Expenses', url: 'https://www.mint.com/' },
-    { id: 111, title: 'Online Dictionary', url: 'https://www.merriam-webster.com/' },
-    { id: 112, title: 'Create Surveys', url: 'https://www.typeform.com/' },
-    { id: 113, title: 'Stock Photos', url: 'https://unsplash.com/' },
-    { id: 114, title: 'Discover Tech Jobs', url: 'https://angel.co/' },
-    { id: 115, title: 'Travel Planner', url: 'https://www.tripadvisor.com/' },
-    { id: 116, title: 'Coding Challenges', url: 'https://www.hackerrank.com/' },
-    { id: 117, title: 'Build Portfolios', url: 'https://www.behance.net/' },
-    { id: 118, title: 'Startup Tools', url: 'https://www.producthunt.com/' },
-    { id: 119, title: 'Online Collaboration', url: 'https://slack.com/' },
-    { id: 120, title: 'Find Scholarships', url: 'https://www.fastweb.com/' },
-    { id: 121, title: 'Free Resume Templates', url: 'https://novoresume.com/' },
-    { id: 122, title: 'Create Animations', url: 'https://www.animaker.com/' },
-    { id: 123, title: 'Convert PDFs', url: 'https://www.pdf2go.com/' },
-    { id: 124, title: 'Website Analytics', url: 'https://www.similarweb.com/' },
-    { id: 125, title: 'Improve Coding Skills', url: 'https://www.freecodecamp.org/' },
-    { id: 126, title: 'Discover Web Fonts', url: 'https://www.fontsquirrel.com/' },
-    { id: 127, title: 'Online Presentations', url: 'https://prezi.com/' },
-    { id: 128, title: 'Mind Mapping', url: 'https://coggle.it/' },
-    { id: 129, title: 'Online File Converter', url: 'https://convertio.co/' },
-    { id: 130, title: 'Cryptocurrency Wallet', url: 'https://www.coinbase.com/' },
-    { id: 131, title: 'Remote Work Tools', url: 'https://trello.com/' },
-    { id: 132, title: 'Academic Research', url: 'https://scholar.google.com/' },
-    { id: 133, title: 'Track Your Fitness', url: 'https://www.myfitnesspal.com/' },
-    { id: 134, title: 'Stream Movies', url: 'https://www.netflix.com/' },
-    { id: 135, title: 'Search Public Records', url: 'https://www.spokeo.com/' },
-    { id: 136, title: 'Explore Creative Projects', url: 'https://www.kickstarter.com/' },
-    { id: 137, title: 'Plan a Wedding', url: 'https://www.theknot.com/' },
-    { id: 138, title: 'Track Weather', url: 'https://www.accuweather.com/' },
-    { id: 139, title: 'Freelance Work Platform', url: 'https://www.peopleperhour.com/' },
-    { id: 140, title: 'Explore News Trends', url: 'https://www.trendhunter.com/' },
-    { id: 141, title: 'Find Home Services', url: 'https://www.angie.com/' },
-    { id: 142, title: 'Explore Online Auctions', url: 'https://www.ebay.com/' },
-    { id: 143, title: 'DIY Craft Ideas', url: 'https://www.instructables.com/' },
-    { id: 144, title: 'Language Translator', url: 'https://translate.google.com/' },
-    { id: 145, title: 'Create Video Slideshows', url: 'https://www.animoto.com/' },
-    { id: 146, title: 'Track International Shipping', url: 'https://www.17track.net/' },
-    { id: 147, title: 'Discover Podcasts', url: 'https://www.spotify.com/' },
-    { id: 148, title: 'Host Webinars', url: 'https://www.webex.com/' },
-    { id: 149, title: 'Download eBooks', url: 'https://www.pdfdrive.com/' },
-    { id: 150, title: 'Job Search', url: 'https://www.monster.com/' },
-    { id: 151, title: 'Explore Stock Footage', url: 'https://www.videvo.net/' },
-    { id: 152, title: 'Document Scanning', url: 'https://www.camscanner.com/' },
-    { id: 153, title: 'Online Polling', url: 'https://www.strawpoll.me/' },
-    { id: 154, title: 'Start a Blog', url: 'https://wordpress.com/' },
-    { id: 155, title: 'Online Test Proctoring', url: 'https://www.proctoru.com/' },
-    { id: 156, title: 'View Archived Websites', url: 'https://archive.org/' },
-    { id: 157, title: 'Create Flowcharts', url: 'https://lucidchart.com/' },
-    { id: 158, title: 'Free Online Courses', url: 'https://alison.com/' },
-    { id: 159, title: 'Record Screen', url: 'https://www.screencastify.com/' },
-    { id: 160, title: 'Password Manager', url: 'https://www.lastpass.com/' },
-    { id: 161, title: 'Practice Coding', url: 'https://www.leetcode.com/' },
-    { id: 162, title: 'Travel Deals', url: 'https://www.skyscanner.com/' },
-    { id: 163, title: 'Infographic Templates', url: 'https://venngage.com/' },
-    { id: 164, title: 'World Clock', url: 'https://www.timeanddate.com/' },
-    { id: 165, title: 'Website Builders', url: 'https://www.wix.com/' },
-    { id: 166, title: 'Practice Public Speaking', url: 'https://virtualspeech.com/' },
-    { id: 167, title: 'Business Planning', url: 'https://www.liveplan.com/' },
-    { id: 168, title: 'Download YouTube Videos', url: 'https://yt1s.com/' },
-    { id: 169, title: 'Vector Graphics Editing', url: 'https://inkscape.org/' },
-    { id: 170, title: 'Explore Startup Metrics', url: 'https://crunchbase.com/' },
-    { id: 171, title: 'Free Video Conferencing', url: 'https://zoom.us/' },
-    { id: 172, title: 'Digital Color Palette', url: 'https://coolors.co/' },
-    { id: 173, title: 'Online Auctions', url: 'https://www.hibid.com/' },
-    { id: 174, title: 'Free Online Calculations', url: 'https://www.desmos.com/' },
-    { id: 175, title: 'Access Free Journals', url: 'https://www.doaj.org/' },
-    { id: 176, title: 'Explore Career Paths', url: 'https://www.onetonline.org/' },
-    { id: 177, title: 'Discover Online Courses', url: 'https://www.udacity.com/' },
-    { id: 178, title: 'Explore Genetic Traits', url: 'https://www.23andme.com/' },
-    { id: 179, title: 'Track Exercise Goals', url: 'https://www.fitbit.com/' },
-    { id: 180, title: 'Freelancer Tools', url: 'https://www.toptal.com/' },
-    { id: 181, title: 'Website Wireframes', url: 'https://balsamiq.com/' },
-    { id: 182, title: 'Scan for Malware', url: 'https://virustotal.com/' },
-    { id: 183, title: 'Discover Global Issues', url: 'https://ourworldindata.org/' },
-    { id: 184, title: 'Interactive Web Tutorials', url: 'https://scrimba.com/' },
-    { id: 185, title: 'Online Forum Builder', url: 'https://www.discourse.org/' },
-    { id: 186, title: 'Rent Vacation Homes', url: 'https://www.airbnb.com/' },
-    { id: 187, title: 'Download Free Templates', url: 'https://templatemaker.nl/' },
-    { id: 188, title: 'Track Flight Info', url: 'https://www.flightaware.com/' },
-    { id: 189, title: 'Improve Vocabulary', url: 'https://www.wordhippo.com/' },
-    { id: 190, title: 'Online Database Builder', url: 'https://www.airtable.com/' },
-    { id: 191, title: 'Explore 3D Models', url: 'https://www.sketchfab.com/' },
-    { id: 192, title: 'Free Mockup Tools', url: 'https://placeit.net/' },
-    { id: 193, title: 'Legal Document Templates', url: 'https://www.legalzoom.com/' },
-    { id: 194, title: 'Interactive Learning', url: 'https://quizlet.com/' },
-    { id: 195, title: 'AI Video Editing', url: 'https://www.descript.com/' },
-    { id: 196, title: 'Explore Statistics', url: 'https://statista.com/' },
-    { id: 197, title: 'Free E-Learning Resources', url: 'https://www.openculture.com/' },
-    { id: 198, title: 'Explore Open Datasets', url: 'https://data.world/' },
-    { id: 199, title: 'Custom Website Themes', url: 'https://themeforest.net/' },
-    { id: 200, title: 'Find Remote Jobs', url: 'https://weworkremotely.com/' },
-    { id: 201, title: 'AI Image Upscaler', url: 'https://icons8.com/upscaler' },
-    { id: 202, title: 'Free Coding Tutorials', url: 'https://www.codecademy.com/' },
-    { id: 203, title: 'Grammar Checker', url: 'https://www.grammarly.com/' },
-    { id: 204, title: 'Generate QR Codes', url: 'https://www.qr-code-generator.com/' },
-    { id: 205, title: 'Make Digital Flashcards', url: 'https://www.brainscape.com/' },
-    { id: 206, title: 'Explore Business Data', url: 'https://www.dnb.com/' },
-    { id: 207, title: 'Organize Research', url: 'https://www.zotero.org/' },
-    { id: 208, title: 'Design Business Cards', url: 'https://www.vistaprint.com/' },
-    { id: 209, title: 'Find Remote Workspaces', url: 'https://www.workfrom.co/' },
-    { id: 210, title: 'Collaborative Whiteboard', url: 'https://miro.com/' },
-    { id: 211, title: 'Daily Meditation', url: 'https://www.headspace.com/' },
-    { id: 212, title: 'Design Custom Maps', url: 'https://mapchart.net/' },
-    { id: 213, title: 'Track Social Media Metrics', url: 'https://www.hootsuite.com/' },
-    { id: 214, title: 'Learn Ethical Hacking', url: 'https://tryhackme.com/' },
-    { id: 215, title: 'Explore Job Market Trends', url: 'https://www.glassdoor.com/' },
-    { id: 216, title: 'Online Photo Editing', url: 'https://pixlr.com/' },
-    { id: 217, title: 'Discover Research Papers', url: 'https://sci-hub.se/' },
-    { id: 218, title: 'Language Learning', url: 'https://www.duolingo.com/' },
-    { id: 219, title: 'Earn Rewards Online', url: 'https://www.swagbucks.com/' },
-    { id: 220, title: 'Create Social Media Posts', url: 'https://www.postermywall.com/' },
-    { id: 221, title: 'Explore Local Events', url: 'https://www.eventbrite.com/' },
-    { id: 222, title: 'Online Video Downloader', url: 'https://keepvid.pro/' },
-    { id: 223, title: 'Access Free Fonts', url: 'https://www.dafont.com/' },
-    { id: 224, title: '3D Printing Resources', url: 'https://www.thingiverse.com/' },
-    { id: 225, title: 'Discover Volunteer Opportunities', url: 'https://www.volunteermatch.org/' },
-    { id: 226, title: 'Find Freelance Work', url: 'https://www.fiverr.com/' },
-    { id: 227, title: 'Track Your Sleep', url: 'https://www.sleepcycle.com/' },
-    { id: 228, title: 'Explore Consumer Reviews', url: 'https://www.trustpilot.com/' },
-    { id: 229, title: 'Build Mobile Apps', url: 'https://www.glideapps.com/' },
-    { id: 230, title: 'Data Security Checker', url: 'https://haveibeenpwned.com/' },
-    { id: 231, title: 'Online Drawing Tools', url: 'https://sketch.io/sketchpad/' },
-    { id: 232, title: 'Learn Public Data Analysis', url: 'https://data.census.gov/' },
-    { id: 233, title: 'Free Online Magazines', url: 'https://issuu.com/' },
-    { id: 234, title: 'Access Historical Maps', url: 'https://www.oldmapsonline.org/' },
-    { id: 235, title: 'Free Music Downloads', url: 'https://freemusicarchive.org/' },
-    { id: 236, title: 'Random Number Generator', url: 'https://random.org/' },
-    { id: 237, title: 'Travel Expense Calculator', url: 'https://www.numbeo.com/' },
-    { id: 238, title: 'Find Local Recipes', url: 'https://www.yummly.com/' },
-    { id: 239, title: 'Create Sound Effects', url: 'https://www.bfxr.net/' },
-    { id: 240, title: 'Email Marketing Tools', url: 'https://mailchimp.com/' },
-    { id: 241, title: 'Online Puzzle Maker', url: 'https://puzzel.org/' },
-    { id: 242, title: 'Find Public Data', url: 'https://opendata.aws/' },
-    { id: 243, title: 'Online Language Partners', url: 'https://www.conversationexchange.com/' },
-    { id: 244, title: 'Discover Tech News', url: 'https://www.techcrunch.com/' },
-    { id: 245, title: 'Build Ecommerce Sites', url: 'https://www.shopify.com/' },
-    { id: 246, title: 'Access Science Videos', url: 'https://www.khanacademy.org/' },
-    { id: 247, title: 'Discover Astronomy Tools', url: 'https://stellarium-web.org/' },
-    { id: 248, title: 'Manage Team Projects', url: 'https://asana.com/' },
-    { id: 249, title: 'Online Document Signing', url: 'https://www.docusign.com/' },
-    { id: 250, title: 'Free Travel Guides', url: 'https://www.lonelyplanet.com/' },
-    { id: 251, title: 'Free Legal Advice', url: 'https://www.avvo.com/' },
-    { id: 252, title: 'Create Event Invitations', url: 'https://www.paperlesspost.com/' },
-    { id: 253, title: 'Online Illustration Tools', url: 'https://www.vectornator.io/' },
-    { id: 254, title: 'Manage Family Finances', url: 'https://www.youneedabudget.com/' },
-    { id: 255, title: 'Practice Mental Math', url: 'https://brilliant.org/' },
-    { id: 256, title: 'Remote Work Communication', url: 'https://www.mattermost.com/' },
-    { id: 257, title: 'Discover Rare Books', url: 'https://www.abebooks.com/' },
-    { id: 258, title: 'Host Virtual Meetings', url: 'https://whereby.com/' },
-    { id: 259, title: '3D Design Tools', url: 'https://www.blender.org/' },
-    { id: 260, title: 'Find Local Artists', url: 'https://artfinder.com/' },
-    { id: 261, title: 'Explore Fashion Trends', url: 'https://www.vogue.com/' },
-    { id: 262, title: 'Track Sports Scores', url: 'https://www.espn.com/' },
-    { id: 263, title: 'Online Typing Practice', url: 'https://10fastfingers.com/' },
-    { id: 264, title: 'Create 3D Floor Plans', url: 'https://planner5d.com/' },
-    { id: 265, title: 'Analyze Web Performance', url: 'https://gtmetrix.com/' },
-    { id: 266, title: 'Custom Recipe Calculators', url: 'https://www.mealime.com/' },
-    { id: 267, title: 'Discover AI Models', url: 'https://huggingface.co/' },
-    { id: 268, title: 'Plan a Garden', url: 'https://www.gardenplanner.com/' },
-    { id: 269, title: 'Explore Real Estate Data', url: 'https://www.realtor.com/' },
-    { id: 270, title: 'Design Logos', url: 'https://www.logojoy.com/' },
-    { id: 271, title: 'Learn Handwriting Analysis', url: 'https://handwritinguniversity.com/' },
-    { id: 272, title: 'Collect Donations Online', url: 'https://gofundme.com/' },
-    { id: 273, title: 'Professional Networking', url: 'https://linkedin.com/' },
-    { id: 274, title: 'Time Management Tools', url: 'https://clockify.me/' },
-    { id: 275, title: 'Data Backup Solutions', url: 'https://www.carbonite.com/' },
-    { id: 276, title: 'Explore Music History', url: 'https://musicmap.info/' },
-    { id: 277, title: 'Find Deals Online', url: 'https://www.retailmenot.com/' },
-    { id: 278, title: 'Discover Family Ancestry', url: 'https://www.familysearch.org/' },
+            { id: 1, title: 'AI', url: 'https://chat.openai.com/' },
+            { id: 2, title: 'Video Streaming', url: 'https://www.youtube.com/' },
+            { id: 3, title: 'Edit PDFs', url: 'https://smallpdf.com/edit-pdf' },
+            { id: 4, title: 'Advanced PDF Editing', url: 'https://www.ilovepdf.com/edit-pdf' },
+            { id: 5, title: 'Remove Image Backgrounds', url: 'https://www.remove.bg/' },
+            { id: 6, title: 'Search Anything', url: 'https://www.google.com/' },
+            { id: 7, title: 'Code Repository', url: 'https://github.com/' },
+            { id: 8, title: 'Programming Q&A', url: 'https://stackoverflow.com/' },
+            { id: 9, title: 'Learn to Code', url: 'https://www.w3schools.com/' },
+            { id: 10, title: 'Web Development Docs', url: 'https://developer.mozilla.org/' },
+            { id: 11, title: 'Tech News', url: 'https://news.ycombinator.com/' },
+            { id: 12, title: 'Download Free Images', url: 'https://unsplash.com/' },
+            { id: 13, title: 'Search Free Images', url: 'https://www.pexels.com/' },
+            { id: 14, title: 'Download Vectors', url: 'https://www.freepik.com/' },
+            { id: 15, title: 'Create Free Designs', url: 'https://www.canva.com/' },
+            { id: 16, title: 'Image Download', url: 'https://www.pinterest.com/' },
+            { id: 17, title: 'Professional Networking', url: 'https://www.linkedin.com/' },
+            { id: 18, title: 'Online Shopping', url: 'https://www.amazon.com/' },
+            { id: 19, title: 'Cloud Storage', url: 'https://www.dropbox.com/' },
+            { id: 20, title: 'Search Scholarly Articles', url: 'https://scholar.google.com/' },
+            { id: 21, title: 'Learn New Skills', url: 'https://www.udemy.com/' },
+            { id: 22, title: 'Online Courses', url: 'https://www.coursera.org/' },
+            { id: 23, title: 'Learn Coding', url: 'https://www.codecademy.com/' },
+            { id: 24, title: 'Plan Your Day', url: 'https://todoist.com/' },
+            { id: 25, title: 'Online Notepad', url: 'https://www.evernote.com/' },
+            { id: 26, title: 'Write Blogs', url: 'https://www.medium.com/' },
+            { id: 27, title: 'Online Dictionaries', url: 'https://www.dictionary.com/' },
+            { id: 28, title: 'Explore Knowledge', url: 'https://www.wikipedia.org/' },
+            { id: 29, title: 'Search Jobs', url: 'https://www.indeed.com/' },
+            { id: 30, title: 'Remote Work Jobs', url: 'https://weworkremotely.com/' },
+            { id: 31, title: 'Convert Files', url: 'https://www.zamzar.com/' },
+            { id: 32, title: 'Compress Images', url: 'https://tinypng.com/' },
+            { id: 33, title: 'Website Analytics', url: 'https://analytics.google.com/' },
+            { id: 34, title: 'SEO Optimization', url: 'https://ahrefs.com/' },
+            { id: 35, title: 'Keyword Research', url: 'https://www.semrush.com/' },
+            { id: 36, title: 'Collaborative Work', url: 'https://slack.com/' },
+            { id: 37, title: 'Online Spreadsheets', url: 'https://www.google.com/sheets/about/' },
+            { id: 38, title: 'Create Forms', url: 'https://www.google.com/forms/about/' },
+            { id: 39, title: 'Organize Meetings', url: 'https://zoom.us/' },
+            { id: 40, title: 'Web Design Inspiration', url: 'https://dribbble.com/' },
+            { id: 41, title: 'Search for Icons', url: 'https://www.flaticon.com/' },
+            { id: 42, title: 'Listen to Music', url: 'https://www.spotify.com/' },
+            { id: 43, title: 'Free Coding Practice', url: 'https://www.freecodecamp.org/' },
+            { id: 44, title: 'Read Books', url: 'https://www.goodreads.com/' },
+            { id: 45, title: 'Track Expenses', url: 'https://www.mint.com/' },
+            { id: 46, title: 'Edit Videos', url: 'https://www.veed.io/' },
+            { id: 47, title: 'Create Mind Maps', url: 'https://www.mindmeister.com/' },
+            { id: 48, title: 'Convert Units', url: 'https://www.unitconverters.net/' },
+            { id: 49, title: 'Time Zone Converter', url: 'https://www.timeanddate.com/worldclock/converter.html' },
+            { id: 50, title: 'Generate Passwords', url: 'https://www.lastpass.com/' },
+            { id: 51, title: 'Online Drawing', url: 'https://www.autodraw.com/' },
+            { id: 52, title: 'Royalty-Free Music', url: 'https://incompetech.com/' },
+            { id: 53, title: 'Discover Fonts', url: 'https://www.dafont.com/' },
+            { id: 54, title: 'Edit Photos Online', url: 'https://www.pixlr.com/' },
+            { id: 55, title: 'Collaborative Documents', url: 'https://www.notion.so/' },
+            { id: 56, title: 'News Aggregator', url: 'https://www.feedly.com/' },
+            { id: 57, title: 'Digital Marketing Tools', url: 'https://buffer.com/' },
+            { id: 58, title: 'Learn a Language', url: 'https://www.duolingo.com/' },
+            { id: 59, title: 'Learn Typing', url: 'https://www.typing.com/' },
+            { id: 60, title: 'Online Calculators', url: 'https://www.calculator.net/' },
+            { id: 61, title: 'Create Infographics', url: 'https://www.visme.co/' },
+            { id: 62, title: 'Shorten URLs', url: 'https://bitly.com/' },
+            { id: 63, title: 'Track Website Speed', url: 'https://pagespeed.web.dev/' },
+            { id: 64, title: 'Create Flowcharts', url: 'https://app.diagrams.net/' },
+            { id: 65, title: 'Generate Mockups', url: 'https://www.mockupworld.co/' },
+            { id: 66, title: 'Find Books', url: 'https://www.projectgutenberg.org/' },
+            { id: 67, title: 'Resume Builder', url: 'https://www.zety.com/resume-builder' },
+            { id: 68, title: 'Learn Mathematics', url: 'https://www.khanacademy.org/' },
+            { id: 69, title: 'Explore Tech Tutorials', url: 'https://www.geeksforgeeks.org/' },
+            { id: 70, title: 'Online Grammar Check', url: 'https://www.grammarly.com/' },
+            { id: 71, title: 'Find Movie Reviews', url: 'https://www.imdb.com/' },
+            { id: 72, title: 'Buy Domain Names', url: 'https://www.namecheap.com/' },
+            { id: 73, title: 'Host Websites', url: 'https://www.bluehost.com/' },
+            { id: 74, title: 'Stock Market Info', url: 'https://www.marketwatch.com/' },
+            { id: 75, title: 'Financial Management', url: 'https://www.personalcapital.com/' },
+            { id: 76, title: 'Online Surveys', url: 'https://www.surveymonkey.com/' },
+            { id: 77, title: 'Explore Maps', url: 'https://www.google.com/maps/' },
+            { id: 78, title: 'Download Videos', url: 'https://www.savethevideo.com/' },
+            { id: 79, title: 'Find GIFs', url: 'https://giphy.com/' },
+            { id: 80, title: 'Analyze Backlinks', url: 'https://moz.com/' },
+            { id: 81, title: 'Convert Currency', url: 'https://www.xe.com/' },
+            { id: 82, title: 'Monitor Website Uptime', url: 'https://uptimerobot.com/' },
+            { id: 83, title: 'Cryptocurrency Tracker', url: 'https://coinmarketcap.com/' },
+            { id: 84, title: 'Buy and Sell Freelance Services', url: 'https://www.fiverr.com/' },
+            { id: 85, title: 'Hire Freelancers', url: 'https://www.upwork.com/' },
+            { id: 86, title: 'Discover Recipes', url: 'https://www.allrecipes.com/' },
+            { id: 87, title: 'Track Time', url: 'https://www.toggl.com/' },
+            { id: 88, title: 'Social Media Scheduling', url: 'https://hootsuite.com/' },
+            { id: 89, title: 'Online Mindfulness', url: 'https://www.headspace.com/' },
+            { id: 90, title: 'Meditation Guide', url: 'https://www.calm.com/' },
+            { id: 91, title: 'Generate Business Names', url: 'https://www.namelix.com/' },
+            { id: 92, title: 'Mock Interviews', url: 'https://www.pramp.com/' },
+            { id: 93, title: 'Website Heatmaps', url: 'https://www.hotjar.com/' },
+            { id: 94, title: 'Create QR Codes', url: 'https://www.qrstuff.com/' },
+            { id: 95, title: 'Explore World Data', url: 'https://www.gapminder.org/' },
+            { id: 96, title: 'Online Whiteboard', url: 'https://miro.com/' },
+            { id: 97, title: 'Build Chatbots', url: 'https://landbot.io/' },
+            { id: 98, title: 'Remote Team Tools', url: 'https://www.asana.com/' },
+            { id: 99, title: 'Free Stock Videos', url: 'https://www.pexels.com/videos/' },
+            { id: 100, title: 'Explore Fonts', url: 'https://fonts.google.com/' },
+            { id: 101, title: 'AI Writing Assistant', url: 'https://rytr.me/' },
+            { id: 102, title: 'Code Playground', url: 'https://codepen.io/' },
+            { id: 103, title: 'Data Visualization', url: 'https://tableau.com/' },
+            { id: 104, title: 'Time Management', url: 'https://www.rescuetime.com/' },
+            { id: 105, title: 'Online Notebooks', url: 'https://jupyter.org/' },
+            { id: 106, title: 'Design Inspiration', url: 'https://dribbble.com/' },
+            { id: 107, title: 'Create Vector Graphics', url: 'https://www.gravit.io/' },
+            { id: 108, title: 'Online Learning', url: 'https://edx.org/' },
+            { id: 109, title: 'Customer Support', url: 'https://www.zendesk.com/' },
+            { id: 110, title: 'Monitor Expenses', url: 'https://www.mint.com/' },
+            { id: 111, title: 'Online Dictionary', url: 'https://www.merriam-webster.com/' },
+            { id: 112, title: 'Create Surveys', url: 'https://www.typeform.com/' },
+            { id: 113, title: 'Stock Photos', url: 'https://unsplash.com/' },
+            { id: 114, title: 'Discover Tech Jobs', url: 'https://angel.co/' },
+            { id: 115, title: 'Travel Planner', url: 'https://www.tripadvisor.com/' },
+            { id: 116, title: 'Coding Challenges', url: 'https://www.hackerrank.com/' },
+            { id: 117, title: 'Build Portfolios', url: 'https://www.behance.net/' },
+            { id: 118, title: 'Startup Tools', url: 'https://www.producthunt.com/' },
+            { id: 119, title: 'Online Collaboration', url: 'https://slack.com/' },
+            { id: 120, title: 'Find Scholarships', url: 'https://www.fastweb.com/' },
+            { id: 121, title: 'Free Resume Templates', url: 'https://novoresume.com/' },
+            { id: 122, title: 'Create Animations', url: 'https://www.animaker.com/' },
+            { id: 123, title: 'Convert PDFs', url: 'https://www.pdf2go.com/' },
+            { id: 124, title: 'Website Analytics', url: 'https://www.similarweb.com/' },
+            { id: 125, title: 'Improve Coding Skills', url: 'https://www.freecodecamp.org/' },
+            { id: 126, title: 'Discover Web Fonts', url: 'https://www.fontsquirrel.com/' },
+            { id: 127, title: 'Online Presentations', url: 'https://prezi.com/' },
+            { id: 128, title: 'Mind Mapping', url: 'https://coggle.it/' },
+            { id: 129, title: 'Online File Converter', url: 'https://convertio.co/' },
+            { id: 130, title: 'Cryptocurrency Wallet', url: 'https://www.coinbase.com/' },
+            { id: 131, title: 'Remote Work Tools', url: 'https://trello.com/' },
+            { id: 132, title: 'Academic Research', url: 'https://scholar.google.com/' },
+            { id: 133, title: 'Track Your Fitness', url: 'https://www.myfitnesspal.com/' },
+            { id: 134, title: 'Stream Movies', url: 'https://www.netflix.com/' },
+            { id: 135, title: 'Search Public Records', url: 'https://www.spokeo.com/' },
+            { id: 136, title: 'Explore Creative Projects', url: 'https://www.kickstarter.com/' },
+            { id: 137, title: 'Plan a Wedding', url: 'https://www.theknot.com/' },
+            { id: 138, title: 'Track Weather', url: 'https://www.accuweather.com/' },
+            { id: 139, title: 'Freelance Work Platform', url: 'https://www.peopleperhour.com/' },
+            { id: 140, title: 'Explore News Trends', url: 'https://www.trendhunter.com/' },
+            { id: 141, title: 'Find Home Services', url: 'https://www.angie.com/' },
+            { id: 142, title: 'Explore Online Auctions', url: 'https://www.ebay.com/' },
+            { id: 143, title: 'DIY Craft Ideas', url: 'https://www.instructables.com/' },
+            { id: 144, title: 'Language Translator', url: 'https://translate.google.com/' },
+            { id: 145, title: 'Create Video Slideshows', url: 'https://www.animoto.com/' },
+            { id: 146, title: 'Track International Shipping', url: 'https://www.17track.net/' },
+            { id: 147, title: 'Discover Podcasts', url: 'https://www.spotify.com/' },
+            { id: 148, title: 'Host Webinars', url: 'https://www.webex.com/' },
+            { id: 149, title: 'Download eBooks', url: 'https://www.pdfdrive.com/' },
+            { id: 150, title: 'Job Search', url: 'https://www.monster.com/' },
+            { id: 151, title: 'Explore Stock Footage', url: 'https://www.videvo.net/' },
+            { id: 152, title: 'Document Scanning', url: 'https://www.camscanner.com/' },
+            { id: 153, title: 'Online Polling', url: 'https://www.strawpoll.me/' },
+            { id: 154, title: 'Start a Blog', url: 'https://wordpress.com/' },
+            { id: 155, title: 'Online Test Proctoring', url: 'https://www.proctoru.com/' },
+            { id: 156, title: 'View Archived Websites', url: 'https://archive.org/' },
+            { id: 157, title: 'Create Flowcharts', url: 'https://lucidchart.com/' },
+            { id: 158, title: 'Free Online Courses', url: 'https://alison.com/' },
+            { id: 159, title: 'Record Screen', url: 'https://www.screencastify.com/' },
+            { id: 160, title: 'Password Manager', url: 'https://www.lastpass.com/' },
+            { id: 161, title: 'Practice Coding', url: 'https://www.leetcode.com/' },
+            { id: 162, title: 'Travel Deals', url: 'https://www.skyscanner.com/' },
+            { id: 163, title: 'Infographic Templates', url: 'https://venngage.com/' },
+            { id: 164, title: 'World Clock', url: 'https://www.timeanddate.com/' },
+            { id: 165, title: 'Website Builders', url: 'https://www.wix.com/' },
+            { id: 166, title: 'Practice Public Speaking', url: 'https://virtualspeech.com/' },
+            { id: 167, title: 'Business Planning', url: 'https://www.liveplan.com/' },
+            { id: 168, title: 'Download YouTube Videos', url: 'https://yt1s.com/' },
+            { id: 169, title: 'Vector Graphics Editing', url: 'https://inkscape.org/' },
+            { id: 170, title: 'Explore Startup Metrics', url: 'https://crunchbase.com/' },
+            { id: 171, title: 'Free Video Conferencing', url: 'https://zoom.us/' },
+            { id: 172, title: 'Digital Color Palette', url: 'https://coolors.co/' },
+            { id: 173, title: 'Online Auctions', url: 'https://www.hibid.com/' },
+            { id: 174, title: 'Free Online Calculations', url: 'https://www.desmos.com/' },
+            { id: 175, title: 'Access Free Journals', url: 'https://www.doaj.org/' },
+            { id: 176, title: 'Explore Career Paths', url: 'https://www.onetonline.org/' },
+            { id: 177, title: 'Discover Online Courses', url: 'https://www.udacity.com/' },
+            { id: 178, title: 'Explore Genetic Traits', url: 'https://www.23andme.com/' },
+            { id: 179, title: 'Track Exercise Goals', url: 'https://www.fitbit.com/' },
+            { id: 180, title: 'Freelancer Tools', url: 'https://www.toptal.com/' },
+            { id: 181, title: 'Website Wireframes', url: 'https://balsamiq.com/' },
+            { id: 182, title: 'Scan for Malware', url: 'https://virustotal.com/' },
+            { id: 183, title: 'Discover Global Issues', url: 'https://ourworldindata.org/' },
+            { id: 184, title: 'Interactive Web Tutorials', url: 'https://scrimba.com/' },
+            { id: 185, title: 'Online Forum Builder', url: 'https://www.discourse.org/' },
+            { id: 186, title: 'Rent Vacation Homes', url: 'https://www.airbnb.com/' },
+            { id: 187, title: 'Download Free Templates', url: 'https://templatemaker.nl/' },
+            { id: 188, title: 'Track Flight Info', url: 'https://www.flightaware.com/' },
+            { id: 189, title: 'Improve Vocabulary', url: 'https://www.wordhippo.com/' },
+            { id: 190, title: 'Online Database Builder', url: 'https://www.airtable.com/' },
+            { id: 191, title: 'Explore 3D Models', url: 'https://www.sketchfab.com/' },
+            { id: 192, title: 'Free Mockup Tools', url: 'https://placeit.net/' },
+            { id: 193, title: 'Legal Document Templates', url: 'https://www.legalzoom.com/' },
+            { id: 194, title: 'Interactive Learning', url: 'https://quizlet.com/' },
+            { id: 195, title: 'AI Video Editing', url: 'https://www.descript.com/' },
+            { id: 196, title: 'Explore Statistics', url: 'https://statista.com/' },
+            { id: 197, title: 'Free E-Learning Resources', url: 'https://www.openculture.com/' },
+            { id: 198, title: 'Explore Open Datasets', url: 'https://data.world/' },
+            { id: 199, title: 'Custom Website Themes', url: 'https://themeforest.net/' },
+            { id: 200, title: 'Find Remote Jobs', url: 'https://weworkremotely.com/' },
+            { id: 201, title: 'AI Image Upscaler', url: 'https://icons8.com/upscaler' },
+            { id: 202, title: 'Free Coding Tutorials', url: 'https://www.codecademy.com/' },
+            { id: 203, title: 'Grammar Checker', url: 'https://www.grammarly.com/' },
+            { id: 204, title: 'Generate QR Codes', url: 'https://www.qr-code-generator.com/' },
+            { id: 205, title: 'Make Digital Flashcards', url: 'https://www.brainscape.com/' },
+            { id: 206, title: 'Explore Business Data', url: 'https://www.dnb.com/' },
+            { id: 207, title: 'Organize Research', url: 'https://www.zotero.org/' },
+            { id: 208, title: 'Design Business Cards', url: 'https://www.vistaprint.com/' },
+            { id: 209, title: 'Find Remote Workspaces', url: 'https://www.workfrom.co/' },
+            { id: 210, title: 'Collaborative Whiteboard', url: 'https://miro.com/' },
+            { id: 211, title: 'Daily Meditation', url: 'https://www.headspace.com/' },
+            { id: 212, title: 'Design Custom Maps', url: 'https://mapchart.net/' },
+            { id: 213, title: 'Track Social Media Metrics', url: 'https://www.hootsuite.com/' },
+            { id: 214, title: 'Learn Ethical Hacking', url: 'https://tryhackme.com/' },
+            { id: 215, title: 'Explore Job Market Trends', url: 'https://www.glassdoor.com/' },
+            { id: 216, title: 'Online Photo Editing', url: 'https://pixlr.com/' },
+            { id: 217, title: 'Discover Research Papers', url: 'https://sci-hub.se/' },
+            { id: 218, title: 'Language Learning', url: 'https://www.duolingo.com/' },
+            { id: 219, title: 'Earn Rewards Online', url: 'https://www.swagbucks.com/' },
+            { id: 220, title: 'Create Social Media Posts', url: 'https://www.postermywall.com/' },
+            { id: 221, title: 'Explore Local Events', url: 'https://www.eventbrite.com/' },
+            { id: 222, title: 'Online Video Downloader', url: 'https://keepvid.pro/' },
+            { id: 223, title: 'Access Free Fonts', url: 'https://www.dafont.com/' },
+            { id: 224, title: '3D Printing Resources', url: 'https://www.thingiverse.com/' },
+            { id: 225, title: 'Discover Volunteer Opportunities', url: 'https://www.volunteermatch.org/' },
+            { id: 226, title: 'Find Freelance Work', url: 'https://www.fiverr.com/' },
+            { id: 227, title: 'Track Your Sleep', url: 'https://www.sleepcycle.com/' },
+            { id: 228, title: 'Explore Consumer Reviews', url: 'https://www.trustpilot.com/' },
+            { id: 229, title: 'Build Mobile Apps', url: 'https://www.glideapps.com/' },
+            { id: 230, title: 'Data Security Checker', url: 'https://haveibeenpwned.com/' },
+            { id: 231, title: 'Online Drawing Tools', url: 'https://sketch.io/sketchpad/' },
+            { id: 232, title: 'Learn Public Data Analysis', url: 'https://data.census.gov/' },
+            { id: 233, title: 'Free Online Magazines', url: 'https://issuu.com/' },
+            { id: 234, title: 'Access Historical Maps', url: 'https://www.oldmapsonline.org/' },
+            { id: 235, title: 'Free Music Downloads', url: 'https://freemusicarchive.org/' },
+            { id: 236, title: 'Random Number Generator', url: 'https://random.org/' },
+            { id: 237, title: 'Travel Expense Calculator', url: 'https://www.numbeo.com/' },
+            { id: 238, title: 'Find Local Recipes', url: 'https://www.yummly.com/' },
+            { id: 239, title: 'Create Sound Effects', url: 'https://www.bfxr.net/' },
+            { id: 240, title: 'Email Marketing Tools', url: 'https://mailchimp.com/' },
+            { id: 241, title: 'Online Puzzle Maker', url: 'https://puzzel.org/' },
+            { id: 242, title: 'Find Public Data', url: 'https://opendata.aws/' },
+            { id: 243, title: 'Online Language Partners', url: 'https://www.conversationexchange.com/' },
+            { id: 244, title: 'Discover Tech News', url: 'https://www.techcrunch.com/' },
+            { id: 245, title: 'Build Ecommerce Sites', url: 'https://www.shopify.com/' },
+            { id: 246, title: 'Access Science Videos', url: 'https://www.khanacademy.org/' },
+            { id: 247, title: 'Discover Astronomy Tools', url: 'https://stellarium-web.org/' },
+            { id: 248, title: 'Manage Team Projects', url: 'https://asana.com/' },
+            { id: 249, title: 'Online Document Signing', url: 'https://www.docusign.com/' },
+            { id: 250, title: 'Free Travel Guides', url: 'https://www.lonelyplanet.com/' },
+            { id: 251, title: 'Free Legal Advice', url: 'https://www.avvo.com/' },
+            { id: 252, title: 'Create Event Invitations', url: 'https://www.paperlesspost.com/' },
+            { id: 253, title: 'Online Illustration Tools', url: 'https://www.vectornator.io/' },
+            { id: 254, title: 'Manage Family Finances', url: 'https://www.youneedabudget.com/' },
+            { id: 255, title: 'Practice Mental Math', url: 'https://brilliant.org/' },
+            { id: 256, title: 'Remote Work Communication', url: 'https://www.mattermost.com/' },
+            { id: 257, title: 'Discover Rare Books', url: 'https://www.abebooks.com/' },
+            { id: 258, title: 'Host Virtual Meetings', url: 'https://whereby.com/' },
+            { id: 259, title: '3D Design Tools', url: 'https://www.blender.org/' },
+            { id: 260, title: 'Find Local Artists', url: 'https://artfinder.com/' },
+            { id: 261, title: 'Explore Fashion Trends', url: 'https://www.vogue.com/' },
+            { id: 262, title: 'Track Sports Scores', url: 'https://www.espn.com/' },
+            { id: 263, title: 'Online Typing Practice', url: 'https://10fastfingers.com/' },
+            { id: 264, title: 'Create 3D Floor Plans', url: 'https://planner5d.com/' },
+            { id: 265, title: 'Analyze Web Performance', url: 'https://gtmetrix.com/' },
+            { id: 266, title: 'Custom Recipe Calculators', url: 'https://www.mealime.com/' },
+            { id: 267, title: 'Discover AI Models', url: 'https://huggingface.co/' },
+            { id: 268, title: 'Plan a Garden', url: 'https://www.gardenplanner.com/' },
+            { id: 269, title: 'Explore Real Estate Data', url: 'https://www.realtor.com/' },
+            { id: 270, title: 'Design Logos', url: 'https://www.logojoy.com/' },
+            { id: 271, title: 'Learn Handwriting Analysis', url: 'https://handwritinguniversity.com/' },
+            { id: 272, title: 'Collect Donations Online', url: 'https://gofundme.com/' },
+            { id: 273, title: 'Professional Networking', url: 'https://linkedin.com/' },
+            { id: 274, title: 'Time Management Tools', url: 'https://clockify.me/' },
+            { id: 275, title: 'Data Backup Solutions', url: 'https://www.carbonite.com/' },
+            { id: 276, title: 'Explore Music History', url: 'https://musicmap.info/' },
+            { id: 277, title: 'Find Deals Online', url: 'https://www.retailmenot.com/' },
+            { id: 278, title: 'Discover Family Ancestry', url: 'https://www.familysearch.org/' },
+            { id: 279, title: 'Live Streaming', url: 'https://www.twitch.tv/' },
+            { id: 280, title: 'Web Icons', url: 'https://fontawesome.com/' },
+            { id: 281, title: 'Social Media', url: 'https://x.com/' },
+            { id: 282, title: 'Photo Sharing', url: 'https://www.instagram.com/' },
+            { id: 283, title: 'Team Communication', url: 'https://www.microsoft.com/en-us/microsoft-teams/' },
+            { id: 284, title: 'Project Management', url: 'https://www.atlassian.com/software/jira' }
+        ];
 
-];
-
-// Initialize default websites if local storage is empty
-function initializeDefaultWebsites() {
-    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (!websites || websites.length === 0) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultWebsites));
-    }
-}
-
-// Open the modal
-function openModal() {
-    document.getElementById('modal').style.display = 'flex';
-}
-
-// Close the modal
-function closeModal() {
-    document.getElementById('modal').style.display = 'none';
-}
-
-// Save a website
-function saveWebsite() {
-    const title = document.getElementById('websiteTitle').value.trim();
-    const url = document.getElementById('websiteUrl').value.trim();
-
-    if (title && url) {
-        const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-
-        // Check if the website already exists (based on URL or Title)
-        const duplicate = websites.some(website => website.url === url || website.title.toLowerCase() === title.toLowerCase());
-        if (duplicate) {
-            return;
+        function initializeDefaultWebsites() {
+            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (!websites || websites.length === 0) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultWebsites));
+            }
         }
 
-        // Add new website
-        const newWebsite = { id: Date.now(), title, url };
-        websites.push(newWebsite);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
+        function openModal() {
+            document.getElementById('modal').style.display = 'flex';
+        }
 
-        // Clear input fields and close modal
-        document.getElementById('websiteTitle').value = '';
-        document.getElementById('websiteUrl').value = '';
-        closeModal();
-        displayMatchingWebsites();
-    }
-}
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
 
-// Display matching websites based on search query
-function displayMatchingWebsites() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-    const resultsContainer = document.getElementById('resultsContainer');
-    resultsContainer.innerHTML = '';
+        function saveWebsite() {
+            const title = document.getElementById('websiteTitle').value.trim();
+            const url = document.getElementById('websiteUrl').value.trim();
 
-    const filteredWebsites = websites.filter(website => website.title.toLowerCase().includes(query));
+            if (title && url) {
+                const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const duplicate = websites.some(website => website.url === url || website.title.toLowerCase() === title.toLowerCase());
+                if (duplicate) {
+                    alert('Website already exists!');
+                    return;
+                }
 
-    if (filteredWebsites.length > 0) {
-        filteredWebsites.forEach(website => {
-            const isPinned = pinnedWebsites.some(pinned => pinned.id === website.id);
+                try {
+                    new URL(url);
+                } catch {
+                    alert('Please enter a valid URL.');
+                    return;
+                }
 
-            const resultItem = document.createElement('div');
-            resultItem.className = 'result-item';
+                const newWebsite = { id: Date.now(), title, url };
+                websites.push(newWebsite);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
 
-            resultItem.innerHTML = `
-                <a href="${website.url}" class="result-title" target="_self">${website.title}</a>
-                <span class="result-url">${website.url}</span>
-                <p class="result-description">Click on the white colored title to open and view the site.</p>
-                <div class="button-container">
-                    <button class="pin-btn" onclick="${isPinned ? `unpinWebsite(${website.id})` : `pinWebsite(${website.id})`}">
-                        ${isPinned ? 'Unpin' : 'Pin'}
-                    </button>
-                    <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
-                </div>
-            `;
+                document.getElementById('websiteTitle').value = '';
+                document.getElementById('websiteUrl').value = '';
+                closeModal();
+                displayMatchingWebsites();
+            } else {
+                alert('Please enter both title and URL.');
+            }
+        }
 
-            resultsContainer.appendChild(resultItem);
+        function markAsVisited(id) {
+            const visitedWebsites = JSON.parse(localStorage.getItem(VISITED_KEY)) || {};
+            visitedWebsites[id] = Date.now();
+            localStorage.setItem(VISITED_KEY, JSON.stringify(visitedWebsites));
+        }
+
+        function isRecentlyVisited(id) {
+            const visitedWebsites = JSON.parse(localStorage.getItem(VISITED_KEY)) || {};
+            const visitTime = visitedWebsites[id];
+            if (!visitTime) return false;
+            const now = Date.now();
+            const twentyFourHours = 24 * 60 * 60 * 1000;
+            return (now - visitTime) <= twentyFourHours;
+        }
+
+        function cleanExpiredVisits() {
+            const visitedWebsites = JSON.parse(localStorage.getItem(VISITED_KEY)) || {};
+            const now = Date.now();
+            const twentyFourHours = 24 * 60 * 60 * 1000;
+            for (const id in visitedWebsites) {
+                if ((now - visitedWebsites[id]) > twentyFourHours) {
+                    delete visitedWebsites[id];
+                }
+            }
+            localStorage.setItem(VISITED_KEY, JSON.stringify(visitedWebsites));
+        }
+
+        function displayMatchingWebsites() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.innerHTML = '';
+
+            cleanExpiredVisits();
+
+            const filteredWebsites = websites
+                .filter(website => 
+                    website.title.toLowerCase().includes(query) || 
+                    website.url.toLowerCase().includes(query)
+                )
+                .sort((a, b) => a.title.localeCompare(b.title));
+
+            if (filteredWebsites.length > 0) {
+                filteredWebsites.forEach(website => {
+                    const isPinned = pinnedWebsites.some(pinned => pinned.id === website.id);
+                    const isVisited = isRecentlyVisited(website.id);
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    resultItem.innerHTML = `
+                        <a href="${website.url}" class="result-title" target="_self" onclick="markAsVisited(${website.id})">${website.title}${isVisited ? '<span class="recently-visited">Recently Visited</span>' : ''}</a>
+                        <span class="result-url">${website.url}</span>
+                        <p class="result-description">Click on the white colored title to open and view the site.</p>
+                        <div class="button-container">
+                            <button class="${isPinned ? 'unpin-btn' : 'pin-btn'}" onclick="togglePin(${website.id})">${isPinned ? 'Unpin' : 'Pin'}</button>
+                            <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(resultItem);
+                });
+            } else if (query) {
+                resultsContainer.innerHTML = '<p>No matching websites found.</p>';
+            } else {
+                resultsContainer.innerHTML = '';
+            }
+        }
+
+        function pinWebsite(id) {
+            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+            const websiteToPin = websites.find(website => website.id === id);
+
+            if (websiteToPin && !pinnedWebsites.some(website => website.id === id)) {
+                pinnedWebsites.push(websiteToPin);
+                localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
+                displayMatchingWebsites();
+            }
+        }
+
+        function unpinWebsite(id) {
+            let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+            pinnedWebsites = pinnedWebsites.filter(website => website.id !== id);
+            localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
+            displayMatchingWebsites();
+        }
+
+        function togglePin(id) {
+            const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const website = websites.find(website => website.id === id);
+
+            if (!website) return;
+
+            const isPinned = pinnedWebsites.some(pinned => pinned.id === id);
+            if (isPinned) {
+                unpinWebsite(id);
+            } else {
+                pinWebsite(id);
+            }
+        }
+
+        function displayPinnedWebsites() {
+            const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.innerHTML = '';
+
+            cleanExpiredVisits();
+
+            const sortedPinnedWebsites = pinnedWebsites.sort((a, b) => a.title.localeCompare(b.title));
+
+            if (sortedPinnedWebsites.length > 0) {
+                sortedPinnedWebsites.forEach(website => {
+                    const isVisited = isRecentlyVisited(website.id);
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    resultItem.innerHTML = `
+                        <a href="${website.url}" class="result-title" target="_self" onclick="markAsVisited(${website.id})">${website.title}${isVisited ? '<span class="recently-visited">Recently Visited</span>' : ''}</a>
+                        <span class="result-url">${website.url}</span>
+                        <p class="result-description">Click on the white colored title to open and view the site.</p>
+                        <div class="button-container">
+                            <button class="unpin-btn" onclick="togglePin(${website.id})">Unpin</button>
+                            <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(resultItem);
+                });
+            } else {
+                resultsContainer.innerHTML = '<p>No pinned websites found.</p>';
+            }
+        }
+
+        function deleteWebsite(id) {
+            let websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            websites = websites.filter(website => website.id !== id);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
+
+            let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
+            pinnedWebsites = pinnedWebsites.filter(website => website.id !== id);
+            localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
+
+            let visitedWebsites = JSON.parse(localStorage.getItem(VISITED_KEY)) || {};
+            delete visitedWebsites[id];
+            localStorage.setItem(VISITED_KEY, JSON.stringify(visitedWebsites));
+
+            displayMatchingWebsites();
+        }
+
+        function searchWebsites() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const filteredWebsites = websites.filter(website => 
+                website.title.toLowerCase().includes(query) || 
+                website.url.toLowerCase().includes(query)
+            );
+
+            if (filteredWebsites.length > 0) {
+                displayMatchingWebsites();
+            } else if (query) {
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)} website`;
+                window.open(googleSearchUrl, '_self');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDefaultWebsites();
+            displayMatchingWebsites();
         });
-    } else if (query) {
-        resultsContainer.innerHTML = '<p>No matching websites found.</p>';
-    } else {
-        resultsContainer.innerHTML = '';
-    }
-}
 
-// Pin a website
-function pinWebsite(id) {
-    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-
-    const websiteToPin = websites.find(website => website.id === id);
-
-    if (websiteToPin && !pinnedWebsites.some(website => website.id === id)) {
-        pinnedWebsites.push(websiteToPin);
-        localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
-        displayMatchingWebsites();
-    }
-}
-
-// Unpin a website
-function unpinWebsite(id) {
-    let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-    pinnedWebsites = pinnedWebsites.filter(website => website.id !== id);
-    localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
-    displayMatchingWebsites();
-}
-
-// Toggle pin/unpin for a website
-function togglePin(id) {
-    let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    const website = websites.find(website => website.id === id);
-
-    if (!website) return;
-
-    const isPinned = pinnedWebsites.some(pinned => pinned.id === id);
-    if (isPinned) {
-        pinnedWebsites = pinnedWebsites.filter(pinned => pinned.id !== id);
-    } else {
-        pinnedWebsites.push(website);
-    }
-
-    localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
-    displayMatchingWebsites();
-}
-
-// Display pinned websites
-function displayPinnedWebsites() {
-    const pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-    const resultsContainer = document.getElementById('resultsContainer');
-
-    resultsContainer.innerHTML = '';
-
-    if (pinnedWebsites.length > 0) {
-        pinnedWebsites.forEach(website => {
-            const resultItem = document.createElement('div');
-            resultItem.className = 'result-item';
-
-            resultItem.innerHTML = `
-                <div>
-                    <a href="${website.url}" class="result-title" target="_self">${website.title}</a>
-                    <span class="result-url">${website.url}</span>
-                    <p class="result-description">Click on the title to view the site.</p>
-                </div>
-                <div class="button-container">
-                    <button class="unpin-btn" onclick="togglePin(${website.id})">Unpin</button>
-                    <button class="delete-btn" onclick="deleteWebsite(${website.id})">Delete</button>
-                </div>
-            `;
-
-            resultsContainer.appendChild(resultItem);
+        document.getElementById('searchInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                searchWebsites();
+            }
         });
-    } else {
-        resultsContainer.innerHTML = '<p>No pinned websites found.</p>';
-    }
-}
 
-// Delete a website
-function deleteWebsite(id) {
-    let websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    websites = websites.filter(website => website.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(websites));
-
-    let pinnedWebsites = JSON.parse(localStorage.getItem(PINNED_KEY)) || [];
-    pinnedWebsites = pinnedWebsites.filter(website => website.id !== id);
-    localStorage.setItem(PINNED_KEY, JSON.stringify(pinnedWebsites));
-
-    displayMatchingWebsites();
-}
-
-// Search websites or open Google
-function searchWebsites() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    const websites = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    const filteredWebsites = websites.filter(website => website.title.toLowerCase().includes(query));
-
-    if (filteredWebsites.length > 0) {
-        displayMatchingWebsites();
-    } else if (query) {
-        const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)} website`;
-        window.open(googleSearchUrl, '_self');
-    }
-}
-
-// Initialize the app
-document.addEventListener('DOMContentLoaded', () => {
-    initializeDefaultWebsites();
-    displayMatchingWebsites();
-});
-
-// Enter key listener for search input
-document.getElementById('searchInput').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        searchWebsites();
-    }
-});
-
-// Add oninput listener for live search
-document.getElementById('searchInput').addEventListener('input', function() {
-    displayMatchingWebsites();
-});
+        document.getElementById('searchInput').addEventListener('input', function() {
+            displayMatchingWebsites();
+        });
     </script>
 </body>
 </html>
