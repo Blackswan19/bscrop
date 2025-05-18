@@ -250,12 +250,15 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 60px;
         }
 
         .movie-card {
-            max-width: 220px;
-            transition: var(--transition);
+           max-width: 320px;
+    transition: var(--transition);
+    background: #222222;
+    padding: 14px;
+    border-radius: 13px;
         }
 
         .movie-card:hover {
@@ -267,7 +270,7 @@
             height: auto;
             border-radius: var(--border-radius);
             object-fit: cover;
-            aspect-ratio: 2/3;
+            aspect-ratio: 3/3;
             cursor: pointer;
         }
 
@@ -278,6 +281,18 @@
             margin-top: 0.5rem;
             color: var(--text-color);
             text-transform: uppercase;
+        }
+
+        .movie-expiry {
+               font-size: 0.85rem;
+    text-align: center;
+    margin-top: 20px;
+    color: #ff0000;
+    font-weight: 500;
+    font-size: 16px;
+    background: #ffffff;
+    padding: 5px;
+    border-radius: 1000px;
         }
 
         .movie-link {
@@ -398,22 +413,23 @@
         </div>
         <div class="subscription-prompt" onclick="showCalculatorPopup()">
             <p>You can now watch your movie online or download it directly for offline viewing.</p>
-
-<p>NOTE :
-Each movie has an expiration date. To keep the movie longer and prevent it from being removed from your list, you can extend the expiration period.
-</p>
-Thank you for using our service!<br><button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px; margin: 10px; border-radius: 6px;">Extand cost.</button></p>
+            <p>NOTE: Each movie has an expiration date. To keep the movie longer and prevent it from being removed from your list, you can extend the expiration period.</p>
+            <p>Thank you for using our service!</p>
+            <button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px; margin: 10px; border-radius: 6px;">Extend cost</button>
         </div>
         <div class="movie-section" id="movieSection">
             <div class="movie-card" id="hit3Card">
+                
+                <p class="movie-expiry">Expires today at 12pm</p>
                 <a class="movie-link">
-                    <img src="https://cdn.123telugu.com/content/wp-content/uploads/2025/04/Hit3-7.jpg" alt="HIT 3" class="movie-img" data-movie="HIT 3" onclick="showFullscreenImage(this)">
+                    <img src="https://english.bigtvlive.com/wp-content/uploads/2025/02/SHUTDOWN-2025-02-24T114737.569.png" alt="HIT 3" class="movie-img" data-movie="HIT 3" onclick="showFullscreenImage(this)">
                 </a>
                 <div class="movie-title">HIT 3</div>
             </div>
             <div class="movie-card" id="gameChangerCard">
+                <p class="movie-expiry">Expires on 21 May</p>
                 <a class="movie-link">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/6/6a/Game_Changer_Telugu.jpg" alt="Game Changer" class="movie-img" data-movie="Game Changer" onclick="showFullscreenImage(this)">
+                    <img src="https://images.ottplay.com/images/ram-charan-in-the-new-game-changer-poster-1728744188.jpg?impolicy=ottplay-202410&width=1200&height=675" alt="Game Changer" class="movie-img" data-movie="Game Changer" onclick="showFullscreenImage(this)">
                 </a>
                 <div class="movie-title">Game Changer</div>
             </div>
@@ -465,7 +481,8 @@ Thank you for using our service!<br><button class="calc-icon" style="background:
                 'PHANI': {
                     password: 'phani@0212',
                     movies: {
-                        'HIT 3': 'https://drive.google.com/file/d/13DniauB_DLHyyI8tljLH5Roa9_Uj1SYz/view'
+                        'HIT 3': 'https://drive.google.com/file/d/13DniauB_DLHyyI8tljLH5Roa9_Uj1SYz/view',
+                        'Game Changer': 'https://drive.google.com/file/d/1INyEFlF-gxnco8FNCC2Zs-U18Gq6a528/view'
                     }
                 },
                 'ramky': {
@@ -501,10 +518,11 @@ Thank you for using our service!<br><button class="calc-icon" style="background:
                     localStorage.setItem('username', username);
                     localStorage.setItem('password', password);
                 }
-                // Show only the relevant movie card
-                if (username === 'PHANI') {
+                // Show relevant movie cards based on user
+                if (users[username].movies['HIT 3']) {
                     hit3Card.style.display = 'block';
-                } else if (username === 'USER2') {
+                }
+                if (users[username].movies['Game Changer']) {
                     gameChangerCard.style.display = 'block';
                 }
             } else {
