@@ -35,7 +35,13 @@
             -ms-user-select: none;
             user-select: none;
         }
-       
+       .thematter {
+   background: black;
+    padding: 30px 0px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+}
         :root {
             --primary-color: #e50914;
             --background-dark: #0d0d0d;
@@ -88,7 +94,7 @@ span#userName {
         /* Header */
         .header {
             background-color: #000;
-            padding: 10% 0;
+            padding: 3% 0;
             text-align: center;
             border-bottom: 2px solid #e5091442;
         }
@@ -107,12 +113,13 @@ span#userName {
 
         /* Password Section */
         .password-section {
-            max-width: 400px;
-            margin: 4rem auto;
-            padding: 1.5rem;
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            text-align: center;
+           max-width: 650px;
+    margin: 4rem auto;
+    padding: 1.5rem;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    text-align: center;
+    width: 100%;
         }
 
         .username-input,
@@ -399,12 +406,6 @@ span#userName {
                 padding: 20% 0;
             }
 
-            .password-section,
-            .subscription-prompt {
-                margin: 2rem 1rem;
-                padding: 1rem;
-            }
-
             .fullscreen-img {
                 filter: blur(5px);
             }
@@ -417,6 +418,15 @@ span#userName {
             .calculator-popup {
                 padding: 1rem;
             }
+            .password-section {
+          max-width: 650px;
+    margin: 4rem auto;
+    padding: 10px;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    text-align: center;
+    width: 100%;
+        }
         }
     </style>
 </head>
@@ -440,13 +450,19 @@ span#userName {
             </div>
             <button class="btn submit-btn mt-3" onclick="checkCredentials()">Verify Now</button>
             <p id="errorMessage" class="error-message">Incorrect Username or Password!</p>
-            <div class="matter" style="padding: 25px; width: 100%;">
-                <p>You can now watch movie online or download it directly a high quality moive here first.</p>
-                <p>With only just 35rs/month.</p>
-            </div>
-            <button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px;margin-top: -15px; border-radius: 6px;">
-                <a style="text-decoration: none; color: white;" onclick="alert('You does not have access to apply')">Apply Now</a>
-            </button>
+             <div class="thematter">
+                    <div class="matter" style="padding: 25px; width: 100%;">
+                    <p>You can now watch movie online or download it directly a high quality moive here first.</p>
+                    <p>With only just 35rs/month.</p>
+                </div>
+                <button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px;margin-top: -15px; border-radius: 6px;">
+                    <a style="text-decoration: none; color: white;" onclick="alert('You does not have access to apply')">Apply Now</a>
+                </button>
+             </div>
+             <p style="margin-top: 25px;
+    font-weight: 600;
+    font-size: 20px;text-decoration: none;color: rgb(0, 46, 255);">
+             <a href="https://blackswan19.github.io/bscrop/watchin/main">Explore BsWatchin</a></p>
         </div>
         <div class="subscription-prompt" id="subscriptionPrompt">
             <h3 style="font-size: 30px;
@@ -461,10 +477,11 @@ span#userName {
     outline: none;
     font-size: 18px;
     border-radius: 10px;">
-                <a style="text-decoration: none; color: white;" href="https://forms.gle/P6tkXRCyvSSYQHgz9">I want a specific movie</a>
+                <a style="text-decoration: none; color: white;" href="https://forms.gle/P6tkXRCyvSSYQHgz9">Apply Now</a>
             </button>
             
         </div>
+        
         <div class="movie-section" id="movieSection">
              <h1 style="margin: 20px 0px 30px 1px;
     font-weight: 800;
