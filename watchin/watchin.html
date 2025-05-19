@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BsWatchin</title>
     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/x5Pb9bH/watchinlogo.png">
-    <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Roboto font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
     <!-- Prompt font -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <style>
-       * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -35,7 +35,7 @@
             -ms-user-select: none;
             user-select: none;
         }
-
+       
         :root {
             --primary-color: #e50914;
             --background-dark: #0d0d0d;
@@ -58,6 +58,31 @@
             top: 0;
             z-index: 1000;
             display: none;
+            align-items: center;
+            justify-content: center;
+        }
+span#userName {
+    text-transform: capitalize;
+    color: white;
+}
+        .logout-btn {
+          background-color: var(--primary-color);
+    border: none;
+    color: var(--text-color);
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 7px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition);
+    left: 18px;
+    position: fixed;
+    font-size: 15px;
+    top: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c40812;
         }
 
         /* Header */
@@ -65,7 +90,7 @@
             background-color: #000;
             padding: 10% 0;
             text-align: center;
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 2px solid #e5091442;
         }
 
         .header h1 {
@@ -133,7 +158,6 @@
             padding: 0.75rem;
             width: 100%;
             border-radius: 4px;
-            text-transform: uppercase;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -151,15 +175,16 @@
 
         /* Subscription Prompt */
         .subscription-prompt {
-            display: none;
-            text-align: center;
-            margin: 2rem auto;
-            padding: 1rem;
-            background-color:transparent;
-            border-radius: var(--border-radius);
-            max-width: 400px;
-            cursor: pointer;
-            transition: var(--transition);
+           display: none;
+    text-align: center;
+    margin: 2rem auto;
+    padding: 3rem;
+    background-color: transparent;
+    border-radius: var(--border-radius);
+    max-width: 400px;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 20px;
         }
 
         .subscription-prompt:hover {
@@ -286,14 +311,13 @@
 
         .movie-expiry {
             font-size: 0.85rem;
-            text-align: center;
-            margin-top: 20px;
-            color: #ff0000;
-            font-weight: 500;
-            font-size: 16px;
-            background: #ffffff;
-            padding: 5px;
-            border-radius: 1000px;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+    background: #595959;
+    padding: 5px;
+    border-radius: 6px;
         }
 
         .movie-link {
@@ -397,48 +421,63 @@
     </style>
 </head>
 <body>
-    <div class="welcome-message" id="welcomeMessage">Welcome, <span id="userName"></span></div>
+    <div class="welcome-message" id="welcomeMessage">
+        Welcome, <span id="userName"></span>
+        <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
     <div class="header">
         <h1>BsWatchin</h1>
     </div>
     <div class="container">
         <div class="password-section" id="passwordSection">
+          <h1 style="margin: 20px 0px 30px 1px;
+    font-weight: 800;
+    color: #ff0000;">Login</h1>
             <input type="text" id="usernameInput" class="form-control username-input" placeholder="Enter Username">
             <div class="password-input-container">
                 <input type="password" id="passwordInput" class="form-control password-input" placeholder="Enter Password">
                 <i class="bi bi-eye eye-icon" id="togglePassword"></i>
             </div>
-            <button class="btn submit-btn mt-3" onclick="checkCredentials()">Submit</button>
+            <button class="btn submit-btn mt-3" onclick="checkCredentials()">Verify Now</button>
             <p id="errorMessage" class="error-message">Incorrect Username or Password!</p>
             <div class="matter" style="padding: 25px; width: 100%;">
-                <p>You can now watch movie online or download it directly.</p>
-                <p>Moive price will be based on the moive quality.</p>
-                <button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px; margin: 10px; border-radius: 6px;">
-                    <a style="text-decoration: none;color: white;" href="https://forms.gle/P6tkXRCyvSSYQHgz9">I want a moive</a>
-                </button>
+                <p>You can now watch movie online or download it directly a high quality moive here first.</p>
+                <p>With only just 35rs/month.</p>
             </div>
-
-           <button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px; margin: 10px; border-radius: 6px;">
-                    <a style="text-decoration: none;color: white;" href="https://blackswan19.github.io/bscrop/watchin/live">WATCH LIVE MOIVE</a>
-            </button> 
+            <button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px;margin-top: -15px; border-radius: 6px;">
+                <a style="text-decoration: none; color: white;" onclick="alert('You does not have access to apply')">Apply Now</a>
+            </button>
         </div>
-        <div class="subscription-prompt" id="subscriptionPrompt" style="font-size: 30px;">Extend Movie Access</h3>
-            <p>₹20 for 30 days or ₹0.68/day to keep the moive more days</p>
-            <input type="number" id="customDays" class="days-input" placeholder="Enter Days" min="1" style="outline: oldlace; border: none;">
-            <button class="calc-btn" onclick="calculateCost()" style="font-size: 15px;">Calculate Cost</button>
-            <p class="cost-display" id="costDisplay">Cost: ₹0</p>
+        <div class="subscription-prompt" id="subscriptionPrompt">
+            <h3 style="font-size: 30px;
+    font-weight: 800;
+    color: red;">I want specific movie</h3>
+            <p>The Price of your specific movie will be based on the quality of the movie</p><br>
+            <button class="calc-icon" style="    background: red;
+    color: white;
+    padding: 10px 25px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    border-radius: 10px;">
+                <a style="text-decoration: none; color: white;" href="https://forms.gle/P6tkXRCyvSSYQHgz9">I want a specific movie</a>
+            </button>
+            
         </div>
-        <div class="movie-section" id="movieSection" >
-            <div class="movie-card" id="hit3Card" style="opacity: 50%;">
-                <p class="movie-expiry">Expires today at 12pm</p>
+        <div class="movie-section" id="movieSection">
+             <h1 style="margin: 20px 0px 30px 1px;
+    font-weight: 800;
+    color: #ff0000;text-transform: uppercase;">available movies </h1>
+            <div class="movie-card" id="hit3Card">
+                <p class="movie-expiry">Expires in 26th May</p>
                 <a class="movie-link">
                     <img src="https://english.bigtvlive.com/wp-content/uploads/2025/02/SHUTDOWN-2025-02-24T114737.569.png" alt="HIT 3" class="movie-img" data-movie="HIT 3" onclick="showFullscreenImage(this)">
                 </a>
                 <div class="movie-title">HIT 3</div>
             </div>
-           
             <div class="movie-card" id="singleCard">
-                <p class="movie-expiry">Expires on 22 May</p>
+                <p class="movie-expiry">Expires on 25th May</p>
                 <a class="movie-link">
                     <img src="https://assetscdn1.paytm.com/images/cinema/SINGLE%20(1)-44bfe650-15e0-11f0-afe9-91710f201788.jpg" alt="SINGLE" class="movie-img" data-movie="SINGLE" onclick="showFullscreenImage(this)">
                 </a>
@@ -457,6 +496,14 @@
         <img src="" alt="Full-screen movie poster" class="fullscreen-img" id="fullscreenImg">
         <a id="playLink" href="#"><button class="play-button">Play Now</button></a>
         <button class="close-button" onclick="closeFullscreen()">✕</button>
+    </div>
+    <div class="calculator-popup" id="calculatorPopup">
+        <button class="close-popup" onclick="closeCalculatorPopup()">✕</button>
+        <h3>Calculate Subscription Cost</h3>
+        <input type="number" id="customDays" class="days-input" placeholder="Enter days">
+        <p id="costDisplay" class="cost-display">Cost: ₹0</p>
+        <button class="calc-btn" onclick="calculateCost()">Calculate</button>
+        <button class="extend-btn" onclick="extendSubscription(document.getElementById('customDays').value)">Extend</button>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -486,21 +533,20 @@
                 'PHANI': {
                     password: 'phani@0212',
                     movies: {
-                        'HIT 3': 'https://drive.google.com/file/d/13DniauB_DLHyyI8tljLH5Roa9_Uj1SYz/view', 
-                        'Game Changer': 'https://drive.google.com/file/d/1INyEFlF-gxnco8FNCC2Zs-U18Gq6a528/view'
+                        'HIT 3': 'https://drive.google.com/file/d/13DniauB_DLHyyI8tljLH5Roa9_Uj1SYz/view',
+                       
                     }
                 },
                 'venky': {
                     password: 'venky@2211',
                     movies: {
-                        'SINGLE': 'https://drive.google.com/file/d/13_eB_cH6BjRfIq-cRxv7BgWzizdX_6SF/view', // Added SINGLE
-                        
+                        'SINGLE': 'https://drive.google.com/file/d/13_eB_cH6BjRfIq-cRxv7BgWzizdX_6SF/view',
                     }
                 }
             };
             const movieSection = document.getElementById('movieSection');
-            // const hit3Card = document.getElementById('hit3Card'); // Commented out HIT 3 card reference
-            const singleCard = document.getElementById('singleCard'); // Added SINGLE card reference
+            const hit3Card = document.getElementById('hit3Card');
+            const singleCard = document.getElementById('singleCard');
             const gameChangerCard = document.getElementById('gameChangerCard');
             const errorMessage = document.getElementById('errorMessage');
             const passwordSection = document.getElementById('passwordSection');
@@ -509,13 +555,13 @@
             const subscriptionPrompt = document.getElementById('subscriptionPrompt');
 
             // Reset card visibility
-            // hit3Card.style.display = 'none'; // Commented out HIT 3 card visibility
-            singleCard.style.display = 'none'; // Reset SINGLE card visibility
+            hit3Card.style.display = 'none';
+            singleCard.style.display = 'none';
             gameChangerCard.style.display = 'none';
 
             if (users[username] && users[username].password === password) {
                 passwordSection.style.display = 'none';
-                welcomeMessage.style.display = 'block';
+                welcomeMessage.style.display = 'flex';
                 movieSection.style.display = 'flex';
                 subscriptionPrompt.style.display = 'block';
                 userNameSpan.textContent = username;
@@ -529,8 +575,11 @@
                     localStorage.setItem('password', password);
                 }
                 // Show relevant movie cards based on user
+                if (users[username].movies['HIT 3']) {
+                    hit3Card.style.display = 'block';
+                }
                 if (users[username].movies['SINGLE']) {
-                    singleCard.style.display = 'block'; // Show SINGLE card
+                    singleCard.style.display = 'block';
                 }
                 if (users[username].movies['Game Changer']) {
                     gameChangerCard.style.display = 'block';
@@ -551,12 +600,37 @@
             }
         }
 
+        // Logout Function
+        function logout() {
+            // Clear stored credentials
+            localStorage.removeItem('lastLoginTime');
+            localStorage.removeItem('username');
+            localStorage.removeItem('password');
+            localStorage.removeItem('movieAccessExpiry');
+            // Reset UI
+            const passwordSection = document.getElementById('passwordSection');
+            const movieSection = document.getElementById('movieSection');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const subscriptionPrompt = document.getElementById('subscriptionPrompt');
+            const usernameInput = document.getElementById('usernameInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMessage = document.getElementById('errorMessage');
+
+            passwordSection.style.display = 'block';
+            movieSection.style.display = 'none';
+            welcomeMessage.style.display = 'none';
+            subscriptionPrompt.style.display = 'none';
+            errorMessage.style.display = 'none';
+            usernameInput.value = '';
+            passwordInput.value = '';
+        }
+
         // Check if user needs to re-authenticate on page load
         window.onload = function() {
             const lastLoginTime = localStorage.getItem('lastLoginTime');
             const username = localStorage.getItem('username');
             const password = localStorage.getItem('password');
-            const thirtyMinutes = 30 * 60 * 1000; // 30 minutes in milliseconds
+            const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
             const movieSection = document.getElementById('movieSection');
             const passwordSection = document.getElementById('passwordSection');
             const welcomeMessage = document.getElementById('welcomeMessage');
@@ -570,14 +644,15 @@
 
             if (lastLoginTime && username && password) {
                 const timeElapsed = Date.now() - parseInt(lastLoginTime);
-                if (timeElapsed < thirtyMinutes) {
-                    // Auto-login if within 30 minutes
+                if (timeElapsed < twentyFourHours) {
+                    // Auto-login if within 24 hours
                     checkCredentials(true);
                 } else {
-                    // Clear credentials if more than 30 minutes have passed
+                    // Clear credentials if more than 24 hours have passed
                     localStorage.removeItem('lastLoginTime');
                     localStorage.removeItem('username');
                     localStorage.removeItem('password');
+                    localStorage.removeItem('movieAccessExpiry');
                 }
             }
         };
@@ -644,8 +719,7 @@
             const overlay = document.getElementById('fullscreenOverlay');
             overlay.style.display = 'none';
         }
-                
-// // Context menu functionality
+        // // Context menu functionality
 document.addEventListener("DOMContentLoaded", () => {
     const customMenu = document.querySelector(".custom-menu");
 
