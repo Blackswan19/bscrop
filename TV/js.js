@@ -17,6 +17,15 @@ const video = document.getElementById('video');
          const brightnessValue = document.getElementById('brightness-value');
          const blendFactorLevel = document.getElementById('blend-factor-level');
          const dropArea = document.getElementById('drop-area');
+         const previewContainer = document.getElementById('preview-container');
+         const previewCanvas = document.getElementById('preview-canvas');
+         const previewCtx = previewCanvas.getContext('2d');
+         const durationDisplay = document.getElementById('duration-display');
+         const previewTimestamp = document.getElementById('preview-timestamp');
+
+         // Create a temporary off-screen video element for preview
+         const previewVideo = document.createElement('video');
+         previewVideo.muted = true;
 
          helpBtn.addEventListener('click', () => {
             popup.style.display = 'block';
@@ -36,7 +45,7 @@ const video = document.getElementById('video');
          video.controls = false;
          title.style.display = 'block';
 
-         // Drag-and-drop functionality on the drop area
+         // Drag-and-drop functionality
          dropArea.addEventListener('dragover', (event) => {
             event.preventDefault();
             dropArea.classList.add('dragover');
@@ -53,11 +62,13 @@ const video = document.getElementById('video');
             if (file && file.type.startsWith('video/')) {
                const videoURL = URL.createObjectURL(file);
                video.src = videoURL;
+               previewVideo.src = videoURL;
                video.style.display = 'block';
                video.play();
 
                video.addEventListener('loadeddata', () => {
                   requestAnimationFrame(updateBackgroundColor);
+                  updateDurationDisplay();
                });
 
                video.addEventListener('play', () => {
@@ -80,6 +91,7 @@ const video = document.getElementById('video');
                video.addEventListener('timeupdate', () => {
                   const progressPercentage = (video.currentTime / video.duration) * 100;
                   progressBar.style.width = progressPercentage + '%';
+                  updateDurationDisplay();
                });
             } else {
                alert('Please drop a valid video file.');
@@ -136,6 +148,7 @@ const video = document.getElementById('video');
             toggleOn.style.display = 'none';
             toggleOff.style.display = 'block';
             progressContainer.style.display = 'block';
+            durationDisplay.style.display = 'block';
             dropArea.style.display = 'block';
          });
 
@@ -146,6 +159,7 @@ const video = document.getElementById('video');
             toggleOff.style.display = 'none';
             toggleOn.style.display = 'block';
             progressContainer.style.display = 'none';
+            durationDisplay.style.display = 'none';
             dropArea.style.display = 'none';
          });
 
@@ -168,22 +182,43 @@ const video = document.getElementById('video');
             blendFactorLevel.textContent = blendFactorLevelValue;
          }
 
-         progressContainer.addEventListener('click', function(event) {
+         function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+         }
+
+         function updateDurationDisplay() {
+            if (video.duration) {
+               durationDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+            }
+         }
+
+         // Progress bar interaction
+         let lastSeekTime = 0;
+
+         function seekToTime(event, isClick = false) {
             const rect = progressContainer.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const width = rect.width;
-            const clickPosition = (x / width) * video.duration;
-            video.currentTime = clickPosition;
+            const seekTime = (x / width) * video.duration;
+            lastSeekTime = Math.min(Math.max(seekTime, 0), video.duration);
+            if (isClick) {
+               video.currentTime = lastSeekTime;
+            }
+            return lastSeekTime;
+         }
+
+         progressContainer.addEventListener('click', function(event) {
+            const seekTime = seekToTime(event, true);
+            console.log(`Clicked to seek to: ${seekTime.toFixed(2)}s`);
          });
 
          progressContainer.addEventListener('mousedown', function(event) {
-            const rect = progressContainer.getBoundingClientRect();
-            const width = rect.width;
+            seekToTime(event, true);
 
             function onMouseMove(e) {
-               const x = e.clientX - rect.left;
-               const dragPosition = (x / width) * video.duration;
-               video.currentTime = Math.min(Math.max(dragPosition, 0), video.duration);
+               seekToTime(e, true);
             }
 
             function onMouseUp() {
@@ -193,6 +228,45 @@ const video = document.getElementById('video');
 
             document.addEventListener('mousemove', onMouseMove);
             document.addEventListener('mouseup', onMouseUp);
+         });
+
+         // Preview on hover
+         async function updatePreview(seekTime) {
+            if (previewContainer.style.display !== 'block' || previewVideo.readyState < 2) return;
+
+            try {
+               previewVideo.currentTime = seekTime;
+               await new Promise((resolve) => {
+                  previewVideo.onseeked = resolve;
+                  previewVideo.onerror = () => {
+                     console.error('Preview video seek error');
+                     resolve();
+                  };
+               });
+
+               previewCanvas.width = 160;
+               previewCanvas.height = 90;
+               previewCtx.drawImage(previewVideo, 0, 0, previewVideo.videoWidth, previewVideo.videoHeight, 0, 0, 160, 90);
+               previewTimestamp.textContent = formatTime(seekTime);
+            } catch (error) {
+               console.error('Error updating preview:', error);
+            }
+         }
+
+         progressContainer.addEventListener('mousemove', function(event) {
+            if (video.readyState >= 2 && previewVideo.readyState >= 2) {
+               const seekTime = seekToTime(event);
+               previewContainer.style.display = 'block';
+               const rect = progressContainer.getBoundingClientRect();
+               previewContainer.style.left = `${Math.min(Math.max(event.clientX - 80, rect.left), rect.right - 160)}px`;
+               updatePreview(seekTime);
+            }
+         });
+
+         progressContainer.addEventListener('mouseleave', () => {
+            previewContainer.style.display = 'none';
+            previewVideo.onseeked = null;
+            previewVideo.onerror = null;
          });
 
          document.addEventListener("DOMContentLoaded", () => {
@@ -233,38 +307,26 @@ const video = document.getElementById('video');
             });
          });
 
+         // Subtitle handling (retained with null check)
          document.addEventListener("DOMContentLoaded", () => {
             const subtitleBtn = document.getElementById("subtitle-btn");
-            const subtitleIcon = subtitleBtn.querySelector("i");
+            const subtitleIcon = subtitleBtn?.querySelector("i");
             const track = document.getElementById("subtitle-track");
             let subtitlesEnabled = true;
 
-            subtitleBtn.addEventListener("click", () => {
-               subtitlesEnabled = !subtitlesEnabled;
-               track.mode = subtitlesEnabled ? "showing" : "hidden";
-               if (subtitlesEnabled) {
-                  subtitleIcon.classList.add("fa-closed-captioning");
-                  subtitleIcon.classList.remove("fa-closed-captioning-slash");
-               } else {
-                  subtitleIcon.classList.remove("fa-closed-captioning");
-                  subtitleIcon.classList.add("fa-closed-captioning-slash");
-               }
-            });
+            if (subtitleBtn) {
+               subtitleBtn.addEventListener("click", () => {
+                  subtitlesEnabled = !subtitlesEnabled;
+                  track.mode = subtitlesEnabled ? "showing" : "hidden";
+                  if (subtitlesEnabled) {
+                     subtitleIcon.classList.add("fa-closed-captioning");
+                     subtitleIcon.classList.remove("fa-closed-captioning-slash");
+                  } else {
+                     subtitleIcon.classList.remove("fa-closed-captioning");
+                     subtitleIcon.classList.add("fa-closed-captioning-slash");
+                  }
+               });
+            }
 
             track.mode = "showing";
-         });
-
-         document.addEventListener("DOMContentLoaded", () => {
-            const customMenu = document.querySelector(".custom-menu");
-
-            document.addEventListener("contextmenu", (event) => {
-               event.preventDefault();
-               customMenu.style.display = "block";
-               customMenu.style.top = `${event.pageY}px`;
-               customMenu.style.left = `${event.pageX}px`;
-            });
-
-            document.addEventListener("click", () => {
-               customMenu.style.display = "none";
-            });
          });
