@@ -1,301 +1,270 @@
-const uploadBtn = document.getElementById('upload-btn');
 const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const title = document.getElementById('title');
-const progressBar = document.getElementById('progress-bar');
+         const canvas = document.getElementById('canvas');
+         const ctx = canvas.getContext('2d');
+         const title = document.getElementById('title');
+         const progressBar = document.getElementById('progress-bar');
+         const toggleOn = document.getElementById('toggle-on');
+         const toggleOff = document.getElementById('toggle-off');
+         const decreaseBlendBtn = document.getElementById('decrease-blend');
+         const increaseBlendBtn = document.getElementById('increase-blend');
+         const controlsContainer = document.getElementById('controls-container');
+         let blendFactor = 0.60;
+         const helpBtn = document.getElementById('helpBtn');
+         const popup = document.getElementById('popup');
+         const overlay = document.getElementById('overlay');
+         const closePopup = document.getElementById('closePopup');
+         const progressContainer = document.getElementById('progress-container');
+         const brightnessValue = document.getElementById('brightness-value');
+         const blendFactorLevel = document.getElementById('blend-factor-level');
+         const dropArea = document.getElementById('drop-area');
 
-// On/Off toggle icons
-const toggleOn = document.getElementById('toggle-on');
-const toggleOff = document.getElementById('toggle-off');
+         helpBtn.addEventListener('click', () => {
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+         });
 
-// Blend factor controls
-const decreaseBlendBtn = document.getElementById('decrease-blend');
-const increaseBlendBtn = document.getElementById('increase-blend');
+         closePopup.addEventListener('click', () => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+         });
 
-// Controls container
-const controlsContainer = document.getElementById('controls-container');
+         overlay.addEventListener('click', () => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+         });
 
-let blendFactor = 0.60; // Initial blend factor
+         video.controls = false;
+         title.style.display = 'block';
 
-const helpBtn = document.getElementById('helpBtn');
-const popup = document.getElementById('popup');
-const overlay = document.getElementById('overlay');
-const closePopup = document.getElementById('closePopup');
+         // Drag-and-drop functionality on the drop area
+         dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.classList.add('dragover');
+         });
 
-helpBtn.addEventListener('click', () => {
-  popup.style.display = 'block';
-  overlay.style.display = 'block';
-});
+         dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('dragover');
+         });
 
-closePopup.addEventListener('click', () => {
-  popup.style.display = 'none';
-  overlay.style.display = 'none';
-});
+         dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('dragover');
+            const file = event.dataTransfer.files[0];
+            if (file && file.type.startsWith('video/')) {
+               const videoURL = URL.createObjectURL(file);
+               video.src = videoURL;
+               video.style.display = 'block';
+               video.play();
 
-overlay.addEventListener('click', () => {
-  popup.style.display = 'none';
-  overlay.style.display = 'none';
-});
+               video.addEventListener('loadeddata', () => {
+                  requestAnimationFrame(updateBackgroundColor);
+               });
 
-// Initially, hide video controls and title
-video.controls = false;
-title.style.display = 'block';
+               video.addEventListener('play', () => {
+                  document.body.style.backgroundColor = '#050505';
+                  if (document.documentElement.requestFullscreen) {
+                     document.documentElement.requestFullscreen();
+                  }
+                  requestAnimationFrame(updateBackgroundColor);
+               });
 
-// Upload video logic
-uploadBtn.addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const videoURL = URL.createObjectURL(file);
-    video.src = videoURL;
-    video.style.display = 'block';
-    video.play();
+               video.addEventListener('pause', () => {
+                  exitFullscreen();
+               });
 
-    // Trigger update after the video is loaded
-    video.addEventListener('loadeddata', () => {
-      requestAnimationFrame(updateBackgroundColor);
-    });
+               video.addEventListener('ended', () => {
+                  exitFullscreen();
+                  document.body.style.backgroundColor = '#0a0a0a';
+               });
 
-    video.addEventListener('play', () => {
-      document.body.style.backgroundColor = '#050505'; // Darker background
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      }
-      requestAnimationFrame(updateBackgroundColor); // Start updating background when playing
-    });
+               video.addEventListener('timeupdate', () => {
+                  const progressPercentage = (video.currentTime / video.duration) * 100;
+                  progressBar.style.width = progressPercentage + '%';
+               });
+            } else {
+               alert('Please drop a valid video file.');
+            }
+         });
 
-    video.addEventListener('pause', () => {
-      exitFullscreen();
-    });
+         function exitFullscreen() {
+            if (document.exitFullscreen) {
+               document.exitFullscreen();
+            }
+         }
 
-    video.addEventListener('ended', () => {
-      exitFullscreen();
-      document.body.style.backgroundColor = '#0a0a0a'; // Original dark background
-    });
+         function updateBackgroundColor() {
+            if (!video.paused && !video.ended) {
+               if (video.videoWidth > 0 && video.videoHeight > 0) {
+                  canvas.width = video.videoWidth;
+                  canvas.height = video.videoHeight;
+                  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                  const data = imageData.data;
+                  let r = 0, g = 0, b = 0, brightness = 0;
+                  const totalPixels = data.length / 4;
+                  const sampleSize = 10;
 
-    // Update progress bar as the video plays
-    video.addEventListener('timeupdate', () => {
-      const progressPercentage = (video.currentTime / video.duration) * 100;
-      progressBar.style.width = progressPercentage + '%';
-    });
-  }
-});
+                  for (let i = 0; i < data.length; i += sampleSize * 4) {
+                     r += data[i];
+                     g += data[i + 1];
+                     b += data[i + 2];
+                     brightness += (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]);
+                  }
 
-// Fullscreen exit logic
-function exitFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  }
-}
+                  r = Math.floor(r / (totalPixels / sampleSize));
+                  g = Math.floor(g / (totalPixels / sampleSize));
+                  b = Math.floor(b / (totalPixels / sampleSize));
+                  brightness = Math.floor(brightness / (totalPixels / sampleSize));
 
-const brightnessValue = document.getElementById('brightness-value'); // Reference to display element
+                  const brightnessPercentage = Math.min(Math.max((brightness / 255) * 100, 0), 100);
+                  brightnessValue.textContent = brightnessPercentage.toFixed(2);
 
-function updateBackgroundColor() {
-  if (!video.paused && !video.ended) {
-    // Ensure the video is loaded and has dimensions before proceeding
-    if (video.videoWidth > 0 && video.videoHeight > 0) {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
+                  const newR = Math.floor((r * blendFactor) + (10 * (1 - blendFactor)));
+                  const newG = Math.floor((g * blendFactor) + (10 * (1 - blendFactor)));
+                  const newB = Math.floor((b * blendFactor) + (10 * (1 - blendFactor)));
 
-      let r = 0, g = 0, b = 0, brightness = 0;
-      const totalPixels = data.length / 4;
-      const sampleSize = 10; // Samples every 10th pixel to improve performance
+                  document.body.style.backgroundColor = `rgb(${newR}, ${newG}, ${newB})`;
+               }
+               requestAnimationFrame(updateBackgroundColor);
+            }
+         }
 
-      for (let i = 0; i < data.length; i += sampleSize * 4) {
-        r += data[i];
-        g += data[i + 1];
-        b += data[i + 2];
+         toggleOn.addEventListener('click', function() {
+            video.controls = true;
+            controlsContainer.style.display = 'block';
+            title.style.display = 'block';
+            toggleOn.style.display = 'none';
+            toggleOff.style.display = 'block';
+            progressContainer.style.display = 'block';
+            dropArea.style.display = 'block';
+         });
 
-        // Calculate brightness as luminance
-        brightness += (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]);
-      }
+         toggleOff.addEventListener('click', function() {
+            video.controls = false;
+            controlsContainer.style.display = 'none';
+            title.style.display = 'none';
+            toggleOff.style.display = 'none';
+            toggleOn.style.display = 'block';
+            progressContainer.style.display = 'none';
+            dropArea.style.display = 'none';
+         });
 
-      r = Math.floor(r / (totalPixels / sampleSize));
-      g = Math.floor(g / (totalPixels / sampleSize));
-      b = Math.floor(b / (totalPixels / sampleSize));
+         decreaseBlendBtn.addEventListener('click', () => {
+            if (blendFactor > 0) {
+               blendFactor = Math.max(0, blendFactor - 0.1);
+               updateBlendFactorDisplay();
+            }
+         });
 
-      brightness = Math.floor(brightness / (totalPixels / sampleSize)); // Average brightness
+         increaseBlendBtn.addEventListener('click', () => {
+            if (blendFactor < 1) {
+               blendFactor = Math.min(1, blendFactor + 0.1);
+               updateBlendFactorDisplay();
+            }
+         });
 
-      // Update the brightness display
-      const brightnessPercentage = Math.min(Math.max((brightness / 255) * 100, 0), 100); // Normalize to 0-100
-      brightnessValue.textContent = brightnessPercentage.toFixed(2); // Update display with brightness percentage
+         function updateBlendFactorDisplay() {
+            const blendFactorLevelValue = Math.round(blendFactor * 10);
+            blendFactorLevel.textContent = blendFactorLevelValue;
+         }
 
-      const newR = Math.floor((r * blendFactor) + (10 * (1 - blendFactor)));
-      const newG = Math.floor((g * blendFactor) + (10 * (1 - blendFactor)));
-      const newB = Math.floor((b * blendFactor) + (10 * (1 - blendFactor)));
+         progressContainer.addEventListener('click', function(event) {
+            const rect = progressContainer.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const width = rect.width;
+            const clickPosition = (x / width) * video.duration;
+            video.currentTime = clickPosition;
+         });
 
-      document.body.style.backgroundColor = `rgb(${newR}, ${newG}, ${newB})`;
-    }
+         progressContainer.addEventListener('mousedown', function(event) {
+            const rect = progressContainer.getBoundingClientRect();
+            const width = rect.width;
 
-    // Continue updating while the video is playing
-    requestAnimationFrame(updateBackgroundColor);
-  }
-}
+            function onMouseMove(e) {
+               const x = e.clientX - rect.left;
+               const dragPosition = (x / width) * video.duration;
+               video.currentTime = Math.min(Math.max(dragPosition, 0), video.duration);
+            }
 
-const progressContainer = document.getElementById('progress-container');
+            function onMouseUp() {
+               document.removeEventListener('mousemove', onMouseMove);
+               document.removeEventListener('mouseup', onMouseUp);
+            }
 
-// Show/hide title and video controls on toggle click
-toggleOn.addEventListener('click', function() {
-  video.controls = true;  // Show video controls
-  controlsContainer.style.display = 'block';  // Show all controls
-  title.style.display = 'block';  // Show title
-  toggleOn.style.display = 'none';  // Hide "on" icon
-  toggleOff.style.display = 'block'; // Show "off" icon
-  uploadBtn.style.display = 'block'; // Show upload button
-  progressContainer.style.display = 'block'; // Show progress bar
-});
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+         });
 
-toggleOff.addEventListener('click', function() {
-  video.controls = false;  // Hide video controls
-  controlsContainer.style.display = 'none';  // Hide all controls
-  title.style.display = 'none';  // Hide title
-  toggleOff.style.display = 'none';  // Hide "off" icon
-  toggleOn.style.display = 'block'; // Show "on" icon
-  uploadBtn.style.display = 'none'; // Hide upload button
-  progressContainer.style.display = 'none'; // Hide progress bar
-});
+         document.addEventListener("DOMContentLoaded", () => {
+            const playPauseBtn = document.getElementById("play-pause-btn");
+            const playPauseIcon = playPauseBtn.querySelector("i");
+            const forwardBtn = document.getElementById("forward-btn");
+            const backwardBtn = document.getElementById("backward-btn");
 
-const blendFactorLevel = document.getElementById('blend-factor-level'); // Reference to display element
+            playPauseBtn.addEventListener("click", () => {
+               if (video.paused || video.ended) {
+                  video.play();
+                  playPauseIcon.classList.remove("fa-play");
+                  playPauseIcon.classList.add("fa-pause");
+               } else {
+                  video.pause();
+                  playPauseIcon.classList.remove("fa-pause");
+                  playPauseIcon.classList.add("fa-play");
+               }
+            });
 
-// Adjust blend factor with buttons
-decreaseBlendBtn.addEventListener('click', () => {
-  if (blendFactor > 0) {
-    blendFactor = Math.max(0, blendFactor - 0.1); // Decrease blend factor by 0.1
-    updateBlendFactorDisplay();
-  }
-});
+            video.addEventListener("play", () => {
+               playPauseIcon.classList.remove("fa-play");
+               playPauseIcon.classList.add("fa-pause");
+            });
 
-increaseBlendBtn.addEventListener('click', () => {
-  if (blendFactor < 1) {
-    blendFactor = Math.min(1, blendFactor + 0.1); // Increase blend factor by 0.1
-    updateBlendFactorDisplay();
-  }
-});
+            video.addEventListener("pause", () => {
+               playPauseIcon.classList.remove("fa-pause");
+               playPauseIcon.classList.add("fa-play");
+            });
 
-// Function to update the blend factor display
-function updateBlendFactorDisplay() {
-  // Convert blendFactor (range 0-1) to a 10-level scale
-  const blendFactorLevelValue = Math.round(blendFactor * 10);
-  blendFactorLevel.textContent = blendFactorLevelValue; // Update the display with the new value
-}
+            forwardBtn.addEventListener("click", () => {
+               video.currentTime += 10;
+            });
 
-// Add event listener for clicking on the progress bar to seek
-progressContainer.addEventListener('click', function(event) {
-  const rect = progressContainer.getBoundingClientRect();
-  const x = event.clientX - rect.left; // Get horizontal position of the click
-  const width = rect.width; // Get width of the progress bar
-  const clickPosition = (x / width) * video.duration; // Calculate the new time
-  video.currentTime = clickPosition; // Set the video time
-});
+            backwardBtn.addEventListener("click", () => {
+               video.currentTime -= 10;
+               if (video.currentTime < 0) video.currentTime = 0;
+            });
+         });
 
-// Add event listener for dragging the progress bar to seek
-progressContainer.addEventListener('mousedown', function(event) {
-  const rect = progressContainer.getBoundingClientRect();
-  const width = rect.width;
+         document.addEventListener("DOMContentLoaded", () => {
+            const subtitleBtn = document.getElementById("subtitle-btn");
+            const subtitleIcon = subtitleBtn.querySelector("i");
+            const track = document.getElementById("subtitle-track");
+            let subtitlesEnabled = true;
 
-  function onMouseMove(e) {
-    const x = e.clientX - rect.left;
-    const dragPosition = (x / width) * video.duration;
-    video.currentTime = Math.min(Math.max(dragPosition, 0), video.duration); // Clamp to video duration
-  }
+            subtitleBtn.addEventListener("click", () => {
+               subtitlesEnabled = !subtitlesEnabled;
+               track.mode = subtitlesEnabled ? "showing" : "hidden";
+               if (subtitlesEnabled) {
+                  subtitleIcon.classList.add("fa-closed-captioning");
+                  subtitleIcon.classList.remove("fa-closed-captioning-slash");
+               } else {
+                  subtitleIcon.classList.remove("fa-closed-captioning");
+                  subtitleIcon.classList.add("fa-closed-captioning-slash");
+               }
+            });
 
-  function onMouseUp() {
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  }
+            track.mode = "showing";
+         });
 
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', onMouseUp);
-});
+         document.addEventListener("DOMContentLoaded", () => {
+            const customMenu = document.querySelector(".custom-menu");
 
+            document.addEventListener("contextmenu", (event) => {
+               event.preventDefault();
+               customMenu.style.display = "block";
+               customMenu.style.top = `${event.pageY}px`;
+               customMenu.style.left = `${event.pageX}px`;
+            });
 
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const video = document.getElementById("video");
-  const playPauseBtn = document.getElementById("play-pause-btn");
-  const playPauseIcon = playPauseBtn.querySelector("i");
-  const forwardBtn = document.getElementById("forward-btn");
-  const backwardBtn = document.getElementById("backward-btn");
-
-  // Play/Pause Functionality
-  playPauseBtn.addEventListener("click", () => {
-     if (video.paused || video.ended) {
-        video.play();
-        playPauseIcon.classList.remove("fa-play");
-        playPauseIcon.classList.add("fa-pause");
-     } else {
-        video.pause();
-        playPauseIcon.classList.remove("fa-pause");
-        playPauseIcon.classList.add("fa-play");
-     }
-  });
-
-  // Sync Play/Pause Button with Video State
-  video.addEventListener("play", () => {
-     playPauseIcon.classList.remove("fa-play");
-     playPauseIcon.classList.add("fa-pause");
-  });
-
-  video.addEventListener("pause", () => {
-     playPauseIcon.classList.remove("fa-pause");
-     playPauseIcon.classList.add("fa-play");
-  });
-
-  // Skip Forward (10 seconds)
-  forwardBtn.addEventListener("click", () => {
-     video.currentTime += 10;
-  });
-
-  // Skip Backward (10 seconds)
-  backwardBtn.addEventListener("click", () => {
-     video.currentTime -= 10;
-     if (video.currentTime < 0) video.currentTime = 0; // Prevent negative time
-  });
-});
-document.addEventListener("DOMContentLoaded", () => {
-  const video = document.getElementById("video");
-  const subtitleBtn = document.getElementById("subtitle-btn");
-  const subtitleIcon = subtitleBtn.querySelector("i");
-  const track = document.getElementById("subtitle-track");
-
-  // Track visibility state
-  let subtitlesEnabled = true;
-
-  // Toggle Subtitles On/Off
-  subtitleBtn.addEventListener("click", () => {
-     subtitlesEnabled = !subtitlesEnabled;
-     track.mode = subtitlesEnabled ? "showing" : "hidden";
-
-     // Update button icon (optional: change style for active/inactive)
-     if (subtitlesEnabled) {
-        subtitleIcon.classList.add("fa-closed-captioning");
-        subtitleIcon.classList.remove("fa-closed-captioning-slash");
-     } else {
-        subtitleIcon.classList.remove("fa-closed-captioning");
-        subtitleIcon.classList.add("fa-closed-captioning-slash");
-     }
-  });
-
-  // Optional: Default state for track
-  track.mode = "showing"; // Enable subtitles by default
-});
-document.addEventListener("DOMContentLoaded", () => {
-  const customMenu = document.querySelector(".custom-menu");
-
-  // Show custom menu on right-click
-  document.addEventListener("contextmenu", (event) => {
-      event.preventDefault();
-      customMenu.style.display = "block";
-      customMenu.style.top = `${event.pageY}px`;
-      customMenu.style.left = `${event.pageX}px`;
-  });
-
-  // Hide the menu when clicking elsewhere
-  document.addEventListener("click", () => {
-      customMenu.style.display = "none";
-  });
-});
+            document.addEventListener("click", () => {
+               customMenu.style.display = "none";
+            });
+         });
