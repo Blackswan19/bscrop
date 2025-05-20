@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SASS</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #000000, #000000); /* Default gradient */
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+    #controls {
+      position: absolute;
+     top: 50px;
+    left: 40px;
+      z-index: 10;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: none; /* Hidden by default */
+    }
+    #toggleControls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+      padding: 5px 10px;
+      background: #4a4a8a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    #toggleControls:hover {
+      background: #6a6aba;
+    }
+    #colorPicker1, #colorPicker2, button {
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button {
+      background: #ffffff3b;
+      color: white;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #ffffff13;
+    }
+  </style>
+</head>
+<body>
+  <button id="toggleControls">+</button>
+  <div id="controls">
+    <script src="noright.js"></script>
+    <input type="color" id="colorPicker1" value="#0a0a23" title="Top Color">
+    <input type="color" id="colorPicker2" value="#1a1a4b" title="Bottom Color">
+    <button onclick="adjustStars(10)">+ Stars</button>
+    <button onclick="adjustStars(-10)">- Stars</button>
+    <span id="starCount">100</span> Stars
+  </div>
+  <canvas id="starsCanvas"></canvas>
+  <script>
+    const canvas = document.getElementById('starsCanvas');
+    const ctx = canvas.getContext('2d');
+    const colorPicker1 = document.getElementById('colorPicker1');
+    const colorPicker2 = document.getElementById('colorPicker2');
+    const starCountDisplay = document.getElementById('starCount');
+    const toggleControls = document.getElementById('toggleControls');
+    const controls = document.getElementById('controls');
+    let backgroundColor1 = colorPicker1.value; // Top color
+    let backgroundColor2 = colorPicker2.value; // Bottom color
+    let numStars = 100; // Initial number of stars
+    let stars = [];
+
+    // Toggle controls visibility
+    toggleControls.addEventListener('click', () => {
+      if (controls.style.display === 'none') {
+        controls.style.display = 'flex';
+        toggleControls.textContent = '-';
+      } else {
+        controls.style.display = 'none';
+        toggleControls.textContent = '+';
+      }
+    });
+
+    // Update background gradient
+    function updateBackground() {
+      backgroundColor1 = colorPicker1.value;
+      backgroundColor2 = colorPicker2.value;
+      document.body.style.background = `linear-gradient(to bottom, ${backgroundColor1}, ${backgroundColor2})`;
+    }
+
+    colorPicker1.addEventListener('input', updateBackground);
+    colorPicker2.addEventListener('input', updateBackground);
+
+    // Resize canvas and redistribute stars
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      redistributeStars();
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Star class
+    class Star {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 1.5 + 0.5;
+        this.alpha = Math.random() * 0.5 + 0.5;
+        this.twinkleSpeed = Math.random() * 0.02 + 0.01;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      update() {
+        this.alpha += Math.sin(Date.now() * this.twinkleSpeed) * 0.02;
+        if (this.alpha < 0.3) this.alpha = 0.3;
+        if (this.alpha > 1) this.alpha = 1;
+        this.draw();
+      }
+    }
+
+    // Meteor class
+    class Meteor {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        const edges = ['top-to-bottom', 'bottom-to-top', 'left-to-right', 'right-to-left'];
+        const edge = edges[Math.floor(Math.random() * edges.length)];
+        let x, y, dx, dy;
+
+        switch (edge) {
+          case 'top-to-bottom':
+            x = Math.random() * canvas.width;
+            y = -50;
+            dx = (Math.random() - 0.5) * 4;
+            dy = 10;
+            break;
+          case 'bottom-to-top':
+            x = Math.random() * canvas.width;
+            y = canvas.height + 50;
+            dx = (Math.random() - 0.5) * 4;
+            dy = -10;
+            break;
+          case 'left-to-right':
+            x = -50;
+            y = Math.random() * canvas.height;
+            dx = 10;
+            dy = (Math.random() - 0.5) * 4;
+            break;
+          case 'right-to-left':
+            x = canvas.width + 50;
+            y = Math.random() * canvas.height;
+            dx = -10;
+            dy = (Math.random() - 0.5) * 4;
+            break;
+        }
+
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.length = Math.random() * 50 + 50;
+        this.alpha = 0.8;
+        this.life = 80;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.dx * this.length / 10, this.y - this.dy * this.length / 10);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${this.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.7)';
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        this.alpha *= 0.95;
+        this.life--;
+        if (this.life > 0 && this.alpha > 0.01) {
+          this.draw();
+        }
+      }
+    }
+
+    // Initialize stars
+    function initializeStars() {
+      stars = [];
+      for (let i = 0; i < numStars; i++) {
+        stars.push(new Star());
+      }
+      starCountDisplay.textContent = numStars;
+    }
+
+    // Redistribute stars on resize
+    function redistributeStars() {
+      stars.forEach(star => {
+        star.x = Math.random() * canvas.width;
+        star.y = Math.random() * canvas.height;
+      });
+    }
+
+    // Adjust star count
+    function adjustStars(change) {
+      numStars = Math.max(10, numStars + change);
+      initializeStars();
+    }
+
+    initializeStars();
+    const meteors = [];
+    let lastMeteorTime = 0;
+    const meteorInterval = 3000;
+
+    // Animation loop
+    function animate(timestamp) {
+      // Apply linear gradient to canvas
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, backgroundColor1);
+      gradient.addColorStop(1, backgroundColor2);
+      ctx.fillStyle = gradient;
+      ctx.globalAlpha = 0.2; // Semi-transparent for smooth trails
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1.0; // Reset alpha
+
+      // Update and draw stars
+      stars.forEach(star => star.update());
+
+      // Spawn meteors
+      if (timestamp - lastMeteorTime > meteorInterval && meteors.length === 0) {
+        meteors.push(new Meteor());
+        lastMeteorTime = timestamp;
+      }
+
+      // Update and draw meteors
+      for (let i = meteors.length - 1; i >= 0; i--) {
+        meteors[i].update();
+        if (meteors[i].life <= 0 || 
+            meteors[i].x < -50 || meteors[i].x > canvas.width + 50 || 
+            meteors[i].y < -50 || meteors[i].y > canvas.height + 50) {
+          meteors.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
