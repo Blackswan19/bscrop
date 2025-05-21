@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Finance Tracker</title>
+  <title>BsFinacal</title>
   <style>
-     /* General Styling */
-     body {
+   @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&family=Red+Hat+Display:ital,wght@0,300..900&family=Strait&display=swap');
+
+        * {
+            font-family: "Red Hat Display", sans-serif;
+        }
+    body {
       font-family: Arial, sans-serif;
       background-color: #121212;
       color: #e0e0e0;
@@ -15,6 +19,7 @@
       align-items: center;
       padding: 20px;
       margin: 0;
+      letter-spacing: 0.5px;
       white-space: nowrap;
     }
 
@@ -29,11 +34,9 @@
     }
 
     .container {
-      max-width: 500px;
+      max-width: 800px;
       width: 100%;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 30px;
     }
 
     .balance-display {
@@ -41,7 +44,7 @@
       color: #ffffff;
       margin-bottom: 20px;
       text-align: center;
-      background: #3c3c3c;
+      background: #3c3c3c63;
       padding: 10px;
     }
 
@@ -88,12 +91,13 @@
     }
 
     .transaction-table th, .transaction-table td {
-        padding: 10px 5px;
+     padding: 10px 5px;
     border: 1px solid #333;
     text-align: center;
-    color: #e0e0e0;
+    color: #e0e0e09e;
     text-transform: capitalize;
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 600;
     }
 
     .transaction-table th {
@@ -116,22 +120,37 @@
 
     /* Calculator Popup Styling */
     .calculator-popup {
-        position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #333;
-    padding: 35px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 90vw;
+      height: 100vh;
+      background-color: #333;
+      padding: 20px;
+      display: none;
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      max-width: 400px;
+    }
+
+    input#calc-display {
+      width: 50%;
+      outline: none;
+      border: none;
+      background: gray;
+      font-size: 20px;
+      color: white;
     }
 
     .calculator {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
+      max-width: 400px;
+      width: 100%;
     }
 
     .calculator input {
@@ -160,6 +179,55 @@
       background-color: #555;
     }
 
+    .close-calculator {
+      position: absolute;
+      top: 10px;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      left: 0px;
+      background: none;
+    }
+
+    .close-calculator:hover {
+      background: none;
+    }
+
+    .options {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    /* Toggle Button Styling */
+    .toggle-form-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #007bff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .toggle-form-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Hide Form by Default */
+    .transaction-form {
+      display: none;
+      margin-bottom: 20px;
+    }
+
     /* Mobile Responsive Styling */
     @media (max-width: 600px) {
       .container {
@@ -175,208 +243,308 @@
       }
 
       button, .form-group input, .form-group select {
-        font-size: 0.9em;
+        font-size: 10px;
+      }
+
+      .calculator {
+        max-width: 100%;
+        padding: 10px;
+      }
+
+      .calculator input {
+        font-size: 1em;
+      }
+
+      .calculator button {
+        font-size: 1em;
+        padding: 8px;
+      }
+.transaction-table th, .transaction-table td {
+    padding: 10px 5px;
+    border: 1px solid #333;
+    text-align: center;
+    color: #e0e0e09e;
+    text-transform: capitalize;
+    font-size: 12px;
+    font-weight: 500;
+}
+      .toggle-form-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2em;
       }
     }
   </style>
 </head>
 <body>
+  <a href="https://blackswan19.github.io/Educate/savenotes.html"><h1>BsFinacal</h1></a>
 
-<a href="https://blackswan19.github.io/Educate/savenotes.html"><h1>Bs_Rora</h1></a>
-  
-<div class="container">
-  <div class="balance-display">
-    Total Balance: $<span id="balance">0.00</span>
+  <div class="container">
+    <!-- Toggle Button -->
+    <button class="toggle-form-btn" id="toggle-form">+</button>
+
+    <div class="balance-display">
+      <span id="balance-label" style="font-weight: 800;
+    color: #0068ff;">Total ₹</span> : <span id="balance" style="font-weight: 800;
+    color: #0068ff;">0.00</span>
+    </div>
+
+    <!-- Transaction Input Form -->
+    <div class="transaction-form" id="transaction-form">
+      <div class="form-group">
+        <label for="transaction-type">Transaction Type:</label>
+        <select id="transaction-type">
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="transaction-description">For:</label>
+        <input type="text" id="transaction-description" placeholder="Enter name or spends on">
+      </div>
+
+      <div class="form-group">
+        <label for="transaction-amount">Rs:</label>
+        <input type="number" id="transaction-amount" placeholder="Enter amount" step="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="transaction-date">Date:</label>
+        <input type="date" id="transaction-date">
+      </div>
+
+      <div class="options">
+        <button id="add-transaction">Add Transaction</button><br>
+        <button id="open-calculator" style="margin-top: 10px;">Calculator</button>
+      </div>
+    </div>
+
+    <!-- Filter Dropdown -->
+    <div class="form-group" style="position: fixed; top: 10px; right: 10px;">
+      <select id="filter-type" onchange="renderTransactions()">
+        <option value="all">All</option>
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+    </div>
+
+    <!-- Transactions Table -->
+    <table class="transaction-table">
+      <thead>
+        <tr>
+          <th>For</th>
+          <th>Rs</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Del</th>
+        </tr>
+      </thead>
+      <tbody id="transaction-list">
+        <!-- Transaction rows will be dynamically added here -->
+      </tbody>
+    </table>
   </div>
-  
-  <!-- Transaction Input Form -->
-  <div class="form-group">
-    <label for="transaction-type">Transaction Type:</label>
-    <select id="transaction-type">
-      <option value="income">Income</option>
-      <option value="expense">Expense</option>
-    </select>
+
+  <!-- Calculator Popup -->
+  <div id="calculator-popup" class="calculator-popup">
+    <button class="close-calculator" onclick="closeCalculator()">X</button>
+    <input style="padding: 10px;" type="text" id="calc-display" oninput="validateInput(this)">
+    <div class="calculator">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="appendSymbol('%')">%</button>
+      <button onclick="appendSymbol('/')">/</button>
+      <button onclick="deleteLastCharacter()">⌫</button>
+      <button onclick="appendSymbol('7')">7</button>
+      <button onclick="appendSymbol('8')">8</button>
+      <button onclick="appendSymbol('9')">9</button>
+      <button onclick="appendSymbol('*')">×</button>
+      <button onclick="appendSymbol('4')">4</button>
+      <button onclick="appendSymbol('5')">5</button>
+      <button onclick="appendSymbol('6')">6</button>
+      <button onclick="appendSymbol('-')">−</button>
+      <button onclick="appendSymbol('1')">1</button>
+      <button onclick="appendSymbol('2')">2</button>
+      <button onclick="appendSymbol('3')">3</button>
+      <button onclick="appendSymbol('+')">+</button>
+      <button onclick="appendSymbol('0')" style="grid-column: span 2;">0</button>
+      <button onclick="appendSymbol('.')">.</button>
+      <button onclick="calculateResult()">=</button>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="transaction-description">For:</label>
-    <input type="text" id="transaction-description" placeholder="Enter name or spends on">
-  </div>
+  <script>
+    let balance = 0;
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
-  <div class="form-group">
-    <label for="transaction-amount">Rs:</label>
-    <input type="number" id="transaction-amount" placeholder="Enter amount" step="0.01">
-  </div>
-
-  <div class="form-group">
-    <label for="transaction-date">Date:</label>
-    <input type="date" id="transaction-date">
-  </div>
-
-  <button id="add-transaction">Add Transaction</button><br>
-  <button id="open-calculator" style="margin-top: 10px;">Open Calculator</button>
-
-  <!-- Filter Dropdown -->
-  <div class="form-group" style="    position: fixed;
-  top: 10px;
-  right: 10px;">
-    <select id="filter-type" onchange="renderTransactions()">
-      <option value="all">All</option>
-      <option value="income">Income</option>
-      <option value="expense">Expense</option>
-    </select>
-  </div>
-
-  <!-- Transactions Table -->
-  <table class="transaction-table">
-    <thead>
-      <tr>
-        <th>For</th>
-        <th>Rs</th>
-        <th>Type</th>
-        <th>Date</th>
-        <th>Del</th>
-      </tr>
-    </thead>
-    <tbody id="transaction-list">
-      <!-- Transaction rows will be dynamically added here -->
-    </tbody>
-  </table>
-</div>
-
-<!-- Calculator Popup -->
-<div id="calculator-popup" class="calculator-popup">
-  <input style="padding: 10px;" type="text" id="calc-display" readonly>
-  <div class="calculator">
-    <button onclick="clearDisplay()">C</button>
-    <button onclick="appendSymbol('%')">%</button>
-    <button onclick="appendSymbol('/')">/</button>
-    <button onclick="appendSymbol('*')">×</button>
-    <button onclick="appendSymbol('7')">7</button>
-    <button onclick="appendSymbol('8')">8</button>
-    <button onclick="appendSymbol('9')">9</button>
-    <button onclick="appendSymbol('-')">−</button>
-    <button onclick="appendSymbol('4')">4</button>
-    <button onclick="appendSymbol('5')">5</button>
-    <button onclick="appendSymbol('6')">6</button>
-    <button onclick="appendSymbol('+')">+</button>
-    <button onclick="appendSymbol('1')">1</button>
-    <button onclick="appendSymbol('2')">2</button>
-    <button onclick="appendSymbol('3')">3</button>
-    <button onclick="calculateResult()">=</button>
-    <button onclick="appendSymbol('0')" style="grid-column: span 2;">0</button>
-    <button onclick="appendSymbol('.')">.</button>
-  </div>
-</div>
-
-<script>
-  let balance = 0;
-  let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-
-  function updateBalance() {
-    document.getElementById("balance").innerText = balance.toFixed(2);
-  }
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); 
-    const year = date.getFullYear();
-    return `${day}-${month}`;
-  }
-
-  function addTransactionToTable(transaction, index) {
-    const transactionList = document.getElementById("transaction-list");
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${transaction.description}</td>
-      <td>₹${transaction.amount.toFixed(2)}</td>
-      <td>${transaction.type}</td>
-      <td>${formatDate(transaction.date)}</td>
-      <td><button class="delete-btn" onclick="deleteTransaction(${index})">Del</button></td>
-    `;
-    transactionList.appendChild(row);
-  }
-
-  function loadTransactions() {
-    transactions.forEach((transaction, index) => {
-      balance += transaction.type === "income" ? transaction.amount : -transaction.amount;
-    });
-    updateBalance();
-    renderTransactions();
-  }
-
-  function saveTransactions() {
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-  }
-
-  function deleteTransaction(index) {
-    const transaction = transactions[index];
-    balance -= transaction.type === "income" ? transaction.amount : -transaction.amount;
-    transactions.splice(index, 1);
-    saveTransactions();
-    renderTransactions();
-    updateBalance();
-  }
-
-  function renderTransactions() {
-    const transactionList = document.getElementById("transaction-list");
-    const filterType = document.getElementById("filter-type").value;
-    transactionList.innerHTML = "";
-    transactions.forEach((transaction, index) => {
-      if (filterType === "all" || transaction.type === filterType) {
-        addTransactionToTable(transaction, index);
+    // Toggle Form Visibility
+    document.getElementById("toggle-form").addEventListener("click", () => {
+      const form = document.getElementById("transaction-form");
+      const button = document.getElementById("toggle-form");
+      if (form.style.display === "none" || form.style.display === "") {
+        form.style.display = "block";
+        button.textContent = "−"; // Change to minus when form is visible
+      } else {
+        form.style.display = "none";
+        button.textContent = "+"; // Change to plus when form is hidden
       }
     });
-  }
 
-  document.getElementById("add-transaction").addEventListener("click", () => {
-    const type = document.getElementById("transaction-type").value;
-    const description = document.getElementById("transaction-description").value;
-    const amount = parseFloat(document.getElementById("transaction-amount").value);
-    const date = document.getElementById("transaction-date").value;
-
-    if (!description || isNaN(amount) || amount <= 0 || !date) {
-      alert("Please enter a valid description, amount, and date.");
-      return;
+    function updateBalance() {
+      renderTransactions();
     }
 
-    const transaction = { description, amount, type, date };
-    transactions.push(transaction);
-
-    balance += type === "income" ? amount : -amount;
-    updateBalance();
-    saveTransactions();
-    renderTransactions();
-
-    document.getElementById("transaction-description").value = "";
-    document.getElementById("transaction-amount").value = "";
-    document.getElementById("transaction-date").value = "";
-  });
-
-  document.getElementById("open-calculator").addEventListener("click", () => {
-    const calculatorPopup = document.getElementById("calculator-popup");
-    calculatorPopup.style.display = calculatorPopup.style.display === "none" ? "block" : "none";
-  });
-
-  function appendSymbol(symbol) {
-    document.getElementById("calc-display").value += symbol;
-  }
-
-  function clearDisplay() {
-    document.getElementById("calc-display").value = "";
-  }
-
-  function calculateResult() {
-    const display = document.getElementById("calc-display");
-    try {
-      display.value = eval(display.value.replace(/×/g, '*').replace(/−/g, '-'));
-    } catch {
-      display.value = "Error";
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}`;
     }
-  }
 
-  loadTransactions();
-</script>
+    function addTransactionToTable(transaction, index) {
+      const transactionList = document.getElementById("transaction-list");
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${transaction.description}</td>
+        <td>₹${transaction.amount.toFixed(2)}</td>
+        <td>${transaction.type}</td>
+        <td>${formatDate(transaction.date)}</td>
+        <td><button class="delete-btn" onclick="deleteTransaction(${index})">Del</button></td>
+      `;
+      transactionList.appendChild(row);
+    }
+
+    function loadTransactions() {
+      transactions.forEach((transaction) => {
+        balance += transaction.type === "income" ? transaction.amount : -transaction.amount;
+      });
+      updateBalance();
+    }
+
+    function saveTransactions() {
+      localStorage.setItem("transactions", JSON.stringify(transactions));
+    }
+
+    function deleteTransaction(index) {
+      const transaction = transactions[index];
+      balance -= transaction.type === "income" ? transaction.amount : -transaction.amount;
+      transactions.splice(index, 1);
+      saveTransactions();
+      renderTransactions();
+    }
+
+    function renderTransactions() {
+      const transactionList = document.getElementById("transaction-list");
+      const filterType = document.getElementById("filter-type").value;
+      const balanceLabel = document.getElementById("balance-label");
+      const balanceDisplay = document.getElementById("balance");
+
+      transactionList.innerHTML = "";
+
+      let typeTotal = 0;
+      transactions.forEach((transaction, index) => {
+        if (filterType === "all" || transaction.type === filterType) {
+          addTransactionToTable(transaction, index);
+          if (filterType === "all") {
+            typeTotal += transaction.type === "income" ? transaction.amount : -transaction.amount;
+          } else if (transaction.type === filterType) {
+            typeTotal += transaction.amount;
+          }
+        }
+      });
+
+      balanceLabel.innerText = filterType === "all" ? "Total ₹" : `Total ${filterType.charAt(0).toUpperCase() + filterType.slice(1)}`;
+      balanceDisplay.innerText = typeTotal.toFixed(2);
+    }
+
+    document.getElementById("add-transaction").addEventListener("click", () => {
+      const type = document.getElementById("transaction-type").value;
+      const description = document.getElementById("transaction-description").value;
+      const amount = parseFloat(document.getElementById("transaction-amount").value);
+      const date = document.getElementById("transaction-date").value;
+
+      if (!description || isNaN(amount) || amount <= 0 || !date) {
+        alert("Please enter a valid description, amount, and date.");
+        return;
+      }
+
+      const transaction = { description, amount, type, date };
+      transactions.push(transaction);
+
+      balance += type === "income" ? amount : -amount;
+      updateBalance();
+      saveTransactions();
+
+      document.getElementById("transaction-description").value = "";
+      document.getElementById("transaction-amount").value = "";
+      document.getElementById("transaction-date").value = "";
+      // Optionally hide the form after adding a transaction
+      document.getElementById("transaction-form").style.display = "none";
+      document.getElementById("toggle-form").textContent = "+";
+    });
+
+    document.getElementById("open-calculator").addEventListener("click", () => {
+      const calculatorPopup = document.getElementById("calculator-popup");
+      calculatorPopup.style.display = calculatorPopup.style.display === "none" ? "flex" : "none";
+      document.getElementById("calc-display").focus();
+    });
+
+    function closeCalculator() {
+      document.getElementById("calculator-popup").style.display = "none";
+    }
+
+    function validateInput(input) {
+      const validPattern = /^[0-9+\-*/%.]*$/;
+      if (!validPattern.test(input.value)) {
+        input.value = input.value.replace(/[^0-9+\-*/%.]/g, '');
+      }
+    }
+
+    function appendSymbol(symbol) {
+      const input = document.getElementById("calc-display");
+      const start = input.selectionStart;
+      const end = input.selectionEnd;
+      const value = input.value;
+      input.value = value.substring(0, start) + symbol + value.substring(end);
+      input.selectionStart = input.selectionEnd = start + symbol.length;
+      input.focus();
+    }
+
+    function clearDisplay() {
+      const input = document.getElementById("calc-display");
+      input.value = "";
+      input.focus();
+    }
+
+    function deleteLastCharacter() {
+      const input = document.getElementById("calc-display");
+      const start = input.selectionStart;
+      const end = input.selectionEnd;
+      if (start !== end) {
+        input.value = input.value.substring(0, start) + input.value.substring(end);
+        input.selectionStart = input.selectionEnd = start;
+      } else if (start > 0) {
+        input.value = input.value.substring(0, start - 1) + input.value.substring(start);
+        input.selectionStart = input.selectionEnd = start - 1;
+      }
+      input.focus();
+    }
+
+    function calculateResult() {
+      const display = document.getElementById("calc-display");
+      try {
+        display.value = eval(display.value.replace(/×/g, '*').replace(/−/g, '-'));
+      } catch {
+        display.value = "Error";
+      }
+      display.focus();
+    }
+
+    // Explicitly hide calculator and ensure form is hidden on page load
+    document.getElementById("calculator-popup").style.display = "none";
+    document.getElementById("transaction-form").style.display = "none";
+    loadTransactions();
+  </script>
 </body>
 </html>
