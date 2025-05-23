@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BsWatchin</title>
+    <title>BsWatchin | BsTv</title>
     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/x5Pb9bH/watchinlogo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Roboto font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -22,700 +22,188 @@
             font-family: "Prompt", sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
-            background-color: #0d0d0d;
-            color: #fff;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-            line-height: 1.5;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #fff;
         }
-        .thematter {
-            background: black;
-            padding: 30px 0px;
-            width: 100%;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-        :root {
-            --primary-color: #e50914;
-            --background-dark: #0d0d0d;
-            --card-background: #1e1e1e;
-            --text-color: #fff;
-            --secondary-background: #222;
-            --border-radius: 8px;
-            --transition: all 0.3s ease;
-        }
-
-        /* Welcome Message */
-        .welcome-message {
-            background-color: #000;
-            color: var(--primary-color);
-            text-align: center;
-            padding: 30px;
-            font-size: 1.125rem;
-            font-weight: 700;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        span#userName {
-            text-transform: capitalize;
-            color: white;
-        }
-        .logout-btn {
-            background-color: var(--primary-color);
-            border: none;
-            color: var(--text-color);
-            font-weight: 700;
-            padding: 8px 12px;
-            border-radius: 7px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transition);
-            left: 18px;
-            position: fixed;
-            font-size: 15px;
-            top: 20px;
-        }
-
-        .logout-btn:hover {
-            background-color: #c40812;
-        }
-
-        /* Header */
         .header {
             background-color: #000;
-            padding: 3% 0;
+            padding: 20px;
             text-align: center;
-            border-bottom: 2px solid #e5091442;
         }
-
         .header h1 {
-            font-size: 50px;
-            font-weight: 900;
-            color: var(--primary-color);
             margin: 0;
-            letter-spacing: 1px;
+            font-size: 2em;
+            color: #e50914;
         }
-
-        ::placeholder {
-            color: rgb(212, 212, 212);
-        }
-
-        /* Password Section */
-        .password-section {
-            max-width: 650px;
-            margin: 4rem auto;
-            padding: 1.5rem;
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            text-align: center;
-            width: 100%;
-        }
-
-        .username-input,
-        .password-input {
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-            font-size: 1rem;
-            width: 100%;
-            transition: var(--transition);
-        }
-
-        .password-input-container {
-            position: relative;
-        }
-
-        .password-input {
-            padding-right: 2.5rem;
-        }
-
-        .eye-icon {
-            position: absolute;
-            right: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #ff0000;
-            font-size: 20px;
-        }
-
-        .username-input:focus,
-        .password-input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
-        }
-
-        .submit-btn {
-            background-color: var(--primary-color);
-            border: none;
-            color: var(--text-color);
-            font-weight: 700;
-            padding: 0.75rem;
-            width: 100%;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .submit-btn:hover {
-            background-color: #c40812;
-        }
-
-        .error-message {
-            color: var(--primary-color);
-            font-size: 0.875rem;
-            margin-top: 25px;
-            display: none;
-        }
-
-        /* Subscription Prompt */
-        .subscription-prompt {
-            display: none;
-            text-align: center;
-            margin: 2rem auto;
-            padding: 3rem;
-            background-color: transparent;
-            border-radius: var(--border-radius);
-            max-width: 400px;
-            cursor: pointer;
-            transition: var(--transition);
-            border-radius: 20px;
-        }
-
-        .subscription-prompt:hover {
-            background-color: #33333363;
-        }
-
-        .subscription-prompt p {
-            margin: 0 0 0.75rem 0;
-            font-size: 15px;
-        }
-
-        .calc-icon {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-right: 0.5rem;
-        }
-
-        /* Calculator Pop-up */
-        .calculator-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--card-background);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            z-index: 3000;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 4px 8px 1000px rgb(0 0 0 / 67%);
-            background: #1e1e1e;
-        }
-
-        .calculator-popup h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .days-input {
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            width: 75%;
-            text-align: center;
-        }
-
-        .cost-display {
-            color: #ffffff;
-            font-weight: 500;
-            margin: 0.5rem 0;
-        }
-
-        .calc-btn,
-        .extend-btn {
-            background-color: var(--primary-color);
-            border: none;
-            color: var(--text-color);
-            padding: 0.625rem 1.25rem;
-            border-radius: 4px;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transition);
-            margin: 0.5rem;
-        }
-
-        .calc-btn:hover,
-        .extend-btn:hover {
-            background-color: #c40812;
-        }
-
-        .close-popup {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        /* Movie Section */
         .movie-section {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .movie-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .movie-info h2 {
+            font-size: 1.8em;
+            margin: 10px 0;
+        }
+        .movie-info p {
+            font-size: 1em;
+            color: #b3b3b3;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .countdown {
+            font-size: 1.5em;
+            color: #e50914;
+            margin: 10px 0;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .play-button {
             display: none;
-            padding: 6rem 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 60px;
-        }
-
-        .movie-card {
-            max-width: 320px;
-            transition: var(--transition);
-            background: #222222;
-            padding: 14px;
-            border-radius: 13px;
-        }
-
-        .movie-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .movie-img {
-            width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            object-fit: cover;
-            aspect-ratio: 3/3;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-        }
-
-        .movie-title {
-            font-size: 1rem;
-            font-weight: 700;
-            text-align: center;
-            margin-top: 0.5rem;
-            color: var(--text-color);
-            text-transform: uppercase;
-        }
-
-        .movie-expiry {
-            font-size: 0.85rem;
-            text-align: center;
-            color: #ffffff;
-            font-weight: 500;
-            font-size: 16px;
-            background: #595959;
-            padding: 5px;
-            border-radius: 6px;
-        }
-
-        .movie-link {
             text-decoration: none;
+            z-index: 10000;
+        }
+        .play-button.active {
             display: block;
         }
-
-        /* Full-Screen Overlay */
-        .fullscreen-overlay {
+        .expired-message {
             display: none;
-            position: fixed;
+            font-size: 1.5em;
+            color: #e50914;
+            margin: 10px 0;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .expired-message.active {
+            display: block;
+        }
+        .image-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            display: block; /* Show image by default */
+        }
+        .image-container img {
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .fullscreen-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: blur(10px);
-            position: absolute;
-            top: 0;
-            left: 0;
             z-index: -1;
         }
-
-        .play-button {
-            background-color: rgb(255 0 0 / 80%);
-            border: none;
-            color: #ffffff;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-size: 1.25rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transition);
-            filter: drop-shadow(0px 0px 16px black);
-        }
-
-        .play-button:hover {
-            background-color: #c40812;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 2100;
-        }
-
         /* Responsive Design */
-        @media (min-width: 768px) {
-            .movie-section {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1.5rem;
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
             }
-
-            .movie-card {
-                margin: 0;
+            .movie-info h2 {
+                font-size: 1.4em;
             }
-        }
-
-        @media (max-width: 576px) {
-            .header {
-                padding: 20% 0;
+            .movie-info p {
+                font-size: 0.9em;
             }
-
-            .fullscreen-img {
-                filter: blur(5px);
-            }
-
-            .play-button {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-            }
-
-            .calculator-popup {
-                padding: 1rem;
-            }
-            .password-section {
-                max-width: 650px;
-                margin: 4rem auto;
-                padding: 10px;
-                background-color: var(--card-background);
-                border-radius: var(--border-radius);
-                text-align: center;
-                width: 100%;
-            }
-            .subscription-prompt {
-                display: none;
-                text-align: center;
-                margin: 2rem auto;
-                padding: 2rem;
+            .countdown, .play-button, .expired-message {
+                font-size: 1.2em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="welcome-message" id="welcomeMessage">
-        Welcome, <span id="userName"></span>
-        <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i></button>
-    </div>
     <div class="header">
-        <h1>BsWatchin</h1>
+        <h1 style="color: #ff000dbe;">Power by <a style="text-decoration: underline;color: #004cff;" target="_blank" href="https://blackswan19.github.io/bscrop/TV/main">BsTv</a></h1>
     </div>
-    <div class="container">
-        <div class="password-section" id="passwordSection">
-            <h1 style="margin: 20px 0px 30px 1px; font-weight: 800; color: #ff0000;">Login</h1>
-            <input type="text" id="usernameInput" class="form-control username-input" placeholder="Enter Username">
-            <div class="password-input-container">
-                <input type="password" id="passwordInput" class="form-control password-input" placeholder="Enter Password">
-                <i class="bi bi-eye eye-icon" id="togglePassword"></i>
-            </div>
-            <button class="btn submit-btn mt-3" onclick="checkCredentials()">Verify Now</button>
-            <p id="errorMessage" class="error-message">Incorrect Username or Password!</p>
-            <div class="thematter">
-                <div class="matter" style="padding: 25px; width: 100%;">
-                    <p>You can now watch movie online or download it directly a high quality moive here first.</p>
-                    <p>With only just 35rs/month.</p>
-                </div>
-                <button class="calc-icon" style="background: red; color: white; padding: 12px 16px; font-weight: 600; border: none; outline: none; font-size: 16px; margin-top: -15px; border-radius: 6px;">
-                    <a style="text-decoration: none; color: white;" onclick="alert('You does not have access to apply')">Apply Now</a>
-                </button>
-            </div>
-            <p style="margin-top: 25px; font-weight: 600; font-size: 20px; text-decoration: none; color: rgb(0, 46, 255);">
-                <a href="https://blackswan19.github.io/bscrop/watchin/main">Explore BsWatchin</a>
-            </p>
+    <div class="movie-section">
+        <div class="movie-info" id="movie-info">
+            <h2>Your Movie</h2>
+            <p>Movies are available from 6:30 PM to 11:30 PM..!</p>
+            <div class="countdown" id="countdown">Movie starts in...</div>
+            <a href="https://drive.google.com/file/d/10i86qwzF9YtAk_OQ1cDmOTXHXMa4-36H/view?usp=drive_link" class="play-button" id="play-button">Play Now</a>
+            <div class="expired-message" id="expired-message">Movie is no longer available.</div>
         </div>
-        <div class="subscription-prompt" id="subscriptionPrompt">
-            <h3 style="font-size: 30px; font-weight: 800; color: red;">I want specific movie</h3>
-            <p>The Price of your specific movie will be based on the quality of the movie</p><br>
-            <button class="calc-icon" style="background: red; color: white; padding: 10px 25px; font-weight: 600; border: none; outline: none; font-size: 18px; border-radius: 10px;">
-                <a style="text-decoration: none; color: white;" href="https://forms.gle/P6tkXRCyvSSYQHgz9">Apply Now</a>
-            </button>
-        </div>
-        <div class="movie-section" id="movieSection" style="display: flex
-;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;">
-            <h1 style="margin: 20px 0px 30px 1px; font-weight: 800; color: #ff0000; text-transform: uppercase;">available movies </h1>
-            <div class="movie-card" id="gameChangerCard">
-                <p class="movie-expiry">Expires in 25th May</p>
-                <a class="movie-link">
-                    <img src="https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/saripodhaa-sanivaaram-et00388631-1724078891.jpg" alt="Saripodhaa Sanivaaram" class="movie-img" data-movie="Saripodhaa Sanivaaram" onclick="showFullscreenImage(this)">
-                </a>
-                <div class="movie-title">Saripodhaa Sanivaaram</div>
-            </div>
-            <p style="font-weight: 600; font-size: 20px; text-decoration: none; color: rgb(255 255 255); position: fixed; bottom: 0px; z-index: 1000; background: black; width: 100%; text-align: center; padding: 13px; margin: 0px; font-size: 15px;">
-                <a style="text-decoration: none; color: white; font-weight: 200; font-size: 12px; letter-spacing: 0.3px;" href="https://blackswan19.github.io/bscrop/TV/main">If you downloaded the moive, Watch in <span style="font-weight: 500;">BsTv</span> a computer system site for better video and audio experience</a>
-            </p>
-            
-            <div class="divert">
-                <h4 style="text-align: center;
-    font-size: 14px;
-    margin-bottom: 30px;
-    color: red;">Partners</h4>
-                <a href="https://mfi0212.github.io/MFI/paymine" style="background: white;
-    color: black;
-    padding: 10px 25px;
-    text-decoration: none;
-    border-radius: 10px;">PAY MINE</a>
-            </div>
+        <div class="image-container" id="image-container">
+            <img src="https://www.deccanchronicle.com/h-upload/2025/04/01/1903380-screenshot2025-04-01at83153pm.webp" alt="Movie Poster">
         </div>
     </div>
-    <div class="fullscreen-overlay" id="fullscreenOverlay">
-        <img src="" alt="Full-screen movie poster" class="fullscreen-img" id="fullscreenImg">
-        <a id="playLink" href="#"><button class="play-button">Play Now</button></a>
-        <button class="close-button" onclick="closeFullscreen()">✕</button>
-    </div>
-    <div class="calculator-popup" id="calculatorPopup">
-        <button class="close-popup" onclick="closeCalculatorPopup()">✕</button>
-        <h3>Calculate Subscription Cost</h3>
-        <input type="number" id="customDays" class="days-input" placeholder="Enter days">
-        <p id="costDisplay" class="cost-display">Cost: ₹0</p>
-        <button class="calc-btn" onclick="calculateCost()">Calculate</button>
-        <button class="extend-btn" onclick="extendSubscription(document.getElementById('customDays').value)">Extend</button>
-    </div>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript -->
     <script>
-        // Global variable to store the user's movie links
-        let userMovies = {};
-
-        // Password Toggle
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('passwordInput');
-
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            togglePassword.classList.toggle('bi-eye');
-            togglePassword.classList.toggle('bi-eye-slash');
-        });
-
-        // Check Credentials
-        function checkCredentials(autoLogin = false) {
-            const usernameInput = document.getElementById('usernameInput');
-            const passwordInput = document.getElementById('passwordInput');
-            const username = autoLogin ? localStorage.getItem('username') : usernameInput.value.trim();
-            const password = autoLogin ? localStorage.getItem('password') : passwordInput.value;
-            const users = {
-                'venky': {
-                    password: 'venky@2211',
-                    movies: {
-                        'Saripodhaa Sanivaaram': 'https://drive.google.com/file/d/1ia1IkaXlsqOMzlrDNrqNGL_rscfN1mgn/view',
-                    }
-                }
-            };
-            const movieSection = document.getElementById('movieSection');
-            const gameChangerCard = document.getElementById('gameChangerCard');
-            const errorMessage = document.getElementById('errorMessage');
-            const passwordSection = document.getElementById('passwordSection');
-            const welcomeMessage = document.getElementById('welcomeMessage');
-            const userNameSpan = document.getElementById('userName');
-            const subscriptionPrompt = document.getElementById('subscriptionPrompt');
-
-            // Reset card visibility
-            gameChangerCard.style.display = 'none';
-
-            if (users[username] && users[username].password === password) {
-                passwordSection.style.display = 'none';
-                welcomeMessage.style.display = 'flex';
-                movieSection.style.display = 'flex';
-                subscriptionPrompt.style.display = 'block';
-                userNameSpan.textContent = username;
-                errorMessage.style.display = 'none';
-                // Store the user's movie links
-                userMovies = users[username].movies;
-                // Store login time and credentials
-                if (!autoLogin) {
-                    localStorage.setItem('lastLoginTime', Date.now());
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('password', password);
-                }
-                // Show relevant movie card based on user
-                if (users[username].movies['Saripodhaa Sanivaaram']) {
-                    gameChangerCard.style.display = 'block';
-                }
-            } else {
-                if (!autoLogin) {
-                    errorMessage.style.display = 'block';
-                }
-                movieSection.style.display = 'none';
-                subscriptionPrompt.style.display = 'none';
-                welcomeMessage.style.display = 'none';
-                // Clear stored credentials on failed login
-                if (!autoLogin) {
-                    localStorage.removeItem('lastLoginTime');
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('password');
-                }
-            }
-        }
-
-        // Logout Function
-        function logout() {
-            // Clear stored credentials
-            localStorage.removeItem('lastLoginTime');
-            localStorage.removeItem('username');
-            localStorage.removeItem('password');
-            localStorage.removeItem('movieAccessExpiry');
-            // Reset UI
-            const passwordSection = document.getElementById('passwordSection');
-            const movieSection = document.getElementById('movieSection');
-            const welcomeMessage = document.getElementById('welcomeMessage');
-            const subscriptionPrompt = document.getElementById('subscriptionPrompt');
-            const usernameInput = document.getElementById('usernameInput');
-            const passwordInput = document.getElementById('passwordInput');
-            const errorMessage = document.getElementById('errorMessage');
-
-            passwordSection.style.display = 'block';
-            movieSection.style.display = 'none';
-            welcomeMessage.style.display = 'none';
-            subscriptionPrompt.style.display = 'none';
-            errorMessage.style.display = 'none';
-            usernameInput.value = '';
-            passwordInput.value = '';
-        }
-
-        // Check if user needs to re-authenticate on page load
+        // Schedule to show PLAY NOW button at 6:30 PM IST and hide it at 11:00 PM IST on May 23, 2025
         window.onload = function() {
-            const lastLoginTime = localStorage.getItem('lastLoginTime');
-            const username = localStorage.getItem('username');
-            const password = localStorage.getItem('password');
-            const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-            const movieSection = document.getElementById('movieSection');
-            const passwordSection = document.getElementById('passwordSection');
-            const welcomeMessage = document.getElementById('welcomeMessage');
-            const subscriptionPrompt = document.getElementById('subscriptionPrompt');
+            const countdownElement = document.getElementById('countdown');
+            const playButton = document.getElementById('play-button');
+            const expiredMessage = document.getElementById('expired-message');
 
-            // Hide movie section and subscription prompt by default
-            movieSection.style.display = 'none';
-            subscriptionPrompt.style.display = 'none';
-            welcomeMessage.style.display = 'none';
-            passwordSection.style.display = 'block';
+            // Target times: May 23, 2025, 6:30 PM IST (start) and 11:00 PM IST (end)
+            const startTime = new Date('2025-05-23T18:30:00+05:30').getTime();
+            const endTime = new Date('2025-05-23T23:00:00+05:30').getTime();
 
-            if (lastLoginTime && username && password) {
-                const timeElapsed = Date.now() - parseInt(lastLoginTime);
-                if (timeElapsed < twentyFourHours) {
-                    // Auto-login if within 24 hours
-                    checkCredentials(true);
+            // Update countdown every second
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeDiffStart = startTime - now;
+                const timeDiffEnd = endTime - now;
+
+                if (timeDiffStart <= 0 && timeDiffEnd > 0) {
+                    // Between 6:30 PM and 11:00 PM: hide countdown, show play button
+                    countdownElement.style.display = 'none';
+                    playButton.classList.add('active');
+                    expiredMessage.classList.remove('active');
+                } else if (timeDiffEnd <= 0) {
+                    // After 11:00 PM: hide countdown and play button, show expired message
+                    countdownElement.style.display = 'none';
+                    playButton.classList.remove('active');
+                    expiredMessage.classList.add('active');
+                    clearInterval(countdownInterval);
                 } else {
-                    // Clear credentials if more than 24 hours have passed
-                    localStorage.removeItem('lastLoginTime');
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('password');
-                    localStorage.removeItem('movieAccessExpiry');
+                    // Before 6:30 PM: show countdown
+                    const minutes = Math.floor((timeDiffStart % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeDiffStart % (1000 * 60)) / 1000);
+                    countdownElement.textContent = `Movie starts in ${minutes
+                        .toString()
+                        .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 }
             }
+
+            // Initial countdown update
+            updateCountdown();
+
+            // Update countdown every second
+            const countdownInterval = setInterval(updateCountdown, 1000);
         };
-
-        // Calculator Pop-up Functions
-        function showCalculatorPopup() {
-            const popup = document.getElementById('calculatorPopup');
-            popup.style.display = 'block';
-            document.getElementById('customDays').value = ''; // Reset input
-            document.getElementById('costDisplay').textContent = 'Cost: ₹0'; // Reset cost
-        }
-
-        function closeCalculatorPopup() {
-            const popup = document.getElementById('calculatorPopup');
-            popup.style.display = 'none';
-        }
-
-        function calculateCost() {
-            const days = parseInt(document.getElementById('customDays').value) || 0;
-            if (days < 1) {
-                alert('Please enter a valid number of days.');
-                return;
-            }
-            const cost = days === 30 ? 20 : (days * 0.68).toFixed(2); // ₹20 for 30 days, else ₹0.68/day
-            document.getElementById('costDisplay').textContent = `Cost: ₹${cost}`;
-        }
-
-        function extendSubscription(days) {
-            const daysNum = parseInt(days);
-            if (!daysNum || daysNum < 1) {
-                alert('Please enter a valid number of days.');
-                return;
-            }
-            const cost = daysNum === 30 ? 20 : (daysNum * 0.68).toFixed(2); // ₹20 for 30 days, else ₹0.68/day
-            alert(`You have extended access for ${daysNum} day(s) at ₹${cost}.`);
-            // Store the expiry date
-            const expiryDate = new Date();
-            expiryDate.setDate(expiryDate.getDate() + daysNum);
-            localStorage.setItem('movieAccessExpiry', expiryDate.getTime());
-            // Close popup and reset
-            closeCalculatorPopup();
-        }
-
-        // Full-Screen Image
-        function showFullscreenImage(imgElement) {
-            const expiry = localStorage.getItem('movieAccessExpiry');
-            const now = Date.now();
-            if (expiry && now > parseInt(expiry)) {
-                alert('Your movie access has expired. Please extend your subscription.');
-                return;
-            }
-
-            const overlay = document.getElementById('fullscreenOverlay');
-            const fullscreenImg = document.getElementById('fullscreenImg');
-            const playLink = document.getElementById('playLink');
-            const movieTitle = imgElement.getAttribute('data-movie');
-
-            fullscreenImg.src = imgElement.src;
-            playLink.href = userMovies[movieTitle] || '#';
-            overlay.style.display = 'flex';
-        }
-
-        function closeFullscreen() {
-            const overlay = document.getElementById('fullscreenOverlay');
-            overlay.style.display = 'none';
-        }
-
-        // Context menu functionality
+         // Context menu functionality
         document.addEventListener("DOMContentLoaded", () => {
             const customMenu = document.querySelector(".custom-menu");
 
