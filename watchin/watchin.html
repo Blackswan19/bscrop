@@ -474,33 +474,21 @@
                 <a style="text-decoration: none; color: white;" href="https://forms.gle/P6tkXRCyvSSYQHgz9">Apply Now</a>
             </button>
         </div>
-        <div class="movie-section" id="movieSection" style="display: flex
-;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;">
+        <div class="movie-section" id="movieSection" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
             <h1 style="margin: 20px 0px 30px 1px; font-weight: 800; color: #ff0000; text-transform: uppercase;">available movies </h1>
             <div class="movie-card" id="gameChangerCard">
-                <p class="movie-expiry">Expires in 25th May</p>
+                <p class="movie-expiry">Expires in 3rd July</p>
                 <a class="movie-link">
-                    <img src="https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/saripodhaa-sanivaaram-et00388631-1724078891.jpg" alt="Saripodhaa Sanivaaram" class="movie-img" data-movie="Saripodhaa Sanivaaram" onclick="showFullscreenImage(this)">
+                    <img src="https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/kannappa-et00377025-1750744616.jpg" alt="Kannappa" class="movie-img" data-movie="Kannappa" onclick="showFullscreenImage(this)">
                 </a>
-                <div class="movie-title">Saripodhaa Sanivaaram</div>
+                <div class="movie-title">Kannappa</div>
             </div>
             <p style="font-weight: 600; font-size: 20px; text-decoration: none; color: rgb(255 255 255); position: fixed; bottom: 0px; z-index: 1000; background: black; width: 100%; text-align: center; padding: 13px; margin: 0px; font-size: 15px;">
                 <a style="text-decoration: none; color: white; font-weight: 200; font-size: 12px; letter-spacing: 0.3px;" href="https://blackswan19.github.io/bscrop/TV/main">If you downloaded the moive, Watch in <span style="font-weight: 500;">BsTv</span> a computer system site for better video and audio experience</a>
             </p>
-            
             <div class="divert">
-                <h4 style="text-align: center;
-    font-size: 14px;
-    margin-bottom: 30px;
-    color: red;">Partners</h4>
-                <a href="https://mfi0212.github.io/MFI/paymine" style="background: white;
-    color: black;
-    padding: 10px 25px;
-    text-decoration: none;
-    border-radius: 10px;">PAY MINE</a>
+                <h4 style="text-align: center; font-size: 14px; margin-bottom: 30px; color: red;">Partners</h4>
+                <a href="https://mfi0212.github.io/MFI/paymine" style="background: white; color: black; padding: 10px 25px; text-decoration: none; border-radius: 10px;">PAY MINE</a>
             </div>
         </div>
     </div>
@@ -542,10 +530,10 @@
             const username = autoLogin ? localStorage.getItem('username') : usernameInput.value.trim();
             const password = autoLogin ? localStorage.getItem('password') : passwordInput.value;
             const users = {
-                'venky': {
-                    password: 'venky@2211',
+                'PHANI': {
+                    password: 'PHANI@0212',
                     movies: {
-                        'Saripodhaa Sanivaaram': 'https://drive.google.com/file/d/1ia1IkaXlsqOMzlrDNrqNGL_rscfN1mgn/view',
+                        'Kannappa': 'https://drive.google.com/file/d/1U8gcGCXfknB_cRggD1c0-8IJDBit5aPW/view?usp=drive_link',
                     }
                 }
             };
@@ -576,7 +564,7 @@
                     localStorage.setItem('password', password);
                 }
                 // Show relevant movie card based on user
-                if (users[username].movies['Saripodhaa Sanivaaram']) {
+                if (users[username].movies['Kannappa']) {
                     gameChangerCard.style.display = 'block';
                 }
             } else {
@@ -714,24 +702,6 @@
             const overlay = document.getElementById('fullscreenOverlay');
             overlay.style.display = 'none';
         }
-
-        // Context menu functionality
-        document.addEventListener("DOMContentLoaded", () => {
-            const customMenu = document.querySelector(".custom-menu");
-
-            // Show custom menu on right-click
-            document.addEventListener("contextmenu", (event) => {
-                event.preventDefault();
-                customMenu.style.display = "block";
-                customMenu.style.top = `${event.pageY}px`;
-                customMenu.style.left = `${event.pageX}px`;
-            });
-
-            // Hide the menu when clicking elsewhere
-            document.addEventListener("click", () => {
-                customMenu.style.display = "none";
-            });
-        });
     </script>
 </body>
 </html>
