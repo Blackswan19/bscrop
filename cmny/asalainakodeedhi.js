@@ -1,30 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
             const logoImg = document.querySelector('.logo img');
-            logoImg.addEventListener('error', () => {
-                logoImg.parentElement.style.display = 'none';
-                document.querySelector('h2').style.marginTop = '10px';
-            });
-
-            const downloadButton = document.querySelector('button');
-            if (downloadButton) {
-                downloadButton.addEventListener('click', generatePDF);
+            if (logoImg) {
+                logoImg.addEventListener('error', () => {
+                    logoImg.parentElement.style.display = 'none';
+                    document.querySelector('h4').style.marginTop = '10px';
+                    displayError('API address error: Failed to load logo image.');
+                });
             } else {
-                console.error('Download button not found');
-                alert('Error: Download button not found.');
+                document.querySelector('.logo').style.display = 'none';
+                document.querySelector('h4').style.marginTop = '10px';
+            }
+
+            // Check if html2pdf.js is loaded
+            if (typeof html2pdf === 'undefined') {
+                displayError('API address error: PDF generation library not loaded.');
+                const downloadButton = document.querySelector('button');
+                if (downloadButton) downloadButton.disabled = true;
             }
         });
-
         function generatePDF() {
+            try {
+                // Simulate a PDF API address error by throwing an error
+                throw new Error('PDF API address error: Unable to connect to PDF generation service.');
+            } catch (error) {
+                displayError(error.message);
+            }
+        }
+        function displayError(message) {
+            const errorElement = document.getElementById('error-message');
+            if (errorElement) {
+                errorElement.textContent = message;
+            } else {
+                alert(message);
+            }
+            console.error(message);
+        }
+
+        function generatepdf() {
             try {
                 const element = document.querySelector('.invoice');
                 if (!element) {
-                    console.error('Invoice element not found');
-                    alert('Error: Invoice element not found.');
+                    displayError('Error: Invoice element not found.');
                     return;
                 }
 
                 const logoImg = document.querySelector('.logo img');
-                const logoLoaded = logoImg && logoImg.complete && logoImg.naturalHeight !== 0;
+                let logoLoaded = true;
+                if (logoImg) {
+                    logoLoaded = logoImg.complete && logoImg.naturalHeight !== 0;
+                    if (!logoLoaded) {
+                        displayError('API address error: Logo image failed to load.');
+                    }
+                }
 
                 const qty = parseFloat(document.getElementById('qty').value) || 0;
                 const amount = parseFloat(document.getElementById('amount').value) || 0;
@@ -34,8 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const clonedElement = element.cloneNode(true);
 
                 if (!logoLoaded) {
-                    clonedElement.querySelector('.logo').style.display = 'none';
-                    clonedElement.querySelector('h2').style.marginTop = '10px';
+                    const clonedLogo = clonedElement.querySelector('.logo');
+                    if (clonedLogo) clonedLogo.style.display = 'none';
+                    const clonedH4 = clonedElement.querySelector('h4');
+                    if (clonedH4) clonedH4.style.marginTop = '10px';
                 }
 
                 const button = clonedElement.querySelector('button');
@@ -64,16 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const filenameValue = document.getElementById('filename').value.trim();
-                const filename = filenameValue ? `${filenameValue}#bs.pdf` : 'invoice#bs.pdf';
+                const filename = filenameValue ? `${filenameValue}.pdf` : 'invoice.pdf';
 
                 if (typeof html2pdf === 'undefined') {
-                    console.error('html2pdf.js is not loaded');
-                    alert('Error: PDF generation library not loaded.');
+                    displayError('API address error: PDF generation library not loaded.');
                     return;
                 }
 
                 html2pdf().from(clonedElement).set({
-                    margin: [0, 10, 10, 10], /* Top, right, bottom, left margins set to 10px */
+                    margin: [10, 10, 10, 10],
                     filename: filename,
                     jsPDF: { 
                         unit: 'mm', 
@@ -82,16 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         compress: false 
                     },
                     html2canvas: { 
-                        scale: 6,
+                        scale: 2,
                         dpi: 192,
                         logging: true,
                         useCORS: true
                     },
-                    
                     autoPaging: 'text'
-                }).save();
+                }).save().catch(error => {
+                    displayError(`API address error: Failed to generate PDF - ${error.message}`);
+                });
             } catch (error) {
-                console.error('Error generating PDF:', error);
-                alert('An error occurred while generating the PDF.');
+                displayError(`API address error: ${error.message}`);
             }
         }
