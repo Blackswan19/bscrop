@@ -1,0 +1,130 @@
+ .invoice-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .invoice { 
+            max-width: 800px;
+            margin: 0 auto; 
+            padding: 15px;
+            background-color: white;
+            box-sizing: border-box;
+            position: relative;
+            top: 0;
+        }
+        .logo {
+            position: relative;
+    top: -30px;
+    left: 5px;
+    float: left;
+        }
+        .logo img {
+            width: 100px;
+            height: 100px;
+            display: block;
+        }
+        .logo img[src=""], .logo img:not([src]) {
+            display: none;
+        }
+        
+        h4 { 
+                color: #000000;
+    padding-bottom: 10px;
+    margin: 0px;
+    font-size: 20px;
+    text-align: right;
+    font-weight: 900;
+        }
+        .main{}
+        .header p { 
+            font-size: 14px;
+            color: #000000; 
+            margin: 3px 0;
+            line-height: 1.4;
+        }
+        .billed-to { 
+            margin-top: 8px;
+        }
+        .billed-to label { 
+            font-weight: bold; 
+            color: #000000; 
+            font-size: 16px;
+        }
+        .highlight input, .highlight textarea { 
+            border: none; 
+            background: #5151514a; 
+            width: 100%; 
+            padding: 3px;
+            font-size: 14px;
+            font-family: 'Times New Roman', Times, serif;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+        .highlight textarea {
+            resize: none;
+            min-height: 80px;
+            max-height: 200px; 
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 8px;
+        }
+        .main{
+        }
+        th, td { 
+            border: 1.5px solid #ddd;
+            padding: 8px;
+            text-align: left; 
+            font-size: 14px;
+        }
+        th { 
+            background-color: #1c2143; 
+            color: white; 
+        }
+        td { 
+            background-color: #ecf0f1; 
+        }
+        .total-row td { 
+            font-weight: bold; 
+            background-color: #fff; 
+        }
+        .main{}
+        .payment-info { 
+            background-color: #1c2143;
+            color: white; 
+            padding: 20px;
+            margin-top: 8px;
+            font-size: 14px;
+            border-radius: 0px;
+            page-break-inside: avoid; /* Prevent breaking inside payment info */
+        }
+        .main{}
+        .payment-info h3 { 
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        .payment-row { 
+            display: flex;
+            align-items: center;
+            margin-bottom: 0px;
+        }
+        input {
+            outline: none;
+        }
+        .payment-row label { 
+            min-width: 150px;
+            font-weight: bold; 
+        }
+        .payment-row .colon { 
+            margin: 0 10px;
+        }
+        .payment-row .highlight { 
+            background-color: transparent;
+        }
+        .payment-row .highlight input { 
+            background-color: #ffffff; 
+            padding: 3px; 
+            color: #000; 
+        }
