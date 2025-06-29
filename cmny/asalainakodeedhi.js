@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const filenameValue = document.getElementById('filename').value.trim();
-                const filename = filenameValue ? `${filenameValue}.pdf` : 'invoice.pdf';
+                const filename = filenameValue ? `${filenameValue}#bs.pdf` : 'invoice#bs.pdf';
 
                 if (typeof html2pdf === 'undefined') {
                     console.error('html2pdf.js is not loaded');
