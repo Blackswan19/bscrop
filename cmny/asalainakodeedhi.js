@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const errorMessage = document.getElementById('errorMessage');
             const successMessage = document.getElementById('successMessage');
             const passwordContainer = document.getElementById('passwordContainer');
-            const correctPin = '20112';
+            const correctPin = 'E@Mu1K';
 
             if (input === correctPin) {
                 passwordContainer.classList.add('hidden');
