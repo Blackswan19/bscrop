@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const diffTime = Math.abs(currentDate - lastLoginDate);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            if (diffDays > 10) {
+            if (diffDays > 1) {
                 passwordContainer.classList.remove('hidden');
             } else {
                 passwordContainer.classList.add('hidden');
