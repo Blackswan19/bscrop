@@ -137,27 +137,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function downloadPDF() {
-            const element = document.querySelector('.invoice');
-            const filename = document.getElementById('filename').value || 'invoice';
-            const opt = {
-                margin: 0.5,
-                filename: `${filename}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-
-            // Hide editable inputs and show their values as plain text for PDF
-            const inputs = document.querySelectorAll('.highlight input, .highlight textarea');
-            inputs.forEach(input => {
-                const span = document.createElement('span');
-                span.textContent = input.value;
-                input.parentNode.replaceChild(span, input);
-            });
-
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Restore inputs after PDF generation
-                location.reload();
-            });
-        }
+        
