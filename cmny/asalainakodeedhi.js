@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 html2pdf().from(clonedElement).set({
-                    margin: [5, 10, 10, 10], /* Top, right, bottom, left margins set to 10px */
+                    margin: [3, 10, 10, 10], /* Top, right, bottom, left margins set to 10px */
                     filename: filename,
                     jsPDF: { 
                         unit: 'mm', 
