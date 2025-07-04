@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 html2pdf().from(clonedElement).set({
-                    margin: [3, 10, 10, 10], /* Top, right, bottom, left margins set to 10px */
+                    margin: [5, 10, 10, 10], /* Top, right, bottom, left margins set to 10px */
                     filename: filename,
                     jsPDF: { 
                         unit: 'mm', 
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const errorMessage = document.getElementById('errorMessage');
             const successMessage = document.getElementById('successMessage');
             const passwordContainer = document.getElementById('passwordContainer');
-            const correctPin = 'E@Mu1K';
+            const correctPin = 'E@Mu1K12';
 
             if (input === correctPin) {
                 passwordContainer.classList.add('hidden');
