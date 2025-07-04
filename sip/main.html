@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BS | SIP-Mid</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.britannica.com/62/236062-050-CD53AE96/Ampersand-symbol.jpg">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #e5e5e5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.5;
+        }
+        * {
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+        .container {
+            background: #fff;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: 600;
+        }
+        .header p {
+            font-size: 1.1em;
+            color: #666;
+            margin: 10px 0 20px;
+        }
+        .video {
+            margin: 30px 0;
+        }
+        .video iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 10px;
+        }
+        .calculator {
+            margin: 30px 0;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #e5e5e5;
+    padding: 30px;
+    border-radius: 30px;
+        }
+        .calculator label {
+            display: block;
+            font-size: 1em;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .calculator input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 43px;
+    font-size: 1em;
+    outline: none;
+    text-align: center;
+        }
+        .calculator button {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #333;
+            display: none;
+        }
+        .services {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .services div {
+            text-align: left;
+            max-width: 180px;
+            margin: 10px;
+        }
+        .services img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 15px;
+        }
+        .services p {
+            font-size: 1em;
+            color: #666;
+            margin: 0;
+        }
+        .cta {
+            margin-top: 30px;
+        }
+        .cta p {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .cta button {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 15px;
+        }
+        .cta button.secondary {
+            background: #fff;
+            color: #000;
+            border: 1px solid #000;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #999;
+            position: relative;
+            width: 100%;
+        }
+        .social {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.9em;
+            color: #999;
+        }
+        .social a {
+            color: #999;
+            margin-left: 15px;
+            text-decoration: none;
+        }
+        div#results {
+    background: #e5e5e5;
+    color: #000000;
+    padding: 35px;
+    border-radius: 30px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="social">
+            <!-- <a href="#">LinkedIn</a> / <a href="#">Dribbble</a> / <a href="#">Instagram</a> -->
+        </div>
+        <div class="header">
+            <img src="https://cdn.britannica.com/62/236062-050-CD53AE96/Ampersand-symbol.jpg" alt="Profile">
+            <h1>Sip-Mid</h1>
+            <p>Invest smart with Sip-Mid</p>
+        </div>
+       <div class="calculator">
+            <label for="amount">Investment Amount (₹):</label>
+            <input type="number" id="amount" placeholder="e.g., 5000" required value="1000">
+            <label for="rate">Expected Return (%):</label>
+            <input type="number" id="rate" placeholder="e.g., 12" step="0.1" required value="6">
+            <label for="years">Time Period (Years):</label>
+            <input type="number" id="years" placeholder="e.g., 5" required value="5"><br>
+            <button onclick="calculateSIP()">Calculate</button>
+        </div>
+       <div class="results" id="results">
+            <p>Your total invested amount for <span id="yearsResult"></span> years: <span id="totalInvested"></span></p>
+            <p>Return profit :  <span id="returnAmount"></span></p>
+            <hr>
+            <p>Total returns: <span id="totalReturns"></span></p>
+        </div>
+        <div class="cta">
+            <p>Tell me about what you want to do now</p>
+            <button>My account</button>
+            <button class="secondary">Apply for SIP</button>
+        </div>
+        <footer>© BS. All rights reserved</footer>
+    </div>
+
+    <script>
+        function calculateSIP() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const rate = parseFloat(document.getElementById('rate').value) / 100;
+            const years = parseInt(document.getElementById('years').value);
+            const resultsDiv = document.getElementById('results');
+            const totalInvestedSpan = document.getElementById('totalInvested');
+            const yearsResultSpan = document.getElementById('yearsResult');
+            const returnAmountSpan = document.getElementById('returnAmount');
+            const totalReturnsSpan = document.getElementById('totalReturns');
+
+            if (amount && rate && years) {
+                const months = years * 12;
+                const totalInvested = amount * months;
+                const futureValue = amount * (((Math.pow(1 + rate/12, months) - 1) / (rate/12)) * (1 + rate/12));
+                const returns = futureValue - totalInvested;
+
+                totalInvestedSpan.textContent = `₹${totalInvested.toFixed(2)}`;
+                yearsResultSpan.textContent = `${years}`;
+                returnAmountSpan.textContent = `₹${returns.toFixed(2)}`;
+                totalReturnsSpan.textContent = `₹${futureValue.toFixed(2)}`;
+                resultsDiv.style.display = 'block';
+            } else {
+                resultsDiv.style.display = 'none';
+                alert('Please fill all fields with valid numbers.');
+            }
+        }
+    </script>
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const customMenu = document.querySelector(".custom-menu");
+
+            document.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                if (customMenu) {
+                    customMenu.style.display = "block";
+                    customMenu.style.top = `${event.pageY}px`;
+                    customMenu.style.left = `${event.pageX}px`;
+                }
+            });
+
+            document.addEventListener("click", () => {
+                if (customMenu) {
+                    customMenu.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
