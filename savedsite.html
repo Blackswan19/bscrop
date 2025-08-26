@@ -8,19 +8,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-        /* Basic reset */
         * {
+            -webkit-tap-highlight-color: transparent;
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            box-sizing: border-box;
         }
-
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
         body {
             background-color: #000000;
             color: #ffffff;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -84,23 +89,23 @@
         }
 
         .website-card {
-            background: #21212116;
-            border-radius: 10px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1.5px solid #ffffff24;
-            position: relative;
-            backdrop-filter: blur(10px);
+           background: #ffffff54;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex
+;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    position: relative;
+    backdrop-filter: blur(10px);
         }
 
         .website-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 0px 15px rgba(255, 255, 255, 0.1);
-            background: #000000a3;
-            border: 1.5px solid #0000003f;
+            background: #969696;
         }
 
         .website-card img {
@@ -108,6 +113,7 @@
             height: 24px;
             margin-right: 10px;
             vertical-align: middle;
+                border-radius: 50%;
         }
 
         .website-card a {
@@ -140,7 +146,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 20px;
             transition: background 0.3s;
         }
 
@@ -171,9 +177,7 @@
         /* Mobile-specific styles */
         @media (max-width: 480px) {
             /* General layout */
-            body {
-                padding: 15px;
-            }
+            
 
             /* Header */
             .header {
@@ -204,10 +208,11 @@
 
             /* Website card */
             .website-card {
-                padding: 12px;
-                border-radius: 8px;
-                border: 1px solid #ffffff1a;
-                gap: 8px;
+                        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ffffff1a;
+        gap: 8px;
+        width: 70%;
             }
 
             .website-card a {
@@ -223,19 +228,16 @@
             .delete-btn {
                 width: 20px;
                 height: 20px;
-                font-size: 10px;
-                right: 8px;
-                top: 8px;
             }
 
             /* Add website button */
             .add-website-btn {
-                top: 15px;
-                right: 15px;
-                padding: 8px 12px;
-                font-size: 12px;
-                border-radius: 6px;
-                border: 1px solid #ffffff24;
+                right: 0px;
+        padding: 21px 20px;
+        border-radius: 0px;
+        position: fixed;
+        height: 100%;
+        top: 0px;
             }
 
             .add-website-btn i {
@@ -384,6 +386,27 @@
             window.addEventListener('storage', (event) => {
                 if (event.key === 'websites') {
                     loadWebsites();
+                }
+            });
+        });
+    </script>
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const customMenu = document.querySelector(".custom-menu");
+
+            document.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                if (customMenu) {
+                    customMenu.style.display = "block";
+                    customMenu.style.top = `${event.pageY}px`;
+                    customMenu.style.left = `${event.pageX}px`;
+                }
+            });
+
+            document.addEventListener("click", () => {
+                if (customMenu) {
+                    customMenu.style.display = "none";
                 }
             });
         });
