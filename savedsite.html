@@ -89,23 +89,23 @@ body {
         }
 
         .website-card {
-           background: #ffffff54;
-    border-radius: 10px;
-    padding: 15px;
+              background: #ffffff17;
+    border-radius: 50px;
+    padding: 10px 15px;
     display: flex
 ;
     flex-direction: column;
     gap: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
     border: none;
     position: relative;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
+    border: solid 1.5px #ffffff3b;
         }
 
         .website-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0px 15px rgba(255, 255, 255, 0.1);
-            background: #969696;
+            transform: translateY(-2px);
+            background: #0000003a;
         }
 
         .website-card img {
@@ -127,10 +127,6 @@ body {
             text-overflow: ellipsis;
             white-space: nowrap;
             width: 90%;
-        }
-
-        .website-card a:hover {
-            text-decoration: underline;
         }
 
         .delete-btn {
@@ -159,18 +155,19 @@ body {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #ffffff24;
+            background: #ffffff3c;
             border: 1.5px solid #ffffff2b;
-            color: #ffffff;
+            color: black;
             padding: 10px 15px;
-            border-radius: 8px;
+            border-radius: 13px;
             cursor: pointer;
             font-size: 14px;
             transition: background 0.3s;
+                backdrop-filter: blur(5px);
         }
 
         .add-website-btn:hover {
-            background: #00000046;
+            background: #ffffff7b;
             border: 1.5px solid #ffffff4d;
         }
 
@@ -208,11 +205,12 @@ body {
 
             /* Website card */
             .website-card {
-                        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #ffffff1a;
+                       padding: 10px 15px;
+        border-radius: 50px;
+        border: 1.5px solid #ffffff2b;
         gap: 8px;
         width: 70%;
+
             }
 
             .website-card a {
