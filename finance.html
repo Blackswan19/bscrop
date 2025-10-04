@@ -1,20 +1,36 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsFinacal</title> <style> @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&family=Red+Hat+Display:ital,wght@0,300..900&family=Strait&display=swap'); * { font-family: "Red Hat Display", sans-serif; } body { font-family: Arial, sans-serif; background-color: #121212; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; letter-spacing: 0.5px; white-space: nowrap; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } h1 { color: #ffffff; font-size: 1.8em; } a { text-decoration: none; color: white; } .container { max-width: 800px; width: 100%; padding: 30px; } .balance-display { font-size: 1.5em; color: #ffffff; margin-bottom: 20px; text-align: center; background: #3c3c3c63; padding: 10px; } .form-group { margin-bottom: 15px; } .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #ffffff; } .form-group input, .form-group select { padding: 10px; border: 1px solid #333; border-radius: 4px; background-color: #2a2a2a; color: #ffffff; outline: none; } button { width: 100%; padding: 10px; background-color: #007bff; color: #ffffff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; transition: background-color 0.3s; } button:hover { background-color: #0056b3; } .transaction-table { width: 100%; border-collapse: collapse; margin-top: 20px; } .transaction-table th, .transaction-table td { padding: 10px 5px; border: 1px solid #333; text-align: center; color: #e0e0e09e; text-transform: capitalize; font-size: 15px; font-weight: 600; } .transaction-table th { background-color: #282828; } .delete-btn { padding: 5px; background-color: transparent; color: #ffffff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; } .delete-btn:hover { background-color: #ff0000; } /* Calculator Popup Styling */ .calculator-popup { position: fixed; top: 0; left: 0; width: 90vw; height: 100vh; background-color: #333; padding: 20px; display: none; z-index: 1000; flex-direction: column; align-items: center; justify-content: center; gap: 40px; max-width: 400px; } input#calc-display { width: 50%; outline: none; border: none; background: gray; font-size: 20px; color: white; } .calculator { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 400px; width: 100%; } .calculator input { grid-column: span 4; padding: 10px; font-size: 1.2em; text-align: right; border-radius: 4px; background-color: #121212; color: #ffffff; border: 1px solid #555; } .calculator button { padding: 10px; font-size: 1.2em; background-color: #444; color: #ffffff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; } .calculator button:hover { background-color: #555; } .close-calculator { position: absolute; top: 10px; color: #ffffff; border: none; cursor: pointer; font-size: 1em; left: 0px; background: none; } .close-calculator:hover { background: none; } .options { display: flex; justify-content: center; align-items: baseline; gap: 10px; } /* Toggle Button Styling */ .toggle-form-btn { position: fixed; top: 10px; left: 10px; width: 40px; height: 40px; font-size: 1.5em; display: flex; align-items: center; justify-content: center; background-color: #007bff; border-radius: 50%; cursor: pointer; transition: background-color 0.3s; } .toggle-form-btn:hover { background-color: #0056b3; } /* Hide Form by Default */ .transaction-form { display: none; margin-bottom: 20px; } /* Mobile Responsive Styling */ @media (max-width: 600px) { .container { padding: 15px; } h1 { font-size: 1.6em; } .balance-display { font-size: 1.3em; } button, .form-group input, .form-group select { font-size: 10px; } .calculator { max-width: 100%; padding: 10px; } .calculator input { font-size: 1em; } .calculator button { font-size: 1em; padding: 8px; } .transaction-table th, .transaction-table td { padding: 10px 5px; border: 1px solid #333; text-align: center; color: #e0e0e09e; text-transform: capitalize; font-size: 12px; font-weight: 500; } .toggle-form-btn { width: 35px; height: 35px; font-size: 1.2em; } } </style> </head> <body> <a href="https://blackswan19.github.io/Educate/savenotes.html"><h1>BsFinacal</h1></a> <div class="container"> <!-- Toggle Button --> <button class="toggle-form-btn" id="toggle-form">+</button> <div class="balance-display"> <span id="balance-label" style="font-weight: 800; color: #0068ff;">Total ₹</span> : <span id="balance" style="font-weight: 800; color: #0068ff;">0.00</span> </div> <!-- Transaction Input Form --> <div class="transaction-form" id="transaction-form"> <div class="form-group"> <label for="transaction-type">Transaction Type:</label> <select id="transaction-type"> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <div class="form-group"> <label for="transaction-description">For:</label> <input type="text" id="transaction-description" placeholder="Enter name or spends on"> </div> <div class="form-group"> <label for="transaction-amount">Rs:</label> <input type="number" id="transaction-amount" placeholder="Enter amount" step="0.01"> </div> <div class="form-group"> <label for="transaction-date">Date:</label> <input type="date" id="transaction-date"> </div> <div class="options"> <button id="add-transaction">Add Transaction</button><br> <button id="open-calculator" style="margin-top: 10px;">Calculator</button> </div> </div> <!-- Filter Dropdown --> <div class="form-group" style="position: fixed; top: 10px; right: 10px;"> <select id="filter-type" onchange="renderTransactions()"> <option value="all">All</option> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <!-- Transactions Table --> <table class="transaction-table"> <thead> <tr> <th>For</th> <th>Rs</th> <th>Type</th> <th>Date</th> <th>Del</th> </tr> </thead> <tbody id="transaction-list"> <!-- Transaction rows will be dynamically added here --> </tbody> </table> </div> <script src="noright.js"></script> <!-- Calculator Popup --> <div id="calculator-popup" class="calculator-popup"> <button class="close-calculator" onclick="closeCalculator()">X</button> <input style="padding: 10px;" type="text" id="calc-display" oninput="validateInput(this)"> <div class="calculator"> <button onclick="clearDisplay()">C</button> <button onclick="appendSymbol('%')">%</button> <button onclick="appendSymbol('/')">/</button> <button onclick="deleteLastCharacter()">⌫</button> <button onclick="appendSymbol('7')">7</button> <button onclick="appendSymbol('8')">8</button> <button onclick="appendSymbol('9')">9</button> <button onclick="appendSymbol('*')">×</button> <button onclick="appendSymbol('4')">4</button> <button onclick="appendSymbol('5')">5</button> <button onclick="appendSymbol('6')">6</button> <button onclick="appendSymbol('-')">−</button> <button onclick="appendSymbol('1')">1</button> <button onclick="appendSymbol('2')">2</button> <button onclick="appendSymbol('3')">3</button> <button onclick="appendSymbol('+')">+</button> <button onclick="appendSymbol('0')" style="grid-column: span 2;">0</button> <button onclick="appendSymbol('.')">.</button> <button onclick="calculateResult()">=</button> </div> </div>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsFinacal</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900&display=swap'); * { font-family: "Red Hat Display", sans-serif; box-sizing: border-box; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } body { background-color: #18181b; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0; overflow-x: hidden; } h1 { color: #0058ff; font-size: 1.8em; font-weight: 800; margin: 120px 0px 0px 0px; position: relative; } a { text-decoration: none; color: #ffffff; } .container { max-width: 800px; width: 100%; padding: 15px; } .balance-display { font-size: 20px; color: #ffffff; background: #2f2f2f; padding: 10px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 8px 1000px rgb(23 23 23 / 66%); display: flex ; justify-content: space-around; } .form-group { margin-bottom: 10px; } .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #ffffff; } .form-group input, .form-group select { padding: 8px; border: 1px solid #404040; border-radius: 4px; background-color: #252526; color: #ffffff; width: 100%; font-size: 0.9em; outline: none; } button { padding: 8px; background-color: #006bff; color: #ffffff; border: none; border-radius: 4px; font-size: 0.9em; cursor: pointer; transition: background-color 0.2s; } button:hover { background-color: #0056b3; } .transaction-table-container { max-height: 600px; overflow-y: auto; width: 100%; margin-top: 20px; scrollbar-width: thin; scrollbar-color: #006bff #404040; } .transaction-table { width: 100%; border-collapse: collapse; } .transaction-table th, .transaction-table td { padding: 8px; border: 1px solid #4040407a; text-align: center; color: gray; font-size: 15px; font-weight: 600; text-transform: capitalize; background: #ffffff12; } .transaction-table th { background-color: #252526; position: sticky; top: 0; z-index: 10; } .delete-btn { color: #ff00006b; border: none; cursor: pointer; background: transparent; padding: 0px; font-size: 14px; } .delete-btn:hover { color: red; background: transparent; } /* Transaction Popup Styling */ .transaction-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90vw; max-width: 400px; background-color: #252526; padding: 20px; display: none; z-index: 1000; flex-direction: column; gap: 10px; border-radius: 8px; box-shadow: 0 4px 8px 1000px rgb(0 0 0 / 70%); } .transaction-popup.active { display: flex; } .close-transaction { position: absolute; top: 10px; left: 10px; color: #ffffff; border: none; cursor: pointer; font-size: 1em; background: none; } .close-transaction:hover { color: #006bff; } .options { display: flex; justify-content: center; gap: 10px; } /* Period Summary Slider Styling */ .period-slider { position: fixed; top: 0; right: -400px; width: 350px; height: 100vh; background-color: #252526; padding: 20px; z-index: 10000; transition: right 0.3s ease-in-out; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; } .period-slider.active { right: 0; } .period-slider h2 { color: #ffffff; font-size: 1.5em; margin-bottom: 15px; font-weight: 600; } .period-result { color: #ffffff; margin-top: 15px; font-size: 0.9em; } .period-result p { margin: 5px 0; } .close-period-slider { position: absolute; top: 10px; right: 10px; color: #ffffff; border: none; cursor: pointer; font-size: 1em; background: none; } .close-period-slider:hover { color: #006bff; } .toggle-form-btn { position: fixed; top: 10px; left: 10px; width: 40px; height: 40px; font-size: 1.5em; display: flex; align-items: center; justify-content: center; background-color: #006bff; color: #ffffff; border: none; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; z-index: 1100; } .toggle-form-btn:hover { background-color: #0056b3; } .toggle-period-btn { position: fixed; top: 60px; right: 10px; width: 40px; height: 40px; font-size: 1.5em; display: flex; align-items: center; justify-content: center; background-color: #006bff; color: #ffffff; border: none; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; z-index: 1100; } /* Filter Dropdown */ .form-group.filter { position: fixed; top: 10px; right: 10px; z-index: 1100; } /* Mobile Responsive Styling */ @media (max-width: 600px) { .container { padding: 10px; } h1 { font-size: 1.5em; } .balance-display { font-size: 18px; padding: 8px; } .form-group input, .form-group select, button { font-size: 0.8em; padding: 6px; } .transaction-table th, .transaction-table td { padding: 6px 3px; font-size: 0.8em; } .transaction-table-container { max-height: 600px; } .toggle-form-btn, .toggle-period-btn { width: 35px; height: 35px; font-size: 1.2em; } .period-slider { width: 100%; right: -100%; } .period-slider.active { right: 0; } .transaction-popup { width: 95vw; max-width: 300px; padding: 15px; } } </style> </head> <body> <a href="https://blackswan19.github.io/Educate/savenotes.html"><h1>BsFinacal</h1></a> <div class="container"> <!-- Toggle Form Button --> <button class="toggle-form-btn" id="toggle-form">+</button> <!-- Toggle Period Slider Button --> <button class="toggle-period-btn" id="toggle-period">Σ</button> <div class="balance-display"> <span id="balance-label" style="font-weight: 800; color: rgb(155, 155, 155);">Total </span> : <span id="balance" style="font-weight: 800; color: #00fff9b0;">0.00</span> </div> <!-- Transaction Input Popup --> <div class="transaction-popup" id="transaction-popup"> <div class="form-group"> <label for="transaction-type">Transaction Type:</label> <select id="transaction-type"> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <div class="form-group"> <label for="transaction-description">For:</label> <input type="text" id="transaction-description" placeholder="Enter name or spends on"> </div> <div class="form-group"> <label for="transaction-amount">Rs:</label> <input type="number" id="transaction-amount" placeholder="Enter amount" step="0.01"> </div> <div class="form-group"> <label for="transaction-date">Date:</label> <input type="date" id="transaction-date" value="2025-09-12"> </div> <div class="options"> <button id="add-transaction">Add Transaction</button> <button onclick="closeTransactionPopup()">Cancel</button> </div> </div> <!-- Filter Dropdown --> <div class="form-group filter"> <select id="filter-type" onchange="renderTransactions()"> <option value="all">All</option> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <!-- Transactions Table --> <div class="transaction-table-container"> <table class="transaction-table"> <thead> <tr> <th>For</th> <th>Rs</th> <th>Type</th> <th>Date</th> <th>Del</th> </tr> </thead> <tbody id="transaction-list"> <!-- Transaction rows will be dynamically added here --> </tbody> </table> </div> </div> <!-- Period Summary Slider --> <div id="period-slider" class="period-slider"> <button class="close-period-slider" onclick="closePeriodSlider()">X</button> <h2>Period Summary</h2> <div class="form-group"> <label for="start-date">Start Date:</label> <input type="date" id="start-date" value="2025-09-12"> </div> <div class="form-group"> <label for="end-date">End Date:</label> <input type="date" id="end-date" value="2025-09-12"> </div> <div class="form-group"> <label for="period-type">Show Details For:</label> <select id="period-type"> <option value="expense">Expenses</option> <option value="income">Income</option> <option value="all">All</option> </select> </div> <button id="calculate-period">Calculate</button> <div id="period-result" class="period-result"></div> </div>
   <script>
     let balance = 0;
     let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
-    // Toggle Form Visibility
+    // Toggle Transaction Popup
     document.getElementById("toggle-form").addEventListener("click", () => {
-      const form = document.getElementById("transaction-form");
+      const popup = document.getElementById("transaction-popup");
       const button = document.getElementById("toggle-form");
-      if (form.style.display === "none" || form.style.display === "") {
-        form.style.display = "block";
-        button.textContent = "−"; // Change to minus when form is visible
+      if (popup.classList.contains("active")) {
+        popup.classList.remove("active");
+        button.textContent = "+";
       } else {
-        form.style.display = "none";
-        button.textContent = "+"; // Change to plus when form is hidden
+        popup.classList.add("active");
+        button.textContent = "−";
       }
     });
+
+    function closeTransactionPopup() {
+      document.getElementById("transaction-popup").classList.remove("active");
+      document.getElementById("toggle-form").textContent = "+";
+    }
+
+    // Toggle Period Slider
+    document.getElementById("toggle-period").addEventListener("click", () => {
+      const slider = document.getElementById("period-slider");
+      slider.classList.toggle("active");
+      document.getElementById("period-result").innerHTML = "";
+    });
+
+    function closePeriodSlider() {
+      document.getElementById("period-slider").classList.remove("active");
+    }
 
     function updateBalance() {
       renderTransactions();
@@ -24,7 +40,6 @@
       const date = new Date(dateString);
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
       return `${day}-${month}`;
     }
 
@@ -33,10 +48,10 @@
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${transaction.description}</td>
-        <td>₹${transaction.amount.toFixed(2)}</td>
+        <td>${transaction.amount.toFixed(0)}</td>
         <td>${transaction.type}</td>
         <td>${formatDate(transaction.date)}</td>
-        <td><button class="delete-btn" onclick="deleteTransaction(${index})">Del</button></td>
+        <td  style='text-align: center;'><button class="delete-btn" onclick="deleteTransaction(${index})"><i class="fa-solid fa-square-minus"></i></button></td>
       `;
       transactionList.appendChild(row);
     }
@@ -104,73 +119,80 @@
 
       document.getElementById("transaction-description").value = "";
       document.getElementById("transaction-amount").value = "";
-      document.getElementById("transaction-date").value = "";
-      // Optionally hide the form after adding a transaction
-      document.getElementById("transaction-form").style.display = "none";
+      document.getElementById("transaction-date").value = "2025-09-12";
+      document.getElementById("transaction-popup").classList.remove("active");
       document.getElementById("toggle-form").textContent = "+";
     });
 
-    document.getElementById("open-calculator").addEventListener("click", () => {
-      const calculatorPopup = document.getElementById("calculator-popup");
-      calculatorPopup.style.display = calculatorPopup.style.display === "none" ? "flex" : "none";
-      document.getElementById("calc-display").focus();
+    // Period Summary Functionality
+    document.getElementById("calculate-period").addEventListener("click", () => {
+      const startStr = document.getElementById("start-date").value;
+      const endStr = document.getElementById("end-date").value;
+      const periodType = document.getElementById("period-type").value;
+
+      if (!startStr || !endStr) {
+        alert("Please select start and end dates.");
+        return;
+      }
+
+      const start = new Date(startStr);
+      const end = new Date(endStr);
+
+      if (start > end) {
+        alert("Start date must be before or equal to end date.");
+        return;
+      }
+
+      const days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+      const filtered = transactions.filter(t => {
+        const tDate = new Date(t.date);
+        return tDate >= start && tDate <= end;
+      });
+
+      let total = 0;
+      let listHtml = "";
+      const listedTransactions = filtered.filter(t => periodType === "all" || t.type === periodType);
+
+      listedTransactions.forEach(t => {
+        const verb = t.type === "expense" ? "spent" : "received";
+        const onFrom = t.type === "expense" ? "on" : "from";
+        listHtml += `<p>You ${verb}: ${t.amount.toFixed(2)}rs ${onFrom} ${t.description}</p>`;
+        total += t.type === "expense" ? (periodType === "all" ? -t.amount : t.amount) : (periodType === "all" ? t.amount : t.amount);
+      });
+
+      const resultDiv = document.getElementById("period-result");
+      const typeLabel = periodType === "all" ? "Net Balance" : periodType.charAt(0).toUpperCase() + periodType.slice(1);
+      resultDiv.innerHTML = `
+        <p>No. of days between: ${days}</p>
+        <p>${typeLabel} on ${days} days: ${total.toFixed(2)}</p>
+        ${listHtml}
+      `;
     });
 
-    function closeCalculator() {
-      document.getElementById("calculator-popup").style.display = "none";
-    }
-
-    function validateInput(input) {
-      const validPattern = /^[0-9+\-*/%.]*$/;
-      if (!validPattern.test(input.value)) {
-        input.value = input.value.replace(/[^0-9+\-*/%.]/g, '');
-      }
-    }
-
-    function appendSymbol(symbol) {
-      const input = document.getElementById("calc-display");
-      const start = input.selectionStart;
-      const end = input.selectionEnd;
-      const value = input.value;
-      input.value = value.substring(0, start) + symbol + value.substring(end);
-      input.selectionStart = input.selectionEnd = start + symbol.length;
-      input.focus();
-    }
-
-    function clearDisplay() {
-      const input = document.getElementById("calc-display");
-      input.value = "";
-      input.focus();
-    }
-
-    function deleteLastCharacter() {
-      const input = document.getElementById("calc-display");
-      const start = input.selectionStart;
-      const end = input.selectionEnd;
-      if (start !== end) {
-        input.value = input.value.substring(0, start) + input.value.substring(end);
-        input.selectionStart = input.selectionEnd = start;
-      } else if (start > 0) {
-        input.value = input.value.substring(0, start - 1) + input.value.substring(start);
-        input.selectionStart = input.selectionEnd = start - 1;
-      }
-      input.focus();
-    }
-
-    function calculateResult() {
-      const display = document.getElementById("calc-display");
-      try {
-        display.value = eval(display.value.replace(/×/g, '*').replace(/−/g, '-'));
-      } catch {
-        display.value = "Error";
-      }
-      display.focus();
-    }
-
-    // Explicitly hide calculator and ensure form is hidden on page load
-    document.getElementById("calculator-popup").style.display = "none";
-    document.getElementById("transaction-form").style.display = "none";
+    // Explicitly hide elements on page load
+    document.getElementById("transaction-popup").classList.remove("active");
+    document.getElementById("period-slider").classList.remove("active");
     loadTransactions();
-  </script>
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const customMenu = document.querySelector(".custom-menu");
+
+            document.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                if (customMenu) {
+                    customMenu.style.display = "block";
+                    customMenu.style.top = `${event.pageY}px`;
+                    customMenu.style.left = `${event.pageX}px`;
+                }
+            });
+
+            document.addEventListener("click", () => {
+                if (customMenu) {
+                    customMenu.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
