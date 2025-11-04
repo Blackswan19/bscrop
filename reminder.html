@@ -1,123 +1,296 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsReminder</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/WBcSJPd/New-Project-A1-A7313.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <link rel="stylesheet" href="calendar.css"> </head> <body> <p style="color: #0059ff;font-weight: 500;">#BsReminder</p> <div class="calendar"> <h2 id="monthAndYear"></h2> <table id="calendar"> <thead> <tr> <th>Sunday</th> <th>Monday</th> <th>Tueday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> </tr> </thead> <tbody id="calendar-body"> </tbody> </table> </div> <div class="leftright"> <button class="but1" onclick="previous()"><i class="fa-solid fa-angle-left"></i></button> <button class="but2" onclick="next()"><i class="fa-solid fa-angle-left fa-flip-horizontal"></i></button> </div> <!-- Goal Input Modal --> <div id="goalInputModal" class="modal"> <div class="modal-content"> <span class="close" onclick="closeModal('goalInputModal')">&times;</span> <h3 id="inputModalDate"></h3> <input type="text" id="goalInput" placeholder="Enter your goal" /> <button onclick="saveGoal()">Save Goal</button> </div> </div> <!-- Goal Display Modal --> <div id="goalDisplayModal" class="modal"> <div class="modal-content"> <span class="close" onclick="closeModal('goalDisplayModal')">&times;</span> <h3 id="displayModalDate"></h3> <p id="goalDisplayText"></p> <button onclick="editGoal()"><i class="fa-regular fa-pen-to-square"></i> Edit</button> </div> </div>
-<script>
-  let today = new Date();
-  let currentMonth = today.getMonth();
-  let currentYear = today.getFullYear();
-  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  
-  let goals = JSON.parse(localStorage.getItem('goals')) || {}; // Load saved goals from localStorage or initialize empty object
-  let selectedDate; // Stores the currently selected date
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>BsReminder</title> <link rel="icon" href="https://i.ibb.co/WBcSJPd/New-Project-A1-A7313.png" type="image/x-icon" /> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /> <style> :root { --bg: #000000; --card: #141414; --border: #222; --text: #eaeaea; --muted: #a5a5a5; --primary: #0059ff; --warning: #ff8c00; /* every month pin - yellow/orange */ --success: #00c389; /* normal note highlight - green */ --title-color: #4da6ff; --note-color: #cfcfcf; } * { box-sizing: border-box; font-family: "Verdana", "Noto Sans", sans-serif; color: var(--text); } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } body { margin: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; } .logo { font-weight: 700; color: var(--primary); margin-top: 20px; font-size: 18px; } table { width: 95%; max-width: 800px; border-collapse: collapse; margin-top: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; } th, td { text-align: center; padding: 15px 0; border: 1px solid var(--border); vertical-align: top; } th { background: #ffffff3f; color: var(--muted); text-transform: uppercase; font-size: 12px; } td { background: var(--card); cursor: pointer; position: relative; width: 150px; height: 70px; } td:hover { background: #ffffff2b; } .highlight { background: #ffffff3b; color: #fff; font-weight: 600; } .pinned { background: #0c4f00; color: #fff; } .has-notes { background:#4c2d1d; color: #fff; } .pinned:hover{ background: #127800; } .has-notes:hover { background:#643d2a;} .note-preview { display: block; font-size: 11px; margin-top: 3px; opacity: 0.8; color: #00fff2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; width: 100%; } .note-count { font-size: 10px; color: var(--primary); margin-top: 4px; } .leftright { display: flex; gap: 40px; white-space: nowrap; } .leftright button { background: #1a1a1a; border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 8px 16px; cursor: pointer; } .leftright button:hover { background: var(--primary); color: #fff; } /* MODAL */ .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 100; } .modal-content { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 25px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; } .close { float: right; font-size: 20px; cursor: pointer; color: var(--muted); } .close:hover { color: var(--primary); } input, button, textarea { width: 100%; padding: 10px; margin: 6px 0; border-radius: 6px; border: 1px solid var(--border); background: #3c3c3c; color: var(--text); font-size: 14px; outline: none; } textarea { resize: none; height: 70px; } input:focus, textarea:focus { border: solid 1.5px #ffffff4a; } button { background: var(--primary); color: #fff; border: none; cursor: pointer; font-weight: 600; } button:hover { background: #0041c2; } .checkbox { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 10px 0; color: var(--muted); } .notes-list { background: #ffffff1a; border-radius: 6px; padding: 10px; margin: 10px 0; border: 1px solid var(--border); overflow-y: auto; max-height: 300px; } .note-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ffffff46; padding: 8px 0; line-height: 26px; } .note-item:last-child { border-bottom: none; } .note-title { color: #0059ff; font-weight: 600; font-size: 13px; text-transform: capitalize; } .note-text { color: var(--note-color); font-size: 13px; margin-top: 2px;} .note-actions { display: flex; gap: 25px; font-size: 14px; background: #ffffff30; padding: 10px 15px; border-radius: 100px; } .note-actions i { cursor: pointer; color: white; transition: color 0.2s; } .note-actions i:hover { color: black; } @media (max-width: 768px) { #monthAndYear { font-size: 15px; margin-top: 30px; } .leftright { display: flex; white-space: nowrap; position: fixed; bottom: 20px; gap: 20px; justify-content: center; align-items: baseline; } .modal-content { max-width: 90%; } } </style> </head> <body> <p class="logo">#BsReminder</p> <div class="leftright"> <button onclick="previous()">Previous</button> <h2 id="monthAndYear"></h2> <button onclick="next()">Next</button> </div> <table id="calendar"> <thead> <tr> <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th> </tr> </thead> <tbody id="calendar-body"></tbody> </table> <!-- Add/Edit Modal --> <div id="noteModal" class="modal"> <div class="modal-content"> <span class="close" onclick="closeModal()">x</span> <h3 id="modalDate"></h3> <div id="existingNotes" class="notes-list"></div> <div class="checkbox"> <input style="width: max-content;" type="checkbox" id="pinForever"> <label for="pinForever">Highlight this date in every month with this note.</label> </div> <input type="text" id="noteTitle" placeholder="Title (optional)"> <textarea id="noteText" placeholder="Your note..."></textarea> <button onclick="saveNote()">Save Note</button> </div> </div>
+  <script>
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
 
-  function generateCalendar(month, year) {
-    let calendarBody = document.getElementById("calendar-body");
-    calendarBody.innerHTML = "";
-    let date = new Date(year, month, 1);
-    let firstDay = date.getDay();
-    let daysInMonth = new Date(year, month + 1, 0).getDate();
+    let oneTimeNotes = JSON.parse(localStorage.getItem('multiNotes') || '{}');
+    let pinnedNotes = JSON.parse(localStorage.getItem('pinned') || '{}');
 
-    document.getElementById("monthAndYear").innerText = months[month] + ' ' + year;
+    let selectedDate = "", selectedDay = 0, editIndex = null, isEditingPinned = false;
 
-    let dayCount = 1;
-    for (let i = 0; i < 6; i++) {
-      let row = document.createElement("tr");
-      for (let j = 0; j < 7; j++) {
-        if (i === 0 && j < firstDay) {
-          let cell = document.createElement("td");
-          cell.appendChild(document.createTextNode(""));
-          row.appendChild(cell);
-        } else if (dayCount > daysInMonth) {
-          break;
-        } else {
-          let cell = document.createElement("td");
-          cell.setAttribute("data-date", `${year}-${month + 1}-${dayCount}`);
-          cell.onclick = () => handleDateClick(cell);
+    function generateCalendar(m, y) {
+      document.getElementById("monthAndYear").innerText = `${months[m]} ${y}`;
+      const body = document.getElementById("calendar-body");
+      body.innerHTML = "";
+      const firstDay = new Date(y, m, 1).getDay();
+      const days = new Date(y, m + 1, 0).getDate();
+      let date = 1;
 
-          let cellText = document.createTextNode(dayCount);
-          cell.appendChild(cellText);
+      for (let i = 0; i < 6; i++) {
+        const row = document.createElement("tr");
+        for (let j = 0; j < 7; j++) {
+          if (i === 0 && j < firstDay) {
+            row.appendChild(document.createElement("td"));
+          } else if (date > days) {
+            break;
+          } else {
+            const cell = document.createElement("td");
+            const full = `${y}-${String(m + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+            cell.dataset.date = full;
 
-          // Highlight today's date
-          if (dayCount === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
-            cell.classList.add("highlight");
+            if (date === today.getDate() && m === today.getMonth() && y === today.getFullYear())
+              cell.classList.add("highlight");
+
+            // Determine highlights
+            const hasOneTime = (oneTimeNotes[full] || []).length > 0;
+            const hasPinned = !!pinnedNotes[date];
+
+            if (hasPinned) {
+              cell.classList.add("pinned"); // Yellow/orange for monthly pins
+            }
+            if (hasOneTime && !hasPinned) {
+              cell.classList.add("has-notes"); // Green for one-time notes (only if no pin)
+            }
+
+            // Count total notes
+            const oneTimeCount = hasOneTime ? (oneTimeNotes[full].length) : 0;
+            const pinnedCount = hasPinned ? 1 : 0;
+            const totalNotes = oneTimeCount + pinnedCount;
+
+            // Show note count indicator (always, even if highlighted)
+            if (totalNotes > 0) {
+              const countDiv = document.createElement("div");
+              countDiv.className = "note-count";
+              countDiv.textContent = `• ${totalNotes} note${totalNotes > 1 ? 's' : ''}`;
+              cell.appendChild(countDiv);
+            }
+
+            // Cell content
+            let content = `<div>${date}</div>`;
+
+            // Pinned note preview
+            if (hasPinned) {
+              const pin = pinnedNotes[date];
+              content += `<span class='note-preview'>Pinned: ${pin.title || "Monthly"}</span>`;
+            }
+
+            // One-time notes preview (max 2)
+            if (hasOneTime) {
+              oneTimeNotes[full].slice(0, 2).forEach(n => {
+                const prev = document.createElement("div");
+                prev.className = "note-preview";
+                const previewText = n.text.length > 10 ? n.text.slice(0, 10) + "..." : n.text;
+                prev.textContent = (n.title ? n.title + ": " : "") + previewText;
+                cell.appendChild(prev);
+              });
+            }
+
+            cell.innerHTML = content;
+            if (hasOneTime) {
+              // Append previews after setting innerHTML
+              oneTimeNotes[full].slice(0, 2).forEach(n => {
+                const prev = document.createElement("div");
+                prev.className = "note-preview";
+                const previewText = n.text.length > 10 ? n.text.slice(0, 10) + "..." : n.text;
+                prev.textContent = (n.title ? n.title + ": " : "") + previewText;
+                cell.appendChild(prev);
+              });
+            }
+
+            row.appendChild(cell);
+            date++;
           }
-
-          // Highlight if a goal is set for this date
-          let goalKey = `${year}-${month + 1}-${dayCount}`;
-          if (goals[goalKey]) {
-            cell.classList.add("goal-highlight");
-          }
-
-          row.appendChild(cell);
-          dayCount++;
         }
+        body.appendChild(row);
       }
-      calendarBody.appendChild(row);
     }
-  }
 
-  // Handle clicking on a date cell
-  function handleDateClick(cell) {
-    selectedDate = cell.getAttribute("data-date");
+    function openNoteModal(fullDate, day) {
+      selectedDate = fullDate;
+      selectedDay = day;
+      editIndex = null;
+      isEditingPinned = false;
 
-    if (goals[selectedDate]) {
-      // If a goal exists for this date, show the display modal
-      document.getElementById("displayModalDate").innerText = `Goal for ${selectedDate}`;
-      document.getElementById("goalDisplayText").innerText = goals[selectedDate] || "No goals";
-      document.getElementById("goalDisplayModal").style.display = "flex";
-    } else {
-      // If no goal exists, open the input modal
-      document.getElementById("inputModalDate").innerText = `Set Goal for ${selectedDate}`;
-      document.getElementById("goalInput").value = "";
-      document.getElementById("goalInputModal").style.display = "flex";
+      const oneTimeCount = (oneTimeNotes[fullDate] || []).length;
+      const pinnedCount = pinnedNotes[day] ? 1 : 0;
+      const total = oneTimeCount + pinnedCount;
+
+      document.getElementById("modalDate").textContent = `${fullDate} (${total} note${total !== 1 ? 's' : ''})`;
+      document.getElementById("pinForever").checked = false;
+      document.getElementById("noteTitle").value = "";
+      document.getElementById("noteText").value = "";
+
+      renderNotesList();
+      document.getElementById("noteModal").style.display = "flex";
     }
-  }
 
-  // Open the goal input modal to edit an existing goal
-  function editGoal() {
-    closeModal('goalDisplayModal');
-    document.getElementById("inputModalDate").innerText = `Edit Goal for ${selectedDate}`;
-    document.getElementById("goalInput").value = goals[selectedDate];
-    document.getElementById("goalInputModal").style.display = "flex";
-  }
+    function renderNotesList() {
+      const listDiv = document.getElementById("existingNotes");
+      listDiv.innerHTML = "";
 
-  // Close the specified modal
-  function closeModal(modalId) {
-    document.getElementById(modalId).style.display = "none";
-  }
+      // Pinned Note
+      if (pinnedNotes[selectedDay]) {
+        const pin = pinnedNotes[selectedDay];
+        const pinDiv = document.createElement("div");
+        pinDiv.classList.add("note-item");
+        pinDiv.innerHTML = `
+          <div>
+            <div class="note-title">Pinned (every month): ${pin.title || "Pinned Note"}</div>
+            <div class="note-text">${pin.note}</div>
+          </div>
+          <div class="note-actions">
+            <i class="fa-solid fa-pen" onclick="editPinned()"></i>
+            <i class="fa-solid fa-trash" onclick="deletePinned()"></i>
+          </div>
+        `;
+        listDiv.appendChild(pinDiv);
+      }
 
-  // Save the goal and refresh calendar to reflect the goal
-  function saveGoal() {
-    let goalText = document.getElementById("goalInput").value;
-    if (goalText.trim()) {
-      goals[selectedDate] = goalText;
-    } else {
-      delete goals[selectedDate]; // Remove goal if input is empty
+      // One-Time Notes
+      if (oneTimeNotes[selectedDate]) {
+        oneTimeNotes[selectedDate].forEach((n, i) => {
+          const div = document.createElement("div");
+          div.classList.add("note-item");
+          div.innerHTML = `
+            <div>
+              <div class="note-title">${n.title || "(No Title)"}</div>
+              <div class="note-text">${n.text}</div>
+            </div>
+            <div class="note-actions">
+              <i class="fa-solid fa-pen" onclick="editOneTime(${i})"></i>
+              <i class="fa-solid fa-trash" onclick="deleteOneTime(${i})"></i>
+            </div>
+          `;
+          listDiv.appendChild(div);
+        });
+      }
+
+      if (!pinnedNotes[selectedDay] && !oneTimeNotes[selectedDate]) {
+        listDiv.innerHTML = "<p style='color:var(--muted); font-size:13px; text-align:center; margin:10px 0;'>No notes yet.</p>";
+      }
     }
-    localStorage.setItem('goals', JSON.stringify(goals)); // Save goals to localStorage
-    closeModal('goalInputModal');
+
+    // Edit Pinned
+    function editPinned() {
+      const pin = pinnedNotes[selectedDay];
+      document.getElementById("noteTitle").value = pin.title || "";
+      document.getElementById("noteText").value = pin.note;
+      document.getElementById("pinForever").checked = true;
+      isEditingPinned = true;
+      editIndex = null;
+    }
+
+    // Delete Pinned
+    function deletePinned() {
+      if (confirm("Delete this pinned (monthly) note?")) {
+        delete pinnedNotes[selectedDay];
+        localStorage.setItem('pinned', JSON.stringify(pinnedNotes));
+        renderNotesList();
+        generateCalendar(currentMonth, currentYear);
+      }
+    }
+
+    // Edit One-Time
+    function editOneTime(i) {
+      const note = oneTimeNotes[selectedDate][i];
+      document.getElementById("noteTitle").value = note.title || "";
+      document.getElementById("noteText").value = note.text;
+      editIndex = i;
+      isEditingPinned = false;
+      document.getElementById("pinForever").checked = false;
+    }
+
+    // Delete One-Time
+    function deleteOneTime(i) {
+      if (confirm("Delete this note?")) {
+        oneTimeNotes[selectedDate].splice(i, 1);
+        if (oneTimeNotes[selectedDate].length === 0) delete oneTimeNotes[selectedDate];
+        localStorage.setItem('multiNotes', JSON.stringify(oneTimeNotes));
+        renderNotesList();
+        generateCalendar(currentMonth, currentYear);
+      }
+    }
+
+    function saveNote() {
+      const title = document.getElementById("noteTitle").value.trim();
+      const text = document.getElementById("noteText").value.trim();
+      const forever = document.getElementById("pinForever").checked;
+
+      if (!text) return alert("Please write a note.");
+
+      if (forever || isEditingPinned) {
+        pinnedNotes[selectedDay] = { title: title || "Pinned", note: text };
+        localStorage.setItem('pinned', JSON.stringify(pinnedNotes));
+        // If editing a one-time as pinned, remove from one-time
+        if (editIndex !== null && !isEditingPinned) {
+          oneTimeNotes[selectedDate].splice(editIndex, 1);
+          if (oneTimeNotes[selectedDate].length === 0) delete oneTimeNotes[selectedDate];
+          localStorage.setItem('multiNotes', JSON.stringify(oneTimeNotes));
+        }
+      } else {
+        if (!oneTimeNotes[selectedDate]) oneTimeNotes[selectedDate] = [];
+        if (editIndex !== null) {
+          oneTimeNotes[selectedDate][editIndex] = { title, text };
+        } else {
+          oneTimeNotes[selectedDate].push({ title, text });
+        }
+        localStorage.setItem('multiNotes', JSON.stringify(oneTimeNotes));
+      }
+
+      // Reset
+      editIndex = null;
+      isEditingPinned = false;
+      document.getElementById("noteTitle").value = "";
+      document.getElementById("noteText").value = "";
+      document.getElementById("pinForever").checked = false;
+
+      renderNotesList();
+      generateCalendar(currentMonth, currentYear);
+    }
+
+    function closeModal() {
+      document.querySelectorAll(".modal").forEach(m => m.style.display = "none");
+      editIndex = null;
+      isEditingPinned = false;
+    }
+
+    function previous() {
+      currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+      currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
+      generateCalendar(currentMonth, currentYear);
+    }
+
+    function next() {
+      currentMonth = (currentMonth + 1) % 12;
+      currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
+      generateCalendar(currentMonth, currentYear);
+    }
+
+    // Click cell
+    document.addEventListener("click", e => {
+      const cell = e.target.closest("td[data-date]");
+      if (!cell) return;
+      const date = cell.dataset.date;
+      const day = parseInt(date.split("-")[2]);
+      openNoteModal(date, day);
+    });
+
+    window.onclick = e => {
+      if (e.target.classList.contains("modal")) closeModal();
+    };
+
+    // Init
     generateCalendar(currentMonth, currentYear);
-  }
+     document.addEventListener("DOMContentLoaded", () => {
+            const customMenu = document.querySelector(".custom-menu");
 
-  generateCalendar(currentMonth, currentYear);
+            document.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                if (customMenu) {
+                    customMenu.style.display = "block";
+                    customMenu.style.top = `${event.pageY}px`;
+                    customMenu.style.left = `${event.pageX}px`;
+                }
+            });
 
-  function previous() {
-    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    generateCalendar(currentMonth, currentYear);
-  }
-
-  function next() {
-    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
-    currentMonth = (currentMonth + 1) % 12;
-    generateCalendar(currentMonth, currentYear);
-  }
-
-  // Close modal if clicked outside of it
-  window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-      closeModal('goalInputModal');
-      closeModal('goalDisplayModal');
-    }
-  };
-</script>
+            document.addEventListener("click", () => {
+                if (customMenu) {
+                    customMenu.style.display = "none";
+                }
+            });
+        });
+  </script>
 </body>
 </html>
