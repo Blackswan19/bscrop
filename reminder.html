@@ -9,7 +9,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
         * { color: #fff; font-family: "Red Hat Display", sans-serif; }
-        body { background: #000; margin: 0; }
+        body { background: #000; margin: 0; -webkit-tap-highlight-color: transparent; 
+      tap-highlight-color: transparent; }
+      body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+         }
         h2#monthAndYear { font-size: 50px; position: fixed; left: 37%; top: 15px; }
         table { width: 100%; position: fixed; top: 20%; }
         th, td { padding: 15px; text-align: center; color: gray; }
@@ -267,6 +274,24 @@
 
     // INIT
     generateCalendar(currentMonth, currentYear);
+    document.addEventListener("DOMContentLoaded", () => {
+            const customMenu = document.querySelector(".custom-menu");
+
+            document.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                if (customMenu) {
+                    customMenu.style.display = "block";
+                    customMenu.style.top = `${event.pageY}px`;
+                    customMenu.style.left = `${event.pageX}px`;
+                }
+            });
+
+            document.addEventListener("click", () => {
+                if (customMenu) {
+                    customMenu.style.display = "none";
+                }
+            });
+        });
 </script>
 </body>
 </html>
