@@ -1,7 +1,8 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgediter</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/27GXWVgg/BS.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700&display=swap'); * { font-family: "Red Hat Display", sans-serif; margin: 0; padding: 0; box-sizing: border-box; } body{background:#000;color:#fff;min-height:100vh;padding:30px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;} h1{font-size:30px;color:#0049ff;margin-bottom:6px;font-weight:500;} .tag{color:#666;font-size:14px;margin-bottom:30px;} * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .box{background:#0d0d0d;border:1px solid #222;border-radius:12px;padding:20px;max-width:520px;width:100%;margin-bottom:18px;} select,button,input{width:100%;padding:14px;margin:8px 0;background:#000;border:1px solid #333;border-radius:8px;color:#fff;font-size:15px;} button{background:#0049ff;border:none;font-weight:500;cursor:pointer;} button:hover{background:#0037cc;} button.small{padding:8px 14px;font-size:13px;width:auto;margin:10px 5px 0;display:inline-block;} .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0;} .f{padding:12px;background:#000;border:1px solid #333;border-radius:8px;font-size:13px;cursor:pointer;} .f.active{border-color:#0049ff;background:#0049ff15;} img{max-width:100%;border-radius:10px;border:2px solid #222;display:block;margin:15px auto;} .orig-above{opacity:0.9;border-color:#0049ff;margin-bottom:20px;} .hidden{display:none;} </style> </head> <body> <h1>BsImgediter</h1> <div class="box"> <select id="mode" onchange="switchMode()"> <option value="rename">Rename</option> <option value="compress">Compress</option> <option value="vintage">Add Filters</option> </select> </div> <div class="box"> <div id="drop" style="border:2px dashed #333;padding:50px;cursor:pointer;border-radius:12px;"> <p style="color:#666;">Drop image or click</p> <input type="file" id="file" accept="image/*" style="display:none;"> </div> </div> <div id="originalToggle" class="box hidden"> <button class="small" id="showOrig">Show Original Above</button> <button class="small" id="hideOrig" style="display:none;">Hide Original</button> </div> <!-- Vintage Mode --> <div id="vintageBox" class="box hidden"> <div class="filters"> <div class="f active" data-f="original">Original</div> <div class="f" data-f="classic">Classic</div> <div class="f" data-f="sepia">Sepia</div> <div class="f" data-f="bw">B&W</div> <div class="f" data-f="noir">Film Noir</div> <div class="f" data-f="grain">Grain</div> </div> <img id="origAbove1" class="orig-above hidden"> <img id="resultVintage"> <select id="formatV"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="dlVintage">Download Image</button> </div> <!-- Compress Mode --> <div id="compressBox" class="box hidden"> <div style="margin:15px 0;"> <label>Quality: <span id="qVal">85</span>%</label> <input type="range" min="10" max="100" value="85" id="quality" style="width:100%;margin:10px 0;"> </div> <img id="origAbove2" class="orig-above hidden"> <img id="resultCompress"> <select id="formatC"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="dlCompress">Download Image</button> </div> <!-- Rename Mode --> <div id="renameBox" class="box hidden"> <img id="origAbove3" class="orig-above hidden"> <img id="renameImg" style="margin:20px 0;"> <input type="text" id="customName" placeholder="filename (optional)"> <select id="formatR"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="renameDownload">Download Image</button> </div>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgediter</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/27GXWVgg/BS.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700&display=swap'); * { font-family: "Red Hat Display", sans-serif; margin: 0; padding: 0; box-sizing: border-box; } body{background:#000;color:#fff;min-height:100vh;padding:30px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;} h1{font-size:30px;color:#0049ff;margin-bottom:6px;font-weight:500;} .tag{color:#666;font-size:14px;margin-bottom:30px;} * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .box{background:#0d0d0d;border:1px solid #222;border-radius:12px;padding:20px;max-width:520px;width:100%;margin-bottom:18px;} select,button,input{width:100%;padding:14px;margin:8px 0;background:#000;border:1px solid #333;border-radius:8px;color:#fff;font-size:15px;} button{background:#0049ff;border:none;font-weight:500;cursor:pointer;} button:hover{background:#0037cc;} button.small{padding:8px 14px;font-size:13px;width:auto;margin:10px 5px 0;display:inline-block;} .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0;} .f{padding:12px;background:#000;border:1px solid #333;border-radius:8px;font-size:13px;cursor:pointer;} .f.active{border-color:#0049ff;background:#0049ff15;} img{max-width:100%;border-radius:10px;border:2px solid #222;display:block;margin:15px auto;} .orig-above{opacity:0.9;border-color:#0049ff;margin-bottom:20px;} .size{display:flex;justify-content:space-between;margin:10px 0;font-size:14px;color:#aaa;} .size span{color:#0f0;} .hidden{display:none;} </style> </head> <body> <h1 style="font-weight: 600;">BsImgediter</h1> <br> <br> <div class="box"> <select id="mode" onchange="switchMode()"> <option value="vintage">Add Filters</option> <option value="compress">Compress</option> <option value="rename">Rename</option> </select> </div> <div class="box"> <div id="drop" style="border:2px dashed #333;padding:50px;cursor:pointer;border-radius:12px;"> <p style="color:#666;">Drop image or click</p> <input type="file" id="file" accept="image/*" style="display:none;"> </div> </div> <div id="originalToggle" class="box hidden"> <button class="small" id="showOrig">Show Original Above</button> <button class="small" id="hideOrig" style="display:none;">Hide Original</button> </div> <!-- Vintage Mode --> <div id="vintageBox" class="box hidden"> <div class="filters"> <div class="f active" data-f="original">Original</div> <div class="f" data-f="classic">Classic</div> <div class="f" data-f="sepia">Sepia</div> <div class="f" data-f="bw">B&W</div> <div class="f" data-f="noir">Film Noir</div> <div class="f" data-f="grain">Grain</div> </div> <img id="origAbove1" class="orig-above hidden"> <img id="resultVintage"> <select id="formatV"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="dlVintage">Download Image</button> </div> <!-- Compress Mode (NOW FULLY WORKING) --> <div id="compressBox" class="box hidden"> <div style="margin:15px 0;"> <label>Quality: <span id="qVal">85</span>%</label> <input type="range" min="5" max="100" value="85" id="quality" style="width:100%;margin:10px 0;"> </div> <div class="size"> <div>Original: <span id="origSize">-</span></div> <div>Compressed: <span id="compSize">-</span></div> </div> <img id="origAbove2" class="orig-above hidden"> <img id="resultCompress"> <select id="formatC"> <option value="webp">WEBP (Best compression)</option> <option value="png">PNG</option> <option value="avif">AVIF (Ultra)</option> <option value="jpg">JPG</option> </select> <button id="dlCompress">Download Image</button> </div> <!-- Rename Mode --> <div id="renameBox" class="box hidden"> <img id="origAbove3" class="orig-above hidden"> <img id="renameImg" style="margin:20px 0;"> <input type="text" id="customName" placeholder="filename (optional)"> <select id="formatR"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="renameDownload">Download Image</button> </div>
 <script>
+    
     document.addEventListener('contextmenu', e => e.preventDefault());
-let file, w, h, current = 'original', finalBlob = null;
+let file, w, h, current = 'original', finalBlob = null, originalKB = 0;
 
 const filters = {
   original: () => {},
@@ -11,6 +12,14 @@ const filters = {
   noir: ctx => { ctx.filter = 'grayscale(100%) contrast(190%) brightness(90%)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,35); addVignette(ctx,0.7); },
   grain: ctx => { addGrain(ctx,45); addVignette(ctx,0.4); }
 };
+
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 KB';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
 
 function addVignette(ctx,i=0.6){
   const g=ctx.createRadialGradient(w/2,h/2,0,w/2,h/2,Math.max(w,h));
@@ -33,8 +42,10 @@ document.getElementById('drop').ondragover=e=>e.preventDefault();
 document.getElementById('file').onchange=e=>load(e.target.files[0]);
 
 function load(f){
-  if(!f||!f.type.startsWith('image/'))return;
+  if(!f||!f.type.startsWith('image/'))return alert('Please upload an image');
   file=f;
+  originalKB = f.size;
+  document.getElementById('origSize').textContent = formatBytes(originalKB);
   const url=URL.createObjectURL(f);
   const img=new Image();
   img.onload=()=>{
@@ -44,7 +55,7 @@ function load(f){
     document.getElementById('resultCompress').src=url;
     document.getElementById('originalToggle').classList.remove('hidden');
     switchMode();
-    if(document.getElementById('mode').value==='compress')compress();
+    compress();
   };
   img.src=url;
 }
@@ -57,12 +68,7 @@ function switchMode(){
 }
 
 document.querySelectorAll('.f').forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll('.f').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    current=b.dataset.f;
-    applyVintage();
-  };
+  b.onclick=()=>{document.querySelectorAll('.f').forEach(x=>x.classList.remove('active'));b.classList.add('active');current=b.dataset.f;applyVintage();}
 });
 function applyVintage(){
   if(!file)return;
@@ -78,21 +84,33 @@ function applyVintage(){
   img.src=URL.createObjectURL(file);
 }
 
-document.getElementById('quality').oninput=function(){
-  document.getElementById('qVal').textContent=this.value;
+document.getElementById('quality').oninput = function(){
+  document.getElementById('qVal').textContent = this.value;
   compress();
 };
+document.getElementById('formatC').onchange = compress;
+
 function compress(){
-  const q=document.getElementById('quality').value/100;
-  const format=document.getElementById('formatC').value;
-  const img=new Image();img.onload=()=>{
-    const c=document.createElement('canvas');c.width=w;c.height=h;
-    const ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+  if(!file) return;
+  const quality = document.getElementById('quality').value / 100;
+  const format = document.getElementById('formatC').value;
+  const mime = format === 'jpg' ? 'image/jpeg' : format === 'png' ? 'image/png' : `image/${format}`;
+
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(img, 0, 0);
     addWatermark(ctx);
-    const mime=format==='jpg'?'image/jpeg':format==='png'?'image/png':`image/${format}`;
-    c.toBlob(b=>{finalBlob=b;document.getElementById('resultCompress').src=URL.createObjectURL(b);},mime,format==='png'?1:q);
+
+    c.toBlob(blob => {
+      finalBlob = blob;
+      document.getElementById('resultCompress').src = URL.createObjectURL(blob);
+      document.getElementById('compSize').textContent = formatBytes(blob.size);
+    }, mime, format === 'png' ? 1 : quality);
   };
-  img.src=URL.createObjectURL(file);
+  img.src = URL.createObjectURL(file);
 }
 
 document.getElementById('showOrig').onclick=()=>{document.querySelectorAll('.orig-above').forEach(el=>el.classList.remove('hidden'));document.getElementById('showOrig').style.display='none';document.getElementById('hideOrig').style.display='inline-block';};
@@ -111,7 +129,7 @@ document.getElementById('renameDownload').onclick=()=>{
 
 function download(blob,type,formatId){
   const base=file.name.split('.').slice(0,-1).join('.')||'image';
-  const name=`#BS_${base}/BsImgediter`;
+  const name=`#BS_${base}`;
   const format=document.getElementById(formatId).value;
   const ext=format==='jpg'?'jpeg':format;
   const a=document.createElement('a');
