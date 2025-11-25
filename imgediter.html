@@ -35,11 +35,11 @@
     // Watermark: White text on black semi-transparent box
     function addWatermark(ctx) {
       const text = "Black Swan";
-      ctx.font = 'bold 14px "Red Hat Display", sans-serif';
+      ctx.font = 'bold 15px "Red Hat Display", sans-serif';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'bottom';
 
-      const padding = 10;
+      const padding = 16;
       const x = w - padding;
       const y = h - padding;
 
@@ -47,7 +47,7 @@
       const textWidth = metrics.width;
 
       ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-      ctx.fillRect(x - textWidth - 18, y - 26, textWidth + 40, 44);
+      ctx.fillRect(x - textWidth - 18, y - 28, textWidth + 36, 38);
 
       ctx.fillStyle = '#ffffff';
       ctx.fillText(text, x, y);
