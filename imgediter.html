@@ -1,35 +1,39 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgediter</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/27GXWVgg/BS.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700&display=swap'); * { font-family: "Red Hat Display", sans-serif; margin: 0; padding: 0; box-sizing: border-box;} body{background:#000;color:#fff;min-height:100vh;padding:30px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;} h1{font-size:30px;color:#0049ff;margin-bottom:6px;font-weight:600;} * {-webkit-tap-highlight-color: transparent;} body {-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;} .box{background:#0d0d0d;border:1px solid #222;border-radius:12px;padding:20px;max-width:520px;width:100%;margin-bottom:18px;} select,button,input{width:100%;padding:14px;margin:8px 0;background:#000;border:1px solid #333;border-radius:8px;color:#fff;font-size:15px;} button{background:#0049ff;border:none;font-weight:500;cursor:pointer;} button:hover{background:#0037cc;} button.small{padding:8px 14px;font-size:13px;width:auto;margin:10px 5px 0;display:inline-block;} .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0;} .f{padding:12px;background:#000;border:1px solid #333;border-radius:8px;font-size:13px;cursor:pointer;} .f.active{border-color:#0049ff;background:#0049ff15;} img{max-width:100%;border-radius:0px;border:2px solid #222;display:block;margin:15px auto;} .orig-above{opacity:0.9;border-color:#0049ff;margin-bottom:20px;} .size{display:flex;justify-content:space-between;margin:10px 0;font-size:14px;color:#aaa;} .size span{color:#0f0;} .slider {width:100%;margin:10px 0;} label{display:block;margin:12px 0 6px;color:#ccc;font-size:14px;text-align:left;} .val{color:#0f0;font-weight:bold;} .hidden{display:none;} </style> </head> <body> <h1>BsImgediter</h1> <br><br> <div class="box"> <select id="mode" onchange="switchMode()"> <option value="vintage">Add Filters</option> <option value="edit">Edit Image</option> <option value="compress">Compress</option> <option value="rename">Rename</option> </select> </div> <div class="box"> <div id="drop" style="border:2px dashed #333;padding:50px;cursor:pointer;border-radius:12px;"> <p style="color:#666;">Drop image or click</p> <input type="file" id="file" accept="image/*" style="display:none;"> </div> </div> <div id="originalToggle" class="box hidden"> <button class="small" id="showOrig">Show Original Above</button> <button class="small" id="hideOrig" style="display:none;">Hide Original</button> </div> <!-- VINTAGE MODE --> <div id="vintageBox" class="box hidden"> <div class="filters"> <div class="f active" data-f="original">Original</div> <div class="f" data-f="classic">Classic</div> <div class="f" data-f="sepia">Sepia</div> <div class="f" data-f="bw">B&W</div> <div class="f" data-f="noir">Film Noir</div> <div class="f" data-f="grain">Grain</div> </div> <img id="origAbove1" class="orig-above hidden"> <img id="resultVintage"> <select id="formatV"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="dlVintage">Download Image</button> </div> <!-- NEW: EDIT MODE --> <div id="editBox" class="box hidden"> <img id="origAbove4" class="orig-above hidden"> <img id="resultEdit"> <label>Brightness <span class="val" id="brightVal">100</span>%</label> <input type="range" min="0" max="200" value="100" class="slider" id="brightness"> <label>Contrast <span class="val" id="contrastVal">100</span>%</label> <input type="range" min="0" max="200" value="100" class="slider" id="contrast"> <label>Saturation <span class="val" id="saturateVal">100</span>%</label> <input type="range" min="0" max="300" value="100" class="slider" id="saturation"> <label>Hue <span class="val" id="hueVal">0</span>°</label> <input type="range" min="-180" max="180" value="0" class="slider" id="hue"> <label>Blur <span class="val" id="blurVal">0</span>px</label> <input type="range" min="0" max="10" value="0" step="0.5" class="slider" id="blur"> <label>Sharpen <span class="val" id="sharpenVal">0</span></label> <input type="range" min="0" max="100" value="0" class="slider" id="sharpen"> <label>Vignette <span class="val" id="vignetteVal">0</span>%</label> <input type="range" min="0" max="100" value="0" class="slider" id="vignette"> <button class="small" onclick="resetEdit()">Reset All</button> <select id="formatE" style="margin-top:15px;"> <option value="png">PNG</option> <option value="webp">WEBP (Recommended)</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="dlEdit">Download Edited Image</button> </div> <!-- COMPRESS MODE --> <div id="compressBox" class="box hidden"> <div style="margin:15px 0;"> <label>Quality: <span id="qVal">85</span>%</label> <input type="range" min="5" max="100" value="85" id="quality" class="slider"> </div> <div class="size"> <div>Original: <span id="origSize">-</span></div> <div>Compressed: <span id="compSize">-</span></div> </div> <img id="origAbove2" class="orig-above hidden"> <img id="resultCompress"> <select id="formatC"> <option value="webp">WEBP (Best compression)</option> <option value="png">PNG</option> <option value="avif">AVIF (Ultra)</option> <option value="jpg">JPG</option> </select> <button id="dlCompress">Download Image</button> </div> <!-- RENAME MODE --> <div id="renameBox" class="box hidden"> <img id="origAbove3" class="orig-above hidden"> <img id="renameImg" style="margin:20px 0;"> <input type="text" id="customName" placeholder="filename (optional)"> <select id="formatR"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="renameDownload">Download Image</button> </div>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsImgediter</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/27GXWVgg/BS.png"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700&display=swap'); * { font-family: "Red Hat Display", sans-serif; margin: 0; padding: 0; box-sizing: border-box;} body{background:#000;color:#fff;min-height:100vh;padding:30px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;} h1{font-size:30px;color:#0049ff;margin-bottom:6px;font-weight:600;} * {-webkit-tap-highlight-color: transparent;} body {-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;} .box{background:#0d0d0d;border:1px solid #222;border-radius:12px;padding:20px;max-width:520px;width:100%;margin-bottom:18px;} select,button,input{width:100%;padding:14px;margin:8px 0;background:#000;border:1px solid #333;border-radius:8px;color:#fff;font-size:15px;} button{background:#0049ff;border:none;font-weight:500;cursor:pointer;} button:hover{background:#0037cc;} button.small{padding:8px 14px;font-size:13px;width:auto;margin:10px 5px 0;display:inline-block;} .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0;} .f{padding:12px;background:#000;border:1px solid #333;border-radius:8px;font-size:13px;cursor:pointer;} .f.active{border-color:#0049ff;background:#0049ff15;} img{max-width:100%;border-radius:0px;border:2px solid #222;display:block;margin:15px auto;} .orig-above{opacity:0.9;border-color:#0049ff;margin-bottom:20px;} .size{display:flex;justify-content:space-between;margin:10px 0;font-size:14px;color:#aaa;} .size span{color:#0f0;} .slider {width:100%;margin:10px 0;} label{display:block;margin:12px 0 6px;color:#ccc;font-size:14px;text-align:left;} .val{color:#0f0;font-weight:bold;} .hidden{display:none;} </style> </head> <body> <h1>BsImgediter</h1> <br><br> <div class="box"> <select id="mode" onchange="switchMode()"> <option value="vintage">Add Filters</option> <option value="edit">Edit Image</option> <option value="compress">Compress</option> <option value="rename">Rename</option> </select> </div> <div class="box"> <div id="drop" style="border:2px dashed #333;padding:50px;cursor:pointer;border-radius:12px;"> <p style="color:#666;">Drop image or click</p> <input type="file" id="file" accept="image/*" style="display:none;"> </div> </div> <div id="originalToggle" class="box hidden"> <button class="small" id="showOrig">Show Original Above</button> <button class="small" id="hideOrig" style="display:none;">Hide Original</button> </div> <!-- VINTAGE MODE --> <div id="vintageBox" class="box hidden"> <div class="filters"> <div class="f active" data-f="original">Original</div> <div class="f" data-f="classic">Classic</div> <div class="f" data-f="sepia">Sepia</div> <div class="f" data-f="bw">B&W</div> <div class="f" data-f="noir">Film Noir</div> <div class="f" data-f="grain">Grain</div> </div> <div style="margin:20px 0;padding:15px;background:#111;border-radius:8px;"> <label>Filter Strength <span class="val" id="densityVal">100</span>%</label> <input type="range" min="0" max="100" value="100" class="slider" id="filterDensity"> </div> <img id="origAbove1" class="orig-above hidden"> <img id="resultVintage"> <select id="formatV"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="dlVintage">Download Image</button> </div> <!-- NEW: EDIT MODE --> <div id="editBox" class="box hidden"> <img id="origAbove4" class="orig-above hidden"> <img id="resultEdit"> <label>Brightness <span class="val" id="brightVal">100</span>%</label> <input type="range" min="0" max="200" value="100" class="slider" id="brightness"> <label>Contrast <span class="val" id="contrastVal">100</span>%</label> <input type="range" min="0" max="200" value="100" class="slider" id="contrast"> <label>Saturation <span class="val" id="saturateVal">100</span>%</label> <input type="range" min="0" max="300" value="100" class="slider" id="saturation"> <label>Hue <span class="val" id="hueVal">0</span>°</label> <input type="range" min="-180" max="180" value="0" class="slider" id="hue"> <label>Blur <span class="val" id="blurVal">0</span>px</label> <input type="range" min="0" max="10" value="0" step="0.5" class="slider" id="blur"> <label>Sharpen <span class="val" id="sharpenVal">0</span></label> <input type="range" min="0" max="100" value="0" class="slider" id="sharpen"> <label>Vignette <span class="val" id="vignetteVal">0</span>%</label> <input type="range" min="0" max="100" value="0" class="slider" id="vignette"> <button class="small" onclick="resetEdit()">Reset All</button> <select id="formatE" style="margin-top:15px;"> <option value="png">PNG</option> <option value="webp">WEBP (Recommended)</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="dlEdit">Download Edited Image</button> </div> <!-- COMPRESS MODE --> <div id="compressBox" class="box hidden"> <div style="margin:15px 0;"> <label>Quality: <span id="qVal">85</span>%</label> <input type="range" min="5" max="100" value="85" id="quality" class="slider"> </div> <div class="size"> <div>Original: <span id="origSize">-</span></div> <div>Compressed: <span id="compSize">-</span></div> </div> <img id="origAbove2" class="orig-above hidden"> <img id="resultCompress"> <select id="formatC"> <option value="webp">WEBP (Best compression)</option> <option value="png">PNG</option> <option value="avif">AVIF (Ultra)</option> <option value="jpg">JPG</option> </select> <button id="dlCompress">Download Image</button> </div> <!-- RENAME MODE --> <div id="renameBox" class="box hidden"> <img id="origAbove3" class="orig-above hidden"> <img id="renameImg" style="margin:20px 0;"> <input type="text" id="customName" placeholder="filename (optional)"> <select id="formatR"> <option value="png">PNG</option> <option value="webp">WEBP</option> <option value="avif">AVIF</option> <option value="jpg">JPG</option> </select> <button id="renameDownload">Download Image</button> </div>
 <script>
     document.addEventListener('contextmenu', e => e.preventDefault());
-    let file, w, h, current = 'original', finalBlob = null, originalKB = 0;
+let file, w, h, current = 'original', density = 100, finalBlob = null, originalKB = 0;
 
-    const filters = {
-      original: () => {},
-      classic: ctx => { ctx.filter = 'sepia(0.75)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,15); addVignette(ctx,0.5); },
-      sepia: ctx => { ctx.filter = 'sepia(0.9)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,10); },
-      bw: ctx => { ctx.filter = 'grayscale(100%) contrast(135%)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,18); },
-      noir: ctx => { ctx.filter = 'grayscale(100%) contrast(190%) brightness(90%)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,35); addVignette(ctx,0.7); },
-      grain: ctx => { addGrain(ctx,45); addVignette(ctx,0.4); }
-    };
+const baseFilters = {
+  original: () => {},
+  classic: ctx => { ctx.filter = 'sepia(0.75)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,15); addVignette(ctx,0.5); },
+  sepia: ctx => { ctx.filter = 'sepia(0.9)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,10); },
+  bw: ctx => { ctx.filter = 'grayscale(100%) contrast(135%)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,18); },
+  noir: ctx => { ctx.filter = 'grayscale(100%) contrast(190%) brightness(90%)'; ctx.drawImage(ctx.canvas,0,0); addGrain(ctx,35); addVignette(ctx,0.7); },
+  grain: ctx => { addGrain(ctx,45); addVignette(ctx,0.4); }
+};
 
-    function formatBytes(bytes) {
-      if (bytes === 0) return '0 KB';
-      const k = 1024, sizes = ['Bytes', 'KB', 'MB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 KB';
+  const k = 1024, sizes = ['Bytes', 'KB', 'MB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
 
-    function addGrain(ctx,a=20){
-      const id=ctx.getImageData(0,0,w,h); const d=id.data;
-      for(let i=0;i<d.length;i+=4){const n=(Math.random()-0.5)*a; d[i]+=n;d[i+1]+=n;d[i+2]+=n;}
-      ctx.putImageData(id,0,0);
-    }
+function addGrain(ctx, a=20){
+  const id = ctx.getImageData(0,0,w,h); const d = id.data;
+  for(let i=0;i<d.length;i+=4){
+    const n = (Math.random()-0.5)*a;
+    d[i]+=n; d[i+1]+=n; d[i+2]+=n;
+  }
+  ctx.putImageData(id,0,0);
+}
 
-    function addVignette(ctx,intensity=0.6){
-      const g=ctx.createRadialGradient(w/2,h/2,0,w/2,h/2,Math.max(w,h)*0.8);
-      g.addColorStop(0,'transparent'); g.addColorStop(0.7,'transparent'); g.addColorStop(1,`rgba(0,0,0,${intensity})`);
-      ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
-    }
+function addVignette(ctx, intensity=0.6){
+  const g = ctx.createRadialGradient(w/2,h/2,0,w/2,h/2,Math.max(w,h)*0.8);
+  g.addColorStop(0,'transparent'); g.addColorStop(0.7,'transparent'); g.addColorStop(1,`rgba(0,0,0,${intensity})`);
+  ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+}
+
 function addWatermark(ctx) {
   const text = "In BsImgediter";
   const letterSpacing = 1.5; 
@@ -49,204 +53,212 @@ function addWatermark(ctx) {
     currentX += ctx.measureText(text[i]).width + letterSpacing;
   }
 }
-    async function generateFinalImage(canvas, format, quality = 0.94) {
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = w; tempCanvas.height = h;
-      const ctx = tempCanvas.getContext('2d');
+async function generateFinalImage(canvas, format, quality = 0.94) {
+  const temp = document.createElement('canvas');
+  temp.width = w; temp.height = h;
+  const ctx = temp.getContext('2d');
+  ctx.drawImage(canvas, 0, 0);
+  addWatermark(ctx);
+  const mime = format === 'jpg' ? 'image/jpeg' : `image/${format}`;
+  return new Promise(res => temp.toBlob(res, mime, format === 'png' ? 1 : quality));
+}
+
+document.getElementById('drop').onclick = () => document.getElementById('file').click();
+document.getElementById('drop').ondrop = e => { e.preventDefault(); load(e.dataTransfer.files[0]); };
+document.getElementById('drop').ondragover = e => e.preventDefault();
+document.getElementById('file').onchange = e => load(e.target.files[0]);
+
+function load(f) {
+  if (!f || !f.type.startsWith('image/')) return alert('Please upload an image');
+  file = f; originalKB = f.size;
+  document.getElementById('origSize').textContent = formatBytes(originalKB);
+  const url = URL.createObjectURL(f);
+  const img = new Image();
+  img.onload = () => {
+    w = img.width; h = img.height;
+    document.querySelectorAll('.orig-above, #renameImg').forEach(el => el.src = url);
+    document.getElementById('resultVintage').src = url;
+    document.getElementById('resultEdit').src = url;
+    document.getElementById('resultCompress').src = url;
+    document.getElementById('originalToggle').classList.remove('hidden');
+    switchMode();
+  };
+  img.src = url;
+}
+
+function switchMode() {
+  const m = document.getElementById('mode').value;
+  document.getElementById('vintageBox').classList.toggle('hidden', m !== 'vintage');
+  document.getElementById('editBox').classList.toggle('hidden', m !== 'edit');
+  document.getElementById('compressBox').classList.toggle('hidden', m !== 'compress');
+  document.getElementById('renameBox').classList.toggle('hidden', m !== 'rename');
+  if (m === 'vintage') applyVintage();
+  if (m === 'edit') applyEdit();
+  if (m === 'compress') compress();
+}
+
+document.querySelectorAll('.f').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('.f').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    current = b.dataset.f;
+    applyVintage();
+  };
+});
+document.getElementById('filterDensity').oninput = function() {
+  density = this.value;
+  document.getElementById('densityVal').textContent = density;
+  applyVintage();
+};
+
+async function applyVintage() {
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  if (current === 'original' || density == 0) {
+    document.getElementById('resultVintage').src = url;
+    finalBlob = file;
+    return;
+  }
+
+  const img = new Image();
+  img.onload = async () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    const originalData = ctx.getImageData(0, 0, w, h);
+    baseFilters[current](ctx);
+    const filteredData = ctx.getImageData(0, 0, w, h);
+
+    const result = ctx.createImageData(w, h);
+    const d = result.data;
+    const o = originalData.data;
+    const f = filteredData.data;
+    const mix = density / 100;
+
+    for (let i = 0; i < d.length; i += 4) {
+      d[i]   = o[i]   + (f[i]   - o[i])   * mix;
+      d[i+1] = o[i+1] + (f[i+1] - o[i+1]) * mix;
+      d[i+2] = o[i+2] + (f[i+2] - o[i+2]) * mix;
+      d[i+3] = 255;
+    }
+    ctx.putImageData(result, 0, 0);
+
+    finalBlob = await generateFinalImage(canvas, document.getElementById('formatV').value);
+    document.getElementById('resultVintage').src = URL.createObjectURL(finalBlob);
+  };
+  img.src = url;
+}
+
+const sliders = { brightness:100, contrast:100, saturation:100, hue:0, blur:0, sharpen:0, vignette:0 };
+
+function updateVal(id, val) { document.getElementById(id).textContent = val; }
+function applyEdit() {
+  if (!file) return;
+  const img = new Image();
+  img.onload = async () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+
+    let filter = `brightness(${sliders.brightness}%) contrast(${sliders.contrast}%) saturate(${sliders.saturation}%) hue-rotate(${sliders.hue}deg) blur(${sliders.blur}px)`;
+    ctx.filter = filter;
+    ctx.drawImage(img, 0, 0);
+
+    if (sliders.sharpen > 0) {
+      ctx.globalCompositeOperation = 'overlay';
+      ctx.globalAlpha = 0.3;
       ctx.drawImage(canvas, 0, 0);
-      addWatermark(ctx);
-      const mime = format === 'jpg' ? 'image/jpeg' : `image/${format}`;
-      return new Promise(res => tempCanvas.toBlob(res, mime, format === 'png' ? 1 : quality));
     }
+    if (sliders.vignette > 0) addVignette(ctx, sliders.vignette / 100 * 0.8);
 
-    document.getElementById('drop').onclick = () => document.getElementById('file').click();
-    document.getElementById('drop').ondrop = e => { e.preventDefault(); load(e.dataTransfer.files[0]); };
-    document.getElementById('drop').ondragover = e => e.preventDefault();
-    document.getElementById('file').onchange = e => load(e.target.files[0]);
+    finalBlob = await generateFinalImage(canvas, document.getElementById('formatE').value);
+    document.getElementById('resultEdit').src = URL.createObjectURL(finalBlob);
+  };
+  img.src = URL.createObjectURL(file);
+}
 
-    function load(f) {
-      if (!f || !f.type.startsWith('image/')) return alert('Please upload an image');
-      file = f; originalKB = f.size;
-      document.getElementById('origSize').textContent = formatBytes(originalKB);
+function resetEdit() {
+  sliders.brightness = sliders.contrast = sliders.saturation = 100;
+  sliders.hue = sliders.blur = sliders.sharpen = sliders.vignette = 0;
+  document.querySelectorAll('#editBox input[type=range]').forEach(s => s.value = sliders[s.id]);
+  ['brightVal','contrastVal','saturateVal','hueVal','blurVal','sharpenVal','vignetteVal'].forEach(id => updateVal(id, sliders[id.replace('Val','')]));
+  applyEdit();
+}
 
-      const url = URL.createObjectURL(f);
-      const img = new Image();
-      img.onload = () => {
-        w = img.width; h = img.height;
-        document.querySelectorAll('.orig-above, #renameImg').forEach(el => el.src = url);
-        document.getElementById('resultVintage').src = url;
-        document.getElementById('resultCompress').src = url;
-        document.getElementById('resultEdit').src = url;
-        document.getElementById('originalToggle').classList.remove('hidden');
-        switchMode();
-        if (document.getElementById('mode').value === 'edit') applyEdit();
-      };
-      img.src = url;
-    }
+document.getElementById('brightness').oninput = function() { sliders.brightness = this.value; updateVal('brightVal', this.value); applyEdit(); };
+document.getElementById('contrast').oninput = function() { sliders.contrast = this.value; updateVal('contrastVal', this.value); applyEdit(); };
+document.getElementById('saturation').oninput = function() { sliders.saturation = this.value; updateVal('saturateVal', this.value); applyEdit(); };
+document.getElementById('hue').oninput = function() { sliders.hue = this.value; updateVal('hueVal', this.value); applyEdit(); };
+document.getElementById('blur').oninput = function() { sliders.blur = this.value; updateVal('blurVal', this.value); applyEdit(); };
+document.getElementById('sharpen').oninput = function() { sliders.sharpen = this.value; updateVal('sharpenVal', this.value); applyEdit(); };
+document.getElementById('vignette').oninput = function() { sliders.vignette = this.value; updateVal('vignetteVal', this.value); applyEdit(); };
+document.getElementById('formatE').onchange = applyEdit;
 
-    function switchMode() {
-      const m = document.getElementById('mode').value;
-      document.getElementById('vintageBox').classList.toggle('hidden', m !== 'vintage');
-      document.getElementById('editBox').classList.toggle('hidden', m !== 'edit');
-      document.getElementById('compressBox').classList.toggle('hidden', m !== 'compress');
-      document.getElementById('renameBox').classList.toggle('hidden', m !== 'rename');
+document.getElementById('quality').oninput = function() {
+  document.getElementById('qVal').textContent = this.value;
+  compress();
+};
+document.getElementById('formatC').onchange = compress;
 
-      if (m === 'vintage') applyVintage();
-      if (m === 'edit') applyEdit();
-      if (m === 'compress') compress();
-    }
-    document.querySelectorAll('.f').forEach(b => {
-      b.onclick = () => {
-        document.querySelectorAll('.f').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        current = b.dataset.f;
-        applyVintage();
-      };
-    });
+async function compress() {
+  if (!file) return;
+  const quality = document.getElementById('quality').value / 100;
+  const format = document.getElementById('formatC').value;
+  const img = new Image();
+  img.onload = async () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    finalBlob = await generateFinalImage(canvas, format, quality);
+    document.getElementById('resultCompress').src = URL.createObjectURL(finalBlob);
+    document.getElementById('compSize').textContent = formatBytes(finalBlob.size);
+  };
+  img.src = URL.createObjectURL(file);
+}
 
-    async function applyVintage() {
-      if (!file) return;
-      const img = new Image();
-      img.onload = async () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        if (current !== 'original') filters[current](ctx);
-        finalBlob = await generateFinalImage(canvas, document.getElementById('formatV').value);
-        document.getElementById('resultVintage').src = URL.createObjectURL(finalBlob);
-      };
-      img.src = URL.createObjectURL(file);
-    }
+document.getElementById('renameDownload').onclick = async () => {
+  const name = (document.getElementById('customName').value.trim() || file.name.split('.').slice(0,-1).join('.'));
+  const format = document.getElementById('formatR').value;
+  const img = new Image();
+  img.onload = async () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    const blob = await generateFinalImage(canvas, format);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `#BS_${name}.${format === 'jpg' ? 'jpeg' : format}`;
+    a.click();
+  };
+  img.src = URL.createObjectURL(file);
+};
 
-    const sliders = {
-      brightness: 100,
-      contrast: 100,
-      saturation: 100,
-      hue: 0,
-      blur: 0,
-      sharpen: 0,
-      vignette: 0
-    };
+document.getElementById('dlVintage').onclick = () => download(finalBlob, 'formatV');
+document.getElementById('dlEdit').onclick = () => download(finalBlob, 'formatE');
+document.getElementById('dlCompress').onclick = () => download(finalBlob, 'formatC');
 
-    function updateSliders() {
-      document.getElementById('brightVal').textContent = sliders.brightness;
-      document.getElementById('contrastVal').textContent = sliders.contrast;
-      document.getElementById('saturateVal').textContent = sliders.saturation;
-      document.getElementById('hueVal').textContent = sliders.hue;
-      document.getElementById('blurVal').textContent = sliders.blur;
-      document.getElementById('sharpenVal').textContent = sliders.sharpen;
-      document.getElementById('vignetteVal').textContent = sliders.vignette;
-    }
+function download(blob, formatId) {
+  const base = file.name.split('.').slice(0,-1).join('.') || 'image';
+  const format = document.getElementById(formatId).value;
+  const ext = format === 'jpg' ? 'jpeg' : format;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `#BS_${base}.${ext}`;
+  a.click();
+}
 
-    function applyEdit() {
-      if (!file) return;
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        const ctx = canvas.getContext('2d');
-
-        let filter = `brightness(${sliders.brightness}%) contrast(${sliders.contrast}%) saturate(${sliders.saturation}%) hue-rotate(${sliders.hue}deg) blur(${sliders.blur}px)`;
-        ctx.filter = filter;
-        ctx.drawImage(img, 0, 0);
-
-        if (sliders.sharpen > 0) {
-          ctx.globalAlpha = 1;
-          ctx.globalCompositeOperation = 'overlay';
-          ctx.drawImage(canvas, 0, 0);
-        }
-
-        if (sliders.vignette > 0) {
-          addVignette(ctx, sliders.vignette / 100 * 0.8);
-        }
-
-        generateFinalImage(canvas, document.getElementById('formatE').value).then(blob => {
-          finalBlob = blob;
-          document.getElementById('resultEdit').src = URL.createObjectURL(blob);
-        });
-      };
-      img.src = URL.createObjectURL(file);
-    }
-
-    function resetEdit() {
-      Object.keys(sliders).forEach(k => sliders[k] = k === 'brightness' || k === 'contrast' || k === 'saturation' ? 100 : 0);
-      document.querySelectorAll('#editBox input[type=range]').forEach(s => s.value = sliders[s.id]);
-      updateSliders();
-      applyEdit();
-    }
-    document.getElementById('brightness').oninput = function() { sliders.brightness = this.value; document.getElementById('brightVal').textContent = this.value; applyEdit(); };
-    document.getElementById('contrast').oninput = function() { sliders.contrast = this.value; document.getElementById('contrastVal').textContent = this.value; applyEdit(); };
-    document.getElementById('saturation').oninput = function() { sliders.saturation = this.value; document.getElementById('saturateVal').textContent = this.value; applyEdit(); };
-    document.getElementById('hue').oninput = function() { sliders.hue = this.value; document.getElementById('hueVal').textContent = this.value; applyEdit(); };
-    document.getElementById('blur').oninput = function() { sliders.blur = this.value; document.getElementById('blurVal').textContent = this.value; applyEdit(); };
-    document.getElementById('sharpen').oninput = function() { sliders.sharpen = this.value; document.getElementById('sharpenVal').textContent = this.value; applyEdit(); };
-    document.getElementById('vignette').oninput = function() { sliders.vignette = this.value; document.getElementById('vignetteVal').textContent = this.value; applyEdit(); };
-    document.getElementById('formatE').onchange = applyEdit;
-
-    document.getElementById('quality').oninput = function() {
-      document.getElementById('qVal').textContent = this.value;
-      compress();
-    };
-    document.getElementById('formatC').onchange = compress;
-
-    async function compress() {
-      if (!file) return;
-      const quality = document.getElementById('quality').value / 100;
-      const format = document.getElementById('formatC').value;
-      const img = new Image();
-      img.onload = async () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0);
-        finalBlob = await generateFinalImage(canvas, format, quality);
-        document.getElementById('resultCompress').src = URL.createObjectURL(finalBlob);
-        document.getElementById('compSize').textContent = formatBytes(finalBlob.size);
-      };
-      img.src = URL.createObjectURL(file);
-    }
-
-    document.getElementById('renameDownload').onclick = async () => {
-      const name = (document.getElementById('customName').value.trim() || file.name.split('.').slice(0,-1).join('.'));
-      const format = document.getElementById('formatR').value;
-      const img = new Image();
-      img.onload = async () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0);
-        const blob = await generateFinalImage(canvas, format);
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `#BS_${name}.${format === 'jpg' ? 'jpeg' : format}`;
-        a.click();
-      };
-      img.src = URL.createObjectURL(file);
-    };
-
-    document.getElementById('dlVintage').onclick = () => download(finalBlob, 'vintage', 'formatV');
-    document.getElementById('dlEdit').onclick = () => download(finalBlob, 'edit', 'formatE');
-    document.getElementById('dlCompress').onclick = () => download(finalBlob, 'compress', 'formatC');
-
-    function download(blob, type, formatId) {
-      const base = file.name.split('.').slice(0,-1).join('.') || 'image';
-      const name = `#BS_${base}`;
-      const format = document.getElementById(formatId).value;
-      const ext = format === 'jpg' ? 'jpeg' : format;
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `${name}.${ext}`;
-      a.click();
-    }
-    document.getElementById('showOrig').onclick = () => {
-      document.querySelectorAll('.orig-above').forEach(el => el.classList.remove('hidden'));
-      document.getElementById('showOrig').style.display = 'none';
-      document.getElementById('hideOrig').style.display = 'inline-block';
-    };
-    document.getElementById('hideOrig').onclick = () => {
-      document.querySelectorAll('.orig-above').forEach(el => el.classList.add('hidden'));
-      document.getElementById('showOrig').style.display = 'inline-block';
-      document.getElementById('hideOrig').style.display = 'none';
-    };
+document.getElementById('showOrig').onclick = () => {
+  document.querySelectorAll('.orig-above').forEach(el => el.classList.remove('hidden'));
+  document.getElementById('showOrig').style.display = 'none';
+  document.getElementById('hideOrig').style.display = 'inline-block';
+};
+document.getElementById('hideOrig').onclick = () => {
+  document.querySelectorAll('.orig-above').forEach(el => el.classList.add('hidden'));
+  document.getElementById('showOrig').style.display = 'inline-block';
+  document.getElementById('hideOrig').style.display = 'none';
+};
 </script>
 </body>
 </html>
