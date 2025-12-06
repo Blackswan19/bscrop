@@ -37,13 +37,13 @@ function addWatermark(ctx) {
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
 
-  const x = 0;     
+  const x = 5;     
   const y = 15;    
   const metrics = ctx.measureText(text);
   const textWidth = metrics.width;
   const textHeight = 20; 
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(x - 8, y - 6, textWidth + 16, textHeight + 10);
+  ctx.fillStyle = 'black';
+  ctx.fillRect(x - 8, y - 8, textWidth + 16, textHeight + 10);
 
   ctx.fillStyle = '#ffffff';
   ctx.fillText(text, x, y);
