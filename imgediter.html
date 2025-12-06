@@ -31,28 +31,23 @@
       g.addColorStop(0,'transparent'); g.addColorStop(0.7,'transparent'); g.addColorStop(1,`rgba(0,0,0,${intensity})`);
       ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
     }
+function addWatermark(ctx) {
+  const text = "BsImgediter";
+  ctx.font = 'bold 15px "Red Hat Display", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
 
-    function addWatermark(ctx) {
-      const text = "BsImgediter";
-      ctx.font = 'bold 15px "Red Hat Display", sans-serif';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'bottom';
+  const x = 0;     
+  const y = 15;    
+  const metrics = ctx.measureText(text);
+  const textWidth = metrics.width;
+  const textHeight = 20; 
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+  ctx.fillRect(x - 8, y - 6, textWidth + 16, textHeight + 10);
 
-      const padding = 16;
-      const x = w - padding;
-      const y = h - padding;
-
-      const metrics = ctx.measureText(text);
-      const textWidth = metrics.width;
-
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-      ctx.fillRect(x - textWidth - 18, y - 28, textWidth + 36, 38);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(text, x, y);
-    }
-
-    // Universal function to generate final image with watermark
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(text, x, y);
+}
     async function generateFinalImage(canvas, format, quality = 0.94) {
       const tempCanvas = document.createElement('canvas');
       tempCanvas.width = w; tempCanvas.height = h;
@@ -63,7 +58,6 @@
       return new Promise(res => tempCanvas.toBlob(res, mime, format === 'png' ? 1 : quality));
     }
 
-    // === FILE LOADING ===
     document.getElementById('drop').onclick = () => document.getElementById('file').click();
     document.getElementById('drop').ondrop = e => { e.preventDefault(); load(e.dataTransfer.files[0]); };
     document.getElementById('drop').ondragover = e => e.preventDefault();
@@ -100,8 +94,6 @@
       if (m === 'edit') applyEdit();
       if (m === 'compress') compress();
     }
-
-    // === VINTAGE ===
     document.querySelectorAll('.f').forEach(b => {
       b.onclick = () => {
         document.querySelectorAll('.f').forEach(x => x.classList.remove('active'));
@@ -126,7 +118,6 @@
       img.src = URL.createObjectURL(file);
     }
 
-    // === NEW EDIT MODE ===
     const sliders = {
       brightness: 100,
       contrast: 100,
@@ -155,19 +146,16 @@
         canvas.width = w; canvas.height = h;
         const ctx = canvas.getContext('2d');
 
-        // Apply CSS-like filters
         let filter = `brightness(${sliders.brightness}%) contrast(${sliders.contrast}%) saturate(${sliders.saturation}%) hue-rotate(${sliders.hue}deg) blur(${sliders.blur}px)`;
         ctx.filter = filter;
         ctx.drawImage(img, 0, 0);
 
-        // Sharpen (unsharp mask simulation)
         if (sliders.sharpen > 0) {
           ctx.globalAlpha = 1;
           ctx.globalCompositeOperation = 'overlay';
           ctx.drawImage(canvas, 0, 0);
         }
 
-        // Vignette
         if (sliders.vignette > 0) {
           addVignette(ctx, sliders.vignette / 100 * 0.8);
         }
@@ -186,8 +174,6 @@
       updateSliders();
       applyEdit();
     }
-
-    // Bind sliders
     document.getElementById('brightness').oninput = function() { sliders.brightness = this.value; document.getElementById('brightVal').textContent = this.value; applyEdit(); };
     document.getElementById('contrast').oninput = function() { sliders.contrast = this.value; document.getElementById('contrastVal').textContent = this.value; applyEdit(); };
     document.getElementById('saturation').oninput = function() { sliders.saturation = this.value; document.getElementById('saturateVal').textContent = this.value; applyEdit(); };
@@ -197,7 +183,6 @@
     document.getElementById('vignette').oninput = function() { sliders.vignette = this.value; document.getElementById('vignetteVal').textContent = this.value; applyEdit(); };
     document.getElementById('formatE').onchange = applyEdit;
 
-    // === COMPRESS & RENAME (with watermark) ===
     document.getElementById('quality').oninput = function() {
       document.getElementById('qVal').textContent = this.value;
       compress();
@@ -237,7 +222,6 @@
       img.src = URL.createObjectURL(file);
     };
 
-    // === DOWNLOADS ===
     document.getElementById('dlVintage').onclick = () => download(finalBlob, 'vintage', 'formatV');
     document.getElementById('dlEdit').onclick = () => download(finalBlob, 'edit', 'formatE');
     document.getElementById('dlCompress').onclick = () => download(finalBlob, 'compress', 'formatC');
@@ -252,8 +236,6 @@
       a.download = `${name}.${ext}`;
       a.click();
     }
-
-    // Toggle original
     document.getElementById('showOrig').onclick = () => {
       document.querySelectorAll('.orig-above').forEach(el => el.classList.remove('hidden'));
       document.getElementById('showOrig').style.display = 'none';
