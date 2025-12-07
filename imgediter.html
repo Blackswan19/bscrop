@@ -38,15 +38,15 @@ function addVignette(ctx, intensity=0.6){
 function addWatermark(ctx) {
   const text = "BsImgediter";
   const letterSpacing = 1.3; 
-  ctx.font = '600 16px "Red Hat Display", sans-serif';
+  ctx.font = '500 18px "Red Hat Display", sans-serif';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
-  const x = 5;
+  const x = 10;
   const y = 25;
   const totalWidth = ctx.measureText(text).width + (text.length - 1) * letterSpacing;
   const textHeight = 20;
   ctx.fillStyle = 'black';
-  ctx.fillRect(x - 10, y - 8, totalWidth + 18, textHeight + 10);
+  ctx.fillRect(x - 10, y - 8, totalWidth + 20, textHeight + 14);
   ctx.fillStyle = '#ffffff';
   let currentX = x;
   for (let i = 0; i < text.length; i++) {
