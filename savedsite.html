@@ -1,276 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png">
-    <title>BSearchin - Saved Websites</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        * {
-            -webkit-tap-highlight-color: transparent;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-body {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Background styling */
-        .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            z-index: -1;
-            filter: brightness(0.5);
-        }
-
-        .blur-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            filter: blur(5px);
-            opacity: 0.3;
-            z-index: -2;
-        }
-
-        /* Header */
-        .header {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header img {
-            width: 50px;
-            height: auto;
-            display: block;
-        }
-
-        /* Websites container */
-        .websites-container {
-            width: 100%;
-            max-width: 1000px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 25px;
-            padding: 20px;
-        }
-
-        .website-card {
-              background: #ffffff17;
-    border-radius: 50px;
-    padding: 10px 15px;
-    display: flex
-;
-    flex-direction: column;
-    gap: 10px;
-    transition: transform 0.3s ease;
-    border: none;
-    position: relative;
-    backdrop-filter: blur(5px);
-    border: solid 1px #ffffffac;
-        }
-
-        .website-card:hover {
-            transform: translateY(-2px);
-            background: #ffffff5c;
-        }
-
-        .website-card img {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-            vertical-align: middle;
-                border-radius: 50%;
-        }
-
-        .website-card a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 90%;
-        }
-
-        .delete-btn {
-            position: absolute;
-            right: 10px;
-            background: #ff0000b3;
-            border: none;
-            color: #ffffff;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: background 0.3s;
-        }
-
-        .delete-btn:hover {
-            background: #ff0000;
-        }
-
-        /* Add website button */
-        .add-website-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ffffff1f;
-            border: 1px solid #ffffff6c;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 13px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s;
-                backdrop-filter: blur(2px);
-        }
-
-        .add-website-btn:hover {
-            background: #ffffff4f;
-            border: 1px solid #ffffff00;
-        }
-
-        /* Mobile-specific styles */
-        @media (max-width: 480px) {
-            /* General layout */
-            
-
-            /* Header */
-            .header {
-                font-size: 24px;
-                font-weight: 600;
-                gap: 8px;
-                margin-bottom: 15px;
-            }
-
-            .header img {
-                width: 36px;
-                height: auto;
-            }
-
-            /* Background containers */
-            .background-container,
-            .blur-background {
-                background-size: cover;
-                background-position: center;
-            }
-
-            /* Websites container */
-            .websites-container {
-                grid-template-columns: 1fr;
-                gap: 15px;
-                padding: 10px;
-            }
-
-            /* Website card */
-            .website-card {
-                       padding: 10px 15px;
-        border-radius: 50px;
-        gap: 8px;
-        width: 70%;
-
-            }
-
-            .website-card a {
-                font-size: 14px;
-                width: 85%;
-            }
-
-            .website-card img {
-                width: 20px;
-                height: 20px;
-            }
-
-            .delete-btn {
-                width: 20px;
-                height: 20px;
-            }
-
-            /* Add website button */
-            .add-website-btn {
-                right: 0px;
-        padding: 21px 20px;
-        border-radius: 0px;
-        position: fixed;
-        height: 100%;
-        top: 0px;
-            }
-
-            .add-website-btn i {
-                font-size: 12px;
-            }
-
-            /* Text elements */
-            p {
-                font-size: 14px;
-                text-align: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Background containers -->
-    <div class="blur-background" id="blurBg"></div>
-    <div class="background-container" id="bgContainer"></div>
-
-    <!-- Header -->
-    <div class="header">
-        <a href="https://blackswan19.github.io/bscrop/bsearchin"><img src="https://i.ibb.co/1bgTMY6/logosercin.png" alt="BSearchin Logo"></a>
-        Saved Websites
-    </div>
-
-    <!-- Websites container -->
-    <div class="websites-container" id="websites-container"></div>
-
-    <!-- Add website button -->
-    <button class="add-website-btn" id="add-website-btn">
-        <i class="fas fa-plus"></i>
-    </button>
-
-    <script src="noright.js"></script>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png"> <title>BSearchin - Saved Websites</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; } body { background-color: #000000; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 80px 20px 20px; position: relative; overflow-x: hidden; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; z-index: -1; filter: brightness(0.5); } .blur-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; filter: blur(8px); opacity: 0.4; z-index: -2; } /* Header */ .header { font-size: 36px; font-weight: 600; margin-bottom: 40px; display: flex; align-items: center; gap: 12px; width: fit-content; max-width: 1200px; justify-content: space-around; position: sticky; top: 3px; z-index: 1000; backdrop-filter: blur(25px); padding: 0px; background: #ffffff21; border-radius: 100px; padding: 0px 3px; width: 100%; } .header img { width: 45px; height: 45px; } /* Websites container */ .websites-container { width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; padding: 0 20px; } .website-card { background: rgba(255, 255, 255, 0.1); border-radius: 124px; padding: 3px 3px 3px 20px; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease; backdrop-filter: blur(10px); border: 1.5px solid rgb(255 255 255 / 18%); position: relative; } .website-card:hover { transform: translateY(-8px); background: rgba(255, 255, 255, 0.25); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); } .website-link { display: flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 500; overflow: hidden; flex: 1; } .website-card img { width: 20px; height: 20px; border-radius: 8px; flex-shrink: 0; } .website-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; color: #ffffffa8; } .delete-btn { background: rgba(255, 0, 0, 0.7); border: none; color: #ffffff; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: background 0.3s; flex-shrink: 0; } .header a { position: relative; top: 8px; left: 5px; } .delete-btn:hover { background: #ff0000; } /* Empty state */ .empty-message { grid-column: 1 / -1; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 18px; margin: 40px 0; } /* Add website button */ .add-website-btn { background: rgb(255 255 255 / 9%); border: 1.5px solid rgb(255 255 255 / 35%); color: white; width: 40px; height: 40px; border-radius: 35px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); z-index: 10; position: relative; right: 8px; } .add-website-btn:hover { background: rgb(255 255 255 / 33%); transform: translateY(-2.5px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0); } /* Responsive adjustments */ @media (max-width: 768px) { .header { font-size: 28px; margin-bottom: 30px; }.websites-container { width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; padding: 0 20px; } .website-card { padding: 16px; } .website-card img { width: 25px; height: 25px; } .header a { position: relative; top: 5px; left: 0px; } .delete-btn { width: 32px; height: 32px; font-size: 18px; } } @media (max-width: 480px) { body { padding: 70px 10px 10px; } .header { font-size: 24px; gap: 10px; } .website-card { padding: 5px 10px 5px 15px; } } </style> </head> <body> <div class="blur-background" id="blurBg"></div> <div class="background-container" id="bgContainer"></div> <div class="header"> <a href="https://blackswan19.github.io/bscrop/bsearchin"><img src="https://i.ibb.co/1bgTMY6/logosercin.png" alt="BSearchin Logo"></a> Saved Websites <button class="add-website-btn" id="add-website-btn"> <i class="fas fa-plus"></i> </button> </div> <div class="websites-container" id="websites-container"></div>
     <script>
-        // Load background from localStorage
+        document.addEventListener('contextmenu', e => e.preventDefault());
         function loadBackground() {
             const storedImage = localStorage.getItem('backgroundImage');
             if (storedImage) {
@@ -282,8 +12,6 @@ body {
                 document.body.style.backgroundColor = savedColor;
             }
         }
-
-        // Get domain for favicon
         function getDomain(url) {
             try {
                 return new URL(url).hostname;
@@ -291,18 +19,15 @@ body {
                 return url;
             }
         }
-
-        // Load websites from localStorage
         function loadWebsites() {
             const websitesContainer = document.getElementById('websites-container');
             websitesContainer.innerHTML = '';
             const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
 
             if (savedWebsites.length === 0) {
-                const emptyMessage = document.createElement('p');
+                const emptyMessage = document.createElement('div');
+                emptyMessage.classList.add('empty-message');
                 emptyMessage.textContent = 'No websites saved yet.';
-                emptyMessage.style.color = '#ffffff80';
-                emptyMessage.style.textAlign = 'center';
                 websitesContainer.appendChild(emptyMessage);
                 return;
             }
@@ -314,21 +39,25 @@ body {
                 const link = document.createElement('a');
                 link.href = website.url;
                 link.target = '_self';
+                link.classList.add('website-link');
 
                 const favicon = document.createElement('img');
                 const domain = getDomain(website.url);
-                favicon.src = `https://www.google.com/s2/favicons?domain=${domain}`;
+                favicon.src = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
                 favicon.onerror = () => {
                     favicon.src = 'https://i.ibb.co/kxgjrZG/sitesaved-BS.png';
                 };
 
                 const title = document.createElement('span');
                 title.textContent = website.title || domain;
+                title.classList.add('website-title');
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.classList.add('delete-btn');
                 deleteBtn.innerHTML = '×';
-                deleteBtn.onclick = () => {
+                deleteBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
                     if (confirm(`Are you sure you want to delete "${website.title || domain}"?`)) {
                         deleteWebsite(index);
                     }
@@ -341,67 +70,41 @@ body {
                 websitesContainer.appendChild(websiteCard);
             });
         }
-
-        // Delete website
         function deleteWebsite(index) {
             const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
             savedWebsites.splice(index, 1);
             localStorage.setItem('websites', JSON.stringify(savedWebsites));
             loadWebsites();
         }
-
-        // Add website
         async function saveWebsite(url) {
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
             }
 
             const title = prompt("Enter a title for this website:");
-            if (title) {
+            if (title && title.trim() !== '') {
                 const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
-                savedWebsites.push({ url, title });
+                savedWebsites.push({ url, title: title.trim() });
                 localStorage.setItem('websites', JSON.stringify(savedWebsites));
                 loadWebsites();
-            } else {
+            } else if (title !== null) {
                 alert("Website title cannot be empty!");
             }
         }
 
-        // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
             loadBackground();
             loadWebsites();
 
-            document.getElementById('add-website-btn').addEventListener('click', async () => {
+            document.getElementById('add-website-btn').addEventListener('click', () => {
                 const url = prompt("Enter the website URL:");
-                if (url) {
-                    await saveWebsite(url);
+                if (url && url.trim() !== '') {
+                    saveWebsite(url.trim());
                 }
             });
-
-            // Listen for storage changes (e.g., from other page)
             window.addEventListener('storage', (event) => {
                 if (event.key === 'websites') {
                     loadWebsites();
-                }
-            });
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const customMenu = document.querySelector(".custom-menu");
-
-            document.addEventListener("contextmenu", (event) => {
-                event.preventDefault();
-                if (customMenu) {
-                    customMenu.style.display = "block";
-                    customMenu.style.top = `${event.pageY}px`;
-                    customMenu.style.left = `${event.pageX}px`;
-                }
-            });
-
-            document.addEventListener("click", () => {
-                if (customMenu) {
-                    customMenu.style.display = "none";
                 }
             });
         });
