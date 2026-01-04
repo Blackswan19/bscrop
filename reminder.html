@@ -1,255 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BsReminder</title>
-    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/WBcSJPd/New-Project-A1-A7313.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
-        * { color: #fff; font-family: "Red Hat Display", sans-serif; }
-        body { background: #000; margin: 0; -webkit-tap-highlight-color: transparent; letter-spacing: 0.3px;
-               tap-highlight-color: transparent; }
-        body {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        .letsbecenter {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        h2#monthAndYear { 
-            font-size: 50px; 
-            position: fixed; 
-            left: 37%; 
-            top: 15px; 
-            white-space: nowrap; 
-            transition: opacity 0.3s ease;
-        }
-        table { 
-            width: 60%;
-            position: fixed;
-            top: 26%;
-            background: #ffffff12;
-            border-radius: 18px;
-            padding: 2px;
-            transition: transform 0.4s ease-in-out;
-        }
-        th, td { 
-            padding: 5px;
-            text-align: center;
-            color: white;
-            width: 100px;
-            height: 40px;
-            border-radius: 16px;
-            opacity: 80%;
-        }
-        th, td:hover { 
-            background: #ffffff44; 
-            color: #bbb; 
-            font-weight: 800; 
-            opacity: 100%;
-        }
-        th { 
-            background: #000; 
-            color: #d6d6d6; 
-        }
-        .highlight { background: #ffffff1f; }
-        .pinned { background: #ff8c008c; }
-        .pinned:hover { background: #ff8c00af; }
-        .goal { background: #1800ffa8; }
-        .goal:hover { background: #1900ffd0; }
-        .leftright {    
-            position: fixed;
-            bottom: 100px;
-            right: 6%;
-            display: flex;
-            gap: 30px;
-        }
-        .leftright button { 
-            background: transparent; 
-            border: none; 
-            font-size: 30px; 
-            color: #ffffff4c; 
-            cursor: pointer;
-        }
-        .leftright button:hover {
-            color: #fff;
-        }
-        .modal { 
-          display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    transition: transform 0.4s ease-in-out;
-    box-shadow: 0px 0px 100px #000000, 0px 0px 200px #000000, 0px 0px 300px #000000;
-    background: #000000ba;
-        }
-        .modal-content { 
-            background: #1b1b1b;
-            padding: 10px;
-            border-radius: 30px;
-            width: 85%;
-            text-align: center;
-            max-width: 300px;
-        }
-        .close { 
-            position: absolute; 
-            top: 10px; 
-            right: 15px; 
-            font-size: 28px; 
-            cursor: pointer; 
-            color: #aaa; 
-        }
-        .close:hover { color: #0049ff; }
-        input, button { 
-            width: -webkit-fill-available; 
-            padding: 12px 25px; 
-            margin: 8px 0; 
-            border: none; 
-            border-radius: 106px; 
-        }
-        input { 
-            background: #4d4d4d; 
-            color: #fff;
-            outline: none;
-            border: solid 1.5px transparent; 
-        }
-        input:focus {
-            border: solid 1.5px rgba(255, 255, 255, 0.571);
-        }
-        button { 
-            background: #0040ff; 
-            cursor: pointer إ
-        }
-        .checkbox { 
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin: 0px 10px;
-            font-size: 13px;
-        }
-        .title-field { display: none; }
-        .note-preview { 
-            font-size: 11px; 
-            margin-top: 4px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-        }
-        .rotated-sideways {
-            opacity: 0;
-        }
-
-        @media (max-width: 480px) {
-            h2#monthAndYear {
-                font-size: 32px;
-                left: 20px;
-                top: 20px;
-            }
-            table {
-                width: 95%;
-                top: 26%;
-                border-radius: 16px;
-            }
-            .leftright { 
-                left: 0px;
-                width: 100%;
-                gap: 0px;
-                bottom: 40px;
-                justify-content: space-around;
-            }
-            th, td {
-                border-radius: 13px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <p style="color:#0049ff;position:fixed;top:10px;left:20px;font-weight:600;">#BsReminder</p>
-    <h2 id="monthAndYear"></h2>
-    <div class="letsbecenter">
-      <table id="calendar">
-        <thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
-        <tbody id="calendar-body"></tbody>
-      </table>
-    </div>
-    <div class="leftright">
-        <button onclick="previous()">‹</button>
-        <button onclick="next()">›</button>
-        <button onclick="toggleRotate()" style="font-size: 28px;">↻</button>
-    </div>
-
-    <!-- SINGLE NOTE POPUP -->
-    <div id="noteModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">×</span>
-            <h3 id="modalDate"></h3>
-            <div id="titleField" class="title-field">
-                <input type="text" id="noteTitle" placeholder="Enter a title here..." />
-            </div>
-            <input type="text" id="noteText" placeholder="Enter your note here..." />
-            <div class="checkbox">
-                <input style="width: fit-content;" type="checkbox" id="pinForever">
-                <label for="pinForever">Pin to <b>every month</b> on this date</label>
-            </div>
-            <button onclick="saveNote()" style="margin-bottom: 1px;">Save Note</button>
-        </div>
-    </div>
-
-    <!-- DISPLAY MODAL -->
-    <div id="viewModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">×</span>
-            <h3 id="viewTitle" style="color:#0040ff;"></h3>
-            <p id="viewText" style="font-size:15px;"></p>
-            <button onclick="editNote()" style="border-radius: 100px; margin-bottom: 1px;">Edit</button>
-        </div>
-    </div>
-
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsReminder</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/WBcSJPd/New-Project-A1-A7313.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap'); * { color: #fff; font-family: "Red Hat Display", sans-serif; } body { background: #000; margin: 0; -webkit-tap-highlight-color: transparent; letter-spacing: 0.3px; tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .letsbecenter { display: flex; justify-content: center; align-items: center; } h2#monthAndYear { font-size: 50px; position: fixed; left: 37%; top: 15px; white-space: nowrap; transition: opacity 0.3s ease; } table { width: 60%; position: fixed; top: 26%; background: #ffffff12; border-radius: 18px; padding: 2px; transition: transform 0.4s ease-in-out; } th, td { padding: 5px; text-align: center; color: white; width: 100px; height: 40px; border-radius: 16px; opacity: 80%; } th, td:hover { background: #ffffff44; color: #bbb; font-weight: 800; opacity: 100%; } th { background: #000; color: #d6d6d6; } .highlight { background: #ffffff1f; } .pinned { background: #ff8c008c; } .pinned:hover { background: #ff8c00af; } .goal { background: #1800ffa8; } .goal:hover { background: #1900ffd0; } .leftright { position: fixed; bottom: 100px; right: 6%; display: flex; gap: 30px; } .leftright button { background: transparent; border: none; font-size: 30px; color: #ffffff4c; cursor: pointer; } .leftright button:hover { color: #fff; } /* Modal overlay - always full screen, never rotated */ .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 999; } /* Only rotate the content box, not the overlay */ .modal-content { background: #1b1b1b; padding: 10px; border-radius: 30px; width: 85%; text-align: center; max-width: 300px; transition: transform 0.4s ease-in-out; /* Smooth rotation only for content */ } .close { position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: #aaa; } .close:hover { color: #0049ff; } input, button { width: -webkit-fill-available; padding: 12px 25px; margin: 8px 0; border: none; border-radius: 106px; } input { background: #4d4d4d; color: #fff; outline: none; border: solid 1.5px transparent; } input:focus { border: solid 1.5px rgba(255, 255, 255, 0.571); } button { background: #0040ff; cursor: pointer; } .checkbox { display: flex; align-items: center; gap: 5px; margin: 0px 10px; font-size: 13px; } .title-field { display: none; } .note-preview { font-size: 11px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .rotated-sideways { opacity: 0; } @media (max-width: 480px) { h2#monthAndYear { font-size: 32px; left: 20px; top: 20px; } table { width: 95%; top: 26%; border-radius: 16px; } .leftright { left: 0px; width: 100%; gap: 0px; bottom: 40px; justify-content: space-around; } th, td { border-radius: 13px; } } </style> </head> <body> <p style="color:#0049ff;position:fixed;top:10px;left:20px;font-weight:600;">#BsReminder</p> <h2 id="monthAndYear"></h2> <div class="letsbecenter"> <table id="calendar"> <thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead> <tbody id="calendar-body"></tbody> </table> </div> <div class="leftright"> <button onclick="previous()">‹</button> <button onclick="next()">›</button> <button onclick="toggleRotate()" style="font-size: 28px;">↻</button> </div> <!-- NOTE MODAL --> <div id="noteModal" class="modal"> <div class="modal-content"> <span class="close" onclick="closeModal()">×</span> <h3 id="modalDate"></h3> <div id="titleField" class="title-field"> <input type="text" id="noteTitle" placeholder="Enter a title here..." /> </div> <input type="text" id="noteText" placeholder="Enter your note here..." /> <div class="checkbox"> <input style="width: fit-content;" type="checkbox" id="pinForever"> <label for="pinForever">Pin to <b>every month</b> on this date</label> </div> <button onclick="saveNote()" style="margin-bottom: 1px;">Save Note</button> </div> </div> <!-- VIEW MODAL --> <div id="viewModal" class="modal"> <div class="modal-content"> <span class="close" onclick="closeModal()">×</span> <h3 id="viewTitle" style="color:#0040ff;"></h3> <p id="viewText" style="font-size:15px;"></p> <button onclick="editNote()" style="border-radius: 100px; margin-bottom: 1px;">Edit</button> </div> </div>
     <script>
         const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
         let today = new Date();
         let currentMonth = today.getMonth();
         let currentYear = today.getFullYear();
 
-        // Storage
         let oneTimeNotes = JSON.parse(localStorage.getItem('notes') || '{}');
         let pinnedNotes  = JSON.parse(localStorage.getItem('pinned') || '{}');
 
         let selectedDate = "";
         let selectedDay = 0;
         let isEditingPinned = false;
-        let isRotated = false; // Global rotation state (preserved across months)
+        let isRotated = false;
 
-        // ——— APPLY CURRENT ROTATION STATE ———
         function applyRotation() {
             const calendar = document.getElementById("calendar");
             const monthYear = document.getElementById("monthAndYear");
-            const modals = document.querySelectorAll('.modal');
+            const modalContents = document.querySelectorAll('.modal-content');
 
             if (isRotated) {
                 calendar.style.transform = "rotate(90deg)";
                 monthYear.classList.add("rotated-sideways");
-                modals.forEach(modal => modal.style.transform = "rotate(90deg)");
+                modalContents.forEach(content => content.style.transform = "rotate(90deg)");
             } else {
                 calendar.style.transform = "rotate(0deg)";
                 monthYear.classList.remove("rotated-sideways");
-                modals.forEach(modal => modal.style.transform = "rotate(0deg)");
+                modalContents.forEach(content => content.style.transform = "rotate(0deg)");
             }
         }
 
-        // ——— CALENDAR GENERATION ———
         function generateCalendar(m, y) {
             document.getElementById("monthAndYear").innerText = `${months[m]} ${y}`;
             let body = document.getElementById("calendar-body");
@@ -299,18 +78,14 @@
                 }
                 body.appendChild(row);
             }
-
-            // Re-apply rotation after new calendar is generated
             applyRotation();
         }
 
-        // ——— TOGGLE ROTATION ———
         function toggleRotate() {
             isRotated = !isRotated;
             applyRotation();
         }
 
-        // ——— OPEN MODALS WITH CURRENT ROTATION ———
         function openNoteModal(fullDate, day, isEdit = false) {
             selectedDate = fullDate;
             selectedDay = day;
@@ -333,20 +108,15 @@
                 document.getElementById("noteText").value = oneTime || "";
             }
 
-            const modal = document.getElementById("noteModal");
-            modal.style.display = "flex";
-            modal.style.transform = isRotated ? "rotate(90deg)" : "rotate(0deg)";
+            document.getElementById("noteModal").style.display = "flex";
         }
 
         function viewNote(title, note) {
             document.getElementById("viewTitle").textContent = title;
             document.getElementById("viewText").textContent = note;
-            const modal = document.getElementById("viewModal");
-            modal.style.display = "flex";
-            modal.style.transform = isRotated ? "rotate(90deg)" : "rotate(0deg)";
+            document.getElementById("viewModal").style.display = "flex";
         }
 
-        // ——— OTHER FUNCTIONS ———
         document.getElementById("pinForever").onchange = function() {
             const show = this.checked;
             document.getElementById("titleField").style.display = show ? "block" : "none";
@@ -366,11 +136,8 @@
                 pinnedNotes[selectedDay] = { title, note: text };
                 delete oneTimeNotes[selectedDate];
             } else {
-                if (text) {
-                    oneTimeNotes[selectedDate] = text;
-                } else {
-                    delete oneTimeNotes[selectedDate];
-                }
+                if (text) oneTimeNotes[selectedDate] = text;
+                else delete oneTimeNotes[selectedDate];
                 delete pinnedNotes[selectedDay];
             }
 
@@ -410,7 +177,6 @@
             document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
         }
 
-        // ——— NAVIGATION (preserves rotation) ———
         function previous() {
             currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
             currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
@@ -426,19 +192,16 @@
         window.onclick = e => { 
             if (e.target.classList.contains('modal')) closeModal(); 
         };
-
-         document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             const customMenu = document.querySelector(".custom-menu");
-
-            // document.addEventListener("contextmenu", (event) => {
-            //     event.preventDefault();
-            //     if (customMenu) {
-            //         customMenu.style.display = "block";
-            //         customMenu.style.top = `${event.pageY}px`;
-            //         customMenu.style.left = `${event.pageX}px`;
-            //     }
-            // });
-
+            document.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                if (customMenu) {
+                    customMenu.style.display = "block";
+                    customMenu.style.top = `${event.pageY}px`;
+                    customMenu.style.left = `${event.pageX}px`;
+                }
+            });
             document.addEventListener("click", () => {
                 if (customMenu) {
                     customMenu.style.display = "none";
