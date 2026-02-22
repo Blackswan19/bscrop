@@ -1,9 +1,7 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsFinacal</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900&display=swap'); * { font-family: "Red Hat Display", sans-serif; box-sizing: border-box; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } body { background-color: #18181b; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0; overflow-x: hidden; } h1 { color: #0058ff; font-size: 1.8em; font-weight: 800; margin: 120px 0px 0px 0px; position: relative; } a { text-decoration: none; color: #ffffff; } .container { max-width: 800px; width: 100%; padding: 15px; } .balance-display { font-size: 20px; color: #ffffff; background: #3c3c3c; padding: 10px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 8px 1000px rgb(23 23 23 / 66%); display: flex; justify-content: space-around; } .form-group { margin-bottom: 10px; } .form-group label { display: block; margin-bottom: 3px; font-weight: 600; color: #0060ff; text-align: justify; padding: 10px 10px 0px 3px; } .form-group input, .form-group select { padding: 8px; border: 1px solid #404040; border-radius: 0px; background-color: #252526; color: #ffffff; width: 100%; font-size: 0.9em; outline: none; } button { padding: 8px; background-color: #006bff; color: #ffffff; border: none; border-radius: 4px; font-size: 0.9em; cursor: pointer; transition: background-color 0.2s; } button:hover { background-color: #0056b3; } .transaction-table-container { max-height: 400px; overflow-y: auto; width: 100%; margin-top: 20px; scrollbar-width: thin; scrollbar-color: #5b5b5b #00000000; background: #8080800a; } .transaction-table { width: 100%; border-collapse: collapse; } .transaction-table th, .transaction-table td { padding: 8px; border: 1px solid #404040; text-align: center; color: gray; font-size: 15px; font-weight: 600; text-transform: capitalize; background: #ffffff00; } .transaction-table th { background-color: #3c3c3c; position: sticky; top: 0; z-index: 10; color: #ffffffc9; } .transaction-table .income { color: #00ff00a3; /* Green for income */ } .transaction-table .expense { color: #ff0000b3; /* Red for expenses */ } .delete-btn { color: #ff00006b; border: none; cursor: pointer; background: transparent; padding: 0px; font-size: 14px; } .delete-btn:hover { color: red; background: transparent; } /* Transaction Popup Styling */ .transaction-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90vw; max-width: 400px; background-color: #252526; padding: 20px; display: none; z-index: 1000; flex-direction: column; gap: 10px; border-radius: 8px; box-shadow: 0 4px 8px 1000px rgb(0 0 0 / 70%); } .transaction-popup.active { display: flex; } .close-transaction { position: absolute; top: 10px; left: 10px; color: #ffffff; border: none; cursor: pointer; font-size: 1em; background: none; } .close-transaction:hover { color: #006bff; } .options { display: flex; justify-content: center; gap: 10px; } /* Period Summary Slider Styling */ .period-slider { position: fixed; top: 0; right: -800px; width: 450px; height: 100vh; background-color: #252526; padding: 20px; z-index: 10000; transition: right 0.3s ease-in-out; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; filter: drop-shadow(2px 4px 16px black); } .period-slider.active { right: 0; } .period-slider h2 { color: #ffffff; font-size: 1.5em; margin-bottom: 15px; font-weight: 600; } .period-result { color: #ffffff; margin-top: 15px; font-size: 0.9em; line-height: 30px; background: #00000080; padding: 10px 15px; } .period-result p { margin: 5px 0; } .period-result .days-between { color: #00ccffba; /* Cyan for days between */ font-weight: bold; } .period-result .income { color: #00ff00a3; background: #ffffff14; font-weight: 700; letter-spacing: 0.5px; text-align: center; } .period-result .expense { color: #ff0000; background: #ffffff14; font-weight: 700; letter-spacing: 0.5px; text-align: center; } .period-result .net-balance { color: #ffd800d9; /* Gold for net balance */ font-weight: bold; } .close-period-slider { position: absolute; top: 10px; right: 10px; color: #ffffff; border: none; cursor: pointer; font-size: 1em; background: none; } .close-period-slider:hover { color: #006bff; } .toggle-form-btn { position: fixed; top: 10px; left: 10px; width: 40px; height: 40px; font-size: 1.5em; display: flex; align-items: center; justify-content: center; background-color: #006bff; color: #ffffff; border: none; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; z-index: 1100; } .toggle-form-btn:hover { background-color: #0056b3; } .toggle-period-btn { position: fixed; top: 60px; right: 10px; width: 40px; height: 40px; font-size: 1.5em; display: flex; align-items: center; justify-content: center; background-color: #006bff; color: #ffffff; border: none; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; z-index: 1100; } /* Filter Dropdown */ .form-group.filter { position: fixed; top: 10px; right: 10px; z-index: 1100; } /* Mobile Responsive Styling */ @media (max-width: 600px) { .container { padding: 10px; } h1 { font-size: 1.5em; } .balance-display { font-size: 18px; padding: 8px; } .form-group input, .form-group select, button { font-size: 0.8em; padding: 6px; } .transaction-table th, .transaction-table td { padding: 6px 3px; font-size: 0.8em; } .transaction-table-container { max-height: 400px; } .toggle-form-btn, .toggle-period-btn { width: 35px; height: 35px; font-size: 1.2em; } .period-slider { width: 100%; right: -100%; } .period-slider.active { right: 0; } .transaction-popup { width: 95vw; max-width: 300px; padding: 15px; } } </style> </head> <body> <a href="https://blackswan19.github.io/Educate/savenotes.html"><h1>BsFinacal</h1></a> <div class="container"> <!-- Toggle Form Button --> <button class="toggle-form-btn" id="toggle-form">+</button> <!-- Toggle Period Slider Button --> <button class="toggle-period-btn" id="toggle-period">Σ</button> <div class="balance-display"> <span id="balance-label" style="font-weight: 800; color: rgb(155, 155, 155);">Total </span> : <span id="balance" style="font-weight: 800; color: #00fff9b0;">0.00</span> </div> <!-- Transaction Input Popup --> <div class="transaction-popup" id="transaction-popup"> <div class="form-group"> <label for="transaction-type">Transaction Type:</label> <select id="transaction-type"> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <div class="form-group"> <label for="transaction-description">For:</label> <input type="text" id="transaction-description" placeholder="Enter name or spends on"> </div> <div class="form-group"> <label for="transaction-amount">Rs:</label> <input type="number" id="transaction-amount" placeholder="Enter amount" step="0.01"> </div> <div class="form-group"> <label for="transaction-date">Date:</label> <input type="date" id="transaction-date"> </div> <div class="options"> <button id="add-transaction">Add Transaction</button> <button onclick="closeTransactionPopup()">Cancel</button> </div> </div> <!-- Filter Dropdown --> <div class="form-group filter"> <select id="filter-type" onchange="renderTransactions()"> <option value="all">All</option> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <!-- Transactions Table --> <div class="transaction-table-container"> <table class="transaction-table"> <thead> <tr> <th>For</th> <th>Rs</th> <th>Type</th> <th>Date</th> <th>Del</th> </tr> </thead> <tbody id="transaction-list"> <!-- Transaction rows will be dynamically added here --> </tbody> </table> </div> </div> <!-- Period Summary Slider --> <div id="period-slider" class="period-slider"> <button class="close-period-slider" onclick="closePeriodSlider()">X</button> <h2>Period Summary</h2> <div class="form-group"> <label for="start-date">Start Date:</label> <input type="date" id="start-date"> </div> <div class="form-group"> <label for="end-date">End Date:</label> <input type="date" id="end-date"> </div> <div class="form-group"> <label for="period-type">Show Details For:</label> <select id="period-type"> <option value="expense">Expenses</option> <option value="income">Income</option> <option value="all">All</option> </select> </div> <button id="calculate-period">Calculate</button> <div id="period-result" class="period-result"></div> </div>
- <script>
-    let balance = 0;
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <title>BsFinacal</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-S..." crossorigin="anonymous" referrerpolicy="no-referrer" /> <style> @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }* { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } body { background: #000000; color: #e0e0e5; min-height: 100vh; padding: 16px 12px; display: flex; flex-direction: column; align-items: center; } a { text-decoration: none; color: inherit; } h1 { color: #0040ff; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.4px; margin: 76px 0 32px; text-align: center; } .container { width: 100%; max-width: 480px; } .balance-display { background: #111113; border-radius: 16px; padding: 20px 16px; margin-bottom: 24px; font-size: 1.38rem; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 10px; border: 1px solid #1a1a20; } #balance { color: #4fc3f7; font-weight: 700; } .form-group { margin-bottom: 15px; margin-top: 20px; } .form-group label { display: block; color: #0040ff; font-size: 0.84rem; font-weight: 500; margin-bottom: 6px; } .form-group input, .form-group select { width: 100%; padding: 12px 14px; background: #111113; border: 1px solid #1e1e25; border-radius: 12px; color: #f0f0f5; font-size: 1rem; outline: none; transition: border-color 0.18s; } button { background: #0040ff; color: white; border: none; border-radius: 102px; padding: 12px 20px; font-size: 0.96rem; font-weight: 600; cursor: pointer; transition: background 0.16s; } /* Floating action buttons */ .toggle-form-btn, .toggle-period-btn { border-radius: 14px; background: #0040ff; color: white; font-size: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; width: 40px; height: 40px; border: none;padding: 0px; }.bottomoptions { display: flex; justify-content: space-around; align-items: center; position: fixed; bottom: 10px; width: 100%;left: 0px; } /* Transaction list */ .transaction-table-container { background: #000000; border-radius: 16px; overflow: hidden; border: 1.5px solid #ffffff1a; margin-top: 16px; height: 400px; overflow-y: scroll; scrollbar-width: thin; scrollbar-color: gray black; } .transaction-table { width: 100%; border-collapse: collapse; } .transaction-table th { background: #111113; color: #90a4ae; font-size: 0.81rem; font-weight: 600; padding: 12px 8px; position: sticky; top: 0; z-index: 2; border-bottom: 1px solid #1e1e25; } .transaction-table td { padding: 14px 8px; font-size: 0.94rem; border-bottom: 1px solid #1a1a1f; text-align: center; } .transaction-table .income { color: #66bb6a; font-weight: 500; } .transaction-table .expense { color: #ef5350; font-weight: 500; } .delete-btn { background: none; border: none; color: #757575; font-size: 1.18rem; cursor: pointer; padding: 4px; } .delete-btn:hover { color: #ef5350; } /* Transaction popup (centered modal) */ .transaction-popup { position: fixed; inset: 0; background: rgba(0,0,0,0.82); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(4px); } .transaction-popup.active { display: flex; } .transaction-popup > div { background: #111113; border-radius: 45px; width: 92%; max-width: 420px; padding: 24px; border: 1px solid #1e1e28; position: relative; } .close-transaction { position: absolute; top: 5px; right: 5px; background: none; border: none; color: #ffffff66; font-size: 1.4rem; cursor: pointer; font-weight: 100; } /* Period summary side sheet */ .period-slider { position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px; height: 100%; background: #0b0b0d; border-left: 1px solid #1e1e25; transition: right 0.28s cubic-bezier(0.4,0,0.2,1); z-index: 1500; padding: 24px 20px; color: #e0e0e5; overflow-y: auto; } .period-slider.active { right: 0; } .close-period-slider { position: absolute; top: 16px; right: 20px; background: none; border: none; color: #90a4ae; font-size: 1.5rem; cursor: pointer; } .period-result { margin-top: 20px; padding: 16px; background: #111113; border-radius: 12px; border: 1px solid #1e1e25; line-height: 1.55; } .period-result .days-between { color: #4fc3f7; font-weight: 600; } .period-result .income { color: #81c784; } .period-result .expense { color: #e57373; } .period-result .net-balance { color: #ffd54f; font-weight: 600; } /* Filter (top-right) */ .form-group.filter { position: fixed; top: 0px; right: 16px; z-index: 900; } #filter-type { background: #111113; color: #e0e0e5; border: 1px solid #1e1e25; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; } /* Options row in popup */ .options { display: flex; gap: 12px; margin-top: 8px; } .options button { flex: 1; } .options button:nth-child(2) { background: #ffffff23; } .options button:nth-child(2):hover { background: #ffffff13; } /* Responsive */ @media (max-width: 480px) { } </style> </head> <body> <a><h1>BsFinacal</h1></a> <div class="container"> <!-- Floating buttons --> <div class="bottomoptions"> <button class="toggle-form-btn" id="toggle-form"><i class="fa-solid fa-plus"></i></button> <button class="toggle-period-btn" id="toggle-period"><i class="fa-solid fa-filter"></i></button> </div> <!-- Balance --> <div class="balance-display"> <span id="balance-label" style="color:#a0a0b0;">Total</span> <span id="balance">0.00</span> </div> <!-- Filter --> <div class="form-group filter"> <select id="filter-type" onchange="renderTransactions()"> <option value="all">All</option> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <!-- Transactions Table --> <div class="transaction-table-container"> <table class="transaction-table"> <thead> <tr> <th>For</th> <th>Rs</th> <th>Type</th> <th>Date</th> <th></th> </tr> </thead> <tbody id="transaction-list"></tbody> </table> </div> </div> <!-- Add Transaction Popup --> <div class="transaction-popup" id="transaction-popup"> <div> <button class="close-transaction" onclick="closeTransactionPopup()">×</button> <div class="form-group"> <label for="transaction-type">Type</label> <select id="transaction-type"> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <div class="form-group"> <label for="transaction-description">For</label> <input type="text" id="transaction-description" placeholder="Salary / Grocery / etc" autocomplete="off"/> </div> <div class="form-group"> <label for="transaction-amount">Amount</label> <input type="number" id="transaction-amount" placeholder="0.00" step="0.01" min="0"/> </div> <div class="form-group"> <label for="transaction-date">Date</label> <input type="date" id="transaction-date"/> </div> <div class="options"> <button id="add-transaction">Add</button> <button onclick="closeTransactionPopup()">Cancel</button> </div> </div> </div> <!-- Period Summary Side Sheet --> <div id="period-slider" class="period-slider"> <button class="close-period-slider" onclick="closePeriodSlider()">×</button> <h2 style="margin-bottom:20px; color:#e0e0e5;">Period Summary</h2> <div class="form-group"> <label for="start-date">Start Date</label> <input type="date" id="start-date"/> </div> <div class="form-group"> <label for="end-date">End Date</label> <input type="date" id="end-date"/> </div> <div class="form-group"> <label for="period-type">Show</label> <select id="period-type"> <option value="all">All</option> <option value="income">Income</option> <option value="expense">Expense</option> </select> </div> <button id="calculate-period" style="width:100%; margin:16px 0 8px;">Calculate</button> <div id="period-result" class="period-result"></div> </div>
+  <script>
     let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
-    // Set default date to current system date
     function setDefaultDates() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById("transaction-date").value = today;
@@ -11,17 +9,12 @@
       document.getElementById("end-date").value = today;
     }
 
-    // Toggle Transaction Popup
+   document.addEventListener('contextmenu', e => e.preventDefault());
     document.getElementById("toggle-form").addEventListener("click", () => {
       const popup = document.getElementById("transaction-popup");
-      const button = document.getElementById("toggle-form");
-      if (popup.classList.contains("active")) {
-        popup.classList.remove("active");
-        button.textContent = "+";
-      } else {
-        popup.classList.add("active");
-        button.textContent = "−";
-      }
+      const btn = document.getElementById("toggle-form");
+      popup.classList.toggle("active");
+      btn.textContent = popup.classList.contains("active") ? "×" : "+";
     });
 
     function closeTransactionPopup() {
@@ -29,10 +22,9 @@
       document.getElementById("toggle-form").textContent = "+";
     }
 
-    // Toggle Period Slider
+    // Toggle period slider
     document.getElementById("toggle-period").addEventListener("click", () => {
-      const slider = document.getElementById("period-slider");
-      slider.classList.toggle("active");
+      document.getElementById("period-slider").classList.toggle("active");
       document.getElementById("period-result").innerHTML = "";
     });
 
@@ -40,173 +32,119 @@
       document.getElementById("period-slider").classList.remove("active");
     }
 
-    function updateBalance() {
-      renderTransactions();
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      return `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}`;
     }
 
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      return `${day}-${month}`;
-    }
-
-    function addTransactionToTable(transaction, index) {
-      const transactionList = document.getElementById("transaction-list");
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${transaction.description}</td>
-        <td>${transaction.amount.toFixed(0)}</td>
-        <td class="${transaction.type}">${transaction.type}</td>
-        <td>${formatDate(transaction.date)}</td>
-        <td style='text-align: center;'><button class="delete-btn" onclick="deleteTransaction(${index})"><i class="fa-solid fa-square-minus"></i></button></td>
+    function addTransactionToTable(t, index) {
+      const tbody = document.getElementById("transaction-list");
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${t.description}</td>
+        <td>${t.amount.toFixed(0)}</td>
+        <td class="${t.type}">${t.type}</td>
+        <td>${formatDate(t.date)}</td>
+        <td><button class="delete-btn" onclick="deleteTransaction(${index})"><i class="fas fa-minus-circle"></i></button></td>
       `;
-      transactionList.appendChild(row);
+      tbody.appendChild(tr);
     }
 
-    function loadTransactions() {
-      transactions.forEach((transaction) => {
-        balance += transaction.type === "income" ? transaction.amount : -transaction.amount;
+    function renderTransactions() {
+      const tbody = document.getElementById("transaction-list");
+      const filter = document.getElementById("filter-type").value;
+      tbody.innerHTML = "";
+
+      let displayedTotal = 0;
+
+      // Show newest first
+      [...transactions].reverse().forEach((t, revIdx) => {
+        const origIdx = transactions.length - 1 - revIdx;
+        if (filter === "all" || t.type === filter) {
+          addTransactionToTable(t, origIdx);
+          displayedTotal += (t.type === "income" ? t.amount : -t.amount) * (filter === "all" ? 1 : (t.type === "income" ? 1 : -1));
+        }
       });
-      updateBalance();
+
+      document.getElementById("balance-label").textContent = filter === "all" ? "Total" : filter.charAt(0).toUpperCase() + filter.slice(1);
+      document.getElementById("balance").textContent = Math.abs(displayedTotal).toFixed(2);
+      document.getElementById("balance").style.color = displayedTotal >= 0 ? "#4fc3f7" : "#ef5350";
     }
 
     function saveTransactions() {
       localStorage.setItem("transactions", JSON.stringify(transactions));
     }
 
-    function deleteTransaction(index) {
-      const transaction = transactions[index];
-      balance -= transaction.type === "income" ? transaction.amount : -transaction.amount;
-      transactions.splice(index, 1);
+    function deleteTransaction(idx) {
+      transactions.splice(idx, 1);
       saveTransactions();
       renderTransactions();
     }
 
-    function renderTransactions() {
-  const transactionList = document.getElementById("transaction-list");
-  const filterType = document.getElementById("filter-type").value;
-  const balanceLabel = document.getElementById("balance-label");
-  const balanceDisplay = document.getElementById("balance");
-
-  transactionList.innerHTML = "";
-
-  let typeTotal = 0;
-  // Create a reversed copy of the transactions array
-  const reversedTransactions = [...transactions].reverse();
-  reversedTransactions.forEach((transaction, reversedIndex) => {
-    if (filterType === "all" || transaction.type === filterType) {
-      // Calculate the original index in the transactions array
-      const originalIndex = transactions.length - 1 - reversedIndex;
-      addTransactionToTable(transaction, originalIndex);
-      if (filterType === "all") {
-        typeTotal += transaction.type === "income" ? transaction.amount : -transaction.amount;
-      } else if (transaction.type === filterType) {
-        typeTotal += transaction.amount;
-      }
-    }
-  });
-
-  balanceLabel.innerText = filterType === "all" ? "Total ₹" : `Total ${filterType.charAt(0).toUpperCase() + filterType.slice(1)}`;
-  balanceDisplay.innerText = typeTotal.toFixed(2);
-}
-
+    // Add transaction
     document.getElementById("add-transaction").addEventListener("click", () => {
-      const type = document.getElementById("transaction-type").value;
-      const description = document.getElementById("transaction-description").value;
-      const amount = parseFloat(document.getElementById("transaction-amount").value);
-      const date = document.getElementById("transaction-date").value;
+      const type  = document.getElementById("transaction-type").value;
+      const desc  = document.getElementById("transaction-description").value.trim();
+      const amt   = parseFloat(document.getElementById("transaction-amount").value);
+      const date  = document.getElementById("transaction-date").value;
 
-      if (!description || isNaN(amount) || amount <= 0 || !date) {
-        alert("Please enter a valid description, amount, and date.");
+      if (!desc || isNaN(amt) || amt <= 0 || !date) {
+        alert("Please fill all fields correctly.");
         return;
       }
 
-      const transaction = { description, amount, type, date };
-      transactions.push(transaction);
-
-      balance += type === "income" ? amount : -amount;
-      updateBalance();
+      transactions.push({ description: desc, amount: amt, type, date });
       saveTransactions();
+      renderTransactions();
 
+      // Reset form
       document.getElementById("transaction-description").value = "";
       document.getElementById("transaction-amount").value = "";
       document.getElementById("transaction-date").value = new Date().toISOString().split('T')[0];
-      document.getElementById("transaction-popup").classList.remove("active");
-      document.getElementById("toggle-form").textContent = "+";
+      closeTransactionPopup();
     });
 
-    // Period Summary Functionality
+    // Period calculation
     document.getElementById("calculate-period").addEventListener("click", () => {
-      const startStr = document.getElementById("start-date").value;
-      const endStr = document.getElementById("end-date").value;
-      const periodType = document.getElementById("period-type").value;
+      const start = document.getElementById("start-date").value;
+      const end   = document.getElementById("end-date").value;
+      const pType = document.getElementById("period-type").value;
 
-      if (!startStr || !endStr) {
-        alert("Please select start and end dates.");
-        return;
-      }
+      if (!start || !end) return alert("Select both dates");
 
-      const start = new Date(startStr);
-      const end = new Date(endStr);
+      const s = new Date(start);
+      const e = new Date(end);
+      if (s > e) return alert("Start date must be before or equal to end date");
 
-      if (start > end) {
-        alert("Start date must be before or equal to end date.");
-        return;
-      }
-
-      const days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+      const days = Math.floor((e - s) / 86400000) + 1;
 
       const filtered = transactions.filter(t => {
-        const tDate = new Date(t.date);
-        return tDate >= start && tDate <= end;
+        const td = new Date(t.date);
+        return td >= s && td <= e;
       });
 
       let total = 0;
-      let listHtml = "";
-      const listedTransactions = filtered.filter(t => periodType === "all" || t.type === periodType);
+      let html = "";
 
-      listedTransactions.forEach(t => {
-        const verb = t.type === "expense" ? "spent" : "received";
-        const onFrom = t.type === "expense" ? "on" : "for";
-        listHtml += `<p class="${t.type}">You ${verb}: ${t.amount.toFixed(0)} rs ${onFrom} ${t.description}</p>`;
-        total += t.type === "expense" ? (periodType === "all" ? -t.amount : t.amount) : (periodType === "all" ? t.amount : t.amount);
+      filtered.filter(t => pType === "all" || t.type === pType).forEach(t => {
+        const sign = t.type === "income" ? "+" : "−";
+        const colorClass = t.type;
+        total += t.type === "income" ? t.amount : -t.amount;
+        html += `<p class="${colorClass}">${sign} ${t.amount.toFixed(0)}  —  ${t.description}</p>`;
       });
 
-      const resultDiv = document.getElementById("period-result");
-      const typeLabel = periodType === "all" ? "Net Balance" : periodType.charAt(0).toUpperCase() + periodType.slice(1);
-      resultDiv.innerHTML = `
-        <p class="days-between">No of days between : ${days}</p>
-        <p class="net-balance">Total ${typeLabel} on ${days}(day/days) was : ${total.toFixed(0)}</p>
-        ${listHtml}
+      const label = pType === "all" ? "Net" : pType.charAt(0).toUpperCase() + pType.slice(1);
+
+      document.getElementById("period-result").innerHTML = `
+        <p class="days-between">Days: ${days}</p>
+        <p class="net-balance">${label}: ${total >= 0 ? "+" : ""}${total.toFixed(0)}</p>
+        ${html ? `<div style="margin-top:12px;">${html}</div>` : "<p style='color:#757575;'>No transactions in this period.</p>"}
       `;
     });
 
-    // Explicitly hide elements on page load
-    document.getElementById("transaction-popup").classList.remove("active");
-    document.getElementById("period-slider").classList.remove("active");
-    loadTransactions();
-    setDefaultDates(); // Set default dates on load
-        
-    document.addEventListener("DOMContentLoaded", () => {
-      const customMenu = document.querySelector(".custom-menu");
-
-      document.addEventListener("contextmenu", (event) => {
-        event.preventDefault();
-        if (customMenu) {
-          customMenu.style.display = "block";
-          customMenu.style.top = `${event.pageY}px`;
-          customMenu.style.left = `${event.pageX}px`;
-        }
-      });
-
-      document.addEventListener("click", () => {
-        if (customMenu) {
-          customMenu.style.display = "none";
-        }
-      });
-    });
+    // Init
+    setDefaultDates();
+    renderTransactions();
   </script>
 </body>
 </html>
-
