@@ -41,20 +41,33 @@
                 <div class="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center">
                     <i class="fas fa-swimmer text-white text-xs"></i>
                 </div>
-                <span class="logo-font text-3xl font-semibold tracking-tighter">black swan</span>
+                <span class="logo-font text-3xl font-semibold tracking-tighter">Black Swan</span>
             </div>
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-10 text-sm font-medium">
-                <a href="#features" class="hover:text-blue-400 transition">Features</a>
-                <a href="#solutions" class="hover:text-blue-400 transition">Solutions</a>
-                <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
+                <a href="#features" class="hover:text-blue-400 transition" data-en="Features" data-ko="기능">Features</a>
+                <a href="#solutions" class="hover:text-blue-400 transition" data-en="Solutions" data-ko="솔루션">Solutions</a>
+                <a href="#pricing" class="hover:text-blue-400 transition" data-en="Pricing" data-ko="요금제">Pricing</a>
+
+                <!-- Language Switcher (Desktop) -->
+                <div class="relative ml-6">
+                    <button id="lang-btn" class="flex items-center gap-1.5 text-sm font-medium hover:text-blue-400 transition">
+                        <span id="current-lang">English</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="lang-menu" class="hidden absolute right-0 mt-2 w-32 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl z-50 py-1.5">
+                        <button class="lang-option w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 transition" data-lang="en">English</button>
+                        <button class="lang-option w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 transition" data-lang="ko">한국어</button>
+                    </div>
+                </div>
             </div>
 
             <div class="flex items-center gap-5">
-                <a href="#" class="hidden sm:block text-sm font-medium">Login</a>
+                <a href="#" class="hidden sm:block text-sm font-medium" data-en="Login" data-ko="로그인">Login</a>
                 <a href="#" 
-                   class="bg-blue-600 hover:bg-blue-500 transition px-8 py-3.5 rounded-2xl text-sm font-semibold">
+                   class="bg-blue-600 hover:bg-blue-500 transition px-8 py-3.5 rounded-2xl text-sm font-semibold"
+                   data-en="Start Free Trial" data-ko="무료 체험 시작">
                     Start Free Trial
                 </a>
                 
@@ -68,10 +81,20 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-zinc-950 border-t border-zinc-900 px-6 py-8">
             <div class="flex flex-col gap-8 text-lg">
-                <a href="#features" onclick="toggleMenu()" class="hover:text-blue-400">Features</a>
-                <a href="#solutions" onclick="toggleMenu()" class="hover:text-blue-400">Solutions</a>
-                <a href="#pricing" onclick="toggleMenu()" class="hover:text-blue-400">Pricing</a>
-                <a href="#" class="bg-blue-600 text-center py-4 rounded-2xl font-semibold">Start Free Trial</a>
+                <a href="#features" onclick="toggleMenu()" class="hover:text-blue-400" data-en="Features" data-ko="기능">Features</a>
+                <a href="#solutions" onclick="toggleMenu()" class="hover:text-blue-400" data-en="Solutions" data-ko="솔루션">Solutions</a>
+                <a href="#pricing" onclick="toggleMenu()" class="hover:text-blue-400" data-en="Pricing" data-ko="요금제">Pricing</a>
+
+                <div class="mt-4 pt-6 border-t border-zinc-800">
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mb-4" data-en="Language" data-ko="언어">Language</div>
+                    <button class="lang-option-mobile block w-full text-left py-3 hover:text-blue-400 transition" data-lang="en">English</button>
+                    <button class="lang-option-mobile block w-full text-left py-3 hover:text-blue-400 transition" data-lang="ko">한국어</button>
+                </div>
+
+                <a href="#" class="bg-blue-600 text-center py-4 rounded-2xl font-semibold mt-4"
+                   data-en="Start Free Trial" data-ko="무료 체험 시작">
+                    Start Free Trial
+                </a>
             </div>
         </div>
     </nav>
@@ -82,34 +105,40 @@
             <div class="max-w-3xl mx-auto">
                 <div class="inline-flex items-center gap-2 px-5 py-2 bg-zinc-900 rounded-full text-xs tracking-widest mb-8">
                     <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                    SECURE • SIMPLE • INFINITE
+                    <span data-en="SECURE • SIMPLE • INFINITE" data-ko="안전 • 간단 • 무제한">SECURE • SIMPLE • INFINITE</span>
                 </div>
                 
-                <h1 class="text-6xl md:text-7xl font-light tracking-tighter leading-none mb-6">
+                <h1 class="text-6xl md:text-7xl font-light tracking-tighter leading-none mb-6" 
+                   data-en="Your data Never lost"
+                   data-ko="당신의 데이터 절대 잃지 않습니다">
                     Your data.<br>
                     <span class="blue-accent">Never lost.</span>
                 </h1>
                 
-                <p class="text-xl md:text-2xl text-zinc-400 max-w-lg mx-auto">
+                <p class="text-xl md:text-2xl text-zinc-400 max-w-lg mx-auto"
+                   data-en="Minimalist cloud storage with military-grade encryption. Designed for clarity and absolute reliability."
+                   data-ko="군사 등급 암호화가 적용된 미니멀리스트 클라우드 스토리지. 명료함과 절대적인 신뢰성을 위해 설계되었습니다.">
                     Minimalist cloud storage with military-grade encryption.<br>
                     Designed for clarity and absolute reliability.
                 </p>
                 
                 <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="#" 
-                       class="bg-blue-600 hover:bg-blue-500 transition px-10 py-5 rounded-3xl text-lg font-medium">
+                       class="bg-blue-600 hover:bg-blue-500 transition px-10 py-5 rounded-3xl text-lg font-medium"
+                       data-en="Start 30-day free trial" data-ko="30일 무료 체험 시작">
                         Start 30-day free trial
                     </a>
                     <a href="#" 
-                       class="border border-zinc-700 hover:border-zinc-400 transition px-10 py-5 rounded-3xl text-lg font-medium">
+                       class="border border-zinc-700 hover:border-zinc-400 transition px-10 py-5 rounded-3xl text-lg font-medium"
+                       data-en="Watch demo" data-ko="데모 보기">
                         Watch demo
                     </a>
                 </div>
                 
-                <div class="mt-16 text-xs text-zinc-500 flex items-center justify-center gap-8">
-                    <div>256-bit AES</div>
-                    <div>Zero knowledge</div>
-                    <div>99.999% uptime</div>
+                <div class="mt-16 text-xs text-zinc-500 flex items-center justify-center gap-8 flex-wrap">
+                    <div data-en="256-bit AES" data-ko="256비트 AES">256-bit AES</div>
+                    <div data-en="Zero knowledge" data-ko="제로 지식">Zero knowledge</div>
+                    <div data-en="99.999% uptime" data-ko="99.999% 가동 시간">99.999% uptime</div>
                 </div>
             </div>
         </div>
@@ -119,8 +148,12 @@
     <section id="features" class="section py-28 bg-zinc-950">
         <div class="max-w-screen-2xl mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="text-blue-400 text-sm font-medium tracking-widest">SIMPLE BY DESIGN</span>
-                <h2 class="text-5xl font-light tracking-tighter mt-3">Everything you need.<br>Nothing you don’t.</h2>
+                <span class="text-blue-400 text-sm font-medium tracking-widest" data-en="SIMPLE BY DESIGN" data-ko="디자인의 단순함">SIMPLE BY DESIGN</span>
+                <h2 class="text-5xl font-light tracking-tighter mt-3"
+                   data-en="Everything you need Nothing you don’t."
+                   data-ko="필요한 모든 것 불필요한 것은 없습니다.">
+                    Everything you need.<br>Nothing you don’t.
+                </h2>
             </div>
             
             <div class="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
@@ -129,8 +162,12 @@
                     <div class="w-14 h-14 mx-auto bg-blue-950 rounded-2xl flex items-center justify-center mb-6">
                         <i class="fas fa-lock text-blue-500 text-3xl"></i>
                     </div>
-                    <h3 class="text-2xl font-medium mb-3">End-to-End Encryption</h3>
-                    <p class="text-zinc-400 leading-relaxed">Your files are encrypted on your device. Even we can’t read them.</p>
+                    <h3 class="text-2xl font-medium mb-3" data-en="End-to-End Encryption" data-ko="종단간 암호화">End-to-End Encryption</h3>
+                    <p class="text-zinc-400 leading-relaxed" 
+                       data-en="Your files are encrypted on your device. Even we can’t read them."
+                       data-ko="파일은 기기에서 암호화됩니다. 우리조차 내용을 읽을 수 없습니다.">
+                        Your files are encrypted on your device. Even we can’t read them.
+                    </p>
                 </div>
                 
                 <!-- Card 2 -->
@@ -138,8 +175,12 @@
                     <div class="w-14 h-14 mx-auto bg-blue-950 rounded-2xl flex items-center justify-center mb-6">
                         <i class="fas fa-infinity text-blue-500 text-3xl"></i>
                     </div>
-                    <h3 class="text-2xl font-medium mb-3">Unlimited Storage</h3>
-                    <p class="text-zinc-400 leading-relaxed">No limits. No throttling. Pay only for what you use.</p>
+                    <h3 class="text-2xl font-medium mb-3" data-en="Unlimited Storage" data-ko="무제한 저장 공간">Unlimited Storage</h3>
+                    <p class="text-zinc-400 leading-relaxed" 
+                       data-en="No limits. No throttling. Pay only for what you use."
+                       data-ko="제한 없음. 속도 제한 없음. 사용한 만큼만 결제.">
+                        No limits. No throttling. Pay only for what you use.
+                    </p>
                 </div>
                 
                 <!-- Card 3 -->
@@ -147,8 +188,12 @@
                     <div class="w-14 h-14 mx-auto bg-blue-950 rounded-2xl flex items-center justify-center mb-6">
                         <i class="fas fa-shield-alt text-blue-500 text-3xl"></i>
                     </div>
-                    <h3 class="text-2xl font-medium mb-3">AI Threat Protection</h3>
-                    <p class="text-zinc-400 leading-relaxed">Automatic ransomware detection and instant rollback.</p>
+                    <h3 class="text-2xl font-medium mb-3" data-en="AI Threat Protection" data-ko="AI 위협 보호">AI Threat Protection</h3>
+                    <p class="text-zinc-400 leading-relaxed" 
+                       data-en="Automatic ransomware detection and instant rollback."
+                       data-ko="자동 랜섬웨어 탐지 및 즉시 복구.">
+                        Automatic ransomware detection and instant rollback.
+                    </p>
                 </div>
             </div>
         </div>
@@ -159,27 +204,43 @@
         <div class="max-w-screen-2xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-20 items-center">
                 <div>
-                    <h2 class="text-5xl font-light tracking-tighter">One platform.<br>Every need.</h2>
+                    <h2 class="text-5xl font-light tracking-tighter" 
+                       data-en="One platform. Every need."
+                       data-ko="하나의 플랫폼. 모든 필요를 충족.">
+                        One platform.<br>Every need.
+                    </h2>
                     <div class="mt-10 space-y-10">
                         <div class="flex gap-6">
                             <div class="text-blue-500 text-4xl">01</div>
                             <div>
-                                <div class="font-medium text-xl">For Teams</div>
-                                <div class="text-zinc-400">Shared workspaces with version history and real-time sync.</div>
+                                <div class="font-medium text-xl" data-en="For Teams" data-ko="팀용">For Teams</div>
+                                <div class="text-zinc-400" 
+                                     data-en="Shared workspaces with version history and real-time sync."
+                                     data-ko="버전 기록과 실시간 동기화가 포함된 공유 작업 공간.">
+                                    Shared workspaces with version history and real-time sync.
+                                </div>
                             </div>
                         </div>
                         <div class="flex gap-6">
                             <div class="text-blue-500 text-4xl">02</div>
                             <div>
-                                <div class="font-medium text-xl">For Individuals</div>
-                                <div class="text-zinc-400">Private vault for photos, documents &amp; memories.</div>
+                                <div class="font-medium text-xl" data-en="For Individuals" data-ko="개인용">For Individuals</div>
+                                <div class="text-zinc-400" 
+                                     data-en="Private vault for photos, documents & memories."
+                                     data-ko="사진, 문서, 추억을 위한 개인 보관함.">
+                                    Private vault for photos, documents & memories.
+                                </div>
                             </div>
                         </div>
                         <div class="flex gap-6">
                             <div class="text-blue-500 text-4xl">03</div>
                             <div>
-                                <div class="font-medium text-xl">For Developers</div>
-                                <div class="text-zinc-400">S3-compatible API with unlimited bandwidth.</div>
+                                <div class="font-medium text-xl" data-en="For Developers" data-ko="개발자용">For Developers</div>
+                                <div class="text-zinc-400" 
+                                     data-en="S3-compatible API with unlimited bandwidth."
+                                     data-ko="무제한 대역폭의 S3 호환 API.">
+                                    S3-compatible API with unlimited bandwidth.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -189,7 +250,10 @@
                     <div class="aspect-video bg-zinc-900 rounded-2xl flex items-center justify-center">
                         <div class="text-center">
                             <i class="fas fa-folder-open text-7xl text-blue-500/30"></i>
-                            <div class="mt-6 text-xs tracking-widest text-zinc-500">YOUR FILES ARE SAFE HERE</div>
+                            <div class="mt-6 text-xs tracking-widest text-zinc-500" 
+                                 data-en="YOUR FILES ARE SAFE HERE" data-ko="당신의 파일은 여기 안전합니다">
+                                YOUR FILES ARE SAFE HERE
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -201,53 +265,57 @@
     <section id="pricing" class="section py-28 bg-zinc-950">
         <div class="max-w-screen-2xl mx-auto px-6 text-center">
             <div class="max-w-md mx-auto mb-16">
-                <h2 class="text-5xl font-light tracking-tighter">Transparent pricing</h2>
-                <p class="text-zinc-400 mt-4">No surprises. No contracts.</p>
+                <h2 class="text-5xl font-light tracking-tighter" data-en="Transparent pricing" data-ko="투명한 요금">Transparent pricing</h2>
+                <p class="text-zinc-400 mt-4" data-en="No surprises. No contracts." data-ko="놀랄 일 없음. 계약 없음.">No surprises. No contracts.</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                 <!-- Starter -->
                 <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800">
-                    <div class="text-sm font-medium text-zinc-400">STARTER</div>
-                    <div class="mt-2 text-5xl font-light">$0</div>
-                    <div class="text-zinc-400 text-sm">forever</div>
+                    <div class="text-sm font-medium text-zinc-400" data-en="STARTER" data-ko="스타터">STARTER</div>
+                    <div class="mt-2 text-5xl font-light" data-en="$0" data-ko="₩0">$0</div>
+                    <div class="text-zinc-400 text-sm" data-en="forever" data-ko="영구 무료">forever</div>
                     
                     <ul class="mt-10 text-left space-y-4 text-sm">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> 5 GB storage</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Basic encryption</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Web &amp; mobile access</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="5 GB storage" data-ko="5GB 저장 공간">5 GB storage</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="Basic encryption" data-ko="기본 암호화">Basic encryption</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="Web & mobile access" data-ko="웹 & 모바일 접속">Web & mobile access</span></li>
                     </ul>
-                    <a href="#" class="mt-12 block py-4 border border-zinc-700 rounded-2xl text-sm font-medium hover:bg-zinc-800">Get started</a>
+                    <a href="#" class="mt-12 block py-4 border border-zinc-700 rounded-2xl text-sm font-medium hover:bg-zinc-800"
+                       data-en="Get started" data-ko="시작하기">Get started</a>
                 </div>
                 
                 <!-- Pro -->
                 <div class="bg-zinc-900 rounded-3xl p-8 border-2 border-blue-600 relative">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-bold px-6 py-1 rounded-3xl">RECOMMENDED</div>
-                    <div class="text-sm font-medium text-blue-400">PRO</div>
-                    <div class="mt-2 text-5xl font-light">$15</div>
-                    <div class="text-zinc-400 text-sm">per month</div>
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-bold px-6 py-1 rounded-3xl"
+                         data-en="RECOMMENDED" data-ko="추천">RECOMMENDED</div>
+                    <div class="text-sm font-medium text-blue-400" data-en="PRO" data-ko="프로">PRO</div>
+                    <div class="mt-2 text-5xl font-light" data-en="$15" data-ko="₩20,000">$15</div>
+                    <div class="text-zinc-400 text-sm" data-en="per month" data-ko="월">per month</div>
                     
                     <ul class="mt-10 text-left space-y-4 text-sm">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> 2 TB storage</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> AI protection</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Priority support</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Unlimited devices</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="2 TB storage" data-ko="2TB 저장 공간">2 TB storage</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="AI protection" data-ko="AI 보호">AI protection</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="Priority support" data-ko="우선 지원">Priority support</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="Unlimited devices" data-ko="무제한 기기">Unlimited devices</span></li>
                     </ul>
-                    <a href="#" class="mt-12 block py-4 bg-blue-600 text-white rounded-2xl text-sm font-semibold">Start free trial</a>
+                    <a href="#" class="mt-12 block py-4 bg-blue-600 text-white rounded-2xl text-sm font-semibold"
+                       data-en="Start free trial" data-ko="무료 체험 시작">Start free trial</a>
                 </div>
                 
                 <!-- Enterprise -->
                 <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800">
-                    <div class="text-sm font-medium text-zinc-400">ENTERPRISE</div>
-                    <div class="mt-2 text-5xl font-light">Custom</div>
+                    <div class="text-sm font-medium text-zinc-400" data-en="ENTERPRISE" data-ko="엔터프라이즈">ENTERPRISE</div>
+                    <div class="mt-2 text-5xl font-light" data-en="Custom" data-ko="맞춤">Custom</div>
                     
                     <ul class="mt-10 text-left space-y-4 text-sm">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Unlimited storage</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Private cloud</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Dedicated manager</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> SLA guarantees</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="Unlimited storage" data-ko="무제한 저장 공간">Unlimited storage</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="Private cloud" data-ko="프라이빗 클라우드">Private cloud</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="Dedicated manager" data-ko="전담 매니저">Dedicated manager</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> <span data-en="SLA guarantees" data-ko="SLA 보장">SLA guarantees</span></li>
                     </ul>
-                    <a href="#" class="mt-12 block py-4 border border-zinc-700 rounded-2xl text-sm font-medium hover:bg-zinc-800">Contact sales</a>
+                    <a href="#" class="mt-12 block py-4 border border-zinc-700 rounded-2xl text-sm font-medium hover:bg-zinc-800"
+                       data-en="Contact sales" data-ko="영업 문의">Contact sales</a>
                 </div>
             </div>
         </div>
@@ -256,12 +324,21 @@
     <!-- FINAL CTA -->
     <section class="py-28 bg-zinc-900">
         <div class="max-w-screen-2xl mx-auto px-6 text-center">
-            <h2 class="text-5xl font-light tracking-tighter max-w-xl mx-auto">Ready to store your data the simple way?</h2>
+            <h2 class="text-5xl font-light tracking-tighter max-w-xl mx-auto"
+               data-en="Ready to store your data the simple way?"
+               data-ko="간단하게 데이터를 저장할 준비가 되셨나요?">
+                Ready to store your data the simple way?
+            </h2>
             <a href="#" 
-               class="mt-10 inline-block bg-blue-600 hover:bg-blue-500 transition px-14 py-6 rounded-3xl text-lg font-medium">
+               class="mt-10 inline-block bg-blue-600 hover:bg-blue-500 transition px-14 py-6 rounded-3xl text-lg font-medium"
+               data-en="Create your free account" data-ko="무료 계정 만들기">
                 Create your free account
             </a>
-            <div class="text-xs text-zinc-500 mt-8">No credit card needed • Cancel anytime</div>
+            <div class="text-xs text-zinc-500 mt-8" 
+                 data-en="No credit card needed • Cancel anytime"
+                 data-ko="신용카드 불필요 • 언제든 취소 가능">
+                No credit card needed • Cancel anytime
+            </div>
         </div>
     </section>
 
@@ -273,32 +350,36 @@
                     <div class="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center">
                         <i class="fas fa-swimmer text-white text-xs"></i>
                     </div>
-                    <span class="logo-font text-3xl font-semibold tracking-tighter">black swan</span>
+                    <span class="logo-font text-3xl font-semibold tracking-tighter" data-en="black swan" data-ko="블랙 스완">black swan</span>
                 </div>
-                <p class="mt-6 text-zinc-400 max-w-xs">Minimalist data storage that just works.</p>
+                <p class="mt-6 text-zinc-400 max-w-xs" 
+                   data-en="Minimalist data storage that just works."
+                   data-ko="그냥 작동하는 미니멀리스트 데이터 스토리지.">
+                    Minimalist data storage that just works.
+                </p>
             </div>
             
             <div class="md:col-span-2">
-                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-500">Product</div>
+                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-500" data-en="Product" data-ko="제품">Product</div>
                 <div class="space-y-4 text-sm">
-                    <a href="#" class="block hover:text-blue-400">Features</a>
-                    <a href="#" class="block hover:text-blue-400">Security</a>
-                    <a href="#" class="block hover:text-blue-400">API</a>
+                    <a href="#" class="block hover:text-blue-400" data-en="Features" data-ko="기능">Features</a>
+                    <a href="#" class="block hover:text-blue-400" data-en="Security" data-ko="보안">Security</a>
+                    <a href="#" class="block hover:text-blue-400" data-en="API" data-ko="API">API</a>
                 </div>
             </div>
             
             <div class="md:col-span-2">
-                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-500">Company</div>
+                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-500" data-en="Company" data-ko="회사">Company</div>
                 <div class="space-y-4 text-sm">
-                    <a href="#" class="block hover:text-blue-400">About</a>
-                    <a href="#" class="block hover:text-blue-400">Blog</a>
-                    <a href="#" class="block hover:text-blue-400">Careers</a>
+                    <a href="#" class="block hover:text-blue-400" data-en="About" data-ko="회사 소개">About</a>
+                    <a href="#" class="block hover:text-blue-400" data-en="Blog" data-ko="블로그">Blog</a>
+                    <a href="#" class="block hover:text-blue-400" data-en="Careers" data-ko="채용">Careers</a>
                 </div>
             </div>
             
             <div class="md:col-span-3">
                 <div class="text-sm">hello@blackswan.storage</div>
-                <div class="mt-8 text-xs text-zinc-500">© 2026 Black Swan Storage</div>
+                <div class="mt-8 text-xs text-zinc-500" data-en="© 2026 Black Swan Storage" data-ko="© 2026 Black Swan Storage">© 2026 Black Swan Storage</div>
             </div>
         </div>
     </footer>
@@ -308,8 +389,63 @@
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
-        
-        // Tailwind script is loaded via CDN
+
+        // ── Language handling ───────────────────────────────────────────────
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+
+            // Update desktop button text
+            const langDisplay = document.getElementById('current-lang');
+            if (langDisplay) {
+                langDisplay.textContent = lang === 'en' ? 'English' : '한국어';
+            }
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-en][data-ko]').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.textContent = text;
+            });
+
+            // Update <html lang>
+            document.documentElement.lang = lang;
+        }
+
+        // Run on load
+        setLanguage(currentLang);
+
+        // Desktop dropdown
+        const langBtn = document.getElementById('lang-btn');
+        const langMenu = document.getElementById('lang-menu');
+
+        if (langBtn && langMenu) {
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.lang-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setLanguage(btn.dataset.lang);
+                    langMenu.classList.add('hidden');
+                });
+            });
+
+            document.addEventListener('click', e => {
+                if (!langBtn.contains(e.target)) {
+                    langMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // Mobile language buttons
+        document.querySelectorAll('.lang-option-mobile').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setLanguage(btn.dataset.lang);
+            });
+        });
     </script>
 </body>
 </html>
