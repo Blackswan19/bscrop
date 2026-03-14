@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Data Center Control Panel</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+background:#000;
+color:#eee;
+display:flex;
+height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:230px;
+background:#050505;
+padding:25px;
+border-right:1px solid #111;
+}
+
+.sidebar h2{
+margin-bottom:30px;
+}
+
+.sidebar a{
+display:block;
+padding:10px 0;
+cursor:pointer;
+color:#aaa;
+}
+
+.sidebar a:hover{
+color:white;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+padding:30px;
+overflow:auto;
+}
+
+.section{display:none}
+.section.active{display:block}
+
+/* CARDS */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
+
+.card{
+background:#0a0a0a;
+padding:20px;
+border:1px solid #111;
+}
+
+.card h3{
+font-size:13px;
+color:#888;
+margin-bottom:6px;
+}
+
+.card p{
+font-size:26px;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+background:#0a0a0a;
+}
+
+th,td{
+padding:12px;
+text-align:left;
+}
+
+th{
+background:#111;
+}
+
+tr:nth-child(even){
+background:#050505;
+}
+
+/* LOGS */
+
+.logbox{
+height:250px;
+overflow:auto;
+background:#050505;
+padding:15px;
+font-family:monospace;
+font-size:12px;
+border:1px solid #111;
+}
+
+/* ALERT */
+
+.alert{
+background:#111;
+padding:10px;
+margin-bottom:10px;
+border-left:3px solid red;
+}
+
+.graph{
+background:#0a0a0a;
+padding:20px;
+border:1px solid #111;
+margin-top:20px;
+}
+
+input{
+padding:8px;
+background:#050505;
+border:1px solid #222;
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>CONTROL</h2>
+
+<a onclick="openSection('dashboard')">Dashboard</a>
+<a onclick="openSection('servers')">Servers</a>
+<a onclick="openSection('network')">Network</a>
+<a onclick="openSection('storage')">Storage</a>
+<a onclick="openSection('alerts')">Alerts</a>
+<a onclick="openSection('logs')">Logs</a>
+<a onclick="openSection('settings')">Settings</a>
+
+</div>
+
+<div class="main">
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="section active">
+
+<h1>Overview</h1>
+
+<div class="cards">
+
+<div class="card">
+<h3>Network Speed</h3>
+<p id="speed">0 MB/s</p>
+</div>
+
+<div class="card">
+<h3>Data Transfer</h3>
+<p id="transfer">0 TB</p>
+</div>
+
+<div class="card">
+<h3>Storage Used</h3>
+<p id="storageNum">0 PB</p>
+</div>
+
+<div class="card">
+<h3>Active Users</h3>
+<p id="users">0</p>
+</div>
+
+</div>
+
+<div class="graph">
+<canvas id="trafficChart"></canvas>
+</div>
+
+</div>
+
+<!-- SERVERS -->
+
+<div id="servers" class="section">
+
+<h1>Servers</h1>
+
+<table>
+
+<tr>
+<th>Server</th>
+<th>CPU</th>
+<th>RAM</th>
+<th>Disk</th>
+</tr>
+
+<tr>
+<td>NODE-01</td>
+<td id="cpu1">0%</td>
+<td id="ram1">0%</td>
+<td id="disk1">0%</td>
+</tr>
+
+<tr>
+<td>NODE-02</td>
+<td id="cpu2">0%</td>
+<td id="ram2">0%</td>
+<td id="disk2">0%</td>
+</tr>
+
+<tr>
+<td>NODE-03</td>
+<td id="cpu3">0%</td>
+<td id="ram3">0%</td>
+<td id="disk3">0%</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- NETWORK -->
+
+<div id="network" class="section">
+
+<h1>Network Bandwidth</h1>
+
+<div class="graph">
+<canvas id="bandwidthChart"></canvas>
+</div>
+
+</div>
+
+<!-- STORAGE -->
+
+<div id="storage" class="section">
+
+<h1>Storage Clusters</h1>
+
+<table>
+
+<tr>
+<th>Cluster</th>
+<th>Total</th>
+<th>Used</th>
+</tr>
+
+<tr>
+<td>A</td>
+<td>800 TB</td>
+<td id="c1">0 TB</td>
+</tr>
+
+<tr>
+<td>B</td>
+<td>600 TB</td>
+<td id="c2">0 TB</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- ALERTS -->
+
+<div id="alerts" class="section">
+
+<h1>Alerts</h1>
+
+<div id="alertbox"></div>
+
+</div>
+
+<!-- LOGS -->
+
+<div id="logs" class="section">
+
+<h1>System Logs</h1>
+
+<div class="logbox" id="logbox"></div>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div id="settings" class="section">
+
+<h1>Settings</h1>
+
+<label>System Name</label><br>
+<input value="Data Center Alpha"><br><br>
+
+<label>Alert Threshold (%)</label><br>
+<input value="85">
+
+</div>
+
+</div>
+
+<script>
+
+/* NAVIGATION */
+
+function openSection(id){
+
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
+document.getElementById(id).classList.add("active")
+
+}
+
+/* LIVE METRICS */
+
+let transfer=5.2
+let storageVal=1.1
+
+setInterval(()=>{
+
+document.getElementById("speed").innerText=Math.floor(Math.random()*900)+" MB/s"
+
+transfer+=Math.random()*0.02
+storageVal+=Math.random()*0.001
+
+document.getElementById("transfer").innerText=transfer.toFixed(2)+" TB"
+document.getElementById("storageNum").innerText=storageVal.toFixed(2)+" PB"
+document.getElementById("users").innerText=Math.floor(Math.random()*4000)
+
+document.getElementById("cpu1").innerText=Math.floor(Math.random()*90)+"%"
+document.getElementById("cpu2").innerText=Math.floor(Math.random()*90)+"%"
+document.getElementById("cpu3").innerText=Math.floor(Math.random()*90)+"%"
+
+document.getElementById("ram1").innerText=Math.floor(Math.random()*90)+"%"
+document.getElementById("ram2").innerText=Math.floor(Math.random()*90)+"%"
+document.getElementById("ram3").innerText=Math.floor(Math.random()*90)+"%"
+
+document.getElementById("disk1").innerText=Math.floor(Math.random()*90)+"%"
+document.getElementById("disk2").innerText=Math.floor(Math.random()*90)+"%"
+document.getElementById("disk3").innerText=Math.floor(Math.random()*90)+"%"
+
+document.getElementById("c1").innerText=(400+Math.random()*200).toFixed(0)+" TB"
+document.getElementById("c2").innerText=(200+Math.random()*200).toFixed(0)+" TB"
+
+},1500)
+
+/* TRAFFIC GRAPH */
+
+const trafficChart=new Chart(
+document.getElementById("trafficChart"),
+{
+type:"line",
+data:{labels:[],datasets:[{data:[],borderColor:"#22c55e"}]},
+options:{scales:{x:{display:false}}}
+}
+)
+
+setInterval(()=>{
+
+if(trafficChart.data.labels.length>20){
+trafficChart.data.labels.shift()
+trafficChart.data.datasets[0].data.shift()
+}
+
+trafficChart.data.labels.push("")
+trafficChart.data.datasets[0].data.push(Math.random()*1000)
+
+trafficChart.update()
+
+},1500)
+
+/* BANDWIDTH GRAPH */
+
+const bandwidthChart=new Chart(
+document.getElementById("bandwidthChart"),
+{
+type:"bar",
+data:{
+labels:["Gateway1","Gateway2","Gateway3","Gateway4"],
+datasets:[{data:[200,300,250,400],backgroundColor:"#3b82f6"}]
+}
+}
+)
+
+setInterval(()=>{
+
+bandwidthChart.data.datasets[0].data=[
+Math.random()*600,
+Math.random()*700,
+Math.random()*500,
+Math.random()*650
+]
+
+bandwidthChart.update()
+
+},2000)
+
+/* LOG STREAM */
+
+const logbox=document.getElementById("logbox")
+
+setInterval(()=>{
+
+let time=new Date().toLocaleTimeString()
+
+let events=[
+"Server request processed",
+"Database replication complete",
+"Backup started",
+"Security scan executed",
+"Network packet received"
+]
+
+let log=time+"  "+events[Math.floor(Math.random()*events.length)]
+
+logbox.innerHTML+=log+"<br>"
+logbox.scrollTop=logbox.scrollHeight
+
+},2000)
+
+/* ALERTS */
+
+const alertbox=document.getElementById("alertbox")
+
+setInterval(()=>{
+
+if(Math.random()>0.7){
+
+let alerts=[
+"High CPU detected on NODE-02",
+"Network latency spike",
+"Disk usage above 85%",
+"Unauthorized login attempt"
+]
+
+let a=document.createElement("div")
+a.className="alert"
+a.innerText=alerts[Math.floor(Math.random()*alerts.length)]
+
+alertbox.prepend(a)
+
+}
+
+},4000)
+
+</script>
+
+</body>
+</html>
