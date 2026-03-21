@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BsAudtrim</title>
+  <link rel="icon" type="image/x-icon" href="https://i.ibb.co/27GXWVgg/BS.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <script src="https://unpkg.com/lamejs@1.2.1/lame.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+          @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;900&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+	font-family: 'Red Hat Display', sans-serif;
+}
+
+* {
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    body {
+      background: #000;
+      color: #e5e5e5;
+      min-height: 100vh;
+      padding: 2.5rem 1rem;
+      line-height: 1.5;
+    }
+
+    canvas {
+      image-rendering: crisp-edges;
+      display: block;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #0029ff;
+      letter-spacing: -1.5px;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Upload area */
+    #uploadArea {
+      text-align: center;
+    }
+
+    #uploadArea button {
+    background: #282828;
+    color: #aaa;
+    padding: 12px 20px 12px 25px;
+    border-radius: 8rem;
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    }
+
+    #uploadArea button:hover {
+      color: #ddd;
+      background: #282828b3;
+    }
+
+    /* Editor wrapper */
+    #editor > div {
+     max-width: 560px;
+    margin: 0 auto;
+    }
+
+    /* File info */
+    .file-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1f1f1f;
+    border-radius: 13rem;
+    padding: 10px;
+    margin-bottom: 1.8rem;
+    }
+
+    .file-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .file-icon {
+        width: 45px;
+    height: 45px;
+    background: rgb(56 56 56);
+    border-radius: 6.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+
+    }
+i.fa-solid.fa-upload.mr-2 {
+    color: #aaa;position: relative;
+    right: 5px;
+}
+    .file-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .file-duration {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 0.2rem;
+    }
+
+    /* Waveform */
+    .wave-container {
+      padding: 40px 0px;
+    }
+
+    #waveform {
+     width: 100%;
+    height: 65px;
+    border-radius: 0px;
+    cursor: pointer;
+    }
+
+    /* Trim sliders */
+    .trim-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .trim-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trim-group > div:first-child {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 0.4rem;
+    }
+
+    .trim-group .time {
+      color: #0029ff;
+      font-family: monospace;
+      font-weight: 500;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      height: 6px;
+      background: #222;
+      border-radius: 999px;
+      outline: none;
+      margin: 0.6rem 0 0.3rem;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #0029ff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,41,255,0.5);
+      transition: all 0.15s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 14px rgba(0,41,255,0.7);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: #0029ff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,41,255,0.5);
+    }
+
+    /* Playback controls */
+    .playback {
+     background: #1f1f1f;
+    border-radius: 18rem;
+    padding: 10px 12px 10px 10px;
+    margin-bottom: 2rem;
+    }
+
+    .playback-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    #playPauseBtn {
+      width: 50px;
+    height: 50px;
+    background: #0029ff;
+    color: white;
+    border: none;
+    border-radius: 12rem;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    }
+
+    #playPauseBtn:hover {
+      background: #002affbc;
+    }
+
+    #playPauseBtn:active {
+      transform: scale(0.96);
+    }
+
+    .progress-wrapper {
+      flex: 1;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: #777;
+      margin-bottom: 0.5rem;
+      font-family: monospace;
+    }
+
+    #progressContainer {
+      height: 4px;
+    background: #ffffff42;
+    border-radius: 0px;
+    position: relative;
+    cursor: pointer;
+    }
+
+    #progressBar {
+      height: 100%;
+      background: #0029ff;
+      width: 0;
+      border-radius: 999px;
+      transition: width 0.08s linear;
+    }
+
+    #seekPreviewLine {
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 2px;
+      background: rgba(255,255,255,0.65);
+      pointer-events: none;
+      z-index: 10;
+      transform: translateX(-50%);
+    }
+
+    /* Download */
+    .download-area {
+      text-align: center;
+    }
+
+    button[onclick="trimAndDownload()"] {
+   background: #0029ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: 200;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    }
+
+   
+button {
+  padding: 12px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+}
+    /* Small note */
+    .privacy {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 1.8rem;
+    }
+
+    /* Reset / new file button */
+    button[onclick="resetApp()"] {
+     background: #383838;
+    color: #888;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 18px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    button[onclick="resetApp()"]:hover {
+      color: #ffffff;background: transparent;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="max-w-5xl mx-auto px-4">
+    <!-- Header -->
+    <h1 class="logo">BsAudtrim</h1>
+
+    <!-- Upload Area -->
+    <div id="uploadArea">
+      <input type="file" id="fileInput" accept="audio/*" class="hidden">
+      <button onclick="document.getElementById('fileInput').click()">
+        <i class="fa-solid fa-upload mr-2"></i> Select Audio File
+      </button>
+    </div>
+
+    <!-- Main Editor -->
+    <div id="editor" class="hidden">
+      <div>
+
+        <!-- File Info -->
+        <div class="file-info">
+          <div class="file-left">
+            <div class="file-icon"><i class="fa-solid fa-music"></i></div>
+            <div>
+              <div class="file-name" id="fileName">filename.mp3</div>
+              <div class="file-duration" id="fileDuration">0:00</div>
+            </div>
+          </div>
+          <button onclick="resetApp()" title="New file">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Waveform -->
+        <div class="wave-container">
+          <canvas id="waveform" width="900" height="140" class="cursor-pointer"></canvas>
+        </div>
+
+        <!-- Trim controls -->
+        <div class="trim-row">
+          <div class="trim-group">
+            <div>
+              <span>Start</span>
+              <span id="startTimeDisplay" class="time">0.00s</span>
+            </div>
+            <input type="range" id="startSlider" min="0" max="100" value="0" step="0.01">
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#555;margin-top:0.3rem;">
+              <span id="startTimeLabel">0:00</span>
+              <span>–</span>
+            </div>
+          </div>
+
+          <div class="trim-group">
+            <div>
+              <span>End</span>
+              <span id="endTimeDisplay" class="time">0.00s</span>
+            </div>
+            <input type="range" id="endSlider" min="0" max="100" value="100" step="0.01">
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#555;margin-top:0.3rem;">
+              <span id="endTimeLabel">0:00</span>
+              <span id="totalDuration">0:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Playback -->
+        <div class="playback">
+          <div class="playback-inner">
+            <button id="playPauseBtn" onclick="togglePreview()">
+              <i id="playIcon" class="fa-solid fa-play"></i>
+              <i id="pauseIcon" class="fa-solid fa-pause hidden"></i>
+            </button>
+
+            <div class="progress-wrapper">
+              <div class="time-row">
+                <span id="currentTimeDisplay">0:00</span>
+                <span id="remainingTimeDisplay">-0:00</span>
+              </div>
+              <div id="progressContainer">
+                <div id="progressBar"></div>
+                <div id="seekPreviewLine" class="hidden"></div>
+              </div>
+            </div>
+
+            <button onclick="playOriginal()" title="Play full original">
+              Play Original
+            </button>
+          </div>
+        </div>
+
+        <!-- Download -->
+        <div class="download-area">
+          <button onclick="trimAndDownload()">
+            <i class="fa-solid fa-download"></i> Trim & Download MP3
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <audio id="audioPlayer" class="hidden"></audio>
+
+  <script>
+    // ────────────────────────────────────────────────
+    // Your existing JavaScript code remains unchanged
+    // Only CSS + minor class name adjustments were made
+    // ────────────────────────────────────────────────
+
+    let audioContext;
+    let originalBuffer = null;
+    let fileNameBase = "";
+    let duration = 0;
+    let audioElement = null;
+    let canvas = null;
+    let ctx = null;
+    let startTime = 0;
+    let endTime = 0;
+    let isPreviewPlaying = false;
+
+    let startSlider, endSlider, startTimeDisplay, endTimeDisplay, startTimeLabel, endTimeLabel, totalDurationLabel;
+    let fileNameEl, fileDurationEl, uploadArea, editor;
+    let currentTimeDisplay, remainingTimeDisplay, progressBar, progressContainer, seekPreviewLine;
+    let playIcon, pauseIcon;
+
+    let isDragging = false;
+
+    window.onload = function() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      audioElement = document.getElementById('audioPlayer');
+      canvas = document.getElementById('waveform');
+      ctx = canvas.getContext('2d');
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      startSlider = document.getElementById('startSlider');
+      endSlider = document.getElementById('endSlider');
+      startTimeDisplay = document.getElementById('startTimeDisplay');
+      endTimeDisplay = document.getElementById('endTimeDisplay');
+      startTimeLabel = document.getElementById('startTimeLabel');
+      endTimeLabel = document.getElementById('endTimeLabel');
+      totalDurationLabel = document.getElementById('totalDuration');
+      fileNameEl = document.getElementById('fileName');
+      fileDurationEl = document.getElementById('fileDuration');
+      uploadArea = document.getElementById('uploadArea');
+      editor = document.getElementById('editor');
+
+      currentTimeDisplay = document.getElementById('currentTimeDisplay');
+      remainingTimeDisplay = document.getElementById('remainingTimeDisplay');
+      progressBar = document.getElementById('progressBar');
+      progressContainer = document.getElementById('progressContainer');
+      seekPreviewLine = document.getElementById('seekPreviewLine');
+
+      playIcon = document.getElementById('playIcon');
+      pauseIcon = document.getElementById('pauseIcon');
+
+      const fileInput = document.getElementById('fileInput');
+      fileInput.addEventListener('change', handleFileSelect);
+
+      uploadArea.addEventListener('dragover', e => { 
+        e.preventDefault(); 
+        uploadArea.style.borderColor = '#0029ff66';
+        uploadArea.style.background = '#111113';
+      });
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = '#222';
+        uploadArea.style.background = '';
+      });
+      uploadArea.addEventListener('drop', e => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#222';
+        uploadArea.style.background = '';
+        if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+      });
+
+      startSlider.addEventListener('input', updateTrimUI);
+      endSlider.addEventListener('input', updateTrimUI);
+
+      canvas.addEventListener('click', e => {
+        if (!originalBuffer) return;
+        const rect = canvas.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        const clicked = percent * duration;
+
+        if (isPreviewPlaying) {
+          audioElement.currentTime = Math.max(startTime, Math.min(endTime, clicked));
+          return;
+        }
+
+        if (Math.abs(clicked - startTime) < Math.abs(clicked - endTime)) {
+          startSlider.value = clicked;
+        } else {
+          endSlider.value = clicked;
+        }
+        updateTrimUI();
+      });
+
+      progressContainer.addEventListener('mousedown', startDragging);
+      progressContainer.addEventListener('touchstart', startDragging, { passive: false });
+
+      document.addEventListener('mousemove', onDragMove);
+      document.addEventListener('mouseup', stopDragging);
+      document.addEventListener('touchmove', onDragMove, { passive: false });
+      document.addEventListener('touchend', stopDragging);
+
+      progressContainer.addEventListener('mousemove', updateSeekPreview);
+      progressContainer.addEventListener('touchmove', updateSeekPreview);
+      progressContainer.addEventListener('mouseleave', () => seekPreviewLine.classList.add('hidden'));
+
+      audioElement.addEventListener('timeupdate', updatePlaybackUI);
+      audioElement.addEventListener('ended', () => { if (isPreviewPlaying) stopPreview(); });
+    };
+
+    // ─── The rest of your JavaScript remains exactly the same ───
+    // (handleFileSelect, handleFile, formatTime, drawWaveform, redrawWaveformWithTrim,
+    //  updateTrimUI, playOriginal, togglePreview, startPreview, stopPreview,
+    //  updatePlaybackUI, getTimeFromEvent, updateSeekPreview, startDragging,
+    //  onDragMove, stopDragging, audioBufferToMp3, trimAndDownload, resetApp)
+
+    function handleFileSelect(e) { if (e.target.files.length) handleFile(e.target.files[0]); }
+
+    function handleFile(file) {
+      if (!file.type.startsWith('audio/')) return alert("Please upload an audio file!");
+      fileNameBase = file.name.replace(/\.[^/.]+$/, "");
+
+      const reader = new FileReader();
+      reader.onload = async ev => {
+        const objectUrl = URL.createObjectURL(file);
+        audioElement.src = objectUrl;
+
+        const decodedBuffer = await audioContext.decodeAudioData(ev.target.result);
+        originalBuffer = decodedBuffer;
+        duration = decodedBuffer.duration;
+
+        uploadArea.classList.add('hidden');
+        editor.classList.remove('hidden');
+
+        fileNameEl.textContent = file.name;
+        fileDurationEl.textContent = formatTime(duration);
+
+        startSlider.max = endSlider.max = duration;
+        startSlider.value = 0;
+        endSlider.value = duration;
+
+        drawWaveform();
+        updateTrimUI();
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function formatTime(seconds) {
+      const min = Math.floor(seconds / 60);
+      const sec = Math.floor(seconds % 60).toString().padStart(2, '0');
+      return `${min}:${sec}`;
+    }
+
+    function drawWaveform() {
+      if (!originalBuffer) return;
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      const data = originalBuffer.getChannelData(0);
+      const step = Math.ceil(data.length / w);
+      const amp = h / 2;
+
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (let i = 0; i < w; i++) {
+        let min = 1, max = -1;
+        for (let j = 0; j < step; j++) {
+          const d = data[i * step + j] || 0;
+          if (d < min) min = d;
+          if (d > max) max = d;
+        }
+        ctx.moveTo(i, (1 + min) * amp);
+        ctx.lineTo(i, (1 + max) * amp);
+      }
+      ctx.stroke();
+      window.baseWaveformImage = ctx.getImageData(0, 0, w, h);
+    }
+
+    function redrawWaveformWithTrim() {
+      if (!window.baseWaveformImage) return;
+      ctx.putImageData(window.baseWaveformImage, 0, 0);
+      const w = canvas.width, h = canvas.height;
+      const sx = (startTime / duration) * w;
+      const ex = (endTime / duration) * w;
+
+      ctx.fillStyle = 'rgba(0,0,0,0.82)';
+      ctx.fillRect(0, 0, sx, h);
+      ctx.fillRect(ex, 0, w - ex, h);
+
+      ctx.strokeStyle = '#0029ff';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.rect(sx + 2, 6, ex - sx - 4, h - 12);
+      ctx.stroke();
+
+      ctx.strokeStyle = '#60a5fa';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(sx, 0); ctx.lineTo(sx, h);
+      ctx.moveTo(ex, 0); ctx.lineTo(ex, h);
+      ctx.stroke();
+    }
+
+    function updateTrimUI() {
+      startTime = parseFloat(startSlider.value);
+      endTime = parseFloat(endSlider.value);
+      if (startTime >= endTime) { 
+        startTime = endTime - 0.1; 
+        startSlider.value = startTime; 
+      }
+
+      startTimeDisplay.textContent = startTime.toFixed(2) + 's';
+      endTimeDisplay.textContent = endTime.toFixed(2) + 's';
+      startTimeLabel.textContent = formatTime(startTime);
+      endTimeLabel.textContent = formatTime(endTime);
+      totalDurationLabel.textContent = formatTime(duration);
+
+      redrawWaveformWithTrim();
+    }
+
+    function playOriginal() {
+      stopPreview();
+      audioElement.currentTime = 0;
+      audioElement.play();
+    }
+
+    function togglePreview() {
+      isPreviewPlaying ? stopPreview() : startPreview();
+    }
+
+    function startPreview() {
+      stopPreview();
+      audioElement.currentTime = startTime;
+      audioElement.play();
+      isPreviewPlaying = true;
+      playIcon.classList.add('hidden');
+      pauseIcon.classList.remove('hidden');
+    }
+
+    function stopPreview() {
+      audioElement.pause();
+      isPreviewPlaying = false;
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+    }
+
+    function updatePlaybackUI() {
+      if (!isPreviewPlaying && !isDragging) return;
+
+      const cur = audioElement.currentTime;
+      if (isPreviewPlaying && cur >= endTime) {
+        stopPreview();
+        return;
+      }
+
+      currentTimeDisplay.textContent = formatTime(cur);
+      remainingTimeDisplay.textContent = '-' + formatTime(Math.max(0, endTime - cur));
+      const prog = ((cur - startTime) / (endTime - startTime)) * 100;
+      progressBar.style.width = Math.min(100, Math.max(0, prog)) + '%';
+    }
+
+    function getTimeFromEvent(e) {
+      const rect = progressContainer.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      let percent = (clientX - rect.left) / rect.width;
+      percent = Math.max(0, Math.min(1, percent));
+      return startTime + percent * (endTime - startTime);
+    }
+
+    function updateSeekPreview(e) {
+      const rect = progressContainer.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      let percent = (clientX - rect.left) / rect.width;
+      percent = Math.max(0, Math.min(1, percent));
+      seekPreviewLine.style.left = (percent * 100) + '%';
+      seekPreviewLine.classList.remove('hidden');
+    }
+
+    function startDragging(e) {
+      e.preventDefault();
+      isDragging = true;
+      const time = getTimeFromEvent(e);
+      audioElement.currentTime = Math.max(startTime, Math.min(endTime, time));
+      updatePlaybackUI();
+    }
+
+    function onDragMove(e) {
+      if (!isDragging) {
+        if ((e.type === 'mousemove' || e.type === 'touchmove') && progressContainer.matches(':hover')) {
+          updateSeekPreview(e);
+        }
+        return;
+      }
+
+      e.preventDefault();
+      const time = getTimeFromEvent(e);
+      audioElement.currentTime = Math.max(startTime, Math.min(endTime, time));
+      updatePlaybackUI();
+    }
+
+    function stopDragging() {
+      isDragging = false;
+      seekPreviewLine.classList.add('hidden');
+    }
+
+    function audioBufferToMp3(buffer) {
+      const channels = buffer.numberOfChannels;
+      const sampleRate = buffer.sampleRate;
+      const bitrate = 128;
+
+      const mp3encoder = new lamejs.Mp3Encoder(channels, sampleRate, bitrate);
+      const maxSamples = 1152;
+      const mp3Data = [];
+
+      let left = buffer.getChannelData(0);
+      let right = channels > 1 ? buffer.getChannelData(1) : left;
+
+      for (let i = 0; i < left.length; i += maxSamples) {
+        const leftChunk = left.subarray(i, i + maxSamples);
+        const rightChunk = right.subarray(i, i + maxSamples);
+
+        const leftInt16 = new Int16Array(leftChunk.length);
+        const rightInt16 = new Int16Array(rightChunk.length);
+        for (let j = 0; j < leftChunk.length; j++) {
+          leftInt16[j]  = Math.max(-32768, Math.min(32767, leftChunk[j]  * 32767));
+          rightInt16[j] = Math.max(-32768, Math.min(32767, rightChunk[j] * 32767));
+        }
+
+        const mp3buf = mp3encoder.encodeBuffer(leftInt16, rightInt16);
+        if (mp3buf.length > 0) mp3Data.push(mp3buf);
+      }
+
+      const endBuf = mp3encoder.flush();
+      if (endBuf.length > 0) mp3Data.push(endBuf);
+
+      return new Blob(mp3Data, { type: 'audio/mp3' });
+    }
+
+    async function trimAndDownload() {
+      if (!originalBuffer) return;
+
+      const startSample = Math.floor(startTime * originalBuffer.sampleRate);
+      const endSample = Math.floor(endTime * originalBuffer.sampleRate);
+      const frameCount = endSample - startSample;
+
+      const trimmedBuffer = audioContext.createBuffer(
+        originalBuffer.numberOfChannels,
+        frameCount,
+        originalBuffer.sampleRate
+      );
+
+      for (let ch = 0; ch < originalBuffer.numberOfChannels; ch++) {
+        const src = originalBuffer.getChannelData(ch);
+        const dst = trimmedBuffer.getChannelData(ch);
+        for (let i = 0; i < frameCount; i++) dst[i] = src[startSample + i];
+      }
+
+      const mp3Blob = audioBufferToMp3(trimmedBuffer);
+
+      const url = URL.createObjectURL(mp3Blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileNameBase + '_trimmed.mp3';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      const btn = document.querySelector('button[onclick="trimAndDownload()"]');
+      const origHTML = btn.innerHTML;
+      btn.innerHTML = `<i class="fa-solid fa-check"></i> Saved!`;
+      btn.disabled = true;
+      setTimeout(() => { 
+        btn.innerHTML = origHTML; 
+        btn.disabled = false; 
+      }, 1800);
+    }
+
+    function resetApp() {
+      stopPreview();
+      originalBuffer = null;
+      audioElement.src = '';
+      uploadArea.classList.remove('hidden');
+      editor.classList.add('hidden');
+      document.getElementById('fileInput').value = '';
+    }
+  </script>
+</body>
+</html>
