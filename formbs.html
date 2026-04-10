@@ -3,6 +3,10 @@
     let isTimerMode = false;
     let timerInterval, timeLeft = 25*60, isRunning = false;
     let notes = [];
+  <script>
+    let isTimerMode = false;
+    let timerInterval, timeLeft = 25*60, isRunning = false;
+    let notes = [];
     let currentNoteIndex = 0;
     let showSeconds = true;
     let use24Hour = true;
@@ -34,34 +38,21 @@
       const bg = document.getElementById('bgColor').value;
       const color = document.getElementById('fontColor').value;
       const opacity = document.getElementById('glassOpacity').value;
-
-      // Background
       document.getElementById('fullscreen').style.background = bg;
-
-      // Glass effect
       document.querySelector('.main-content').style.background = `rgba(255,255,255,${opacity})`;
       document.querySelector('.note-slider').style.background = `rgba(255,255,255,${opacity * 0.85})`;
-
-      // Apply font color
       const allTextElements = document.querySelectorAll(
         '.time-display, .timer-display, .date-display, .note-text, .note-controls, .control-btn, label, span, .top-bar, .settings-panel, h3, .close-btn'
       );
       allTextElements.forEach(el => el.style.color = color);
-
-      // Special handling for delete button
       const deleteBtn = document.querySelector('button[onclick="deleteCurrentNote()"]');
       if (deleteBtn) deleteBtn.style.color = '#ff6666';
-
-      // Apply font family, weight & style to time displays
       document.querySelectorAll('.time-display, .timer-display, .date-display').forEach(el => {
         el.style.fontFamily = family;
         el.style.fontWeight = weight;
         el.style.fontStyle = style;
       });
-
       document.getElementById('date').style.fontFamily = family;
-
-      // Save preferences
       localStorage.setItem('fontFamily', family);
       localStorage.setItem('fontWeight', weight);
       localStorage.setItem('fontStyle', style);
@@ -178,8 +169,6 @@
       applyPreferences();
       document.getElementById('settingsPanel').classList.remove('show');
     }
-
-    // Event Listeners
     document.getElementById('topTime').addEventListener('click', () => {
       document.getElementById('fullscreen').classList.add('show');
       if (isTimerMode) toggleMode();
@@ -190,8 +179,6 @@
     });
 
     document.getElementById('settingsIcon').addEventListener('click', openSettings);
-
-    // Live updates
     document.querySelectorAll('#fontFamily, #fontWeight, #fontStyle, #timeFormat, #showSeconds, #bgColor, #fontColor, #glassOpacity').forEach(el => {
       el.addEventListener('change', applyPreferences);
       if (el.type === 'color' || el.type === 'range') {
@@ -205,8 +192,6 @@
         document.getElementById('settingsPanel').classList.remove('show');
       }
     });
-
-    // Init
     function init() {
       loadAllData();
       updateSmallTime();
