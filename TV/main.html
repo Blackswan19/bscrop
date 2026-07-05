@@ -1,1 +1,213 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>BsTv</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/GkDXg2B/tvlogo.png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <link rel="stylesheet" href="css.css"> </head> <body> <div class="screen-frame"> <!-- Upload Section --> <div class="upload-section"> <div class="upload-container"> <input type="file" id="video-upload" accept="video/*" style="display: none;"> <button id="upload-btn" class="upload-button"> <i class="fas fa-upload"></i> Upload Video </button> <p id="upload-status" class="upload-status"></p> </div> </div> <video id="video"></video> <canvas id="canvas"></canvas> <div id="title"><a style="text-decoration: none; color: rgb(255, 255, 255);">BsTv</a></div> <div class="maincontent"> <div id="progress-container"> <div id="progress-bar"></div> </div> <div class="volume-control"> <button id="volume-btn"> <i class="fas fa-volume-up"></i> </button> <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" > <span id="volume-percentage">100%</span> </div> <!-- Preview --> <div id="preview-container"> <canvas id="preview-canvas"></canvas> <div id="preview-timestamp">0:00</div> </div> <div id="duration-display">0:00 / 0:00</div> <div class="help" id="helpBtn">Help..?</div> </div> <div class="overlay" id="overlay"></div> <div class="popup" id="popup"> <h1>Welcome to BsTv!</h1> <br> <p>BsTv is a tool that lets you watch movies. Simply upload a movie in the top-left area to enjoy a better viewing experience!</p> <button id="closePopup">Close</button> </div> </div> <!-- Custom Menu --> <div class="custom-menu"> <a href="https://blackswan19.github.io/bscrop/watchin/main"><button>Go to BsWatchin</button></a> <a href="https://blackswan19.github.io/bscrop/watchin/mylist"><button>Go to BsVideosaver</button></a> <a href="https://blackswan19.github.io/bscrop/formbs"><button>More From BS</button></a> </div> <!-- Controls Container --> <div id="controls-container"> <div class="blend-factor-controls"> <div id="brightness-container"> Brightness: <span id="brightness-value">0</span>% </div> <div class="mainbgcontrol"> <div id="blend-factor-display"> Dark: <span id="blend-factor-level">6</span> / 10 </div> <div class="bgcontrols"> <button class="blend-factor-button" id="decrease-blend"><i class="fa-solid fa-circle-minus"></i></button> <button class="blend-factor-button" id="increase-blend"><i class="fa-solid fa-circle-plus"></i></button> </div> </div> </div> <div class="playpause"> <button id="backward-btn"><i class="fa-solid fa-backward"></i></button> <button id="play-pause-btn"><i class="fa-solid fa-play"></i></button> <button id="forward-btn"><i class="fa-solid fa-forward"></i></button> </div> </div> <i id="toggle-on" class="fa-solid fa-toggle-on toggle-btn"></i> <i id="toggle-off" class="fa-solid fa-toggle-off toggle-btn" style="display: none;"></i> <script src="js.js"></script> </body> </html>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <title>GlassFlix</title> <style> @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); :root { --glass: rgba(30, 30, 36, 0.78); --glass-light: rgba(255, 255, 255, 0.2); } * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #000; color: white; overflow: hidden; height: 100vh; touch-action: manipulation; } .container { position: relative; width: 100vw; height: 100vh; overflow: hidden; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } #bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(18px) saturate(1.4); transform: scale(1.08); z-index: 1; opacity: 0.75; transition: all 0.4s ease; } /* Main Video */ #main-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; max-width: 98%; border-radius: 80px; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.75); transition: all 0.4s ease; width: 100%; } #main-video.rotated { transform: translate(-50%, -50%) rotate(90deg); } .ui-overlay { position: absolute; inset: 0; z-index: 10; pointer-events: none; } .top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 20px 25px; display: flex; justify-content: space-between; align-items: center; z-index: 30; transition: opacity 0.4s ease; } .header { font-size: 35px; font-weight: 700; background: white; -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; justify-content: center; align-items: center; gap: 5px; } .cinema-btn{ border-radius: 9999px; padding: 5px 11px; font-size: 20px; font-weight: 400; cursor: pointer; pointer-events: auto; box-shadow: 0px 0px 8px rgb(0 0 0 / 21%); background: rgb(255 255 255 / 10%); backdrop-filter: blur(30px); border: 0.5px solid rgba(255, 255, 255, 0.1); display: flex; min-width: 80px; justify-content: center; align-items: center; } .fullscreen-btn, .rotate-btn { font-size: 15px; font-weight: 400; cursor: pointer; pointer-events: auto; display: flex; background-color: transparent; border: none; align-items: center; padding: 0; } .mainoptions { display: flex; justify-content: space-between; align-items: center; border-radius: 9999px; box-shadow: 0px 0px 8px rgb(0 0 0 / 21%); background: rgb(255 255 255 / 10%); backdrop-filter: blur(30px); border: 0.5px solid rgba(255, 255, 255, 0.1); padding: 5px 8px; gap: 15px; } .controls { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); border-radius: 9999px; display: flex; align-items: center; max-width: 700px; width: 100%; box-shadow: 0px 0px 8px rgb(0 0 0 / 21%); background: rgb(255 255 255 / 10%); backdrop-filter: blur(30px); font-weight: 200; border: 0.5px solid rgba(255, 255, 255, 0.1); pointer-events: auto; padding: 5px; gap: 10px; } svg { width: 30px; height: 30px; fill: white; } .control-btn { background: transparent; border: none; color: white; font-size: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.25s ease; cursor: pointer; } .control-btn:hover { background: rgba(255,255,255,0.18); } button#play-pause svg { width: 35px; height: 35px; } .progress-wrapper { flex: 1; position: relative; height: 28px; display: flex; align-items: center; cursor: pointer; } .progress-container { width: 100%; height: 5px; background: rgba(255,255,255,0.3); border-radius: 9999px; position: relative; transition: height 0.2s ease; } .controls:hover .progress-container { height: 7px; } #progress { height: 100%; background: white; border-radius: 9999px; width: 0%; position: relative; } #progress::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: white; border-radius: 50%; opacity: 0; transition: all 0.2s ease; } .progress-wrapper:hover #progress::after { opacity: 1; } .time { font-size: 13.5px; font-weight: 500; min-width: 92px; text-align: center; } .volume-group { display: flex; align-items: center; gap: 8px; } #volume-slider { width: 110px; accent-color: white; height: 3px; } input#opacity-slider, input#blur-slider { width: 110px; accent-color: white; height: 3px; } .settings { position: absolute; top: 75px; right: 25px; width: 300px; border-radius: 15px; padding: 0 7px 5px 7px; z-index: 30; transition: all 0.4s ease; pointer-events: auto; box-shadow: 0px 0px 8px rgb(0 0 0 / 21%); background: rgb(255 255 255 / 10%); backdrop-filter: blur(30px); border: 0.5px solid rgba(255, 255, 255, 0.1); text-align: center; line-height: 30px; } button#volume-btn svg { width: 22px; height: 22px; } .ui-hidden .top-bar, .ui-hidden .controls, .ui-hidden .settings { opacity: 0; pointer-events: none; } .ui-hidden #main-video { max-width: 95%; border-radius: 12px; } /* Mobile enhancements */ @media (max-width: 768px) { .controls { bottom: 15px; max-width: 95%; overflow: scroll; scrollbar-width: none; } .top-bar { padding: 10px; } .settings { position: absolute; top: 70px; right: 10px;} .header { font-size: 28px; } #main-video{ height: 98vh; max-height: 100vh; border-radius: 30px; } .ui-hidden #main-video { max-width: 100%; height: 100vh; } .progress-wrapper{ display: none; } } </style> </head> <body> <div class="container" id="main-container"> <!-- Blurred Background Video --> <video id="bg-video" loop muted playsinline></video> <!-- Main Video --> <video id="main-video" playsinline></video> <div class="ui-overlay"> <!-- Top Bar --> <div class="top-bar" id="top-bar"> <div class="header"><svg style=" width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M210-280h540q37.23 0 63.62-26.38Q840-332.77 840-370v-220q0-37.23-26.38-63.62Q787.23-680 750-680H210q-37.23 0-63.62 26.38Q120-627.23 120-590v220q0 37.23 26.38 63.62Q172.77-280 210-280Zm90 60h-90q-62.15 0-106.08-43.92Q60-307.85 60-370v-220q0-62.15 43.92-106.08Q147.85-740 210-740h540q62.15 0 106.08 43.92Q900-652.15 900-590v220q0 62.15-43.92 106.08Q812.15-220 750-220h-90q0 14.69-10.35 25.04-10.34 10.34-25.04 10.34H335.39q-14.7 0-25.04-10.34Q300-205.31 300-220Zm180-260Z"/></svg>BsTv</div> <div style="display: flex; gap: 10px;"> <div class="mainoptions"> <button class="rotate-btn" id="rotate-btn"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m528.61-875.69 100.47 100.46q8.3 8.31 8.5 20.88.19 12.58-8.5 21.27-8.7 8.7-21.08 8.7-12.38 0-21.08-8.7L421.54-898.46q-10.08-10.08-5.48-23.25 4.59-13.17 18.79-15.64 11.69-1.65 22.56-2.15 10.88-.5 22.59-.5 95.15 0 178.81 35.96 83.65 35.96 146.46 98.77 62.81 62.81 98.77 146.46Q940-575.15 940-480q0 12.75-8.63 21.37-8.63 8.63-21.38 8.63-12.76 0-21.37-8.63Q880-467.25 880-480q0-75.62-26.88-143.69-26.89-68.08-73.81-120.85-46.93-52.77-111.31-87.35-64.39-34.57-139.39-43.8ZM431.39-84.31 330.92-184.77q-8.3-8.31-8.5-20.88-.19-12.58 8.5-21.27 8.7-8.7 21.08-8.7 12.38 0 21.08 8.7L538.46-61.54q10.08 10.08 5.54 23.5t-18.78 15.27q-11.72 1.85-22.61 2.31Q491.72-20 480-20q-94.87 0-178.73-35.94-83.85-35.94-146.62-98.71-62.77-62.77-98.71-146.62Q20-385.13 20-480q0-12.75 8.63-21.37Q37.26-510 50.01-510q12.76 0 21.37 8.63Q80-492.75 80-480q0 75.62 26.88 143.69 26.89 68.08 73.81 120.85 46.93 52.77 111.31 87.35 64.39 34.57 139.39 43.8Zm73.07-121.54L205.69-505.23q-10.08-10.14-15.57-23.05-5.5-12.91-5.5-26.74 0-13.83 5.5-26.72 5.49-12.9 15.57-23.03l149.54-149.54q10.14-10.23 23.05-15.34 12.91-5.12 26.74-5.12 13.83 0 26.72 5.12 12.9 5.11 23.03 15.34l298.77 298.77q10.08 10.14 15.58 23.05 5.49 12.91 5.49 26.74 0 13.83-5.49 26.72-5.5 12.9-15.58 23.03L604-205.85q-10.14 10.23-23.05 15.35-12.91 5.11-26.74 5.11-13.82 0-26.72-5.11-12.9-5.12-23.03-15.35Zm40.92-43.38q3.47 3.46 8.85 3.46 5.39 0 8.85-3.46l147.69-147.69q3.46-3.46 3.46-8.85 0-5.38-3.46-8.85L413.85-711.54Q410.38-715 405-715q-5.39 0-8.85 3.46L248.46-563.85Q245-560.39 245-555q0 5.38 3.46 8.85l296.92 296.92Zm-65.76-231.15Zm-104.77-74.85q12.3 0 20.42-8.52 8.11-8.51 8.11-19.87 0-12.3-8.11-20.42-8.11-8.11-20.51-8.11-11.45 0-19.88 8.11-8.42 8.11-8.42 20.51 0 11.45 8.52 19.88 8.52 8.42 19.87 8.42Z"/></svg> </button> <button class="fullscreen-btn" id="fullscreen-btn"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M212.31-140Q182-140 161-161q-21-21-21-51.31V-330q0-12.77 8.62-21.38Q157.23-360 170-360t21.38 8.62Q200-342.77 200-330v117.69q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85H330q12.77 0 21.38 8.62Q360-182.77 360-170t-8.62 21.38Q342.77-140 330-140H212.31Zm535.38 0H630q-12.77 0-21.38-8.62Q600-157.23 600-170t8.62-21.38Q617.23-200 630-200h117.69q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-330q0-12.77 8.62-21.38Q777.23-360 790-360t21.38 8.62Q820-342.77 820-330v117.69Q820-182 799-161q-21 21-51.31 21ZM140-630v-117.69Q140-778 161-799q21-21 51.31-21H330q12.77 0 21.38 8.62Q360-802.77 360-790t-8.62 21.38Q342.77-760 330-760H212.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46V-630q0 12.77-8.62 21.38Q182.77-600 170-600t-21.38-8.62Q140-617.23 140-630Zm620 0v-117.69q0-4.62-3.85-8.46-3.84-3.85-8.46-3.85H630q-12.77 0-21.38-8.62Q600-777.23 600-790t8.62-21.38Q617.23-820 630-820h117.69Q778-820 799-799q21 21 21 51.31V-630q0 12.77-8.62 21.38Q802.77-600 790-600t-21.38-8.62Q760-617.23 760-630Z"/></svg> </button> </div> <div class="cinema-btn" id="cinema-btn">Hide</div> </div> </div> <!-- Controls --> <div class="controls" id="controls"> <button class="control-btn" id="rewind"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M368.46-506.15h-33.84q-10.31 0-17.08-6.77-6.77-6.77-6.77-17.08 0-10.31 6.77-17.08 6.77-6.77 17.08-6.77h57.69q10.31 0 17.07 6.77 6.77 6.77 6.77 17.08v180q0 10.31-6.77 17.08-6.76 6.77-17.07 6.77t-17.08-6.77q-6.77-6.77-6.77-17.08v-156.15Zm135.39 180q-17 0-28.5-11.5t-11.5-28.5v-147.7q0-17 11.5-28.5t28.5-11.5h75.38q17 0 28.5 11.5t11.5 28.5v147.7q0 17-11.5 28.5t-28.5 11.5h-75.38Zm12.3-47.7h50.77q2.31 0 3.47-1.15 1.15-1.15 1.15-3.46v-123.08q0-2.31-1.15-3.46-1.16-1.15-3.47-1.15h-50.77q-2.3 0-3.46 1.15-1.15 1.15-1.15 3.46v123.08q0 2.31 1.15 3.46 1.16 1.15 3.46 1.15ZM347.39-126.77q-61.85-26.77-107.85-72.77-46-46-72.77-107.85Q140-369.23 140-440q0-12.77 8.62-21.38Q157.23-470 170-470t21.38 8.62Q200-452.77 200-440q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-10.62l42.47 42.46q8.92 8.93 8.8 20.89-.11 11.96-8.8 21.26-9.31 9.31-21.39 9.62-12.07.31-21.38-9l-89.92-90.31q-10.85-10.84-10.85-25.3 0-14.47 10.85-25.31L469.85-866q8.92-8.92 21.19-8.81 12.27.12 21.58 9.43 8.69 9.3 9 21.07.3 11.77-9 21.08L469.38-780H480q70.77 0 132.61 26.77 61.85 26.77 107.85 72.77 46 46 72.77 107.85Q820-510.77 820-440q0 70.77-26.77 132.61-26.77 61.85-72.77 107.85-46 46-107.85 72.77Q550.77-100 480-100q-70.77 0-132.61-26.77Z"/></svg> </button> <button class="control-btn" id="play-pause"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M340-302.23v-355.54q0-15.84 10.85-26 10.84-10.15 25.31-10.15 4.61 0 9.53 1.31 4.93 1.3 9.54 3.92l279.84 178.15q8.24 5.62 12.35 13.46 4.12 7.85 4.12 17.08 0 9.23-4.12 17.08-4.11 7.84-12.35 13.46L395.23-271.31q-4.61 2.62-9.54 3.92-4.92 1.31-9.53 1.31-14.47 0-25.31-10.15-10.85-10.16-10.85-26Z"/></svg> </button> <button class="control-btn" id="forward"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M347.39-126.77q-61.85-26.77-107.85-72.77-46-46-72.77-107.85Q140-369.23 140-440q0-70.77 26.77-132.61 26.77-61.85 72.77-107.85 46-46 107.85-72.77Q409.23-780 480-780h10.62l-43.24-43.23q-9.3-9.31-9-21.08.31-11.77 9-21.07 9.31-9.31 21.58-9.43 12.27-.11 21.19 8.81l90.69 90.31q10.85 10.84 10.85 25.31 0 14.46-10.85 25.3l-89.92 90.31q-9.31 9.31-21.38 9-12.08-.31-21.39-9.62-8.69-9.3-8.8-21.26-.12-11.96 8.8-20.89L490.62-720H480q-117 0-198.5 81.5T200-440q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-12.77 8.62-21.38Q777.23-470 790-470t21.38 8.62Q820-452.77 820-440q0 70.77-26.77 132.61-26.77 61.85-72.77 107.85-46 46-107.85 72.77Q550.77-100 480-100q-70.77 0-132.61-26.77Zm21.07-379.38h-33.84q-10.31 0-17.08-6.77-6.77-6.77-6.77-17.08 0-10.31 6.77-17.08 6.77-6.77 17.08-6.77h57.69q10.31 0 17.07 6.77 6.77 6.77 6.77 17.08v180q0 10.31-6.77 17.08-6.76 6.77-17.07 6.77t-17.08-6.77q-6.77-6.77-6.77-17.08v-156.15Zm135.39 180q-17 0-28.5-11.5t-11.5-28.5v-147.7q0-17 11.5-28.5t28.5-11.5h75.38q17 0 28.5 11.5t11.5 28.5v147.7q0 17-11.5 28.5t-28.5 11.5h-75.38Zm12.3-47.7h50.77q2.31 0 3.47-1.15 1.15-1.15 1.15-3.46v-123.08q0-2.31-1.15-3.46-1.16-1.15-3.47-1.15h-50.77q-2.3 0-3.46 1.15-1.15 1.15-1.15 3.46v123.08q0 2.31 1.15 3.46 1.16 1.15 3.46 1.15Z"/></svg> </button> <div class="progress-wrapper" id="progress-wrapper"> <div class="progress-container" id="progress-container"> <div id="progress"></div> </div> </div> <div class="time" id="time">0:00 / 0:00</div> <div class="volume-group"> <button class="control-btn" id="volume-btn"> <svg xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="512" height="512"><path d="M20.8,4.293A1,1,0,0,0,19.39,5.707a8.911,8.911,0,0,1,0,12.586A1,1,0,1,0,20.8,19.707,10.911,10.911,0,0,0,20.8,4.293Z"/><path d="M18.093,7.293a1,1,0,1,0-1.414,1.414,4.664,4.664,0,0,1,0,6.586,1,1,0,1,0,1.414,1.414A6.665,6.665,0,0,0,18.093,7.293Z"/><path d="M13.819.207A12.055,12.055,0,0,0,6.268,5H5a5.006,5.006,0,0,0-5,5v4a5.006,5.006,0,0,0,5,5H6.269a12.051,12.051,0,0,0,7.55,4.793A1,1,0,0,0,15,22.81V1.19A1,1,0,0,0,13.819.207Z"/></svg> </button> <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.8"> </div> </div> <!-- Settings --> <div class="settings" id="settings-panel"> <h2 style=" text-align: left; display: flex; justify-content: flex-start; align-items: center;gap: 5px; "><svg style=" width: 35px; height: 35px; display: flex; justify-content: center; align-items: center;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M210-280h540q37.23 0 63.62-26.38Q840-332.77 840-370v-220q0-37.23-26.38-63.62Q787.23-680 750-680H210q-37.23 0-63.62 26.38Q120-627.23 120-590v220q0 37.23 26.38 63.62Q172.77-280 210-280Zm90 60h-90q-62.15 0-106.08-43.92Q60-307.85 60-370v-220q0-62.15 43.92-106.08Q147.85-740 210-740h540q62.15 0 106.08 43.92Q900-652.15 900-590v220q0 62.15-43.92 106.08Q812.15-220 750-220h-90q0 14.69-10.35 25.04-10.34 10.34-25.04 10.34H335.39q-14.7 0-25.04-10.34Q300-205.31 300-220Zm180-260Z"/></svg>BsTv</h2> <div style="margin-top:0px"> <label>Video</label> <input type="file" id="video-upload" accept="video/*" style="width: 100%; padding: 10px 12px; border-radius: 35px; box-shadow: 0px 0px 8px rgb(0 0 0 / 21%); background: rgb(255 255 255 / 10%); backdrop-filter: blur(30px); font-weight: 200;"> </div> <div style="margin-top:15px"> <label>Blur Intensity <span id="blur-value">18</span>px</label> <input type="range" id="blur-slider" min="0" max="40" value="18" style="width:100%"> </div> <div style="margin-top:15px"> <label>Background Opacity <span id="opacity-value">0.75</span></label> <input type="range" id="opacity-slider" min="0.1" max="1" step="0.01" value="0.75" style="width:100%"> </div> </div> </div> </div>
+    <script>
+        const mainVideo = document.getElementById('main-video');
+        const bgVideo = document.getElementById('bg-video');
+        const container = document.getElementById('main-container');
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        const playPauseBtn = document.getElementById('play-pause');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress');
+        const timeDisplay = document.getElementById('time');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeBtn = document.getElementById('volume-btn');
+        const cinemaBtn = document.getElementById('cinema-btn');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const rotateBtn = document.getElementById('rotate-btn');
+        
+        let isCinemaMode = false;
+        let isRotated = false;
+        
+        function formatTime(seconds) {
+            if (!seconds) return "0:00";
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+        
+        function updateProgress() {
+            if (!mainVideo.duration) return;
+            const percent = (mainVideo.currentTime / mainVideo.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            timeDisplay.textContent = `${formatTime(mainVideo.currentTime)} / ${formatTime(mainVideo.duration)}`;
+        }
+        
+        // Cinema Mode
+        cinemaBtn.addEventListener('click', () => {
+            isCinemaMode = !isCinemaMode;
+            container.classList.toggle('ui-hidden', isCinemaMode);
+            cinemaBtn.textContent = isCinemaMode ? "Show" : "Hide";
+        });
+        
+        // Playback
+        playPauseBtn.addEventListener('click', () => {
+            if (mainVideo.paused) {
+                mainVideo.play();
+                bgVideo.play();
+                playPauseBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M620-220q-24.54 0-42.27-17.73Q560-255.46 560-280v-400q0-24.54 17.73-42.27Q595.46-740 620-740h30q24.54 0 42.27 17.73Q710-704.54 710-680v400q0 24.54-17.73 42.27Q674.54-220 650-220h-30Zm-310 0q-24.54 0-42.27-17.73Q250-255.46 250-280v-400q0-24.54 17.73-42.27Q285.46-740 310-740h30q24.54 0 42.27 17.73Q400-704.54 400-680v400q0 24.54-17.73 42.27Q364.54-220 340-220h-30Z"/></svg>`;
+            } else {
+                mainVideo.pause();
+                bgVideo.pause();
+                playPauseBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M340-302.23v-355.54q0-15.84 10.85-26 10.84-10.15 25.31-10.15 4.61 0 9.53 1.31 4.93 1.3 9.54 3.92l279.84 178.15q8.24 5.62 12.35 13.46 4.12 7.85 4.12 17.08 0 9.23-4.12 17.08-4.11 7.84-12.35 13.46L395.23-271.31q-4.61 2.62-9.54 3.92-4.92 1.31-9.53 1.31-14.47 0-25.31-10.15-10.85-10.16-10.85-26Z"/></svg>`;
+            }
+        });
+        
+        document.getElementById('forward').addEventListener('click', () => mainVideo.currentTime += 10);
+        document.getElementById('rewind').addEventListener('click', () => mainVideo.currentTime -= 10);
+        
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            mainVideo.currentTime = ((e.clientX - rect.left) / rect.width) * mainVideo.duration;
+        });
+        
+        // Volume
+        const volumeSVG = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="512" height="512"><path d="M20.8,4.293A1,1,0,0,0,19.39,5.707a8.911,8.911,0,0,1,0,12.586A1,1,0,1,0,20.8,19.707,10.911,10.911,0,0,0,20.8,4.293Z"/><path d="M18.093,7.293a1,1,0,1,0-1.414,1.414,4.664,4.664,0,0,1,0,6.586,1,1,0,1,0,1.414,1.414A6.665,6.665,0,0,0,18.093,7.293Z"/><path d="M13.819.207A12.055,12.055,0,0,0,6.268,5H5a5.006,5.006,0,0,0-5,5v4a5.006,5.006,0,0,0,5,5H6.269a12.051,12.051,0,0,0,7.55,4.793A1,1,0,0,0,15,22.81V1.19A1,1,0,0,0,13.819.207Z"/></svg>
+`;
+        const muteSVG = `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512"><path d="m14.004,23.814c-.061,0-.121-.005-.181-.017-2.999-.551-5.752-2.299-7.554-4.794h-1.271C2.241,19.003-.002,16.76-.002,14.003v-4.005C-.002,7.241,2.241,4.998,4.998,4.998h1.271C8.068,2.505,10.821.758,13.822.204c.294-.052.594.025.821.215.229.19.36.472.36.769v21.627c0,.297-.132.579-.36.769-.181.151-.407.231-.64.231Z"/></svg>`;
+        
+        volumeSlider.addEventListener('input', () => {
+            const vol = parseFloat(volumeSlider.value);
+            mainVideo.volume = vol;
+            volumeBtn.innerHTML = (vol > 0) ? volumeSVG : muteSVG;
+        });
+        
+        volumeBtn.addEventListener('click', () => {
+            if (mainVideo.volume > 0) {
+                mainVideo.volume = 0;
+                volumeSlider.value = 0;
+                volumeBtn.innerHTML = muteSVG;
+            } else {
+                mainVideo.volume = 0.8;
+                volumeSlider.value = 0.8;
+                volumeBtn.innerHTML = volumeSVG;
+            }
+        });
+        
+        // Video Upload
+        document.getElementById('video-upload').addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                mainVideo.src = url;
+                bgVideo.src = url;
+                mainVideo.play().catch(() => {});
+                bgVideo.play().catch(() => {});
+                playPauseBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M620-220q-24.54 0-42.27-17.73Q560-255.46 560-280v-400q0-24.54 17.73-42.27Q595.46-740 620-740h30q24.54 0 42.27 17.73Q710-704.54 710-680v400q0 24.54-17.73 42.27Q674.54-220 650-220h-30Zm-310 0q-24.54 0-42.27-17.73Q250-255.46 250-280v-400q0-24.54 17.73-42.27Q285.46-740 310-740h30q24.54 0 42.27 17.73Q400-704.54 400-680v400q0 24.54-17.73 42.27Q364.54-220 340-220h-30Z"/></svg>`;
+            }
+        });
+        
+        // Background Controls
+        document.getElementById('blur-slider').addEventListener('input', e => {
+            const val = e.target.value;
+            document.getElementById('blur-value').textContent = val;
+            bgVideo.style.filter = `blur(${val}px) saturate(1.4)`;
+        });
+        
+        document.getElementById('opacity-slider').addEventListener('input', e => {
+            const val = e.target.value;
+            document.getElementById('opacity-value').textContent = val;
+            bgVideo.style.opacity = val;
+        });
+        
+        // Sync playback
+        mainVideo.addEventListener('play', () => bgVideo.play());
+        mainVideo.addEventListener('pause', () => bgVideo.pause());
+        mainVideo.addEventListener('seeked', () => bgVideo.currentTime = mainVideo.currentTime);
+        
+        // Video Events
+        mainVideo.addEventListener('timeupdate', updateProgress);
+        mainVideo.addEventListener('loadedmetadata', updateProgress);
+        mainVideo.addEventListener('ended', () => {
+            playPauseBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M340-302.23v-355.54q0-15.84 10.85-26 10.84-10.15 25.31-10.15 4.61 0 9.53 1.31 4.93 1.3 9.54 3.92l279.84 178.15q8.24 5.62 12.35 13.46 4.12 7.85 4.12 17.08 0 9.23-4.12 17.08-4.11 7.84-12.35 13.46L395.23-271.31q-4.61 2.62-9.54 3.92-4.92 1.31-9.53 1.31-14.47 0-25.31-10.15-10.85-10.16-10.85-26Z"/></svg>`;
+            bgVideo.pause();
+        });
+        
+        // Fullscreen
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen: ${err.message}`);
+                });
+                fullscreenBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M212.31-140Q182-140 161-161q-21-21-21-51.31V-330q0-12.77 8.62-21.38Q157.23-360 170-360t21.38 8.62Q200-342.77 200-330v117.69q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85H330q12.77 0 21.38 8.62Q360-182.77 360-170t-8.62 21.38Q342.77-140 330-140H212.31Zm535.38 0H630q-12.77 0-21.38-8.62Q600-157.23 600-170t8.62-21.38Q617.23-200 630-200h117.69q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-330q0-12.77 8.62-21.38Q777.23-360 790-360t21.38 8.62Q820-342.77 820-330v117.69Q820-182 799-161q-21 21-51.31 21ZM140-630v-117.69Q140-778 161-799q21-21 51.31-21H330q12.77 0 21.38 8.62Q360-802.77 360-790t-8.62 21.38Q342.77-760 330-760H212.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46V-630q0 12.77-8.62 21.38Q182.77-600 170-600t-21.38-8.62Q140-617.23 140-630Zm620 0v-117.69q0-4.62-3.85-8.46-3.84-3.85-8.46-3.85H630q-12.77 0-21.38-8.62Q600-777.23 600-790t8.62-21.38Q617.23-820 630-820h117.69Q778-820 799-799q21 21 21 51.31V-630q0 12.77-8.62 21.38Q802.77-600 790-600t-21.38-8.62Q760-617.23 760-630Z"/></svg>`;
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="#fff"><path d="M200-200v-160h80v80h80v80H200Zm400 0v-80h80v-80h80v160H600ZM200-600v-160h160v80h-80v80H200Zm480 0v-80h-80v-80h160v160h-80Z"/></svg>
+                `;
+            }
+        }
+        
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        
+        // Rotate Video (for mobile landscape feel)
+        rotateBtn.addEventListener('click', () => {
+            isRotated = !isRotated;
+            mainVideo.classList.toggle('rotated', isRotated);
+            
+            // Also rotate background for consistency
+            if (isRotated) {
+                bgVideo.style.transform = 'scale(1.08) rotate(90deg)';
+            } else {
+                bgVideo.style.transform = 'scale(1.08)';
+            }
+            
+            rotateBtn.style.background = isRotated ? 'rgba(255, 100, 100, 0.3)' : 'rgb(255 255 255 / 10%)';
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === " " || e.code === "Space") { 
+                e.preventDefault(); 
+                playPauseBtn.click(); 
+            }
+            if (e.key === "ArrowRight") mainVideo.currentTime += 10;
+            if (e.key === "ArrowLeft") mainVideo.currentTime -= 10;
+            if (e.key.toLowerCase() === "c") cinemaBtn.click();
+            if (e.key.toLowerCase() === "f") toggleFullscreen();
+            if (e.key.toLowerCase() === "r") rotateBtn.click();
+        });
+        
+        // Mobile orientation hint
+        function showMobileHint() {
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                const hint = document.createElement('div');
+                hint.style.position = 'fixed';
+                hint.style.bottom = '80px';
+                hint.style.left = '50%';
+                hint.style.transform = 'translateX(-50%)';
+                hint.style.background = 'rgba(0,0,0,0.7)';
+                hint.style.color = '#fff';
+                hint.style.padding = '8px 16px';
+                hint.style.borderRadius = '30px';
+                hint.style.fontSize = '13px';
+                hint.style.zIndex = '100';
+                hint.style.opacity = '0.9';
+                document.body.appendChild(hint);
+                
+                setTimeout(() => {
+                    hint.style.transition = 'opacity 0.6s';
+                    hint.style.opacity = '0';
+                    setTimeout(() => hint.remove(), 600);
+                }, 3500);
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            showMobileHint();
+            
+            // Auto-play on load if possible
+            mainVideo.muted = false;
+        });
+        
+        // Handle fullscreen change
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                fullscreenBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M212.31-140Q182-140 161-161q-21-21-21-51.31V-330q0-12.77 8.62-21.38Q157.23-360 170-360t21.38 8.62Q200-342.77 200-330v117.69q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85H330q12.77 0 21.38 8.62Q360-182.77 360-170t-8.62 21.38Q342.77-140 330-140H212.31Zm535.38 0H630q-12.77 0-21.38-8.62Q600-157.23 600-170t8.62-21.38Q617.23-200 630-200h117.69q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-330q0-12.77 8.62-21.38Q777.23-360 790-360t21.38 8.62Q820-342.77 820-330v117.69Q820-182 799-161q-21 21-51.31 21ZM140-630v-117.69Q140-778 161-799q21-21 51.31-21H330q12.77 0 21.38 8.62Q360-802.77 360-790t-8.62 21.38Q342.77-760 330-760H212.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46V-630q0 12.77-8.62 21.38Q182.77-600 170-600t-21.38-8.62Q140-617.23 140-630Zm620 0v-117.69q0-4.62-3.85-8.46-3.84-3.85-8.46-3.85H630q-12.77 0-21.38-8.62Q600-777.23 600-790t8.62-21.38Q617.23-820 630-820h117.69Q778-820 799-799q21 21 21 51.31V-630q0 12.77-8.62 21.38Q802.77-600 790-600t-21.38-8.62Q760-617.23 760-630Z"/></svg>`;
+            }
+        });
+    </script>
+</body>
+</html>
