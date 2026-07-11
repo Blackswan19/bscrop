@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png"> <title>BSearchin - Saved Websites</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box;scrollbar-width: none; font-family: 'Poppins', sans-serif; } body { background-color: #000000; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 80px 20px 20px; position: relative; overflow-x: hidden; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; z-index: -1; filter: brightness(0.5); } .blur-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; filter: blur(8px); opacity: 0.4; z-index: -2; } /* Header */ .header { font-size: 36px; font-weight: 550; margin-bottom: 40px; display: flex; align-items: center; gap: 25px; max-width: 400px; justify-content: space-between; position: sticky; top: 3px; z-index: 1000; backdrop-filter: blur(10px); background: #ffffff17; border-radius: 100px; padding: 0px 3px; width: 90%; } .header img { width: 45px; height: 45px; } /* Websites container */ .websites-container { width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px 0; padding: 0 20px; } .website-card { background: rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 10px; display: flex; align-items: center; transition: all 0.3s ease; backdrop-filter: blur(10px); border: 1.5px solid rgb(255 255 255 / 18%); position: relative; max-width: 100px; flex-direction: column; gap: 10px; } .website-card:hover { background: rgba(255, 255, 255, 0.25); } .website-link { display: flex; align-items: center; gap: 6px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 500; overflow: hidden; flex: 1; } .website-card img { width: 20px; height: 20px; flex-shrink: 0; } .website-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; width: 50px; color: #ffffffa8; } .delete-btn { background: rgba(255, 0, 0, 0.7); border: none; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; transition: background 0.3s; flex-shrink: 0; width: 100%; border-radius: 100px; padding: 5px; } .header a { position: relative; top: 8px; left: 5px; } .delete-btn:hover { background: #ff0000; } /* Empty state */ .empty-message { grid-column: 1 / -1; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 18px; margin: 40px 0; } /* Add website button */ .add-website-btn { background: rgba(255, 255, 255, 0.199); color: white; width: 40px; height: 40px; border: none; border-radius: 35px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; z-index: 10; position: relative; right: 8px; } .add-website-btn:hover { background: rgb(255 255 255 / 33%); } /* Responsive adjustments */ @media (max-width: 768px) { .header { font-size: 28px; margin-bottom: 30px; }.websites-container { width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; padding: 0 20px; } .header a { position: relative; top: 5px; left: 0px; } } @media (max-width: 480px) { body { padding: 50px 10px 10px; } .header { font-size: 24px; gap: 10px; } } </style> </head> <body> <div class="blur-background" id="blurBg"></div> <div class="background-container" id="bgContainer"></div> <div class="header"> <a href="https://blackswan19.github.io/bscrop/bsearchin"><img src="https://i.ibb.co/1bgTMY6/logosercin.png" alt="BSearchin Logo"></a> Saved Sites <button class="add-website-btn" id="add-website-btn"> <i class="fas fa-plus"></i> </button> </div> <div class="websites-container" id="websites-container"></div>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/1bgTMY6/logosercin.png"> <title>BSearchin - Saved Websites</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); * { -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.648) transparent; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } body { background-color: #000000; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; justify-content: center; user-select: none; } .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; z-index: -1; filter: brightness(0.6) blur(2px); } .blur-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; filter: blur(20px); opacity: 0.35; z-index: -2; } /* Main Container - Centered like macOS Window */ .app-container { width: 96%; max-width: 700px; background: rgb(0 0 0 / 17%); backdrop-filter: blur(20px); border-radius: 40px; box-shadow: 0 0px 40px rgb(0 0 0 / 60%); overflow: hidden; position: relative; border-top: 1px solid rgba(255, 255, 255, 0.215); border-bottom: 1px solid rgba(255, 255, 255, 0.215); } /* Header like macOS */ .header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: sticky; top: 0; z-index: 100; background: rgb(0 0 0 / 55%); backdrop-filter: blur(30px); } .header-left { display: flex; align-items: center; gap: 12px; } .header-left img { width: 42px; } .header-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; } /* Search Bar */ .search-container { position: relative; margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: 3px; border-top: 1px solid rgba(255, 255, 255, 0.215); border-bottom: 1px solid rgba(255, 255, 255, 0.215); background: rgb(255 255 255 / 10%); padding: 7px 12px; border-radius: 9999px; width: 180px; } .search-bar { background: transparent; border: none; outline: none; font-size: 18px; color: white; max-width: 400px; width: 150px; } .search-icon { width: 100%; padding: 10px 16px 10px 42px; border-radius: 999px; color: white; font-size: 15px; outline: none; background: transparent; border: none; } /* Toolbar / Categories */ .toolbar { display: flex; padding: 12px 24px; gap: 8px;display: none; overflow-x: auto; scrollbar-width: none; background: rgba(255,255,255,0.03); } .category-btn { padding: 6px 14px; background: rgba(255,255,255,0.1); border: none; border-radius: 9999px; color: white; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: all 0.2s ease; } .category-btn.active, .category-btn:hover { background: white; color: black; } /* Grid */ .websites-container { padding: 20px 5px; display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 20px; justify-items: center; height: 350px; overflow-y: scroll; scrollbar-width: none; } .website-card { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 110px; cursor: pointer; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); } .icon-wrapper { width: 65px; height: 65px; border-radius: 18px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; border-top: 1px solid rgba(255, 255, 255, 0.215); border-bottom: 1px solid rgba(255, 255, 255, 0.215); background: linear-gradient(45deg, #000000c9, #25252587); } .website-card img { width: 52px; height: 52px; border-radius: 12px; object-fit: contain; } .website-title { font-size: 13px; font-weight: 500; text-align: center; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #f1f1f1; } .delete-btn { position: absolute; top: 38px; right: 4px; background: red; color: white; width: 22px; height: 22px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; border: none; opacity: 0; transition: all 0.2s ease; } .website-card:hover .delete-btn { display: flex; opacity: 1; } .empty-message { grid-column: 1 / -1; text-align: center; color: rgba(255, 255, 255, 0.5); font-size: 17px; padding: 60px 20px; } .add-btn { width: 40px; height: 40px; background: blue; color: white; border: none; border-radius: 50%; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; transition: transform 0.3s ease; } /* Traffic lights */ .traffic-lights { display: flex; gap: 8px; } .light { width: 12px; height: 12px; border-radius: 50%; } .close { background: #ff5f57; } .minimize { background: #ffbd2e; } .maximize { background: #28c840; } </style> </head> <body> <div class="blur-background" id="blurBg"></div> <div class="background-container" id="bgContainer"></div> <div class="app-container"> <!-- macOS-style header --> <div class="header"> <div class="header-left"> <a href="https://blackswan19.github.io/bscrop/bsearchin" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; justify-content: center;"> <img src="https://i.ibb.co/1bgTMY6/logosercin.png" alt="Logo"> </a> </div> <div class="search-container"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M380.77-335.39q-102.46 0-173.54-71.07-71.07-71.08-71.07-173.54t71.07-173.54q71.08-71.07 173.54-71.07t173.54 71.07q71.07 71.08 71.07 173.54 0 42.85-14.38 81.85-14.39 39-38.39 67.84l230.16 230.16q8.31 8.3 8.5 20.88.19 12.58-8.5 21.27t-21.08 8.69q-12.38 0-21.07-8.69L530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14Zm0-59.99q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z"/></svg> <input type="text" id="search-input" class="search-bar" placeholder="Search..." autocomplete="off"> </div> <button class="add-btn" id="add-website-btn"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M458.62-148.63Q450-157.25 450-170v-280H170q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q157.25-510 170-510h280v-280q0-12.75 8.63-21.37 8.63-8.63 21.38-8.63 12.76 0 21.37 8.63Q510-802.75 510-790v280h280q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q802.75-450 790-450H510v280q0 12.75-8.63 21.37-8.63 8.63-21.38 8.63-12.76 0-21.37-8.63Z"/></svg> </button> </div> <!-- Categories --> <div class="toolbar" id="categories"> <button class="category-btn active" data-category="all">All</button> <!-- You can add more categories dynamically if needed --> </div> <!-- Grid --> <div class="websites-container" id="websites-container"></div> </div>
 <script>
         document.addEventListener('contextmenu', e => e.preventDefault());
         function loadBackground() {
@@ -8,38 +8,46 @@
                 document.getElementById('blurBg').style.backgroundImage = `url('${storedImage}')`;
             }
             const savedColor = localStorage.getItem('bgColor');
-            if (savedColor) {
-                document.body.style.backgroundColor = savedColor;
-            }
+            if (savedColor) document.body.style.backgroundColor = savedColor;
         }
+
         function getDomain(url) {
             try {
-                return new URL(url).hostname;
+                return new URL(url).hostname.replace('www.', '');
             } catch (e) {
                 return url;
             }
         }
-        function loadWebsites() {
-            const websitesContainer = document.getElementById('websites-container');
-            websitesContainer.innerHTML = '';
-            const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+
+        function loadWebsites(filter = '') {
+            const container = document.getElementById('websites-container');
+            container.innerHTML = '';
+
+            let savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+
+            if (filter) {
+                const term = filter.toLowerCase();
+                savedWebsites = savedWebsites.filter(site => 
+                    (site.title && site.title.toLowerCase().includes(term)) || 
+                    site.url.toLowerCase().includes(term)
+                );
+            }
 
             if (savedWebsites.length === 0) {
-                const emptyMessage = document.createElement('div');
-                emptyMessage.classList.add('empty-message');
-                emptyMessage.textContent = 'No websites saved yet.';
-                websitesContainer.appendChild(emptyMessage);
+                const empty = document.createElement('div');
+                empty.className = 'empty-message';
+                empty.textContent = filter ? 'No matching websites found.' : 'No websites saved yet.';
+                container.appendChild(empty);
                 return;
             }
 
             savedWebsites.forEach((website, index) => {
-                const websiteCard = document.createElement('div');
-                websiteCard.classList.add('website-card');
+                const card = document.createElement('div');
+                card.className = 'website-card';
+                card.onclick = () => window.open(website.url, '_blank');
 
-                const link = document.createElement('a');
-                link.href = website.url;
-                link.target = '_self';
-                link.classList.add('website-link');
+                const iconWrapper = document.createElement('div');
+                iconWrapper.className = 'icon-wrapper';
 
                 const favicon = document.createElement('img');
                 const domain = getDomain(website.url);
@@ -48,64 +56,81 @@
                     favicon.src = 'https://i.ibb.co/kxgjrZG/sitesaved-BS.png';
                 };
 
-                const title = document.createElement('span');
-                title.textContent = website.title || domain;
-                title.classList.add('website-title');
-
                 const deleteBtn = document.createElement('button');
-                deleteBtn.classList.add('delete-btn');
-                deleteBtn.innerHTML = 'Delete';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-437.85 277.08-234.92q-8.31 8.3-20.89 8.5-12.57.19-21.27-8.5-8.69-8.7-8.69-21.08 0-12.38 8.69-21.08L437.85-480 234.92-682.92q-8.3-8.31-8.5-20.89-.19-12.57 8.5-21.27 8.7-8.69 21.08-8.69 12.38 0 21.08 8.69L480-522.15l202.92-202.93q8.31-8.3 20.89-8.5 12.57-.19 21.27 8.5 8.69 8.7 8.69 21.08 0 12.38-8.69 21.08L522.15-480l202.93 202.92q8.3 8.31 8.5 20.89.19 12.57-8.5 21.27-8.7 8.69-21.08 8.69-12.38 0-21.08-8.69L480-437.85Z"/></svg>';
                 deleteBtn.onclick = (e) => {
                     e.stopPropagation();
-                    e.preventDefault();
-                    if (confirm(`Are you sure you want to delete "${website.title || domain}"?`)) {
+                    if (confirm(`Delete "${website.title || domain}"?`)) {
                         deleteWebsite(index);
                     }
                 };
 
-                link.appendChild(favicon);
-                link.appendChild(title);
-                websiteCard.appendChild(link);
-                websiteCard.appendChild(deleteBtn);
-                websitesContainer.appendChild(websiteCard);
+                iconWrapper.appendChild(favicon);
+                iconWrapper.appendChild(deleteBtn);
+
+                const title = document.createElement('div');
+                title.className = 'website-title';
+                title.textContent = website.title || domain;
+
+                card.appendChild(iconWrapper);
+                card.appendChild(title);
+                container.appendChild(card);
             });
         }
+
         function deleteWebsite(index) {
-            const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+            let savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
             savedWebsites.splice(index, 1);
             localStorage.setItem('websites', JSON.stringify(savedWebsites));
-            loadWebsites();
+            loadWebsites(document.getElementById('search-input').value);
         }
+
         async function saveWebsite(url) {
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
             }
 
-            const title = prompt("Enter a title for this website:");
-            if (title && title.trim() !== '') {
-                const savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
-                savedWebsites.push({ url, title: title.trim() });
-                localStorage.setItem('websites', JSON.stringify(savedWebsites));
-                loadWebsites();
-            } else if (title !== null) {
-                alert("Website title cannot be empty!");
+            let title = prompt("Enter a title for this website:");
+            if (!title || title.trim() === '') {
+                title = getDomain(url);
             }
+
+            let savedWebsites = JSON.parse(localStorage.getItem('websites') || '[]');
+            savedWebsites.push({ url, title: title.trim() });
+            localStorage.setItem('websites', JSON.stringify(savedWebsites));
+            loadWebsites(document.getElementById('search-input').value);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             loadBackground();
             loadWebsites();
 
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => {
+                loadWebsites(e.target.value.trim());
+            });
+
+            // Add button
             document.getElementById('add-website-btn').addEventListener('click', () => {
-                const url = prompt("Enter the website URL:");
+                const url = prompt("Enter website URL:");
                 if (url && url.trim() !== '') {
                     saveWebsite(url.trim());
                 }
             });
-            window.addEventListener('storage', (event) => {
-                if (event.key === 'websites') {
-                    loadWebsites();
+
+            // Keyboard support
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '/' && document.getElementById('search-input') !== document.activeElement) {
+                    e.preventDefault();
+                    document.getElementById('search-input').focus();
                 }
+            });
+
+            // Sync across tabs
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'websites') loadWebsites(searchInput.value);
             });
         });
     </script>
