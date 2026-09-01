@@ -1,153 +1,84 @@
 <!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Welcome to Black Swan</title> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/27GXWVgg/BS.png"> <style> * { margin: 0; padding: 0; box-sizing: border-box; } * { -webkit-tap-highlight-color: transparent; } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } html, body { height: 100%; overflow: hidden; -ms-overflow-style: none; scrollbar-width: none; } html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; } body { min-height: 100vh; min-height: 100dvh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle at center, #222 0%, #090909 45%, #000 100%); color: white; font-family: Arial, Helvetica, sans-serif; position: relative; } /* Background glow */ .glow { position: absolute; width: min(500px, 80vw); height: min(500px, 80vw); border-radius: 50%; background: rgb(1 0 143); filter: blur(80px); animation: glowPulse 4s ease-in-out infinite; pointer-events: none; } /* Main container */ .welcome-container { position: relative; text-align: center; z-index: 2; width: 100%; } /* Decorative line */ .line { width: clamp(60px, 20vw, 120px); height: 1px; margin: clamp(16px, 4vw, 30px) auto; background: linear-gradient(to right, transparent, white, transparent); animation: lineExpand 2s ease forwards; } /* Language text */ #welcomeText { min-height: clamp(60px, 15vw, 120px); font-size: 20px; font-weight: 700; letter-spacing: 0.5px; line-height: 1.25; opacity: 0; transform: translateY(25px); text-shadow: 0 0 10px rgba(255,255,255,0.15), 0 0 30px rgba(255,255,255,0.08); padding: 0 10px; word-break: break-word; white-space: nowrap; } #language { margin-top: clamp(16px, 3.5vw, 28px); font-size: clamp(12px, 2.8vw, 15px); letter-spacing: clamp(2px, 1vw, 4px); color: #ffffffbf; text-transform: uppercase; opacity: 0; } /* FromBS Button */ .frombs-btn { display: inline-block; margin-top: clamp(24px, 5vw, 40px); padding: 12px 32px; font-size: clamp(13px, 2.5vw, 15px); font-weight: 500; color: #fff; background: transparent; border: 1.5px solid rgba(255, 255, 255, 0.35); border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; transition: all 0.35s ease; opacity: 0; animation: textIn 1s ease 0.8s forwards; } .frombs-btn::before { content: ""; position: absolute; inset: 0; background: linear-gradient( 135deg, rgba(1, 0, 143, 0.4), rgba(80, 60, 255, 0.25) ); opacity: 0; transition: opacity 0.35s ease; border-radius: 999px; } .frombs-btn:hover { border-color: rgba(255, 255, 255, 0.7); box-shadow: 0 0 20px rgba(80, 60, 255, 0.35); transform: translateY(-2px); } .frombs-btn:hover::before { opacity: 1; } .frombs-btn span { position: relative; z-index: 1; } /* ========================= SERVICE POPUP ========================= */ .service-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; padding: 20px; } .service-overlay.active { opacity: 1; visibility: visible; } .service-box { width: min(400px, 92vw); background: linear-gradient( 145deg, rgba(35, 35, 45, 0.92), rgba(8, 8, 12, 0.96) ); border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 35px; padding: 20px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7), 0 0 40px rgba(40, 30, 255, 0.12); transform: translateY(30px) scale(0.94); transition: transform 0.4s cubic-bezier(.2,.8,.2,1); position: relative; } .service-overlay.active .service-box { transform: translateY(0) scale(1); } .service-title { font-size: 21px; font-weight: 700; margin-bottom: 7px; } .service-subtitle { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 22px; } /* Service options */ .service-option { width: 100%; padding: 17px; margin-top: 12px; border-radius: 16px; background: rgba(255,255,255,0.045); color: white; text-decoration: none; display: flex;border: none; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.3s ease; text-align: left; } .service-option:hover { background: rgba(255,255,255,0.1); } .option-left { display: flex; align-items: center; gap: 13px; } .option-icon { width: 42px; height: 42px; border-radius: 13px; display: flex; justify-content: center; align-items: center; background: rgba(50, 40, 255, 0.16); border: 1px solid rgba(100, 90, 255, 0.2); font-size: 18px; } .option-name { font-size: 15px; font-weight: 600; } .option-description { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 3px; } .arrow { color: rgba(255,255,255,0.5); font-size: 18px; transition: transform 0.25s ease; } .service-option:hover .arrow { transform: translateX(4px); color: white; } /* Close button */ .close-service { position: fixed; top: 16px; right: 16px; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 18px; transition: all 0.25s ease; border: none; font-weight: 100; background: transparent; color: white; } .close-service:hover { color: white; } /* Particles */ .particle { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; opacity: 0.3; animation: particleMove linear infinite; pointer-events: none; } .p1 { left: 10%; animation-duration: 8s; } .p2 { left: 25%; animation-duration: 12s; } .p3 { left: 40%; animation-duration: 9s; } .p4 { left: 60%; animation-duration: 11s; } .p5 { left: 75%; animation-duration: 7s; } .p6 { left: 90%; animation-duration: 10s; } /* Animations */ @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } } @keyframes glowPulse { 0%, 100% { transform: scale(0.9); opacity: 0.4; } 50% { transform: scale(1.15); opacity: 0.8; } } @keyframes lineExpand { from { width: 0; opacity: 0; } to { width: clamp(60px, 20vw, 120px); opacity: 1; } } @keyframes particleMove { from { bottom: -10px; transform: translateX(0); } to { bottom: 110vh; transform: translateX(80px); } } .show { animation: textIn 1s ease forwards; } .hide { animation: textOut 0.6s ease forwards; } @keyframes textIn { from { opacity: 0; transform: translateY(25px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } } @keyframes textOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-25px) scale(1.04); } } /* Extra small phones */ @media (max-width: 360px) { #welcomeText { font-size: 20px; } #language { font-size: 11px; letter-spacing: 2px; } .frombs-btn { padding: 10px 24px; letter-spacing: 2px; } .service-box { padding: 23px 18px; } } /* Mobile */ @media (max-width: 600px) { .glow { filter: blur(50px); } } /* Large Desktop */ @media (min-width: 1400px) { #welcomeText { font-size: 72px; } .glow { width: 600px; height: 600px; } } /* Landscape phones */ @media (max-height: 500px) and (orientation: landscape) { .welcome-container { padding: 12px; } .line { margin: 12px auto; } #welcomeText { min-height: 50px; font-size: clamp(20px, 5vh, 36px); } #language { margin-top: 12px; font-size: 12px; } .frombs-btn { margin-top: 16px; padding: 8px 22px; } .glow { display: none; } .service-box { max-height: 90vh; overflow-y: auto; } } </style> </head> <body> <div class="glow"></div> <div class="particle p1"></div> <div class="particle p2"></div> <div class="particle p3"></div> <div class="particle p4"></div> <div class="particle p5"></div> <div class="particle p6"></div> <div class="welcome-container"> <div id="welcomeText"></div> <div id="language"></div> <div class="line"></div> <button class="frombs-btn" id="fromBsButton"> <span>Enter</span> </button> </div> <!-- ========================= SERVICE POPUP ========================== --> <div class="service-overlay" id="serviceOverlay"> <div class="service-box"> <button class="close-service" id="closeService"> ✕ </button> <div class="service-title"> Black Swan </div> <!-- OPTION 1 --> <a class="service-option" href="https://blackswan19.github.io/bscrop/formbs" rel="noopener noreferrer" > <div class="option-left"> <div> <div class="option-name"> FromBS </div> </div> </div> <div class="arrow"> → </div> </a> <!-- OPTION 2 --> <button style="opacity: 50%;cursor: not-allowed;" class="service-option" id="accessOption" onclick="alert('Don`t have access')" type="button" > <div class="option-left"> <div> <div class="option-name"> Services </div> </div> </div> <div class="arrow"> → </div> </button> </div> </div>
-<script>
+
+  <script>
 document.addEventListener('contextmenu', e => e.preventDefault());
     const languages = [
       {
         name: "English",
         text: "Welcome to Black Swan"
       },
-
       {
         name: "Español",
         text: "Bienvenido a Black Swan"
       },
-
       {
         name: "台灣語",
         text: "歡迎來到 Black Swan"
       },
-
-      {
-        name: "Nederlands",
-        text: "Welkom bij Black Swan"
-      },
-
       {
         name: "Français",
         text: "Bienvenue à Black Swan"
       },
-
       {
         name: "Deutsch",
         text: "Willkommen bei Black Swan"
       },
-
       {
         name: "Русский",
         text: "Добро пожаловать в Black Swan"
       }
     ];
 
-
     const welcomeText =
       document.getElementById("welcomeText");
-
     const language =
       document.getElementById("language");
-
     let current = 0;
-
-
     function showLanguage() {
-
       welcomeText.classList.remove("show");
-
       welcomeText.classList.add("hide");
-
       language.style.opacity = "0";
-
-
-      setTimeout(() => {
-
+        setTimeout(() => {
         welcomeText.textContent =
           languages[current].text;
-
         language.textContent =
           languages[current].name;
-
-
         welcomeText.classList.remove("hide");
-
         void welcomeText.offsetWidth;
-
         welcomeText.classList.add("show");
-
-
         language.style.transition =
           "opacity 1s ease";
-
         language.style.opacity = "1";
-
-
         current =
           (current + 1) % languages.length;
 
       }, 600);
-
     }
-
-
     showLanguage();
-
     setInterval(showLanguage, 3000);
-
-
-    /* =========================
-       SERVICE POPUP
-    ========================== */
-
     const fromBsButton =
       document.getElementById("fromBsButton");
-
     const serviceOverlay =
       document.getElementById("serviceOverlay");
-
     const closeService =
       document.getElementById("closeService");
-
-
-    /* Open popup */
-
     fromBsButton.addEventListener("click", () => {
 
       serviceOverlay.classList.add("active");
-
     });
-
-
-    /* Close popup */
-
     closeService.addEventListener("click", () => {
-
       serviceOverlay.classList.remove("active");
-
     });
-
-
-    /* Close when clicking outside */
-
     serviceOverlay.addEventListener("click", (event) => {
-
       if (event.target === serviceOverlay) {
-
         serviceOverlay.classList.remove("active");
-
       }
-
     });
-
-
-    /* Close with ESC */
-
     document.addEventListener("keydown", (event) => {
-
       if (event.key === "Escape") {
-
         serviceOverlay.classList.remove("active");
-
      }
     });
   </script>
-
 </body>
 </html>
