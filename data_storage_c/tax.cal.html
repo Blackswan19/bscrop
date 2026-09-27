@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Black swan cost page</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 18px;overflow: hidden;
+      line-height: 1.5;
+    }
+    h1 { font-size: 1.35rem; margin-bottom: 4px; }
+    .subtitle { color: #94a3b8; font-size: 0.88rem; margin-bottom: 16px; }
+    .badge {
+      display: inline-block;
+      background: #0ea5e9;
+      color: white;
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
+      font-weight: 600;
+    }
+
+    .top-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: end;
+    }
+    label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 3px; }
+    input, button {
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #f1f5f9;
+      font-size: 0.93rem;
+      width: 100%;
+    }
+    button {
+      background: #0ea5e9;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #0284c7; }
+    button.secondary { background: #334155; }
+    button.secondary:hover { background: #475569; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin-top: 8px;
+    }
+    th, td {
+      padding: 8px 6px;
+      text-align: left;
+      border-bottom: 1px solid #334155;
+    }
+    th { background: #0f172a; color: #94a3b8; font-weight: 600; }
+    .total-row { font-weight: 700; background: #0f172a; }
+    .good { color: #4ade80; }
+    .bad { color: #f87171; }
+    .note {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+    .ytd-box {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 16px;
+      border: 1px solid #334155;
+    }
+    .ytd-box h3 { margin-bottom: 8px; color: #38bdf8; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      Black swan cost page
+      <span class="badge">include - Servers · Websites · Bots · APIs</span>
+    </h1>
+    <!-- <p class="subtitle">
+      Includes: Tax + Electricity + Internet + Domains + Website costs + Water + Misc<br>
+      3 DR · 5 USA · 12 Belgium · 6 Russia · 4 Taiwan = 30 hosts
+    </p> -->
+
+    <div class="top-controls" style="display: none;">
+      <div>
+        <label>Total Monthly Payment Budget (USD)</label>
+        <input type="number" id="totalBudget" value="10000" min="0" step="100">
+      </div>
+      <div>
+        <label>Average Watts per unit (24/7)</label>
+        <input type="number" id="watts" value="120" min="30" step="10">
+      </div>
+      <div>
+        <button onclick="calculate()">Calculate This Month</button>
+      </div>
+    </div>
+
+    <button class="secondary" onclick="addToYTD()" style="margin-bottom:12px;display: none;">
+      + Add This Month to Year-to-Date
+    </button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Hosts</th>
+          <th>Payment</th>
+          <th>Tax</th>
+          <th>Electricity</th>
+          <th>Internet</th>
+          <th>Domains + Web run</th>
+          <th>Water + cooling</th>
+          <th>Total Costs</th>
+          <th>After costs</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td>TOTAL</td>
+          <td>30</td>
+          <td id="totalPay">$0</td>
+          <td id="totalTax">$0</td>
+          <td id="totalElec">$0</td>
+          <td id="totalNetCost">$0</td>
+          <td colspan="3"></td>
+          <td id="totalNet" class="good">$0</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- <div class="ytd-box">
+      <h3>Year-to-Date Summary</h3>
+      <div id="ytdContent">No months added yet.</div>
+    </div> -->
+
+    <p class="note">
+      <strong>All BS monthly costs included:</strong><br>
+      • Tax → calculated with each country’s own rules<br>
+      • Electricity → 24/7 based on watts you set<br>
+      • Internet → average per country<br>
+      • Domains + Website running costs → monthly<br>
+      • Water + Misc utilities + small maintenance<br><br>
+    </p>
+  </div>
+
+  <script>
+    // Exchange rates
+    const rates = {
+      usa: 1,
+      dr: 59.5,
+      belgium: 0.875,
+      russia: 84.3,
+      taiwan: 31.7
+    };
+
+    // Electricity price USD/kWh
+    const elecPrice = {
+      usa: 0.18,
+      dr: 0.115,
+      belgium: 0.40,
+      russia: 0.07,
+      taiwan: 0.10
+    };
+
+    // Other monthly costs per host (USD) - realistic averages
+    const otherCosts = {
+      usa:      { internet: 45, domainsWeb: 12, waterMisc: 8 },
+      dr:       { internet: 28, domainsWeb: 9,  waterMisc: 5 },
+      belgium:  { internet: 40, domainsWeb: 11, waterMisc: 10 },
+      russia:   { internet: 18, domainsWeb: 7,  waterMisc: 4 },
+      taiwan:   { internet: 25, domainsWeb: 8,  waterMisc: 6 }
+    };
+
+    const people = {
+      usa: 5,
+      dr: 3,
+      belgium: 12,
+      russia: 6,
+      taiwan: 4
+    };
+
+    const taxData = {
+      usa: {
+        name: "USA",
+        currency: "USD",
+        brackets: [
+          { limit: 12400/12, rate: 0.10 },
+          { limit: 50400/12, rate: 0.12 },
+          { limit: 105700/12, rate: 0.22 },
+          { limit: 201775/12, rate: 0.24 },
+          { limit: 256225/12, rate: 0.32 },
+          { limit: 640600/12, rate: 0.35 },
+          { limit: Infinity, rate: 0.37 }
+        ]
+      },
+      dr: {
+        name: "Dominican Republic",
+        currency: "DOP",
+        brackets: [
+          { limit: 416220/12, rate: 0.00 },
+          { limit: 624329/12, rate: 0.15 },
+          { limit: 867123/12, rate: 0.20 },
+          { limit: Infinity, rate: 0.25 }
+        ]
+      },
+      belgium: {
+        name: "Belgium",
+        currency: "EUR",
+        allowance: 11180/12,
+        brackets: [
+          { limit: 16720/12, rate: 0.25 },
+          { limit: 29510/12, rate: 0.40 },
+          { limit: 51070/12, rate: 0.45 },
+          { limit: Infinity, rate: 0.50 }
+        ]
+      },
+      russia: {
+        name: "Russia",
+        currency: "RUB",
+        brackets: [
+          { limit: 2400000/12, rate: 0.13 },
+          { limit: 5000000/12, rate: 0.15 },
+          { limit: 20000000/12, rate: 0.18 },
+          { limit: 50000000/12, rate: 0.20 },
+          { limit: Infinity, rate: 0.22 }
+        ]
+      },
+      taiwan: {
+        name: "Taiwan",
+        currency: "TWD",
+        brackets: [
+          { limit: 610000/12, rate: 0.05 },
+          { limit: 1380000/12, rate: 0.12 },
+          { limit: 2770000/12, rate: 0.20 },
+          { limit: 5190000/12, rate: 0.30 },
+          { limit: Infinity, rate: 0.40 }
+        ]
+      }
+    };
+
+    let ytd = { months: 0, pay: 0, tax: 0, costs: 0, net: 0 };
+
+    function calcTax(income, key) {
+      const data = taxData[key];
+      let taxable = income;
+      if (data.allowance) taxable = Math.max(0, income - data.allowance);
+      let tax = 0, prev = 0;
+      for (const b of data.brackets) {
+        if (taxable > prev) {
+          const amount = Math.min(taxable, b.limit) - prev;
+          tax += amount * b.rate;
+          prev = b.limit;
+        } else break;
+      }
+      return tax;
+    }
+
+    function format(n) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+      }).format(n);
+    }
+
+    function calculate() {
+      const totalBudget = parseFloat(document.getElementById('totalBudget').value) || 0;
+      const watts = parseFloat(document.getElementById('watts').value) || 120;
+      const days = 30.4;
+      const kWhPerUnit = (watts * 24 * days) / 1000;
+
+      const totalPeople = Object.values(people).reduce((a,b) => a+b, 0);
+      const perPerson = totalBudget / totalPeople;
+
+      const body = document.getElementById('tableBody');
+      body.innerHTML = '';
+
+      let sumPay = 0, sumTax = 0, sumElec = 0, sumOther = 0, sumNet = 0;
+
+      for (const [key, count] of Object.entries(people)) {
+        const payUSD = perPerson * count;
+        const localIncome = payUSD * rates[key];
+        const taxLocal = calcTax(localIncome, key);
+        const taxUSD = taxLocal / rates[key];
+
+        const elec = kWhPerUnit * elecPrice[key] * count;
+        const oc = otherCosts[key];
+        const internet = oc.internet * count;
+        const domainsWeb = oc.domainsWeb * count;
+        const waterMisc = oc.waterMisc * count;
+        const otherTotal = internet + domainsWeb + waterMisc;
+
+        const totalCosts = taxUSD + elec + otherTotal;
+        const net = payUSD - totalCosts;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${taxData[key].name}</td>
+          <td>${count}</td>
+          <td>${format(payUSD)}</td>
+          <td class="bad">${format(taxUSD)}</td>
+          <td class="bad">${format(elec)}</td>
+          <td class="bad">${format(internet)}</td>
+          <td class="bad">${format(domainsWeb)}</td>
+          <td class="bad">${format(waterMisc)}</td>
+          <td class="bad">${format(totalCosts)}</td>
+          <td class="good">${format(net)}</td>
+        `;
+        body.appendChild(row);
+
+        sumPay += payUSD;
+        sumTax += taxUSD;
+        sumElec += elec;
+        sumOther += otherTotal;
+        sumNet += net;
+      }
+
+      document.getElementById('totalPay').textContent = format(sumPay);
+      document.getElementById('totalTax').textContent = format(sumTax);
+      document.getElementById('totalElec').textContent = format(sumElec);
+      document.getElementById('totalNetCost').textContent = format(sumTax + sumElec + sumOther);
+      document.getElementById('totalNet').textContent = format(sumNet);
+    }
+
+    function addToYTD() {
+      const pay = parseFloat(document.getElementById('totalPay').textContent.replace(/[^0-9.-]+/g,"")) || 0;
+      const tax = parseFloat(document.getElementById('totalTax').textContent.replace(/[^0-9.-]+/g,"")) || 0;
+      const costs = parseFloat(document.getElementById('totalNetCost').textContent.replace(/[^0-9.-]+/g,"")) || 0;
+      const net = parseFloat(document.getElementById('totalNet').textContent.replace(/[^0-9.-]+/g,"")) || 0;
+
+      ytd.months++;
+      ytd.pay += pay;
+      ytd.tax += tax;
+      ytd.costs += costs;
+      ytd.net += net;
+
+      document.getElementById('ytdContent').innerHTML = `
+        <p><strong>Months added:</strong> ${ytd.months}</p>
+        <p>Total Payments: <span class="good">${format(ytd.pay)}</span></p>
+        <p>Total Tax: <span class="bad">${format(ytd.tax)}</span></p>
+        <p>Total All Costs (Tax + Power + Internet + Domains + Water + Misc): <span class="bad">${format(ytd.costs)}</span></p>
+        <p><strong>Total Net kept by hosts:</strong> <span class="good">${format(ytd.net)}</span></p>
+      `;
+    }
+
+    calculate();
+  </script>
+</body>
+</html>
